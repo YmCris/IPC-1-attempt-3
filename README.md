@@ -1,6 +1,6 @@
-### INTRODUCCIÓN A LA PROGRAMACIÓN Y COMPUTACIÓN I
+###                      INTRODUCCIÓN A LA PROGRAMACIÓN Y COMPUTACIÓN I
 
-![Image](https://github.com/user-attachments/assets/0dac4eed-4aaf-4d81-86a0-9d6e1abfe03f)
+ ![Image](https://github.com/user-attachments/assets/0dac4eed-4aaf-4d81-86a0-9d6e1abfe03f)
 
 ## Diagrama de Flujo:
 **Ingresar con correo institucional:**
