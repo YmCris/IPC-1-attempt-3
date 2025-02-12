@@ -45,7 +45,7 @@ public class ComoJugar {
     /**
      * Método encargado de mostrar como jugar el juego RPG.
      */
-    private void mostrarRPG() {
+    public void mostrarRPG() {
         System.out.println("\n".repeat(60));
         System.out.println("Hola Mundo, soy RPG");
         System.out.println("Presione enter para regresar");
@@ -57,7 +57,7 @@ public class ComoJugar {
     /**
      * Método encargado de mostrar el juego de carreras.
      */
-    private void mostrarCarreras() {
+    public void mostrarCarreras() {
         System.out.println("\n".repeat(60));
         System.out.println("Hola Mundo, soy CARRERAS");
         System.out.println("Presione enter para continuar");

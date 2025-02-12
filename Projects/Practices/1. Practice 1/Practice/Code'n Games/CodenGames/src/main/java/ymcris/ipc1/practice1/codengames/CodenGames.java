@@ -82,7 +82,7 @@ public class CodenGames {
             } else if (comando.equals("carreras")) {
                 code.setIniciosCarreras(+1);
                 Carreras carrera = new Carreras();
-                carrera.holaCarros();
+                carrera.iniciarCarrera();
             } else if (comando.equals("reportes")) {
                 Reportes reporte = new Reportes();
                 reporte.decirReportes();
@@ -115,7 +115,7 @@ public class CodenGames {
             case 3:
                 games.setIniciosCarreras(+1);
                 Carreras carrera = new Carreras();
-                carrera.holaCarros();
+                carrera.iniciarCarrera();
                 break;
             case 4:
                 Reportes reporte = new Reportes();
