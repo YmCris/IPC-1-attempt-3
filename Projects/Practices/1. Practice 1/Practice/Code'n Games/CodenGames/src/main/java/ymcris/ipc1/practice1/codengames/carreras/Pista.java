@@ -12,6 +12,8 @@ import static ymcris.ipc1.practice1.codengames.CodenGames.scanner;
 public class Pista {
 
     //VARIABLES-----------------------------------------------------------------
+    private char jugador1;
+    private char jugador2;
     private int numeroDeJugadores;
     private static char[][] pista;//static porque pertenece a la clase, no a una posible instancia.
     private final char trap;
@@ -44,12 +46,13 @@ public class Pista {
     /**
      * Método encargado de crear la pista.
      *
-     * @param longitud - Tamaño/ longitud que va a tener la pista.
+     * @param filas - filas que va a tener la pista.
+     * @param columnas - longitud que va a taner la pista.
      */
-    private void crearPista(int longitud) {
-        pista = new char[numeroDeJugadores][longitud];
-        for (char[] pista1 : pista) {//i = filas
-            for (int j = 0; j < pista1.length; j++) {//j = columnas
+    private void crearPista(int filas, int columnas) {//longitud = columnas
+        pista = new char[filas + 1][columnas];
+        for (char[] pista1 : pista) {//RELLENA LA PISTA CON '_'
+            for (int j = 0; j < pista1.length; j++) {
                 pista1[j] = '_';
             }
         }
@@ -76,12 +79,12 @@ public class Pista {
      * @param fila - Posición en la fila de la pista.
      * @param columna - Posición en la columna de la pista
      */
-    private void modificarPista(char modificacion, int fila, int columna) {
+    protected void modificarPista(char modificacion, int fila, int columna) {
         for (char[] pista1 : pista) {
             for (int j = 0; j < pista1.length; j++) {
-                if (fila < numeroDeJugadores && columna < pista[0].length) {// Verifica que el tamaño de la fila y la columna sean los adecuados
-                    if (pista[fila][columna] == '_') {
-                        pista[fila][columna] = modificacion;
+                if (fila < pista.length && columna < pista[0].length) {// Verifica que el tamaño de la fila y la columna sean los adecuados
+                    if (pista[fila][columna] == '_') {//verifica que no hayan vehiculos, traps o boosters
+                        pista[fila][columna] = modificacion;//implementa la modificación
                     }
                 }
             }
@@ -94,15 +97,17 @@ public class Pista {
      */
     private void añadirElementos() {
         boolean modificacionesActivadas;
+        int limiteDeFilas = Carreras.cantidadDeRivales + 1;
+        int limiteDeColumnas = pista[0].length;
         do {
             int numeroDeBoosters = random.nextInt(1, 7);//[1,6)
-            int numeroDeTraps = random.nextInt(1, 7);
+            int numeroDeTraps = random.nextInt(1, 7);//[1,6)
             for (char[] pista1 : pista) {
                 for (int i = 0; i < numeroDeBoosters; i++) {//Implementa los boosters en la pista
-                    modificarPista(booster, random.nextInt(0, numeroDeJugadores), random.nextInt(0, pista[0].length));//ej Fila [0,2) Columnas [0,150)
+                    modificarPista(booster, random.nextInt(0, limiteDeFilas), random.nextInt(0, limiteDeColumnas));//Fila [0,3] Columnas [0,150) con tres rivales
                 }
                 for (int i = 0; i < numeroDeTraps; i++) {//Implementa los traps
-                    modificarPista(trap, random.nextInt(0, numeroDeJugadores), random.nextInt(0, pista[0].length));//ej Fila [0,2) Columnas [0,150)
+                    modificarPista(trap, random.nextInt(0, limiteDeFilas), random.nextInt(0, limiteDeColumnas));//Fila [0,2] Columnas [0,150)
                 }
             }
             modificacionesActivadas = true;
@@ -129,15 +134,18 @@ public class Pista {
         scanner.nextLine();
         switch (opcion) {
             case 1 -> {
-                crearPista(longitudesPistas[0]);
+                crearPista(Carreras.cantidadDeRivales, longitudesPistas[0]);
+                agregarVehiculos();
                 mostrarPista();
             }
             case 2 -> {
-                crearPista(longitudesPistas[1]);
+                crearPista(Carreras.cantidadDeRivales, longitudesPistas[1]);
+                agregarVehiculos();
                 mostrarPista();
             }
             case 3 -> {
-                crearPista(longitudesPistas[2]);
+                crearPista(Carreras.cantidadDeRivales, longitudesPistas[2]);
+                agregarVehiculos();
                 mostrarPista();
             }
             case 4 -> {
@@ -147,12 +155,36 @@ public class Pista {
                     System.out.println("Debes crear una pista mayor a 50 metros y menor a 500");
                     elegirPista();
                 } else {
-                    crearPista(longitudPista);
+                    crearPista(Carreras.cantidadDeRivales, longitudPista);
                 }
             }
             default -> {
                 System.out.println("Elige una pista adecuada.");
                 elegirPista();
+            }
+        }
+    }
+
+    protected void agregarVehiculos() {
+        if (Carreras.opcion == 1) {//jugar contra computadora.
+            jugador1 = Carreras.jugadorUno.charAt(0);
+            modificarPista(jugador1, 0, 0);
+            for (int i = 0; i < pista.length; i++) {
+                char elementoAAgregar = Carreras.computadora[random.nextInt(0, 10)];
+                modificarPista(elementoAAgregar, i + 1, 0);
+                modificarPista(elementoAAgregar, Carreras.cantidadDeRivales, 0);
+            }
+        } else if (Carreras.opcion == 2) {//jugar contra rival
+            jugador1 = Carreras.jugadorUno.charAt(0);
+            jugador2 = Carreras.jugadorDos.charAt(0);
+            modificarPista(jugador1, 0, 0);
+            modificarPista(jugador2, 1, 0);
+        }
+    }
+
+    protected void verificarGanador() {
+        for (char[] pista1 : pista) {
+            for (int j = 0; j < pista1.length; j++) {//columnas
             }
         }
     }
