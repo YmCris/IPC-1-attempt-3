@@ -1,6 +1,8 @@
 package ymcris.ipc1.practice1.codengames.carreras;
 
 import java.util.Random;
+import static ymcris.ipc1.practice1.codengames.CodenGames.AZUL;
+import static ymcris.ipc1.practice1.codengames.CodenGames.RESETEAR_COLOR;
 import static ymcris.ipc1.practice1.codengames.CodenGames.scanner;
 
 /**
@@ -14,7 +16,11 @@ public class Pista {
     //VARIABLES-----------------------------------------------------------------
     private char jugador1;
     private char jugador2;
-    private int numeroDeJugadores;
+    private int numeroDeVehiculos;
+    private int posicionJugador1;
+    private int posicionJugador2;
+    private int[] posicionesVehiculos;
+    private static char[] vehiculos;
     private static char[][] pista;//static porque pertenece a la clase, no a una posible instancia.
     private final char trap;
     private final char booster;
@@ -24,31 +30,36 @@ public class Pista {
     private final int[] longitudesPistas;
 
     //OBJETOS-------------------------------------------------------------------
-    private Random random = new Random();
+    Random random = new Random();
+    MotorDelJuego motor = new MotorDelJuego();
 
-    //MÉTODO CONSTRUCTO---------------------------------------------------------
-    /**
-     * Método constructor encargado de inicializar los atributos necesraios.
-     *
-     * @param numeroDeJugadores - Representa las filas que va a tener la "pista"
-     */
+    //MÉTODOS CONSTRUCTORES ----------------------------------------------------
     public Pista(int numeroDeJugadores) {
         this.trap = 'T';
         this.booster = 'B';
+        this.posicionJugador1 = 0;
+        this.posicionJugador2 = 0;
         this.longitudPistaCorta = 75;
         this.longitudPistaMedia = 100;
         this.longitudPistaLarga = 150;
-        this.numeroDeJugadores = numeroDeJugadores;
+        this.numeroDeVehiculos = numeroDeJugadores;
+        Pista.vehiculos = new char[numeroDeJugadores];
+        this.posicionesVehiculos = new int[numeroDeJugadores + 1];
+        this.longitudesPistas = new int[]{longitudPistaCorta, longitudPistaMedia, longitudPistaLarga};
+    }
+
+    public Pista() {
+        this.trap = 'T';
+        this.booster = 'B';
+        this.posicionJugador1 = 0;
+        this.posicionJugador2 = 0;
+        this.longitudPistaCorta = 75;
+        this.longitudPistaMedia = 100;
+        this.longitudPistaLarga = 150;
         this.longitudesPistas = new int[]{longitudPistaCorta, longitudPistaMedia, longitudPistaLarga};
     }
 
     //MÉTODOS-------------------------------------------------------------------
-    /**
-     * Método encargado de crear la pista.
-     *
-     * @param filas - filas que va a tener la pista.
-     * @param columnas - longitud que va a taner la pista.
-     */
     private void crearPista(int filas, int columnas) {//longitud = columnas
         pista = new char[filas + 1][columnas];
         for (char[] pista1 : pista) {//RELLENA LA PISTA CON '_'
@@ -56,13 +67,12 @@ public class Pista {
                 pista1[j] = '_';
             }
         }
+        agregarVehiculos();
     }
 
-    /**
-     * Método encargado de mostrar la pista.
-     */
     private void mostrarPista() {
-        añadirElementos();
+        añadirBoostersOTraps();
+        System.out.println(AZUL + "PISTA:" + RESETEAR_COLOR);
         for (char[] pista1 : pista) {//i = filas
             for (int j = 0; j < pista1.length; j++) {//j = columnas
                 System.out.print(pista1[j]);
@@ -71,14 +81,6 @@ public class Pista {
         }
     }
 
-    /**
-     * Método encargado de poder agregar elementos (boosters o traps) en la
-     * pista.
-     *
-     * @param modificacion - simbolo del elemento.
-     * @param fila - Posición en la fila de la pista.
-     * @param columna - Posición en la columna de la pista
-     */
     protected void modificarPista(char modificacion, int fila, int columna) {
         for (char[] pista1 : pista) {
             for (int j = 0; j < pista1.length; j++) {
@@ -91,13 +93,9 @@ public class Pista {
         }
     }
 
-    /**
-     * Método encargado de determinar el número de boosters o traps que habrán
-     * en la pista y su posición.
-     */
-    private void añadirElementos() {
+    private void añadirBoostersOTraps() {
         boolean modificacionesActivadas;
-        int limiteDeFilas = Carreras.cantidadDeRivales + 1;
+        int limiteDeFilas = MotorDelJuego.cantidadDeRivales + 1;
         int limiteDeColumnas = pista[0].length;
         do {
             int numeroDeBoosters = random.nextInt(1, 7);//[1,6)
@@ -114,9 +112,6 @@ public class Pista {
         } while (modificacionesActivadas == false);
     }
 
-    /**
-     * Método encargado de mostrar el menú de elegir pista
-     */
     protected void elegirPista() {
         System.out.println("                                        ┌------------------------------------------------┐");
         System.out.println("                                        |             ¿QUÉ PISTA DESEA USAR?             |");
@@ -126,26 +121,24 @@ public class Pista {
         System.out.println("                                        ¦ [2]        Pista Media (100 metros)            ¦");
         System.out.println("                                        ¦ [3]        Pista Larga (150 metros)            ¦");
         System.out.println("                                        ¦ [4]              Crear Pista                   ¦");
+        System.out.println("                                        ¦ [5]                Regresar                    ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦            -Seleccione una opción-             ¦");
         System.out.println("                                        └------------------------------------------------┘");
-        int opcion = scanner.nextInt();
+        int opcionPista = scanner.nextInt();
         scanner.nextLine();
-        switch (opcion) {
+        switch (opcionPista) {
             case 1 -> {
-                crearPista(Carreras.cantidadDeRivales, longitudesPistas[0]);
-                agregarVehiculos();
+                crearPista(MotorDelJuego.cantidadDeRivales, longitudesPistas[0]);
                 mostrarPista();
             }
             case 2 -> {
-                crearPista(Carreras.cantidadDeRivales, longitudesPistas[1]);
-                agregarVehiculos();
+                crearPista(MotorDelJuego.cantidadDeRivales, longitudesPistas[1]);
                 mostrarPista();
             }
             case 3 -> {
-                crearPista(Carreras.cantidadDeRivales, longitudesPistas[2]);
-                agregarVehiculos();
+                crearPista(MotorDelJuego.cantidadDeRivales, longitudesPistas[2]);
                 mostrarPista();
             }
             case 4 -> {
@@ -155,8 +148,12 @@ public class Pista {
                     System.out.println("Debes crear una pista mayor a 50 metros y menor a 500");
                     elegirPista();
                 } else {
-                    crearPista(Carreras.cantidadDeRivales, longitudPista);
+                    crearPista(MotorDelJuego.cantidadDeRivales, longitudPista);
                 }
+            }
+            case 5 -> {
+                Carreras carrera = new Carreras();
+                carrera.irAlMenuPrincipal();
             }
             default -> {
                 System.out.println("Elige una pista adecuada.");
@@ -166,36 +163,108 @@ public class Pista {
     }
 
     protected void agregarVehiculos() {
-        if (Carreras.opcion == 1) {//jugar contra computadora.
-            jugador1 = Carreras.jugadorUno.charAt(0);
-            modificarPista(jugador1, 0, 0);
-            for (int i = 0; i < pista.length; i++) {
+        if (Carreras.opcionMenu == 1) {//jugar contra computadora.
+            jugador1 = Carreras.jugadorUno.charAt(0);//convierte la primera letra del nombre del jugador 1 en un char
+            posicionJugador1 = 0;
+            modificarPista(jugador1, 0, 0);//Coloca al jugador 1 en la pista
+            for (int i = 1; i < numeroDeVehiculos + 1; i++) {
                 char elementoAAgregar = Carreras.computadora[random.nextInt(0, 10)];
-                modificarPista(elementoAAgregar, i + 1, 0);
-                modificarPista(elementoAAgregar, Carreras.cantidadDeRivales, 0);
+                pista[i][0] = elementoAAgregar;
+                posicionesVehiculos[i] = 0;
+                vehiculos[i - 1] = elementoAAgregar;
             }
-        } else if (Carreras.opcion == 2) {//jugar contra rival
-            jugador1 = Carreras.jugadorUno.charAt(0);
-            jugador2 = Carreras.jugadorDos.charAt(0);
-            modificarPista(jugador1, 0, 0);
-            modificarPista(jugador2, 1, 0);
+        } else if (Carreras.opcionMenu == 2) {//jugar contra rival
+            jugador1 = Carreras.jugadorUno.charAt(0);//convierte la primera letra del nombre del jugador 1 en un char
+            jugador2 = Carreras.jugadorDos.charAt(0);//convierte la primera letra del nombre del jugador 2 en un char
+            modificarPista(jugador1, 0, 0);//Coloca al jugador 1 en la pista
+            modificarPista(jugador2, 1, 0);//Coloca al jugador 2 en la pista
+            posicionJugador1 = 0;
+            posicionJugador2 = 0;
         }
     }
 
-    protected void verificarGanador() {
-        for (char[] pista1 : pista) {
-            for (int j = 0; j < pista1.length; j++) {//columnas
+    protected void moverVehiculoJugador(int resultadoDado) {
+        if (Carreras.opcionMenu == 1) {//opcion 1 = jugar contra computadora
+            pista[0][posicionJugador1] = 0;
+            posicionJugador1 += resultadoDado;
+            if (posicionJugador1 >= pista[0].length) {
+                posicionJugador1 = pista[0].length - 1;
+                System.out.println("El jugador 1 ha ganado");
             }
+            pista[0][posicionJugador1] = jugador1;
+        } else if (Carreras.opcionMenu == 2) {//opcion 2 jugar contra rival
+            pista[0][posicionJugador1] = 0;
+            posicionJugador1 += resultadoDado;
+            if (posicionJugador1 >= pista[0].length) {
+                posicionJugador1 = pista[0].length - 1;
+                System.out.println("El jugador 1 ha ganado");
+            }
+            pista[0][posicionJugador1] = jugador1;
+            pista[1][posicionJugador2] = 0;
+            posicionJugador2 += resultadoDado;
+            if (posicionJugador2 >= pista[0].length) {
+                posicionJugador2 = pista[0].length - 1;
+                System.out.println("El jugador 2 ha ganado");
+            }
+            pista[1][posicionJugador2] = jugador2;
         }
     }
 
-    //GETTERS & SETTERS---------------------------------------------------------
-    public int getNumeroDeJugadores() {
-        return numeroDeJugadores;
+    private void definirPosicionesInicialesVehiculos() {
+        for (int i = 0; i < numeroDeVehiculos; i++) {
+            this.posicionesVehiculos[i] = 0;
+        }
     }
 
-    public void setNumeroDeJugadores(int numeroDeJugadores) {
-        this.numeroDeJugadores = numeroDeJugadores;
+    protected void moverVehiculosAleatorios(int resultadoDados) {
+        definirPosicionesInicialesVehiculos();
+        for (int i = 1; i <= numeroDeVehiculos; i++) {
+            pista[i][posicionesVehiculos[i]] = 0;
+            int movimientoAleatorio = random.nextInt(resultadoDados) * 2;
+            posicionesVehiculos[i] += movimientoAleatorio;
+            if (posicionesVehiculos[i] >= pista[0].length) {
+                posicionesVehiculos[i] = pista[0].length - 1;
+                System.out.println("El vehículo " + (i + 1) + " llegó a la meta " + Carreras.jugadorUno + " perdió");
+            }
+            pista[i][posicionesVehiculos[i]] = vehiculos[i];
+        }
+    }
+
+    protected boolean verificarJuegoTerminado() {
+        for (int i = 0; i < pista.length; i++) {
+            for (int j = 0; j < pista[i].length; j++) {
+                if (posicionJugador1 == pista[0].length) { // POR SI GANA EL JUGADOR 1
+                    System.out.println("El jugador " + Carreras.jugadorUno + " es el ganador.");
+                    motor.setHumanoGanador(+1);
+                    return true;
+                }
+                if (posicionJugador2 == pista[0].length) { //POR SI GANA EL JUGADOR 2
+                    System.out.println("El jugador " + Carreras.jugadorDos + " es el ganador.");
+                    motor.setHumanoGanador(+1);
+                    return true;
+                }
+                if (getPosicionVehiculo(i) == pista[0].length) { // POR SI GANA UN VEHÍCULO
+                    System.out.println("El vehículo " + i + " " + Carreras.computadora[i] + " es el ganador.");
+                    motor.setComputadoraGanadora(+1);
+                    return true;
+                }
+                if ((posicionJugador1 == pista[0].length && posicionJugador2 == pista[0].length)
+                        || (posicionJugador1 == pista[0].length && getPosicionVehiculo(i) == pista[0].length)
+                        || (posicionJugador2 == pista[0].length && getPosicionVehiculo(i) == pista[0].length)) { // POR SI HAY EMPATE
+                    System.out.println("¡Es un empate!");
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    protected int getPosicionVehiculo(int indiceVehiculo) {
+        if (indiceVehiculo == 0) {
+            return posicionJugador1;
+        } else {
+            return posicionesVehiculos[indiceVehiculo];
+        }
     }
 
 }

@@ -1,11 +1,11 @@
 package ymcris.ipc1.practice1.codengames.carreras;
 
+import java.util.Scanner;
 import ymcris.ipc1.practice1.codengames.CodenGames;
-import static ymcris.ipc1.practice1.codengames.CodenGames.scanner;
 
 /**
- * Clase encargada de echar punta, como el motor del juego, teniendo las
- * opciones del menu y las de jugabilidad.
+ * Clase encargada de pedir información y mostrarla durante el transcurso del
+ * juego.
  *
  * @Date Feb 6, 2025
  * @author YmCris
@@ -13,39 +13,33 @@ import static ymcris.ipc1.practice1.codengames.CodenGames.scanner;
 public class Carreras {
 
     //VARIABLES-----------------------------------------------------------------
-    private int numeroDeDados;
-    private String jugadorActual;
-    private boolean juegoTerminado;
-    protected static int opcion;
+    protected static int opcionMenu;//opcion 1 = jugar contra computadora
     protected static String jugadorUno;
     protected static String jugadorDos;
     protected static char[] computadora;
-    protected static int cantidadDeRivales;
 
     //OBJETOS-------------------------------------------------------------------
-    Pista pista = new Pista(2);
+    CodenGames code = new CodenGames();
+    Scanner scanner = new Scanner(System.in);
+    MotorDelJuego motor = new MotorDelJuego();
 
     //MÉTODO CONSTRUCTOR--------------------------------------------------------
     public Carreras() {
-        this.juegoTerminado = false;
-        this.numeroDeDados = 2;
         Carreras.computadora = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
     }
 
     //MÉTODOS ------------------------------------------------------------------
+    /**
+     * Método encargado de iniciar la partida.
+     */
     public void iniciarCarrera() {
-        echarPunta();
-    }
-
-    private void echarPunta() {//"Motor del juego"
         irAlMenuPrincipal();
-        do {
-            pista.verificarGanador();
-        } while (juegoTerminado == true);
-        finalizarPartida();
     }
 
-    private void irAlMenuPrincipal() {
+    /**
+     * Método encargado de mostrar las opciones al iniciar el juego.
+     */
+    protected void irAlMenuPrincipal() {
         System.out.println("                                        ┌------------------------------------------------┐");
         System.out.println("                                        |              ¿QUÉ DESEA REALIZAR?              |");
         System.out.println("                                        ├------------------------------------------------┤");
@@ -53,32 +47,38 @@ public class Carreras {
         System.out.println("                                        ¦ [1]        Jugar contra Computadora            ¦");
         System.out.println("                                        ¦ [2]            Jugar contra Rival              ¦");
         System.out.println("                                        ¦ [3]               ¿Cómo jugar?                 ¦");
+        System.out.println("                                        ¦ [4]                 Regresar                   ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦            -Seleccione una opción-             ¦");
         System.out.println("                                        └------------------------------------------------┘");
-        opcion = scanner.nextInt();
-        switch (opcion) {
-            case 1:
-                jugarContraComputadora();
-                break;
-            case 2:
-                jugarContraRival();
-                break;
-            case 3:
-                System.out.println("Hola Mundo, soy CARRERAS");
-                System.out.println("Presione enter para continuar");
+        opcionMenu = scanner.nextInt();
+        switch (opcionMenu) {
+            case 1 ->
+                motor.jugarContraComputadora();
+            case 2 ->
+                motor.jugarContraRival();
+            case 3 -> {
+                System.out.println("Hola, soy carreras.");
                 scanner.nextLine();
                 scanner.nextLine();
-                break;
-            default:
-
-                break;
+            }
+            case 4 -> {
+                CodenGames code = new CodenGames();
+                code.pedirOpcionMenu();
+            }
+            default -> {
+                scanner.nextLine();
+                System.out.println("Por favor, elija una opción válida");
+                irAlMenuPrincipal();
+            }
         }
-        scanner.nextLine();
     }
 
-    private void pedirNombres() {
+    /**
+     * Método encargado de pedir los nombres a los jugadores.
+     */
+    protected void pedirNombres() {
         scanner.nextLine();
         System.out.println("Ingrese el nombre del jugador 1: ");
         jugadorUno = scanner.nextLine();
@@ -86,29 +86,11 @@ public class Carreras {
         jugadorDos = scanner.nextLine();
     }
 
-    public String definirJugadorActual() {
-
-        return jugadorActual;
-    }
-
-    private void jugarContraComputadora() {
-        scanner.nextLine();
-        System.out.println("Ingrese su nombre: ");
-        jugadorUno = scanner.nextLine();
-        System.out.println("¿Cuántos contrincantes desea tener? (1-8)");
-        cantidadDeRivales = scanner.nextInt();
-        Pista pistas = new Pista(cantidadDeRivales);
-        pistas.elegirPista();
-    }
-
-    private void jugarContraRival() {
-        cantidadDeRivales = 1;
-        pedirNombres();
-        pista.elegirPista();
-    }
-
-    private void finalizarPartida() {
-        CodenGames code = new CodenGames();
+    /**
+     * Método encargado de mostrar las opciones al jugador cuando la partida
+     * finaliza.
+     */
+    protected void finalizarPartida() {
         int opcion;
         System.out.println("                                        ┌------------------------------------------------┐");
         System.out.println("                                        |     JUEGO FINALIZADO ¿QUÉ DESEA REALIZAR?      |");

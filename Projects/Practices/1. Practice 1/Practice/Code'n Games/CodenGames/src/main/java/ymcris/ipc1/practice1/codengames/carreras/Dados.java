@@ -17,16 +17,15 @@ public class Dados {
 
     //OBJETOS-------------------------------------------------------------------
     private Random random = new Random();
-    public static Dados dado = new Dados();
-    public static Carreras carrera = new Carreras();
 
     //MÉTODOS-------------------------------------------------------------------
     /**
      * Método encargado de simular el lanzado de dados.
      *
      * @param numeroDeDados - número de dados con los que se desearán jugar.
+     * @return
      */
-    protected void lanzarDados(int numeroDeDados) {
+    protected int lanzarDados(int numeroDeDados) {
         int resultadoDado;
         resultado = 0;
         for (int i = 0; i < numeroDeDados; i++) {
@@ -34,7 +33,8 @@ public class Dados {
             resultado += resultadoDado;
             System.out.println("El resultado del dado " + (i + 1) + " es: " + resultadoDado);
         }
-        System.out.println(AZUL + "El jugador: " + carrera.definirJugadorActual() + " avanza " + resultado + " metros" + RESETEAR_COLOR);
+        System.out.println(AZUL + "El jugador avanza " + resultado + " metros" + RESETEAR_COLOR);
+        return resultado;
     }
 
     //GETTER--------------------------------------------------------------------
