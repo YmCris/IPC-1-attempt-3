@@ -2,7 +2,7 @@ package ymcris.ipc1.practice1.codengames.RPG;
 
 /**
  * Clase encargada de Crear al personaje, y reiniciar sus estadísticas o
- * modificarlas
+ * modificarlas.
  *
  * @Date Feb 14, 2025
  * @author YmCris
@@ -16,52 +16,89 @@ public class Personaje {
     private int nivel;
     private String nombre;
     private int experiencia;
-    private boolean estavivo;
+    private boolean estaVivo;
     private int monstruosVencidos;
+    private final int EXPERIENCIA_REQUERIDA;
 
     // INSTANCIAS --------------------------------------------------------------
+    /**
+     * Static porque lo va a usar el jugador, pero de tener más personajes, el
+     * inventario no sería solo de un personaje (De querer que todos los
+     * personajes tengan un propio inventario ya no sería estático).
+     */
     public static Inventario inventario = new Inventario();
 
     // MÉTODO CONSTRUCTOR -------------------------------------------------------
-    public Personaje(int hp, int mp, int oro, int nivel, String nombre, int experiencia, boolean estavivo, int monstruosVencidos) {
+    /**
+     * Método encargado de inicializar los atributos necesarios del personaje.
+     *
+     * @param hp - Vida inicial del personaje
+     * @param mp - Mana inicial del personaje
+     * @param oro - Plata inicial del personaje
+     * @param nivel - Nivel inicial del personaje
+     * @param nombre - Nombre del personaje
+     * @param experiencia - Experiencia inicial del personaje
+     * @param monstruosVencidos - Monstruos iniciales vencidos del personaje
+     */
+    public Personaje(int hp, int mp, int oro, int nivel, String nombre, int experiencia, int monstruosVencidos) {
         this.hp = hp;
         this.mp = mp;
         this.oro = oro;
         this.nivel = nivel;
         this.nombre = nombre;
+        this.estaVivo = hp > 0;
         this.experiencia = experiencia;
-        this.estavivo = estavivo;
-        this.monstruosVencidos = monstruosVencidos;
+        this.EXPERIENCIA_REQUERIDA = 100;
+        this.monstruosVencidos = monstruosVencidos;//De haber más personajes, sería una variable estática en otra clase.
     }
 
     // MÉTODOS -----------------------------------------------------------------
-    private boolean verificarReinicio(Personaje personaje) {
-        if (personaje.hp <= 0) {
-            return true;
-        } else {
-            return false;
+    /**
+     * Método encargado de verificar si el personaje ha muerto.
+     *
+     * @return true si la vida es menor a 0 (esta muerto).
+     */
+    private boolean verificarReinicio() {
+        return this.hp <= 0;
+    }
+
+    /**
+     * Método encargado de reiniciar los atributos del personaje en dado caso
+     * muera.
+     */
+    protected void resetearEstadisticas() {
+        if (verificarReinicio()) {
+            this.oro = 0;
+            this.hp = 100;
+            this.mp = 100;
+            this.nivel = 0;
+            this.estaVivo = true;
+            this.experiencia = 0;
+            inventario.cantidadPotion = 0;
+            inventario.cantidadMPotion = 0;
+            inventario.cantidadHiPotion = 0;
         }
     }
 
-    private void resetearEstadisticas(Personaje personaje) {
-        personaje.oro = 0;
-        personaje.hp = 100;
-        personaje.mp = 100;
-        personaje.nivel = 0;
-        personaje.experiencia = 0;
-        personaje.estavivo = true;
-        inventario.cantidadPotion = 0;
-        inventario.cantidadMPotion = 0;
-        inventario.cantidadHiPotion = 0;
+    /**
+     * Método encargado de verificar si el personaje puede subir de nivel y
+     * quitar la expericncia requerida
+     */
+    protected void verificarNivel() {
+        if (this.experiencia >= EXPERIENCIA_REQUERIDA) {
+            this.setNivel(+1);
+            this.setExperiencia(-100);
+            System.out.println("El jugador " + this.getNombre() + " ha subido al nivel" + this.getNivel() + " y tiene " + this.getExperiencia() + " de experiencia.");
+        }
     }
 
-    // GETTERS & SETTERS -------------------------------------------------------
+    // GETTERS & SETTERS (Para aumentar, disminuir las características)---------
     public int getHp() {
         return hp;
     }
 
     public void setHp(int hp) {
-        this.hp = hp;
+        this.hp += hp;
     }
 
     public int getMp() {
@@ -69,7 +106,7 @@ public class Personaje {
     }
 
     public void setMp(int mp) {
-        this.mp = mp;
+        this.mp += mp;
     }
 
     public int getOro() {
@@ -77,7 +114,7 @@ public class Personaje {
     }
 
     public void setOro(int oro) {
-        this.oro = oro;
+        this.oro += oro;
     }
 
     public int getNivel() {
@@ -85,7 +122,7 @@ public class Personaje {
     }
 
     public void setNivel(int nivel) {
-        this.nivel = nivel;
+        this.nivel += nivel;
     }
 
     public String getNombre() {
@@ -101,15 +138,15 @@ public class Personaje {
     }
 
     public void setExperiencia(int experiencia) {
-        this.experiencia = experiencia;
+        this.experiencia += experiencia;
     }
 
-    public boolean isEstavivo() {
-        return estavivo;
+    public boolean isEstaVivo() {
+        return estaVivo;
     }
 
-    public void setEstavivo(boolean estavivo) {
-        this.estavivo = estavivo;
+    public void setEstaVivo(boolean estaVivo) {
+        this.estaVivo = estaVivo;
     }
 
     public int getMonstruosVencidos() {
@@ -117,7 +154,7 @@ public class Personaje {
     }
 
     public void setMonstruosVencidos(int monstruosVencidos) {
-        this.monstruosVencidos = monstruosVencidos;
+        this.monstruosVencidos += monstruosVencidos;
     }
 
 }

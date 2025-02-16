@@ -26,7 +26,7 @@ public class RPG {
     private void pedirInformacion() {
         System.out.println("Introduzca su nombre: ");
         nombreJugador = scanner.nextLine();
-        jugador = new Personaje(100, 100, 0, 0, nombreJugador, 0, true, 0);
+        jugador = new Personaje(100, 100, 0, 0, nombreJugador, 0, 0);
 
     }
 }

@@ -8,6 +8,7 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
  *
  * @Date Feb 14, 2025
  * @author YmCris
+ * @see Personaje
  */
 public class Inventario {
 
@@ -17,6 +18,10 @@ public class Inventario {
     protected int cantidadHiPotion;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método constructor encargado de inicializar la cantidad de potions que
+     * tiene el JUGADOR.
+     */
     public Inventario() {
         this.cantidadPotion = 0;
         this.cantidadMPotion = 0;
@@ -24,39 +29,63 @@ public class Inventario {
     }
 
     // MÉTODOS -----------------------------------------------------------------
+    /**
+     * Método encargado de mostrar los items que posee un PERSONAJE.
+     */
     protected void mostrarItems() {
         System.out.println(jugador.getNombre() + " tiene: " + inventario.getCantidadPotion() + " items Potion");
         System.out.println(jugador.getNombre() + " tiene: " + inventario.getCantidadMPotion() + " items M-Potion");
         System.out.println(jugador.getNombre() + " tiene: " + inventario.getCantidadHiPotion() + " items Hi-Potion");
     }
 
+    /**
+     * Método encargado de usar el item para UN PERSONAJE (Aliado)
+     *
+     * @param item - Item a utilizar sobre un aliado.
+     * @param personaje - Personaje a quien se le atribuirá el item.
+     */
     protected void usarItem(String item, Personaje personaje) {
         if (verificarItems(item)) {
-            System.out.println(jugador.getNombre() + " Recupera 25 de HP");
-            personaje.setHp(+25);
-        } else if (verificarItems(item)) {
-            System.out.println(jugador.getNombre() + " Recupera 10 de MP");
-            personaje.setMp(+10);
-        } else if (verificarItems(item)) {
-            System.out.println(jugador.getNombre() + " Recupera 75 de HP");
-            personaje.setHp(+75);
-        } else {
-            System.out.println(jugador.getNombre() + " no tiene el item " + item);
+            if (item.equalsIgnoreCase("potion")) {
+                System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 25 de HP");
+                this.setCantidadPotion(-1);
+                personaje.setHp(+25);
+            } else if (item.equalsIgnoreCase("mpotion")) {
+                System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 10 de MP");
+                this.setCantidadMPotion(-1);
+                personaje.setMp(+10);
+            } else if (item.equalsIgnoreCase("hipotion")) {
+                System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 75 de MP");
+                this.setCantidadHiPotion(-1);
+                personaje.setHp(+75);
+            }
         }
     }
 
+    /**
+     * Método encargado de verificar si el JUGADOR tiene el item.
+     *
+     * @param item - Item a verificar.
+     * @return true si el JUGADOR posee el item.
+     */
     protected boolean verificarItems(String item) {
-        if (item.toLowerCase().equals("potion")) {
-            if (inventario.getCantidadPotion() > 0) {
-                return true;
+        switch (item.toLowerCase()) {
+            case "potion" -> {
+                if (inventario.getCantidadPotion() > 0) {
+                    return true;
+                }
             }
-        } else if (item.toLowerCase().equals("mpotion")) {
-            if (inventario.getCantidadMPotion() > 0) {
-                return true;
+            case "mpotion" -> {
+                if (inventario.getCantidadMPotion() > 0) {
+                    return true;
+                }
             }
-        } else if (item.toLowerCase().equals("hipotion")) {
-            if (inventario.getCantidadHiPotion() > 0) {
-                return true;
+            case "hipotion" -> {
+                if (inventario.getCantidadHiPotion() > 0) {
+                    return true;
+                }
+            }
+            default -> {
             }
         }
         System.out.println(jugador.getNombre() + " No tiene el item " + item);
