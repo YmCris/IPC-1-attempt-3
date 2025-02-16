@@ -10,8 +10,10 @@ package ymcris.ipc1.practice1.codengames.RPG;
 public class Personaje {
 
     // VARIABLES ---------------------------------------------------------------
-    private int hp;
-    private int mp;
+    public int hp;
+    public int mp;
+    public int hpMaximo;
+    public int mpMaximo;
     private int oro;
     private int nivel;
     private String nombre;
@@ -88,8 +90,32 @@ public class Personaje {
         if (this.experiencia >= EXPERIENCIA_REQUERIDA) {
             this.setNivel(+1);
             this.setExperiencia(-100);
+            this.hpMaximo = (100 * (this.nivel + 1));
+            this.mpMaximo = (10 * (this.nivel + 1));
             System.out.println("El jugador " + this.getNombre() + " ha subido al nivel" + this.getNivel() + " y tiene " + this.getExperiencia() + " de experiencia.");
+            System.out.println("Su HP actual es " + this.hp + "/" + this.hpMaximo);
+            System.out.println("Su MP actual es " + this.mp + "/" + this.mpMaximo);
+        } else {
+            System.out.println(this.nombre + " no tienes la experiencia requerida, tienes " + this.experiencia);
         }
+    }
+
+    /**
+     * Método encargado de verificar si el hp o el mp sobrepasa los valores
+     * máximos del mp o hp
+     *
+     * @return true si el hp o el mp son máximos
+     */
+    protected boolean verificarHpyMpMaximos() {
+        if (this.hp >= this.hpMaximo) {
+            this.hp = this.hpMaximo;
+            return true;
+        }
+        if (this.mp >= this.mpMaximo) {
+            this.mp = this.mpMaximo;
+            return true;
+        }
+        return false;
     }
 
     // GETTERS & SETTERS (Para aumentar, disminuir las características)---------
@@ -99,6 +125,7 @@ public class Personaje {
 
     public void setHp(int hp) {
         this.hp += hp;
+        verificarHpyMpMaximos();
     }
 
     public int getMp() {
@@ -107,6 +134,7 @@ public class Personaje {
 
     public void setMp(int mp) {
         this.mp += mp;
+        verificarHpyMpMaximos();
     }
 
     public int getOro() {
@@ -155,6 +183,22 @@ public class Personaje {
 
     public void setMonstruosVencidos(int monstruosVencidos) {
         this.monstruosVencidos += monstruosVencidos;
+    }
+
+    public int getHpMaximo() {
+        return hpMaximo;
+    }
+
+    public void setHpMaximo(int hpMaximo) {
+        this.hpMaximo = hpMaximo;
+    }
+
+    public int getMpMaximo() {
+        return mpMaximo;
+    }
+
+    public void setMpMaximo(int mpMaximo) {
+        this.mpMaximo = mpMaximo;
     }
 
 }

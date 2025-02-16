@@ -15,18 +15,20 @@ public class RPG {
     private String nombreJugador;
 
     // INSTANCIAS --------------------------------------------------------------
+    Menu menu = new Menu();
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODOS -----------------------------------------------------------------
     public void decirHola() {
         System.out.println("Hola soy RPG");
         pedirInformacion();
+        menu.mostrarOpciones();
     }
 
     private void pedirInformacion() {
         System.out.println("Introduzca su nombre: ");
         nombreJugador = scanner.nextLine();
-        jugador = new Personaje(100, 100, 0, 0, nombreJugador, 0, 0);
+        jugador = new Personaje(100, 10, 0, 0, nombreJugador, 0, 0);
 
     }
 }

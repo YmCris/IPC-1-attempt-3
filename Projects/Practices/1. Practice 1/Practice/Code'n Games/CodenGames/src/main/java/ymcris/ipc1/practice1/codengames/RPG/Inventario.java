@@ -33,9 +33,9 @@ public class Inventario {
      * Método encargado de mostrar los items que posee un PERSONAJE.
      */
     protected void mostrarItems() {
-        System.out.println(jugador.getNombre() + " tiene: " + inventario.getCantidadPotion() + " items Potion");
-        System.out.println(jugador.getNombre() + " tiene: " + inventario.getCantidadMPotion() + " items M-Potion");
-        System.out.println(jugador.getNombre() + " tiene: " + inventario.getCantidadHiPotion() + " items Hi-Potion");
+        System.out.println("Aventurero " + jugador.getNombre() + " tienes " + inventario.getCantidadPotion() + " items Potion");
+        System.out.println("Aventurero " + jugador.getNombre() + " tienes " + inventario.getCantidadMPotion() + " items M-Potion");
+        System.out.println("Aventurero " + jugador.getNombre() + " tienes " + inventario.getCantidadHiPotion() + " items Hi-Potion");
     }
 
     /**

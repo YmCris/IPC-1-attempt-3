@@ -37,7 +37,7 @@ public class Tienda {
     /**
      * Método encargado de mostrar las opciones que ofrece la tienda.
      */
-    private void mostrarOpciones() {
+    protected void mostrarOpciones() {
         int opcionOpciones;
         System.out.println("                                        ┌------------------------------------------------┐");
         System.out.println("                                        |              ¿QUÉ DESEA REALIZAR?              |");
@@ -45,7 +45,7 @@ public class Tienda {
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ¦ [1]              Comprar items                 ¦");
         System.out.println("                                        ¦ [2]               Vender items                 ¦");
-        System.out.println("                                        ¦ [3]                Regresar                    ¦");
+        System.out.println("                                        ¦ [3]                 Regresar                   ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦             -Seleccione una opción-            ¦");
