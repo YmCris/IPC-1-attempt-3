@@ -9,10 +9,14 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
  * @Date Feb 14, 2025
  * @author YmCris
  * @see Personaje
+ * @see Tienda
  */
 public class Inventario {
 
-    // VARIABLES ---------------------------------------------------------------
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    private final String MAGENTA;
+    private final String RESETEAR;
+    // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected int cantidadPotion;
     protected int cantidadMPotion;
     protected int cantidadHiPotion;
@@ -25,6 +29,8 @@ public class Inventario {
     public Inventario() {
         this.cantidadPotion = 0;
         this.cantidadMPotion = 0;
+        this.MAGENTA = "\033[95m";
+        this.RESETEAR = "\033[0m";
         this.cantidadHiPotion = 0;
     }
 
@@ -45,19 +51,23 @@ public class Inventario {
      * @param personaje - Personaje a quien se le atribuirá el item.
      */
     protected void usarItem(String item, Personaje personaje) {
-        if (verificarItems(item)) {
-            if (item.equalsIgnoreCase("potion")) {
-                System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 25 de HP");
-                this.setCantidadPotion(-1);
-                personaje.setHp(+25);
-            } else if (item.equalsIgnoreCase("mpotion")) {
-                System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 10 de MP");
-                this.setCantidadMPotion(-1);
-                personaje.setMp(+10);
-            } else if (item.equalsIgnoreCase("hipotion")) {
-                System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 75 de MP");
-                this.setCantidadHiPotion(-1);
-                personaje.setHp(+75);
+        if (verificarItems(item)) {//Verifica que en inventario este el item
+            if (personaje.getMp() == personaje.getMpMaximo() || personaje.getHp() == personaje.getHpMaximo()) {//verifica que el personaje no tenga mp y hp máximos.
+                System.out.println("No puedes usar las posiones, ya que tus capacidades de vida o mana estan llenas");
+            } else {//Dependiendo del item elegido se aplicará su efecto y se resta en el inventario.
+                if (item.equalsIgnoreCase("potion")) {
+                    System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 25 de vida");
+                    this.setCantidadPotion(-1);
+                    personaje.setHp(+25);
+                } else if (item.equalsIgnoreCase("mpotion")) {
+                    System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 10 de mana");
+                    this.setCantidadMPotion(-1);
+                    personaje.setMp(+10);
+                } else if (item.equalsIgnoreCase("hipotion")) {
+                    System.out.println(jugador.getNombre() + " Usa " + item + " y Recupera 75 de vida");
+                    this.setCantidadHiPotion(-1);
+                    personaje.setHp(+75);
+                }
             }
         }
     }
@@ -69,7 +79,7 @@ public class Inventario {
      * @return true si el JUGADOR posee el item.
      */
     protected boolean verificarItems(String item) {
-        switch (item.toLowerCase()) {
+        switch (item.toLowerCase()) {//verifica si el jugador tiene el item en el inventario.
             case "potion" -> {
                 if (inventario.getCantidadPotion() > 0) {
                     return true;
@@ -86,9 +96,10 @@ public class Inventario {
                 }
             }
             default -> {
+                System.out.println("No existe el item");
             }
         }
-        System.out.println(jugador.getNombre() + " No tiene el item " + item);
+        System.out.println(MAGENTA + "                                                          ---------- " + RESETEAR + jugador.getNombre() + " no tienes el item " + item + MAGENTA + " ---------- " + RESETEAR);
         return false;
     }
 

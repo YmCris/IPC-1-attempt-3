@@ -3,35 +3,46 @@ package ymcris.ipc1.practice1.codengames.RPG;
 import java.util.Scanner;
 
 /**
- *
+ * Clase encargada de iniciar el juego, pedir información y mostrar los
+ * escenarios y opciones de las batallas.
  *
  * @Date Feb 6, 2025
  * @author YmCris
+ * @see Batallas
+ * @see Personaje
+ * @see Enemigo
  */
 public class RPG {
 
     // VARIBLES ----------------------------------------------------------------
-    public static Personaje jugador;
     private String nombreJugador;
+    public static Personaje jugador;
     public static boolean juegoTerminado;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODOS -----------------------------------------------------------------
-    public void decirHola() {
-        pedirInformacion();
-        do {
+    /**
+     * Método encargado de iniciar el juego RPG
+     */
+    public void iniciarRpg() {
+        pedirInformacion();//Pide la información para crear un personaje.
+        do {//Pa que el juego no se termine
             Menu menu = new Menu();
             menu.mostrarOpciones();
         } while (juegoTerminado == true);
 
     }
 
+    /**
+     * Método encargado de crear el personaje principal y verificar que tenga un
+     * nombre válido.
+     */
     private void pedirInformacion() {
         System.out.println("Introduzca su nombre: ");
         nombreJugador = scanner.nextLine();
-        if (nombreJugador.isEmpty()) {
+        if (nombreJugador.isEmpty()) {//para que el nombre no sea un espacio vacio.
             System.out.println("Ingresa un nombre válido");
             pedirInformacion();
         } else {
@@ -40,6 +51,10 @@ public class RPG {
         }
     }
 
+    /**
+     * Método encargado de mostrar el escenario de batalla entre el aventurero y
+     * el enemigo darkwolf
+     */
     public static void aventureroLobo() {
         System.out.println("""
                                                                                                                                   =**%+=*+-:                 
@@ -70,6 +85,10 @@ public class RPG {
                            """);
     }
 
+    /**
+     * Método encargado de mostrar el escenario de batalla entre el aventurero y
+     * el enemigo Dragon
+     */
     public static void aventureroDragon() {
         System.out.println("""
                                                                                                                                                                                  :=*#=              
@@ -109,6 +128,10 @@ public class RPG {
                                                       @@#**#                  **+-                                                     :+#@@@@*=:#      +#@%@@@@@-                                    """);
     }
 
+    /**
+     * Método encargado de mostrar el escenario de batalla entre el aventurero y
+     * el enemigo golem
+     */
     public static void aventureroGolem() {
         System.out.println("""
                                                                                                                                              :.  .:-+=                                
@@ -148,6 +171,13 @@ public class RPG {
                            """);
     }
 
+    /**
+     * Método encargado de mostrar las opciones durante el turno del jugador en
+     * la batalla.
+     *
+     * @param personaje Personaje del jugador al cual le corresponden las
+     * características.
+     */
     public static void verOpcionesBatalla(Personaje personaje) {
         System.out.println("..............................................................................................................................................................................................");
         System.out.println(". TURNO DE: " + personaje.getNombre() + "         .                                                                                                                                                               .");
@@ -161,6 +191,10 @@ public class RPG {
         System.out.println("..............................................................................................................................................................................................");
     }
 
+    /**
+     * Método encargado de mostrar las opciones de los items durante la batalla
+     * en el turno del jugador.
+     */
     protected static void verOpcionesItems() {
         System.out.println("..............................................................................................................................................................................................");
         System.out.println(".                                                                                                                                                                                            .");

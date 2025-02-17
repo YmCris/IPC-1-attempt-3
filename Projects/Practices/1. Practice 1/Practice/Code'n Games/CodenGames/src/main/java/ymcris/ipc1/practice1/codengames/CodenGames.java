@@ -78,7 +78,7 @@ public class CodenGames {
             } else if (comando.equals("rpg")) {
                 code.setIniciosRpg(+1);
                 RPG rpg = new RPG();
-                rpg.decirHola();
+                rpg.iniciarRpg();
             } else if (comando.equals("carreras")) {
                 code.setIniciosCarreras(+1);
                 Carreras carrera = new Carreras();
@@ -110,7 +110,7 @@ public class CodenGames {
             case 2:
                 games.setIniciosRpg(+1);
                 RPG rpg = new RPG();
-                rpg.decirHola();
+                rpg.iniciarRpg();
                 break;
             case 3:
                 games.setIniciosCarreras(+1);

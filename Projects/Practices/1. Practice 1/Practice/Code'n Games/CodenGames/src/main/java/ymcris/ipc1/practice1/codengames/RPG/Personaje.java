@@ -6,6 +6,7 @@ package ymcris.ipc1.practice1.codengames.RPG;
  *
  * @Date Feb 14, 2025
  * @author YmCris
+ * @see Inventario
  */
 public class Personaje {
 
@@ -77,6 +78,7 @@ public class Personaje {
             this.nivel = 0;
             this.estaVivo = true;
             this.experiencia = 0;
+            this.monstruosVencidos = 0;
             inventario.cantidadPotion = 0;
             inventario.cantidadMPotion = 0;
             inventario.cantidadHiPotion = 0;
@@ -88,7 +90,7 @@ public class Personaje {
      * quitar la expericncia requerida
      */
     protected void verificarNivel() {
-        if (this.experiencia >= EXPERIENCIA_REQUERIDA) {
+        if (this.experiencia >= EXPERIENCIA_REQUERIDA) {//Verifica si el jugador tiene la experiencia necesaria para subir de nivel y quita experiencia y aumenta estadísticas.
             this.setNivel(+1);
             this.setExperiencia(-100);
             this.hpMaximo = (100 * (this.nivel + 1));
@@ -108,17 +110,17 @@ public class Personaje {
      * @return true si el hp o el mp son máximos
      */
     protected boolean verificarHpyMpMaximosYMinimos() {
-        if (this.hp >= this.hpMaximo) {
+        if (this.hp >= this.hpMaximo) {//verifica que el hp no pase del máximo
             this.hp = this.hpMaximo;
             return true;
         }
-        if (this.hp < 0) {
+        if (this.hp < 0) {//verifica que el hp no sea negativo
             this.hp = 0;
         }
-        if (this.mp < 0) {
+        if (this.mp < 0) {//verifica que el mp no sea negativo
             this.mp = 0;
         }
-        if (this.mp >= this.mpMaximo) {
+        if (this.mp >= this.mpMaximo) {//verifica que el mp no pase del máximo
             this.mp = this.mpMaximo;
             return true;
         }

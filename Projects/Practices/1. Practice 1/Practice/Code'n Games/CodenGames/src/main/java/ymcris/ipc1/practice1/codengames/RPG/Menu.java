@@ -9,12 +9,13 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
  *
  * @Date Feb 15, 2025
  * @author YmCris
+ * @see CodenGames
  */
 public class Menu {
 
     // INSTANCIAS --------------------------------------------------------------
-    Batallas batalla = new Batallas(jugador);
     Scanner scanner = new Scanner(System.in);
+    Batallas batalla = new Batallas(jugador);
 
     // MÉTODOS -----------------------------------------------------------------
     /**
@@ -41,21 +42,18 @@ public class Menu {
             opcionMenu = scanner.nextInt();
             scanner.nextLine();
             switch (opcionMenu) {
-                case 1 -> {
+                case 1 ->
                     batalla.pelear();
-                }
-                case 2 -> {
+                case 2 ->
                     new Tienda().mostrarOpciones();
-                }
                 case 3 ->
                     descansarPersonaje(jugador);
                 case 4 ->
                     mostrarEstadisticas(jugador);
                 case 5 ->
                     jugador.verificarNivel();
-                case 6 -> {
+                case 6 ->
                     new CodenGames().pedirOpcionMenu();
-                }
                 default ->
                     System.out.println("Introduce una opción válida");
             }
@@ -70,10 +68,10 @@ public class Menu {
      * @param personaje - Personaje el cual resivirá el descanso.
      */
     private void descansarPersonaje(Personaje personaje) {
-        if (personaje.getHp() == personaje.getHpMaximo() && personaje.getMp() == personaje.getMpMaximo()) {
+        if (personaje.getHp() == personaje.getHpMaximo() && personaje.getMp() == personaje.getMpMaximo()) {//Verifica que el personaje no tenga mp y hp máximos
             System.out.println("No puedes descansar a tu personaje ya que tiene sus puntos de hp y mp en su capacidad máxima");
         } else {
-            if (personaje.getOro() >= 30) {
+            if (personaje.getOro() >= 30) {//Verifica si el personaje tiene oro
                 personaje.hp = personaje.hpMaximo;
                 personaje.mp = personaje.mpMaximo;
                 personaje.setOro(-30);
@@ -95,14 +93,14 @@ public class Menu {
      */
     private void mostrarEstadisticas(Personaje personaje) {
         Inventario inventario = new Inventario();
-        System.out.println("--------------- Aventurero: " + personaje.getNombre() + " estas son tus características ---------------");
+        System.out.println("-------------------- Aventurero: " + personaje.getNombre() + " estas son tus características --------------------");
         System.out.println("Vida: " + personaje.getHp() + "/" + personaje.getHpMaximo());
         System.out.println("Mana: " + personaje.getMp() + "/" + personaje.getMpMaximo());
         System.out.println("Nivel: " + personaje.getNivel());
         System.out.println("Experiencia: " + personaje.getExperiencia());
         System.out.println("Oro: " + personaje.getOro());
         System.out.println("Monstruos Vencidos: " + personaje.getMonstruosVencidos());
-        System.out.println("--------------------------------- Inventario ---------------------------------");
+        System.out.println("--------------------------------------- Inventario ---------------------------------------");
         inventario.mostrarItems();
 
     }

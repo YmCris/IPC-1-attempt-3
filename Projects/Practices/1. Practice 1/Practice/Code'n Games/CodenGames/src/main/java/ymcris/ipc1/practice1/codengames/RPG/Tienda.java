@@ -89,21 +89,21 @@ public class Tienda {
         opcionComprar = scanner.nextInt();
         switch (opcionComprar) {
             case 1 -> {
-                if (verificarOro(PRECIO_POTION)) {
+                if (verificarOro(PRECIO_POTION)) {//Verifica que el personaje tenga el oro para la potion
                     System.out.println("Aventurero " + jugador.getNombre() + " has comprado 1 Potion");
                     inventario.setCantidadPotion(+1);
                     System.out.println(jugador.getNombre() + " tienes " + inventario.cantidadPotion + " potions");
                 }
             }
             case 2 -> {
-                if (verificarOro(PRECIO_M_POTION)) {
+                if (verificarOro(PRECIO_M_POTION)) {//Verifica que el personaje tenga el oro para la mpotion
                     System.out.println("Aventurero " + jugador.getNombre() + " has comprado 1 MPotion");
                     inventario.setCantidadMPotion(+1);
                     System.out.println(jugador.getNombre() + " tienes " + inventario.cantidadMPotion + " Mpotions");
                 }
             }
             case 3 -> {
-                if (verificarOro(PRECIO_HI_POTION)) {
+                if (verificarOro(PRECIO_HI_POTION)) {//Verifica que el personaje tenga el oro para la hipotion
                     System.out.println("Aventurero " + jugador.getNombre() + " has comprado 1 HiPotion");
                     inventario.setCantidadHiPotion(+1);
                     System.out.println(jugador.getNombre() + " tienes " + inventario.cantidadHiPotion + " Hipotions");
@@ -127,7 +127,7 @@ public class Tienda {
      * @return true si el PERSONAJE tiene la cantidad de oro requerido.
      */
     private boolean verificarOro(int oro) {
-        if (jugador.getOro() >= oro) {
+        if (jugador.getOro() >= oro) {//Verifica si el personaje tiene el oro y se lo quita
             jugador.setOro(-oro);
             return true;
         } else {
@@ -173,21 +173,21 @@ public class Tienda {
         opcionVender = scanner.nextInt();
         switch (opcionVender) {
             case 1 -> {
-                if (inventario.verificarItems("potion")) {
+                if (inventario.verificarItems("potion")) {//verifica que existe el item en el inventario
                     System.out.println("Aventurero " + jugador.getNombre() + " has vendido 1 potion y has ganado 25 de oro");
                     inventario.setCantidadPotion(-1);
                     jugador.setOro(+(PRECIO_POTION / 2));//50/2=25;
                 }
             }
             case 2 -> {
-                if (inventario.verificarItems("mpotion")) {
+                if (inventario.verificarItems("mpotion")) {//verifica que existe el item en el inventario
                     System.out.println("Aventurero " + jugador.getNombre() + " has vendido 1 Mpotion y has ganado 38 de oro");
                     inventario.setCantidadMPotion(-1);
                     jugador.setOro(+(PRECIO_M_POTION + 1) / 2);//(75+1)/2=38;
                 }
             }
             case 3 -> {
-                if (inventario.verificarItems("hipotion")) {
+                if (inventario.verificarItems("hipotion")) {//verifica que existe el item en el inventario
                     System.out.println("Aventurero " + jugador.getNombre() + " has vendido 1 Hipotion y has ganado 50 de oro");
                     inventario.setCantidadHiPotion(-1);
                     jugador.setOro(+(PRECIO_HI_POTION / 2));//100/2=50;
