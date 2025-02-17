@@ -36,17 +36,18 @@ public class Personaje {
      *
      * @param hp - Vida inicial del personaje
      * @param mp - Mana inicial del personaje
-     * @param oro - Plata inicial del personaje
      * @param nivel - Nivel inicial del personaje
      * @param nombre - Nombre del personaje
      * @param experiencia - Experiencia inicial del personaje
      * @param monstruosVencidos - Monstruos iniciales vencidos del personaje
      */
-    public Personaje(int hp, int mp, int oro, int nivel, String nombre, int experiencia, int monstruosVencidos) {
+    public Personaje(int hp, int mp, int nivel, String nombre, int experiencia, int monstruosVencidos) {
         this.hp = hp;
         this.mp = mp;
-        this.oro = oro;
+        this.oro = 100;
         this.nivel = nivel;
+        this.mpMaximo = 10;
+        this.hpMaximo = 100;
         this.nombre = nombre;
         this.estaVivo = hp > 0;
         this.experiencia = experiencia;
@@ -70,9 +71,9 @@ public class Personaje {
      */
     protected void resetearEstadisticas() {
         if (verificarReinicio()) {
-            this.oro = 0;
+            this.oro = 100;
             this.hp = 100;
-            this.mp = 100;
+            this.mp = 10;
             this.nivel = 0;
             this.estaVivo = true;
             this.experiencia = 0;
@@ -92,7 +93,7 @@ public class Personaje {
             this.setExperiencia(-100);
             this.hpMaximo = (100 * (this.nivel + 1));
             this.mpMaximo = (10 * (this.nivel + 1));
-            System.out.println("El jugador " + this.getNombre() + " ha subido al nivel" + this.getNivel() + " y tiene " + this.getExperiencia() + " de experiencia.");
+            System.out.println("El jugador " + this.getNombre() + " ha subido al nivel " + this.getNivel() + " y tiene " + this.getExperiencia() + " de experiencia.");
             System.out.println("Su HP actual es " + this.hp + "/" + this.hpMaximo);
             System.out.println("Su MP actual es " + this.mp + "/" + this.mpMaximo);
         } else {
@@ -106,10 +107,16 @@ public class Personaje {
      *
      * @return true si el hp o el mp son máximos
      */
-    protected boolean verificarHpyMpMaximos() {
+    protected boolean verificarHpyMpMaximosYMinimos() {
         if (this.hp >= this.hpMaximo) {
             this.hp = this.hpMaximo;
             return true;
+        }
+        if (this.hp < 0) {
+            this.hp = 0;
+        }
+        if (this.mp < 0) {
+            this.mp = 0;
         }
         if (this.mp >= this.mpMaximo) {
             this.mp = this.mpMaximo;
@@ -125,7 +132,7 @@ public class Personaje {
 
     public void setHp(int hp) {
         this.hp += hp;
-        verificarHpyMpMaximos();
+        verificarHpyMpMaximosYMinimos();
     }
 
     public int getMp() {
@@ -134,7 +141,7 @@ public class Personaje {
 
     public void setMp(int mp) {
         this.mp += mp;
-        verificarHpyMpMaximos();
+        verificarHpyMpMaximosYMinimos();
     }
 
     public int getOro() {
@@ -189,16 +196,8 @@ public class Personaje {
         return hpMaximo;
     }
 
-    public void setHpMaximo(int hpMaximo) {
-        this.hpMaximo = hpMaximo;
-    }
-
     public int getMpMaximo() {
         return mpMaximo;
-    }
-
-    public void setMpMaximo(int mpMaximo) {
-        this.mpMaximo = mpMaximo;
     }
 
 }

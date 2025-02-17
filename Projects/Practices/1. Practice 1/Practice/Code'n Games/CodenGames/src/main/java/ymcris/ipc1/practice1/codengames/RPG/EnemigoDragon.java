@@ -32,8 +32,9 @@ public class EnemigoDragon extends Enemigo {
         }
         int daño = calcularDaño(personaje);
         personaje.setHp(-daño);
+        System.out.println(MAGENTA + "                     --------------- " + RESETEAR + this.nombre + " ha lastimado al aventurero " + jugador.getNombre() + " y le ha hecho " + daño + " de daño." + MAGENTA + " --------------- " + RESETEAR);
         if (personaje.getHp() <= 0) {
-            System.out.println("El jugador " + jugador.getNombre() + " ha sido derrotado por " + this.getNombre());
+            System.out.println(MAGENTA + "                                               --------------- " + RESETEAR + "El jugador " + jugador.getNombre() + " ha sido derrotado por " + this.getNombre() + MAGENTA + " --------------- " + RESETEAR);
         }
     }
 

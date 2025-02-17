@@ -32,22 +32,24 @@ public class EnemigoDarkWolf extends Enemigo {
         }
         int daño = calcularDaño(personaje);
         personaje.setHp(-daño);
+        System.out.println(MAGENTA + "                     --------------- " + RESETEAR + this.nombre + " ha lastimado al aventurero " + jugador.getNombre() + " y le ha hecho " + daño + " de daño." + MAGENTA + " --------------- " + RESETEAR);
         if (personaje.getHp() <= 0) {
-            System.out.println("El jugador " + jugador.getNombre() + " ha sido derrotado por " + this.getNombre());
+            System.out.println("\n".repeat(100));
+            System.out.println(MAGENTA + "                                    --------------- " + RESETEAR + "El jugador " + jugador.getNombre() + " ha sido derrotado por " + this.getNombre() + MAGENTA + " --------------- " + RESETEAR);
         }
     }
-
+    
     @Override
     protected int calcularDaño(Personaje personaje) {
         dañoARealizar = random.nextInt((FACTOR_DE_ATAQUE + personaje.getNivel()), (FACTOR_DE_ATAQUE + personaje.getNivel() + 10) + 1);// +1 porque el bound excluye el ultimo valor "[)"
         return dañoARealizar;
     }
-
+    
     @Override
     protected void modificarDificultad(String dificultad, int hp, int factorDeAtaque) {
         this.dificultad = dificultad;
         this.hp = hp;
         this.FACTOR_DE_ATAQUE = factorDeAtaque;
     }
-
+    
 }

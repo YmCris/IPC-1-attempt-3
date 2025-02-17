@@ -60,10 +60,9 @@ public class Tienda {
                 menu.mostrarOpciones();
             default -> {
                 System.out.println("Ingresa una opción válida.");
-                mostrarOpciones();
             }
         }
-
+        volverALaTienda();
     }
 
     /**
@@ -72,8 +71,8 @@ public class Tienda {
     private void comprarItems() {
         int opcionComprar;
         System.out.println("Tienes " + jugador.getOro() + " de oro");
-        System.out.println("Tienes " + jugador.getHp() + " de Hp");
-        System.out.println("Tienes " + jugador.getMp() + " de Mp");
+        System.out.println("Tienes " + jugador.getHp() + "/" + jugador.getHpMaximo() + " de Hp");
+        System.out.println("Tienes " + jugador.getMp() + "/" + jugador.getMpMaximo() + " de Mp");
         System.out.println("");
         System.out.println("                                        ┌------------------------------------------------┐");
         System.out.println("                                        |               ¿QUÉ DESEA COMPRAR?              |");
@@ -91,20 +90,23 @@ public class Tienda {
         switch (opcionComprar) {
             case 1 -> {
                 if (verificarOro(PRECIO_POTION)) {
-                    System.out.println(jugador.getNombre() + " ha comprado 1 Potion");
-                    System.out.println(jugador.getNombre() + " tiene" + " potions");
+                    System.out.println("Aventurero " + jugador.getNombre() + " has comprado 1 Potion");
+                    inventario.setCantidadPotion(+1);
+                    System.out.println(jugador.getNombre() + " tienes " + inventario.cantidadPotion + " potions");
                 }
             }
             case 2 -> {
                 if (verificarOro(PRECIO_M_POTION)) {
-                    System.out.println(jugador.getNombre() + " ha comprado 1 MPotion");
-                    System.out.println(jugador.getNombre() + " tiene" + " Mpotions");
+                    System.out.println("Aventurero " + jugador.getNombre() + " has comprado 1 MPotion");
+                    inventario.setCantidadMPotion(+1);
+                    System.out.println(jugador.getNombre() + " tienes " + inventario.cantidadMPotion + " Mpotions");
                 }
             }
             case 3 -> {
                 if (verificarOro(PRECIO_HI_POTION)) {
-                    System.out.println(jugador.getNombre() + " ha comprado 1 HiPotion");
-                    System.out.println(jugador.getNombre() + " tiene" + " Hipotions");
+                    System.out.println("Aventurero " + jugador.getNombre() + " has comprado 1 HiPotion");
+                    inventario.setCantidadHiPotion(+1);
+                    System.out.println(jugador.getNombre() + " tienes " + inventario.cantidadHiPotion + " Hipotions");
                 }
             }
             case 4 -> {
@@ -112,9 +114,9 @@ public class Tienda {
             }
             default -> {
                 System.out.println("Ingresa una opción válida");
-                comprarItems();
             }
         }
+        volverALaTienda();
     }
 
     /**
@@ -126,11 +128,23 @@ public class Tienda {
      */
     private boolean verificarOro(int oro) {
         if (jugador.getOro() >= oro) {
+            jugador.setOro(-oro);
             return true;
         } else {
             System.out.println(jugador.getNombre() + " no tienes el oro suficiente");
             return false;
         }
+    }
+
+    /**
+     * Método super importante para que el juego no se quede estancado, regresa
+     * al menú principal de la tienda.
+     */
+    private void volverALaTienda() {
+        System.out.println("Presione enter para volver al menú de compras.");
+        scanner.nextLine();
+        scanner.nextLine();
+        mostrarOpciones();
     }
 
     /**
@@ -160,22 +174,22 @@ public class Tienda {
         switch (opcionVender) {
             case 1 -> {
                 if (inventario.verificarItems("potion")) {
-                    System.out.println(jugador.getNombre() + " has vendido 1 potion y has ganado 25 de oro");
+                    System.out.println("Aventurero " + jugador.getNombre() + " has vendido 1 potion y has ganado 25 de oro");
                     inventario.setCantidadPotion(-1);
                     jugador.setOro(+(PRECIO_POTION / 2));//50/2=25;
                 }
             }
             case 2 -> {
                 if (inventario.verificarItems("mpotion")) {
-                    System.out.println(jugador.getNombre() + " has vendido 1 Mpotion y has ganado 35 de oro");
+                    System.out.println("Aventurero " + jugador.getNombre() + " has vendido 1 Mpotion y has ganado 38 de oro");
                     inventario.setCantidadMPotion(-1);
                     jugador.setOro(+(PRECIO_M_POTION + 1) / 2);//(75+1)/2=38;
                 }
             }
             case 3 -> {
                 if (inventario.verificarItems("hipotion")) {
-                    System.out.println(jugador.getNombre() + " has vendido 1 Hipotion y has ganado 50 de oro");
-                    inventario.setCantidadMPotion(-1);
+                    System.out.println("Aventurero " + jugador.getNombre() + " has vendido 1 Hipotion y has ganado 50 de oro");
+                    inventario.setCantidadHiPotion(-1);
                     jugador.setOro(+(PRECIO_HI_POTION / 2));//100/2=50;
                 }
             }
@@ -184,9 +198,9 @@ public class Tienda {
             }
             default -> {
                 System.out.println("Ingresa una opción válida");
-                venderItems();
             }
         }
+        volverALaTienda();
     }
 
 }

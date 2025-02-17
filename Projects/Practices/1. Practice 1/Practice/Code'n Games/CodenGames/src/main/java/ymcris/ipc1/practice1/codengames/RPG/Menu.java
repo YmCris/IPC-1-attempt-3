@@ -13,7 +13,7 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
 public class Menu {
 
     // INSTANCIAS --------------------------------------------------------------
-    //Batallas batalla = new Batallas();
+    Batallas batalla = new Batallas(jugador);
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODOS -----------------------------------------------------------------
@@ -42,7 +42,7 @@ public class Menu {
             scanner.nextLine();
             switch (opcionMenu) {
                 case 1 -> {
-                    //batalla.pelear();
+                    batalla.pelear();
                 }
                 case 2 -> {
                     new Tienda().mostrarOpciones();
@@ -59,7 +59,8 @@ public class Menu {
                 default ->
                     System.out.println("Introduce una opción válida");
             }
-        } while (opcionMenu < 0 || opcionMenu > 6);
+        } while (opcionMenu <= 0 || opcionMenu > 6);
+        continuarJugando();
     }
 
     /**
@@ -69,15 +70,20 @@ public class Menu {
      * @param personaje - Personaje el cual resivirá el descanso.
      */
     private void descansarPersonaje(Personaje personaje) {
-        if (personaje.getOro() >= 30) {
-            personaje.hp = personaje.hpMaximo;
-            personaje.mp = personaje.mpMaximo;
-            personaje.setOro(-30);
-            System.out.println("Aventurero " + personaje.getNombre() + " Has descansado lo suficiente, te has recuperado!");
-            System.out.println(personaje.getNombre() + " tienes " + personaje.hp + " de vida y " + personaje.mp + " de mana");
+        if (personaje.getHp() == personaje.getHpMaximo() && personaje.getMp() == personaje.getMpMaximo()) {
+            System.out.println("No puedes descansar a tu personaje ya que tiene sus puntos de hp y mp en su capacidad máxima");
         } else {
-            System.out.println("Aventurero " + personaje.getNombre() + " no tienes los recursos necesarios");
-            System.out.println("Sigue realizando tareas y misiones para poder descansar");
+            if (personaje.getOro() >= 30) {
+                personaje.hp = personaje.hpMaximo;
+                personaje.mp = personaje.mpMaximo;
+                personaje.setOro(-30);
+                System.out.println("Aventurero " + personaje.getNombre() + " Has descansado lo suficiente, te has recuperado!");
+                System.out.println(personaje.getNombre() + " tienes " + personaje.hp + " de vida y " + personaje.mp + " de mana");
+                System.out.println("Tu oro actual es de " + personaje.getOro());
+            } else {
+                System.out.println("Aventurero " + personaje.getNombre() + " no tienes los recursos necesarios");
+                System.out.println("Sigue realizando tareas y misiones para poder descansar");
+            }
         }
     }
 
@@ -96,9 +102,18 @@ public class Menu {
         System.out.println("Experiencia: " + personaje.getExperiencia());
         System.out.println("Oro: " + personaje.getOro());
         System.out.println("Monstruos Vencidos: " + personaje.getMonstruosVencidos());
-        System.out.println("------------------------------ Inventario ------------------------------");
+        System.out.println("--------------------------------- Inventario ---------------------------------");
         inventario.mostrarItems();
 
+    }
+
+    /**
+     * Método super importante para que no se termine el juego.
+     */
+    private void continuarJugando() {
+        System.out.println("Presione enter para regresar al Menu principal.");
+        scanner.nextLine();
+        mostrarOpciones();
     }
 
 }

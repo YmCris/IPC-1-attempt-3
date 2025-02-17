@@ -17,6 +17,8 @@ public abstract class Enemigo {
     protected int dañoARealizar;
     protected String dificultad;
     protected int FACTOR_DE_ATAQUE;
+    protected final String RESETEAR = "\033[0m";
+    protected final String MAGENTA = "\033[95m";
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
     /**
@@ -51,11 +53,11 @@ public abstract class Enemigo {
      * @param daño - Daño que recibirá el enemigo.
      * @return true si el enemigo ha muerto.
      */
-    public boolean recibirDanio(int daño) {
+    public boolean recibirDaño(int daño) {
         this.hp -= daño;
         if (this.hp < 0) {
             this.hp = 0;
-            System.out.println("El enemigo " + this.nombre + " ha sido vencido por " + jugador.getNombre());
+            System.out.println(MAGENTA + "                                           El enemigo " + this.nombre + " ha sido vencido por " + jugador.getNombre() + RESETEAR);
             jugador.setMonstruosVencidos(+1);
             return true;
         }
@@ -66,33 +68,33 @@ public abstract class Enemigo {
     public int getHp() {
         return hp;
     }
-    
+
     public void setHp(int hp) {
         this.hp = hp;
     }
-    
+
     public String getNombre() {
         return nombre;
     }
-    
+
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-    
+
     public String getDificultad() {
         return dificultad;
     }
-    
+
     public void setDificultad(String dificultad) {
         this.dificultad = dificultad;
     }
-    
+
     public int getFACTOR_DE_ATAQUE() {
         return FACTOR_DE_ATAQUE;
     }
-    
+
     public void setFACTOR_DE_ATAQUE(int FACTOR_DE_ATAQUE) {
         this.FACTOR_DE_ATAQUE = FACTOR_DE_ATAQUE;
     }
-    
+
 }
