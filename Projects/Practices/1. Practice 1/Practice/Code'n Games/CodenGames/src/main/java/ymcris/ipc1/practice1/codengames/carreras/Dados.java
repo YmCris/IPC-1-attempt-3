@@ -7,23 +7,24 @@ import static ymcris.ipc1.practice1.codengames.CodenGames.RESETEAR_COLOR;
 /**
  * Clase encargada de simular los dados y dar el resultado de X dados.
  *
- * @Date Feb 9, 2025
+ * @since Feb 9, 2025
  * @author YmCris
  */
 public class Dados {
 
-    //VARIABLES-----------------------------------------------------------------
+    // VARIABLES ---------------------------------------------------------------
     private int resultado;
 
-    //OBJETOS-------------------------------------------------------------------
+    // INSTANCIAS --------------------------------------------------------------
     private Random random = new Random();
 
     //MÉTODOS-------------------------------------------------------------------
     /**
-     * Método encargado de simular el lanzado de dados.
+     * Método encargado de simular el lanzado de dados que representará el
+     * avance de los jugadores (humanos).
      *
      * @param numeroDeDados - número de dados con los que se desearán jugar.
-     * @return
+     * @return resultado de el lanzamiento de los dados
      */
     protected int lanzarDados(int numeroDeDados) {
         int resultadoDado;
@@ -33,11 +34,11 @@ public class Dados {
             resultado += resultadoDado;
             System.out.println("El resultado del dado " + (i + 1) + " es: " + resultadoDado);
         }
-        System.out.println(AZUL + "El jugador avanza " + resultado + " metros" + RESETEAR_COLOR);
+        System.out.println(AZUL + " -------------------- El jugador avanza " + resultado + " metros -------------------- " + RESETEAR_COLOR);
         return resultado;
     }
 
-    //GETTER--------------------------------------------------------------------
+    // GETTER  -----------------------------------------------------------------
     public int getResultado() {
         return resultado;
     }

@@ -15,7 +15,7 @@ import static ymcris.ipc1.practice1.codengames.reportes.Reportes.setContadorJuga
  * Las opciones que se tienen durante la batalla (atacar, curar, item, tengo
  * miedo) y verificar si la partida ha acabo y aplicar sus consecuencias.
  *
- * @Date Feb 16, 2025
+ * @since Feb 16, 2025
  * @author YmCris
  * @see Enemigo
  * @see Personaje
@@ -79,10 +79,10 @@ public class Batallas {
             System.out.println(AZUL + "                                ---------- " + RESETEAR + "Aventurero " + personaje.getNombre() + " has logrado escapar del temible " + enemigo.getNombre() + " pero él se ha quedado con tu oro" + AZUL + " ---------- " + RESETEAR);
             personaje.setOro(-oroParaEscapar);
             System.out.println(AZUL + "                                                     ---------- " + RESETEAR + "Has perdido " + oroParaEscapar + " de oro, tu oro actual es de " + personaje.getOro() + AZUL + " ---------- " + RESETEAR);
-            return batallaTerminada = true;
+            return this.batallaTerminada = true;
         } else {
             System.out.println(AZUL + "                                          ---------- " + RESETEAR + personaje.getNombre() + " no tienes el oro suficiente, debes seguir peleando" + AZUL + " ---------- " + RESETEAR);
-            return batallaTerminada = false;
+            return this.batallaTerminada = false;
         }
     }
 
@@ -109,20 +109,24 @@ public class Batallas {
      *
      * @return true si la partida ha terminado.
      */
-    private boolean verificarPartidaTerminada() {
-        if (personaje.getHp() <= 0) {//Verifica si el personaje no ha muerto
-            aplicarConsecuenciasBatalla();
-            setContadorJugadorPerdedorRPG(1);
-            enemigo.resetearVida();//Resetea la vida del enemigo para que no empiece con la vida que tenia cuando mato al personaje
-            return batallaTerminada = true;
-        } else if (enemigo.getHp() <= 0) {//Verifica si el enemigo ha muerto
-            System.out.println(AZUL + "                                          ---------- " + RESETEAR + "Bien hecho aventurero " + personaje.getNombre() + " has logrado derrotar al temible " + enemigo.getNombre() + AZUL + " ---------- " + RESETEAR);
-            aplicarConsecuenciasBatalla();
-            personaje.setMonstruosVencidos(+1);
-            enemigo.resetearVida();//Resetea la vida del enemigo para que no empiece vida 0
+    private boolean verificarPartidaTerminada(int numero) {
+        if (numero == 4) {
             return batallaTerminada = true;
         } else {
-            return batallaTerminada = false;
+            if (personaje.getHp() <= 0) {//Verifica si el personaje no ha muerto
+                aplicarConsecuenciasBatalla();
+                setContadorJugadorPerdedorRPG(1);
+                enemigo.resetearVida();//Resetea la vida del enemigo para que no empiece con la vida que tenia cuando mato al personaje
+                return batallaTerminada = true;
+            } else if (enemigo.getHp() <= 0) {//Verifica si el enemigo ha muerto
+                System.out.println(AZUL + "                                          ---------- " + RESETEAR + "Bien hecho aventurero " + personaje.getNombre() + " has logrado derrotar al temible " + enemigo.getNombre() + AZUL + " ---------- " + RESETEAR);
+                aplicarConsecuenciasBatalla();
+                personaje.setMonstruosVencidos(+1);
+                enemigo.resetearVida();//Resetea la vida del enemigo para que no empiece vida 0
+                return batallaTerminada = true;
+            } else {
+                return batallaTerminada = false;
+            }
         }
     }
 
@@ -196,17 +200,17 @@ public class Batallas {
                 case 3 -> //usarItem
                     seleccionarItem();
                 case 4 -> {//tengomiedo (lit)
-                    batallaTerminada = true;
+                    this.batallaTerminada = true;
                     escaparDeLaBatalla();
-                    batallaTerminada = true;
+                    this.batallaTerminada = true;
                 }
                 default ->
                     System.out.println("Elige una opción válida.");
             }
-            if (verificarPartidaTerminada() == false) {//VERIFICA QUE EL JUGADOR NO HAYA MATADO AL ENEMIGO
+            if (verificarPartidaTerminada(opcionJugador) == false) {//VERIFICA QUE EL JUGADOR NO HAYA MATADO AL ENEMIGO
                 enemigo.atacar(personaje);//TURNO DEL ENEMIGO
                 if (personaje.getHp() <= 0) {//VERIFICA QUE EL ENEMIGO NO HAYA MATADO AL PERSONAJE
-                    verificarPartidaTerminada();
+                    verificarPartidaTerminada(opcionJugador);
                 }
             }
         } while (batallaTerminada == false);

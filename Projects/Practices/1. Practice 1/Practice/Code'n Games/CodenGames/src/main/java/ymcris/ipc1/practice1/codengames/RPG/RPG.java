@@ -6,7 +6,7 @@ import java.util.Scanner;
  * Clase encargada de iniciar el juego, pedir información y mostrar los
  * escenarios y opciones de las batallas.
  *
- * @Date Feb 6, 2025
+ * @since Feb 6, 2025
  * @author YmCris
  * @see Batallas
  * @see Personaje

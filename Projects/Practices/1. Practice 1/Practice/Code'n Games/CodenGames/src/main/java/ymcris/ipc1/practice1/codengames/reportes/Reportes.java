@@ -4,32 +4,41 @@ import java.util.Scanner;
 import ymcris.ipc1.practice1.codengames.CodenGames;
 
 /**
+ * Método encargado de mostrar los reportes que tiene el juego.
  *
- *
- * @Date Feb 6, 2025
+ * @since Feb 6, 2025
  * @author YmCris
  */
 public class Reportes {
 
     // VARIABLES ---------------------------------------------------------------
-    public static int contadorJugadorPerdedorRPG = 0;
-    public static int contadorJugadorEnBatallaRPG = 0;
+    public static int contadorJugadorPerdedorRPG = 0;//reporte 2
+    public static int contadorJugadorEnBatallaRPG = 0;//reporte 3
+    public static int contadorComputadoraGanadoraCarreras = 0;//reporte 4
+    public static int contadorHumanoGanadorCarreras = 0;//reporte 5
 
+    // INSTANCIAS --------------------------------------------------------------
     CodenGames code = new CodenGames();
     Scanner scan = new Scanner(System.in);
 
+    // MÉTODOS -----------------------------------------------------------------
+    /**
+     * Método encargado de "decir" los reportes.
+     */
     public void decirReportes() {
-        System.out.println("1. VECES QUE SE HA INICIADO EL JUEGO RPG: " + code.getIniciosRpg() + " VECES QUE SE HA INICIADO EL JUEGO DE CARRERAS: " + code.getIniciosCarreras());
-        System.out.println("2. VECES QUE HA PERDIDO EN UNA BATALLA DEL JUEGO RPG: " + getContadorJugadorPerdedorRPG());
-        System.out.println("3. VECES QUE HA ENTRADO EN UNA BATALLA DEL JUEGO RPG: " + getContadorJugadorEnBatallaRPG());
-        System.out.println("4. VECES QUE LA COMPUTADORA HA GANADO EN EL JUEGO DE CARRERAS: ");
-        System.out.println("5. VECES QUE UN JUGADOR HUMANO HA GANADO EN EL JUEGO DE CARRERAS: ");
+        System.out.println(" ------------------------------ REPORTES ------------------------------ ");
+        System.out.println("1| VECES QUE SE HA INICIADO EL JUEGO RPG: " + code.getIniciosRpg() + " VECES QUE SE HA INICIADO EL JUEGO DE CARRERAS: " + code.getIniciosCarreras());
+        System.out.println("2| VECES QUE HA PERDIDO EN UNA BATALLA DEL JUEGO RPG: " + getContadorJugadorPerdedorRPG());
+        System.out.println("3| VECES QUE HA ENTRADO EN UNA BATALLA DEL JUEGO RPG: " + getContadorJugadorEnBatallaRPG());
+        System.out.println("4| VECES QUE LA COMPUTADORA HA GANADO EN EL JUEGO DE CARRERAS: " + getContadorComputadoraGanadoraCarreras());
+        System.out.println("5| VECES QUE UN JUGADOR HUMANO HA GANADO EN EL JUEGO DE CARRERAS: " + getContadorHumanoGanadorCarreras());
         System.out.println("");
         System.out.println("Presione enter para regresar.");
         scan.nextLine();
         code.pedirOpcionMenu();
     }
 
+    // GETTERS & SETTERS -------------------------------------------------------
     public static int getContadorJugadorPerdedorRPG() {
         return contadorJugadorPerdedorRPG;
     }
@@ -46,20 +55,20 @@ public class Reportes {
         Reportes.contadorJugadorEnBatallaRPG += contadorJugadorEnBatallaRPG;
     }
 
-    public CodenGames getCode() {
-        return code;
+    public static int getContadorComputadoraGanadoraCarreras() {
+        return contadorComputadoraGanadoraCarreras;
     }
 
-    public void setCode(CodenGames code) {
-        this.code = code;
+    public static void setContadorComputadoraGanadoraCarreras(int contadorComputadoraGanadoraCarreras) {
+        Reportes.contadorComputadoraGanadoraCarreras += contadorComputadoraGanadoraCarreras;
     }
 
-    public Scanner getScan() {
-        return scan;
+    public static int getContadorHumanoGanadorCarreras() {
+        return contadorHumanoGanadorCarreras;
     }
 
-    public void setScan(Scanner scan) {
-        this.scan = scan;
+    public static void setContadorHumanoGanadorCarreras(int contadorHumanoGanadorCarreras) {
+        Reportes.contadorHumanoGanadorCarreras += contadorHumanoGanadorCarreras;
     }
 
 }

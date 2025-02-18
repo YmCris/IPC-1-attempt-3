@@ -3,7 +3,7 @@ package ymcris.ipc1.practice1.codengames.RPG;
 /**
  * Clase encargada de crear un Enemigo del tipo Dragon
  *
- * @Date Feb 15, 2025
+ * @since Feb 15, 2025
  * @author YmCris
  * @see Enemigo
  */

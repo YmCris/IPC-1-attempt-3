@@ -4,7 +4,7 @@ package ymcris.ipc1.practice1.codengames.RPG;
  * Clase encargada de Crear al personaje, y reiniciar sus estadísticas o
  * modificarlas.
  *
- * @Date Feb 14, 2025
+ * @since Feb 14, 2025
  * @author YmCris
  * @see Inventario
  */

@@ -6,7 +6,10 @@ import ymcris.ipc1.practice1.codengames.carreras.Carreras;
 import ymcris.ipc1.practice1.codengames.reportes.Reportes;
 
 /**
+ * Método encargado de iniciar el programa y dar la bienvenida y mostrar
+ * información de los menús.
  *
+ * @since Feb 5, 2025
  * @author YmCris
  * @version 21.0.5
  * @see RPG
@@ -15,14 +18,18 @@ import ymcris.ipc1.practice1.codengames.reportes.Reportes;
  */
 public class CodenGames {
 
+    // VARIABLES ---------------------------------------------------------------
     private int opcionJuego;
     //Son estáticas para poder utilizarlas en cualquier clase
     public static final String AZUL = "\033[34m";
     public static final String RESETEAR_COLOR = "\033[0m";
+
+    // INSTANCIAS --------------------------------------------------------------
     public static int[] iniciosRpg = new int[1];
     public static int[] iniciosCarreras = new int[1];
     public static Scanner scanner = new Scanner(System.in);
 
+    // MÉTODOS -----------------------------------------------------------------
     /**
      * Método Main encargado de iniciar el programa.
      *
@@ -69,26 +76,37 @@ public class CodenGames {
         System.out.println("                                        └------------------------------------------------┘");
     }
 
+    /**
+     * Método encargado de iniciar el juego de manera inmediata sin empezar con
+     * un menú.
+     *
+     * @param parametro - Parametro que se le envia al programa para iniciar.
+     */
     private void iniciarConParametroInmediato(String[] parametro) {
         CodenGames code = new CodenGames();
         if (parametro.length > 0) {//valida que el usuario haya colocado algo
             String comando = parametro[0].trim().toLowerCase();
-            if (comando.equals("hola")) {
-                System.out.println("HOLA MUNDO");
-            } else if (comando.equals("rpg")) {
-                code.setIniciosRpg(+1);
-                RPG rpg = new RPG();
-                rpg.iniciarRpg();
-            } else if (comando.equals("carreras")) {
-                code.setIniciosCarreras(+1);
-                Carreras carrera = new Carreras();
-                carrera.iniciarCarrera();
-            } else if (comando.equals("reportes")) {
-                Reportes reporte = new Reportes();
-                reporte.decirReportes();
-            } else {
-                System.out.println("INGRESA UN COMANDO VÁLIDO");
-                System.out.println("'RPG', 'CARRERAS', 'REPORTES'");
+            switch (comando) {
+                case "hola" ->
+                    System.out.println("HOLA MUNDO");
+                case "rpg" -> {
+                    code.setIniciosRpg(+1);
+                    RPG rpg = new RPG();
+                    rpg.iniciarRpg();
+                }
+                case "carreras" -> {
+                    code.setIniciosCarreras(+1);
+                    Carreras carrera = new Carreras();
+                    carrera.iniciarCarrera();
+                }
+                case "reportes" -> {
+                    Reportes reporte = new Reportes();
+                    reporte.decirReportes();
+                }
+                default -> {
+                    System.out.println("INGRESA UN COMANDO VÁLIDO");
+                    System.out.println("'RPG', 'CARRERAS', 'REPORTES'");
+                }
             }
         } else {
             code.mostrarBienvenida();
@@ -97,41 +115,44 @@ public class CodenGames {
         }
     }
 
+    /**
+     * Método encargado de mostrar el menú principal y ejecutar la opción que
+     * quiera el jugador.
+     */
     public void pedirOpcionMenu() {
         CodenGames games = new CodenGames();
         System.out.println("\n".repeat(10));
         mostrarMenuPrincipal();
         opcionJuego = scanner.nextInt();
         switch (opcionJuego) {
-            case 1:
+            case 1 -> {
                 ComoJugar jugar = new ComoJugar();
                 jugar.mostrarComoJugar();
-                break;
-            case 2:
+            }
+            case 2 -> {
                 games.setIniciosRpg(+1);
                 RPG rpg = new RPG();
                 rpg.iniciarRpg();
-                break;
-            case 3:
+            }
+            case 3 -> {
                 games.setIniciosCarreras(+1);
                 Carreras carrera = new Carreras();
                 carrera.iniciarCarrera();
-                break;
-            case 4:
+            }
+            case 4 -> {
                 Reportes reporte = new Reportes();
                 reporte.decirReportes();
-                break;
-            case 5:
+            }
+            case 5 ->
                 System.exit(0);
-                break;
-            default:
+            default -> {
                 System.out.println("Por favor, ingrese una opción válida ('1','2','3','4','5')");
                 pedirOpcionMenu();
-                break;
+            }
         }
     }
 
-    //Setters & Getters
+    // GETTERS & SETTERS -------------------------------------------------------
     public int getIniciosRpg() {
         return iniciosRpg[0];
     }

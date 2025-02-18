@@ -7,7 +7,7 @@ import ymcris.ipc1.practice1.codengames.CodenGames;
  * Clase encargada de pedir información y mostrarla durante el transcurso del
  * juego.
  *
- * @Date Feb 6, 2025
+ * @since Feb 6, 2025
  * @author YmCris
  */
 public class Carreras {
@@ -18,14 +18,17 @@ public class Carreras {
     protected static String jugadorDos;
     protected static char[] computadora;
 
-    //OBJETOS-------------------------------------------------------------------
+    // INSTANCIAS --------------------------------------------------------------
     CodenGames code = new CodenGames();
     Scanner scanner = new Scanner(System.in);
     MotorDelJuego motor = new MotorDelJuego();
 
     //MÉTODO CONSTRUCTOR--------------------------------------------------------
+    /**
+     * Método encargado de inicializar las variables
+     */
     public Carreras() {
-        Carreras.computadora = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+        Carreras.computadora = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};//"vehículos" de la computadora
     }
 
     //MÉTODOS ------------------------------------------------------------------
@@ -48,6 +51,7 @@ public class Carreras {
         System.out.println("                                        ¦ [2]            Jugar contra Rival              ¦");
         System.out.println("                                        ¦ [3]               ¿Cómo jugar?                 ¦");
         System.out.println("                                        ¦ [4]                 Regresar                   ¦");
+        System.out.println("                                        ¦ [5]             Salir del juego                ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦            -Seleccione una opción-             ¦");
@@ -64,9 +68,11 @@ public class Carreras {
                 scanner.nextLine();
             }
             case 4 -> {
-                CodenGames code = new CodenGames();
-                code.pedirOpcionMenu();
+                CodenGames coden = new CodenGames();
+                coden.pedirOpcionMenu();
             }
+            case 5 ->
+                System.exit(0);
             default -> {
                 scanner.nextLine();
                 System.out.println("Por favor, elija una opción válida");
@@ -96,7 +102,7 @@ public class Carreras {
         System.out.println("                                        |     JUEGO FINALIZADO ¿QUÉ DESEA REALIZAR?      |");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦                                                ¦");
-        System.out.println("                                        ¦ [1]              Volver a jugar                ¦");
+        System.out.println("                                        ¦ [1]               Volver a jugar               ¦");
         System.out.println("                                        ¦ [2]            Ir al menú principal            ¦");
         System.out.println("                                        ¦ [3]            Terminar el programa            ¦");
         System.out.println("                                        ¦                                                ¦");

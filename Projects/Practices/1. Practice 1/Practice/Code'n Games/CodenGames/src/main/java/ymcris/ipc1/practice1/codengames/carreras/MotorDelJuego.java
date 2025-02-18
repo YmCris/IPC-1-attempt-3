@@ -9,32 +9,38 @@ import static ymcris.ipc1.practice1.codengames.carreras.Carreras.opcionMenu;
  * Clase encargada de hacer que el juego funciones, con métodos que mueven a los
  * vehículos, definen ganador, etc.
  *
- * @Date Feb 12, 2025
+ * @since Feb 12, 2025
  * @author YmCris
  */
 public class MotorDelJuego {
 
     // VARIABLES ---------------------------------------------------------------
     public static int numeroDeDados;
-    private int humanoGanador;
-    private int computadoraGanadora;
     private String jugadorActual;
     private boolean juegoTerminado;
     protected static int cantidadDeRivales;
 
-    // OBJETOS -----------------------------------------------------------------
+    // INSTANCIAS --------------------------------------------------------------
     Dados dados = new Dados();
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de inicializar las variables necesarias.
+     */
     public MotorDelJuego() {
-        this.humanoGanador = 0;
         this.juegoTerminado = false;
-        this.computadoraGanadora = 0;
     }
 
     // MÉTODOS -----------------------------------------------------------------
-    protected void echarPunta(int numeroDeJugadores) {//"Motor del juego"
+    /**
+     * Método encarado de ser el motor del juego cuando se juegue con una
+     * computadora.
+     *
+     * @param numeroDeJugadores - Numero de vehículos que se van a enfrentar
+     * contra el jugador.
+     */
+    protected void echarPuntaComputadora(int numeroDeJugadores) {
         System.out.println("¿Con cuántos dados desea Jugar?");
         numeroDeDados = scanner.nextInt();
         scanner.nextLine();
@@ -44,23 +50,40 @@ public class MotorDelJuego {
             informarJuego();
             elegirDesicion();
             pistaActual.elegirPista();
-        } while (pistaActual.verificarJuegoTerminado());
+        } while (pistaActual.verificarJuegoTerminado() || juegoTerminado == true);
     }
 
+    /**
+     * Motor del juego cuando se jueguen 2 jugadores.
+     */
+    protected void echarPuntaRival() {
+        do {
+
+        } while (juegoTerminado == false);
+
+    }
+
+    /**
+     * Método encargado de pedir los datos necesarios para jugar contra una
+     * computadora.
+     */
     protected void jugarContraComputadora() {
         scanner.nextLine();
         System.out.println("Ingrese su nombre: ");
         Carreras.jugadorUno = scanner.nextLine();
-        System.out.println("¿Cuántos contrincantes desea tener? (1-8)");
+        System.out.println("¿Contra cuántos vehículos desea competir?");
         cantidadDeRivales = scanner.nextInt();
-        echarPunta(cantidadDeRivales);
+        echarPuntaComputadora(cantidadDeRivales);
     }
 
+    /**
+     * Método encargado de pedir el nombre 
+     */
     protected void jugarContraRival() {
         Carreras carrera = new Carreras();
         cantidadDeRivales = 1;
         carrera.pedirNombres();
-        echarPunta(2);
+        echarPuntaRival();
     }
 
     private void elegirDesicion() {
@@ -105,22 +128,6 @@ public class MotorDelJuego {
 
     public static int getCantidadDeRivales() {
         return cantidadDeRivales;
-    }
-
-    public int getHumanoGanador() {
-        return humanoGanador;
-    }
-
-    public void setHumanoGanador(int humanoGanador) {
-        this.humanoGanador += humanoGanador;
-    }
-
-    public int getComputadoraGanadora() {
-        return computadoraGanadora;
-    }
-
-    public void setComputadoraGanadora(int computadoraGanadora) {
-        this.computadoraGanadora += computadoraGanadora;
     }
 
 }

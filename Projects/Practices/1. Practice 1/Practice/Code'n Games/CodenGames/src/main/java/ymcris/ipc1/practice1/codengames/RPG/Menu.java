@@ -7,7 +7,7 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
 /**
  * Clase encargada de mostrar las opciones del menú principal y ejecutarlas.
  *
- * @Date Feb 15, 2025
+ * @since Feb 15, 2025
  * @author YmCris
  * @see CodenGames
  */
@@ -35,6 +35,7 @@ public class Menu {
             System.out.println("                                        ¦ [4]                 STATUS                     ¦");
             System.out.println("                                        ¦ [5]             ¡¡¡MÁS PODER!!!                ¦");
             System.out.println("                                        ¦ [6]                Regresar                    ¦");
+            System.out.println("                                        ¦ [7]             Salir del juego                ¦");
             System.out.println("                                        ¦                                                ¦");
             System.out.println("                                        ├------------------------------------------------┤");
             System.out.println("                                        ¦             -Seleccione una opción-            ¦");
@@ -54,6 +55,8 @@ public class Menu {
                     jugador.verificarNivel();
                 case 6 ->
                     new CodenGames().pedirOpcionMenu();
+                case 7 ->
+                    System.exit(0);
                 default ->
                     System.out.println("Introduce una opción válida");
             }
@@ -102,7 +105,7 @@ public class Menu {
         System.out.println("Monstruos Vencidos: " + personaje.getMonstruosVencidos());
         System.out.println("--------------------------------------- Inventario ---------------------------------------");
         inventario.mostrarItems();
-
+        
     }
 
     /**
@@ -113,5 +116,5 @@ public class Menu {
         scanner.nextLine();
         mostrarOpciones();
     }
-
+    
 }

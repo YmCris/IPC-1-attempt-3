@@ -7,7 +7,7 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
  * Clase encargada de ser la clase abstracta "padre" de los enemigos. Crear
  * enemigos, Definir su daño y atacar a un personaje y recibir daño.
  *
- * @Date Feb 15, 2025
+ * @since Feb 15, 2025
  * @author YmCris
  */
 public abstract class Enemigo {

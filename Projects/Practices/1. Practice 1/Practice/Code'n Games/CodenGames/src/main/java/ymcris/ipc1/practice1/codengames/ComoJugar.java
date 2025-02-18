@@ -3,9 +3,9 @@ package ymcris.ipc1.practice1.codengames;
 import static ymcris.ipc1.practice1.codengames.CodenGames.scanner;
 
 /**
+ * Clase encargada de mostrar como jugar el videojuego.
  *
- *
- * @Date Feb 6, 2025
+ * @since Feb 6, 2025
  * @author YmCris
  */
 public class ComoJugar {
@@ -21,24 +21,25 @@ public class ComoJugar {
         System.out.println("Recomendamos ampliamente leer el manual de usuario donde se detallan a profundidad cada juego.");
         System.out.println("Selecciona el juego que desees saber como se juega:");
         System.out.println("1. Juego RPG");
-        System.out.println("2. Juego de carreras.");
-        System.out.println("3. Regresar al menú.");
+        System.out.println("2. Juego de carreras");
+        System.out.println("3. Regresar al menú");
+        System.out.println("4. Salir del juego");
         int opcion = scanner.nextInt();
         switch (opcion) {
-            case 1:
+            case 1 ->
                 mostrarRPG();
-                break;
-            case 2:
+            case 2 ->
                 mostrarCarreras();
-                break;
-            case 3:
+            case 3 -> {
                 System.out.println("\n".repeat(30));
                 games.pedirOpcionMenu();
-                break;
-            default:
+            }
+            case 4 ->
+                System.exit(0);
+            default -> {
                 System.out.println("Opción no válida");
                 mostrarComoJugar();
-                break;
+            }
         }
     }
 

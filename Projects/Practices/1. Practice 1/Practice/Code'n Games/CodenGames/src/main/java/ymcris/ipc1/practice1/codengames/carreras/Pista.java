@@ -4,11 +4,13 @@ import java.util.Random;
 import static ymcris.ipc1.practice1.codengames.CodenGames.AZUL;
 import static ymcris.ipc1.practice1.codengames.CodenGames.RESETEAR_COLOR;
 import static ymcris.ipc1.practice1.codengames.CodenGames.scanner;
+import static ymcris.ipc1.practice1.codengames.reportes.Reportes.setContadorComputadoraGanadoraCarreras;
+import static ymcris.ipc1.practice1.codengames.reportes.Reportes.setContadorHumanoGanadorCarreras;
 
 /**
  * Clase encargada de Generar la pista, mostrarla y modificarla
  *
- * @Date Feb 9, 2025
+ * @since Feb 9, 2025
  * @author YmCris
  */
 public class Pista {
@@ -122,6 +124,7 @@ public class Pista {
         System.out.println("                                        ¦ [3]        Pista Larga (150 metros)            ¦");
         System.out.println("                                        ¦ [4]              Crear Pista                   ¦");
         System.out.println("                                        ¦ [5]                Regresar                    ¦");
+        System.out.println("                                        ¦ [6]             Salir del juego                ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦            -Seleccione una opción-             ¦");
@@ -154,6 +157,9 @@ public class Pista {
             case 5 -> {
                 Carreras carrera = new Carreras();
                 carrera.irAlMenuPrincipal();
+            }
+            case 6 -> {
+                System.exit(0);
             }
             default -> {
                 System.out.println("Elige una pista adecuada.");
@@ -235,17 +241,17 @@ public class Pista {
             for (int j = 0; j < pista[i].length; j++) {
                 if (posicionJugador1 == pista[0].length) { // POR SI GANA EL JUGADOR 1
                     System.out.println("El jugador " + Carreras.jugadorUno + " es el ganador.");
-                    motor.setHumanoGanador(+1);
+                    setContadorHumanoGanadorCarreras(+1);
                     return true;
                 }
                 if (posicionJugador2 == pista[0].length) { //POR SI GANA EL JUGADOR 2
                     System.out.println("El jugador " + Carreras.jugadorDos + " es el ganador.");
-                    motor.setHumanoGanador(+1);
+                    setContadorHumanoGanadorCarreras(+1);
                     return true;
                 }
                 if (getPosicionVehiculo(i) == pista[0].length) { // POR SI GANA UN VEHÍCULO
                     System.out.println("El vehículo " + i + " " + Carreras.computadora[i] + " es el ganador.");
-                    motor.setComputadoraGanadora(+1);
+                    setContadorComputadoraGanadoraCarreras(+1);
                     return true;
                 }
                 if ((posicionJugador1 == pista[0].length && posicionJugador2 == pista[0].length)

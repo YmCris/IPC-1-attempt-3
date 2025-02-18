@@ -6,7 +6,7 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
 /**
  * Clase encargada de mostrar y usar los items que tiene el jugador
  *
- * @Date Feb 14, 2025
+ * @since Feb 14, 2025
  * @author YmCris
  * @see Personaje
  * @see Tienda

@@ -8,7 +8,7 @@ import static ymcris.ipc1.practice1.codengames.RPG.RPG.jugador;
  * Clase encargada de mostrar la tienda y comprar elementos y guardarlos en el
  * inventario del jugador.
  *
- * @Date Feb 14, 2025
+ * @since Feb 14, 2025
  * @author YmCris
  * @see Inventario
  */
@@ -46,6 +46,7 @@ public class Tienda {
         System.out.println("                                        ¦ [1]              Comprar items                 ¦");
         System.out.println("                                        ¦ [2]               Vender items                 ¦");
         System.out.println("                                        ¦ [3]                 Regresar                   ¦");
+        System.out.println("                                        ¦ [4]              Salir del juego               ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦             -Seleccione una opción-            ¦");
@@ -58,6 +59,8 @@ public class Tienda {
                 venderItems();
             case 3 ->
                 menu.mostrarOpciones();
+            case 4 ->
+                System.exit(0);
             default -> {
                 System.out.println("Ingresa una opción válida.");
             }
@@ -82,6 +85,7 @@ public class Tienda {
         System.out.println("                                        ¦ [2]  M-Potion  | Precio:  75   | Cura: 10 MP   ¦");
         System.out.println("                                        ¦ [3]  Hi-Potion | Precio: 100   | Cura: 75 HP   ¦");
         System.out.println("                                        ¦ [4]                Regresar                    ¦");
+        System.out.println("                                        ¦ [5]             Salir del juego                ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦            -Seleccione una opción-             ¦");
@@ -111,6 +115,9 @@ public class Tienda {
             }
             case 4 -> {
                 mostrarOpciones();
+            }
+            case 5 -> {
+                System.exit(0);
             }
             default -> {
                 System.out.println("Ingresa una opción válida");
@@ -166,6 +173,7 @@ public class Tienda {
         System.out.println("                                        ¦ [2]         M-Potion  | Precio:  38            ¦");
         System.out.println("                                        ¦ [3]         Hi-Potion | Precio:  50            ¦");
         System.out.println("                                        ¦ [4]                Regresar                    ¦");
+        System.out.println("                                        ¦ [5]             Salir del juego                ¦");
         System.out.println("                                        ¦                                                ¦");
         System.out.println("                                        ├------------------------------------------------┤");
         System.out.println("                                        ¦            -Seleccione una opción-             ¦");
@@ -196,11 +204,14 @@ public class Tienda {
             case 4 -> {
                 mostrarOpciones();
             }
+            case 5 -> {
+                System.exit(0);
+            }
             default -> {
                 System.out.println("Ingresa una opción válida");
             }
         }
         volverALaTienda();
     }
-
+    
 }
