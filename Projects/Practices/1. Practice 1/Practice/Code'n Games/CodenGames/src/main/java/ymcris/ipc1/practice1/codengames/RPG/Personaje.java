@@ -13,10 +13,10 @@ public class Personaje {
     // VARIABLES ---------------------------------------------------------------
     public int hp;
     public int mp;
-    public int hpMaximo;
-    public int mpMaximo;
     private int oro;
     private int nivel;
+    public int hpMaximo;
+    public int mpMaximo;
     private String nombre;
     private int experiencia;
     private boolean estaVivo;

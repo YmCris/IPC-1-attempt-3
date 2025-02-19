@@ -28,6 +28,7 @@ public class Carreras {
      * Método encargado de inicializar las variables
      */
     public Carreras() {
+
         Carreras.computadora = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};//"vehículos" de la computadora
     }
 
@@ -43,6 +44,7 @@ public class Carreras {
      * Método encargado de mostrar las opciones al iniciar el juego.
      */
     protected void irAlMenuPrincipal() {
+        System.out.println("\n".repeat(100));
         System.out.println("                                        ┌------------------------------------------------┐");
         System.out.println("                                        |              ¿QUÉ DESEA REALIZAR?              |");
         System.out.println("                                        ├------------------------------------------------┤");
@@ -65,7 +67,6 @@ public class Carreras {
             case 3 -> {
                 System.out.println("Hola, soy carreras.");
                 scanner.nextLine();
-                scanner.nextLine();
             }
             case 4 -> {
                 CodenGames coden = new CodenGames();
@@ -79,17 +80,6 @@ public class Carreras {
                 irAlMenuPrincipal();
             }
         }
-    }
-
-    /**
-     * Método encargado de pedir los nombres a los jugadores.
-     */
-    protected void pedirNombres() {
-        scanner.nextLine();
-        System.out.println("Ingrese el nombre del jugador 1: ");
-        jugadorUno = scanner.nextLine();
-        System.out.println("Ingrese el número del jugador 2: ");
-        jugadorDos = scanner.nextLine();
     }
 
     /**

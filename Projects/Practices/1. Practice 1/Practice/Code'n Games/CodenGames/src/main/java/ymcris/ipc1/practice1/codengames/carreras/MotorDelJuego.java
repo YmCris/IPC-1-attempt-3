@@ -1,9 +1,6 @@
 package ymcris.ipc1.practice1.codengames.carreras;
 
 import java.util.Scanner;
-import static ymcris.ipc1.practice1.codengames.carreras.Carreras.jugadorDos;
-import static ymcris.ipc1.practice1.codengames.carreras.Carreras.jugadorUno;
-import static ymcris.ipc1.practice1.codengames.carreras.Carreras.opcionMenu;
 
 /**
  * Clase encargada de hacer que el juego funciones, con métodos que mueven a los
@@ -15,22 +12,12 @@ import static ymcris.ipc1.practice1.codengames.carreras.Carreras.opcionMenu;
 public class MotorDelJuego {
 
     // VARIABLES ---------------------------------------------------------------
-    public static int numeroDeDados;
-    private String jugadorActual;
-    private boolean juegoTerminado;
+    public int numeroDeDados;
     protected static int cantidadDeRivales;
 
     // INSTANCIAS --------------------------------------------------------------
     Dados dados = new Dados();
     Scanner scanner = new Scanner(System.in);
-
-    // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    /**
-     * Método encargado de inicializar las variables necesarias.
-     */
-    public MotorDelJuego() {
-        this.juegoTerminado = false;
-    }
 
     // MÉTODOS -----------------------------------------------------------------
     /**
@@ -40,27 +27,74 @@ public class MotorDelJuego {
      * @param numeroDeJugadores - Numero de vehículos que se van a enfrentar
      * contra el jugador.
      */
-    protected void echarPuntaComputadora(int numeroDeJugadores) {
+    private void echarPuntaComputadora(int numeroDeJugadores) {
         System.out.println("¿Con cuántos dados desea Jugar?");
         numeroDeDados = scanner.nextInt();
         scanner.nextLine();
         Pista pistaActual = new Pista(numeroDeJugadores);
         pistaActual.elegirPista();
         do {
-            informarJuego();
-            elegirDesicion();
-            pistaActual.elegirPista();
-        } while (pistaActual.verificarJuegoTerminado() || juegoTerminado == true);
+            int desicion;
+            pistaActual.mostrarPista();
+            System.out.println("Selecciona tu acción:");
+            System.out.println("1. Tirar los dados");
+            System.out.println("2. Terminar programa");
+            System.out.println("3. Regresar al menú de carreras");
+            desicion = scanner.nextInt();
+            switch (desicion) {
+                case 1 -> {
+                    int resultadoDadosJugador = dados.lanzarDados(numeroDeDados);
+                    pistaActual.moverVehiculoJugador(resultadoDadosJugador);
+                    if (pistaActual.getTamañoPista() != pistaActual.getPosicionJugador1()) {
+                        pistaActual.moverVehiculosAleatorios(dados.lanzarDadosVehículos(numeroDeDados));
+                    }
+                }
+                case 2 ->
+                    System.exit(0);
+                case 3 ->
+                    new Carreras().irAlMenuPrincipal();
+                default -> {
+                    System.out.println("Ingresa una opción válida");
+                }
+            }
+        } while (pistaActual.verificarJuegoTerminado() == false);
+        Carreras carreras = new Carreras();
+        carreras.finalizarPartida();
     }
 
     /**
-     * Motor del juego cuando se jueguen 2 jugadores.
+     * Método encargado de realizar el juego pero con un rival
      */
-    protected void echarPuntaRival() {
+    private void echarPuntaRival() {
+        System.out.println("¿Con cuántos dados desea Jugar?");
+        numeroDeDados = scanner.nextInt();
+        scanner.nextLine();
+        Pista pistaActual = new Pista(2);
+        pistaActual.elegirPista();
         do {
-
-        } while (juegoTerminado == false);
-
+            int desicion;
+            pistaActual.mostrarPista();
+            System.out.println("Selecciona tu acción:");
+            System.out.println("1. Tirar los dados");
+            System.out.println("2. Terminar programa");
+            System.out.println("3. Regresar al menú de carreras");
+            desicion = scanner.nextInt();
+            System.out.println("\n".repeat(100));
+            switch (desicion) {
+                case 1 -> {
+                    int resultadoDadosJugador1 = dados.lanzarDados(numeroDeDados);
+                    pistaActual.moverVehiculoJugador(resultadoDadosJugador1);
+                }
+                case 2 ->
+                    System.exit(0);
+                case 3 ->
+                    new Carreras().irAlMenuPrincipal();
+                default -> {
+                    System.out.println("Ingresa una opción válida");
+                }
+            }
+        } while (pistaActual.verificarJuegoTerminado() == false);
+        new Carreras().finalizarPartida();
     }
 
     /**
@@ -68,7 +102,6 @@ public class MotorDelJuego {
      * computadora.
      */
     protected void jugarContraComputadora() {
-        scanner.nextLine();
         System.out.println("Ingrese su nombre: ");
         Carreras.jugadorUno = scanner.nextLine();
         System.out.println("¿Contra cuántos vehículos desea competir?");
@@ -77,57 +110,15 @@ public class MotorDelJuego {
     }
 
     /**
-     * Método encargado de pedir el nombre 
+     * Método encargado de pedir el nombre de los jugadores
      */
     protected void jugarContraRival() {
-        Carreras carrera = new Carreras();
+        System.out.println("Ingrese el nombre del primer jugador: ");
+        Carreras.jugadorUno = scanner.nextLine();
+        System.out.println("Ingrese el nombre del segundo jugador: ");
+        Carreras.jugadorDos = scanner.nextLine();
         cantidadDeRivales = 1;
-        carrera.pedirNombres();
         echarPuntaRival();
-    }
-
-    private void elegirDesicion() {
-        System.out.println("Selecciona tu opción:");
-        System.out.println("1. Tirar los dados");
-        System.out.println("2. Regresar al menú de carreras");
-        int desicion = scanner.nextInt();
-        switch (desicion) {
-            case 1 -> {
-                Pista pista = new Pista();
-                pista.moverVehiculoJugador(dados.lanzarDados(numeroDeDados));
-                pista.moverVehiculosAleatorios(dados.lanzarDados(numeroDeDados));
-            }
-            case 2 -> {
-                Carreras carrera = new Carreras();
-                carrera.irAlMenuPrincipal();
-            }
-            default ->
-                elegirDesicion();
-        }
-    }
-
-    private void informarJuego() {
-        Pista pista = new Pista();
-        if (opcionMenu == 1) {//computadora
-            System.out.println("El vehículo de: " + jugadorUno + " " + jugadorUno.charAt(0) + " Ha recorrido " + pista.getPosicionVehiculo(0));
-        } else if (opcionMenu == 2) {//rival
-            System.out.println("El vehículo de: " + jugadorUno + " " + jugadorUno.charAt(0) + " Ha recorrido " + pista.getPosicionVehiculo(0));
-            System.out.println("El vehículo de: " + jugadorDos + " " + jugadorDos.charAt(0) + " Ha recorrido " + pista.getPosicionVehiculo(1));
-        }
-
-    }
-
-    // GETTERS -----------------------------------------------------------------
-    public int getNumeroDeDados() {
-        return numeroDeDados;
-    }
-
-    public String getJugadorActual() {
-        return jugadorActual;
-    }
-
-    public static int getCantidadDeRivales() {
-        return cantidadDeRivales;
     }
 
 }
