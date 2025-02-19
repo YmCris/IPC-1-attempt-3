@@ -45,7 +45,7 @@ public class Personaje {
     public Personaje(int hp, int mp, int nivel, String nombre, int experiencia, int monstruosVencidos) {
         this.hp = hp;
         this.mp = mp;
-        this.oro = 100;
+        this.oro = 250;
         this.nivel = nivel;
         this.mpMaximo = 10;
         this.hpMaximo = 100;
@@ -176,14 +176,6 @@ public class Personaje {
 
     public void setExperiencia(int experiencia) {
         this.experiencia += experiencia;
-    }
-
-    public boolean isEstaVivo() {
-        return estaVivo;
-    }
-
-    public void setEstaVivo(boolean estaVivo) {
-        this.estaVivo = estaVivo;
     }
 
     public int getMonstruosVencidos() {

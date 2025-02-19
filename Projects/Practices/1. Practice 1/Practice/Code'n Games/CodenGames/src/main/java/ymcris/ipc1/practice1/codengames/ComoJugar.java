@@ -24,6 +24,8 @@ public class ComoJugar {
         System.out.println("2. Juego de carreras");
         System.out.println("3. Regresar al menú");
         System.out.println("4. Salir del juego");
+
+        System.out.println("...");
         int opcion = scanner.nextInt();
         switch (opcion) {
             case 1 ->

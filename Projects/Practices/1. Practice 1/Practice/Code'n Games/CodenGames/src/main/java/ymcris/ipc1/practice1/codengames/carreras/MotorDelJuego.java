@@ -28,9 +28,11 @@ public class MotorDelJuego {
      * contra el jugador.
      */
     private void echarPuntaComputadora(int numeroDeJugadores) {
-        System.out.println("¿Con cuántos dados desea Jugar?");
-        numeroDeDados = scanner.nextInt();
-        scanner.nextLine();
+        do {
+            System.out.println("¿Con cuántos dados desea Jugar?");
+            System.out.println("El dado debe ser mayor a uno");
+            numeroDeDados = scanner.nextInt();
+        } while (numeroDeDados <= 1);
         Pista pistaActual = new Pista(numeroDeJugadores);
         pistaActual.elegirPista();
         do {
@@ -69,6 +71,10 @@ public class MotorDelJuego {
         System.out.println("¿Con cuántos dados desea Jugar?");
         numeroDeDados = scanner.nextInt();
         scanner.nextLine();
+        if (numeroDeDados <= 0) {
+            System.out.println("El dado debe ser mayor a uno, se jugará con 2 dados");
+            numeroDeDados = 2;
+        }
         Pista pistaActual = new Pista(2);
         pistaActual.elegirPista();
         do {

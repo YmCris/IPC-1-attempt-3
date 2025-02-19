@@ -1,5 +1,6 @@
 package ymcris.ipc1.practice1.codengames.carreras;
 
+import static java.awt.Color.MAGENTA;
 import java.util.Random;
 import static ymcris.ipc1.practice1.codengames.CodenGames.AZUL;
 import static ymcris.ipc1.practice1.codengames.CodenGames.RESETEAR_COLOR;
@@ -15,7 +16,7 @@ import static ymcris.ipc1.practice1.codengames.reportes.Reportes.setContadorHuma
  */
 public class Pista {
 
-    //VARIABLES-----------------------------------------------------------------
+    // VARIABLES ---------------------------------------------------------------
     private char jugador1;
     private char jugador2;
     private int numeroDeVehiculos;
@@ -250,6 +251,27 @@ public class Pista {
     }
 
     /**
+     * Método encargado de implementar el movimiento con los boosters y ajam
+     *
+     * @param avanceNormal - avance de los dados normales
+     * @param fila - fila donde se iba a verificar si hay un booster o trap
+     * @param columna - columna donde se iba a verificar si hay un booster o
+     * trap
+     * @return - el avance ya con los boster o traps
+     */
+    private int implementarFuncionBoostersTraps(int avanceNormal, int fila, int columna) {
+        int avanceConElemento = avanceNormal;
+        if (pista[fila][columna] == '»') {//booster
+            avanceConElemento += avanceConElemento;
+            System.out.println(MAGENTA + "Te has topado con un booster, tu avance se ha duplicado" + RESETEAR_COLOR);
+        } else if (pista[fila][columna] == '«') {//trap
+            avanceConElemento /= 2;
+            System.out.println(MAGENTA + "Te has topado con un trap, tu avance se ha reducido a la mitad" + RESETEAR_COLOR);
+        }
+        return avanceConElemento;
+    }
+
+    /**
      * Método encargado de mover los vehículos de manera aleatoria
      *
      * @param resultadoDados - avance que tendrán los vehículos (según un
@@ -305,7 +327,7 @@ public class Pista {
     }
 
     // GETTERS -----------------------------------------------------------------
-    public int getPosicionVehiculo(int indiceVehiculo) {
+    public int getPosicionVehiculo(int indiceVehiculo) {//me devuelve su espacio en columna
         if (indiceVehiculo == 0) {
             return posicionJugador1;
         } else {
@@ -319,10 +341,6 @@ public class Pista {
 
     public int getPosicionJugador2() {
         return posicionJugador2;
-    }
-
-    public static char[][] getPista() {
-        return pista;
     }
 
     public int getTamañoPista() {
