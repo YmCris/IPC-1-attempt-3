@@ -6,19 +6,19 @@
 
 ## Descripciones de Proyectos:
 1. Práctica 1: Libreria de 2 juegos, (1) juego rpg de peleas, (2) Juego de carreras de vehículos.
-2. Proyecto 1:
+2. Proyecto 1: Juego de encontrar tesoros en un mapa
 3. Práctica 2:
 4. Proyecto 2:
 
 ## Manuales de Usuario:
 1. Práctica 1: https://docs.google.com/document/d/14aZlzQUYkg4i3znxWJmNo6oYz0XQXmFKT9a7GFBgk6Q/edit?usp=sharing
-2. Proyecto 1:
+2. Proyecto 1: https://docs.google.com/document/d/1ob7tNgvqHi1SN5U-n9hZfwKyOutew-ACMbCMEzKG2oA/edit?usp=sharing
 3. Práctica 2:
 4. Proyecto 2:
 
 ## Manuales Técnicos:
 1. Práctica 1: https://docs.google.com/document/d/1_QE-JDT4o3DCdES1uJvBzmVYlddizI0TXuZOxMdaIUY/edit?usp=sharing
-2. Proyecto 1:
+2. Proyecto 1: https://docs.google.com/document/d/1POWHfa8YiOx8e0o509C1_Ty04Ju2OCaIfhVXWFqb8K0/edit?usp=sharing
 3. Práctica 2:
 4. Proyecto 2:
 
@@ -27,6 +27,6 @@
 
 ## Diagramas de Clases:
 1. Práctica 1: [https://drive.google.com/file/d/12VOXlFZXnrOGtX01o5okx-yLPsBSK1tA/view?usp=drive_link](https://drive.google.com/file/d/12VOXlFZXnrOGtX01o5okx-yLPsBSK1tA/view?usp=sharing)
-2. Proyecto 1:
+2. Proyecto 1: https://drive.google.com/file/d/1NIGqib1bVhoVVEll_7OBmWOkXNd6G_sU/view?usp=sharing
 3. Práctica 2:
 4. Proyecto 2:
