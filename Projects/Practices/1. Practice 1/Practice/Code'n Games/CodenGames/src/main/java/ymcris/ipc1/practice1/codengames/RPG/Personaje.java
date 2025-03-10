@@ -72,7 +72,7 @@ public class Personaje {
      */
     protected void resetearEstadisticas() {
         if (verificarReinicio()) {
-            this.oro = 100;
+            this.oro = 250;
             this.hp = 100;
             this.mp = 10;
             this.nivel = 0;

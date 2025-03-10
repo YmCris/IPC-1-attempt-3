@@ -225,7 +225,7 @@ public class Pista {
                 pista[0][posicionJugador1] = jugador1;//Pone el vehículo del jugador en la posición que le corresponde.
             } else if (Carreras.opcionMenu == 2) {//opcion 2 jugar contra rival
                 pista[0][posicionJugador1] = ' ';//Límpia la posición del jugador 1
-                int avance = random.nextInt(0, resultadoDado);
+                int avance = random.nextInt(1, resultadoDado);
                 posicionJugador1 += avance;// Renueva la posición del jugador 1
                 System.out.println(AZUL + " -------------------- El jugador 1 avanza " + avance + " metros -------------------- " + RESETEAR_COLOR);
                 System.out.println("Al jugador 1 le hacen falta " + Math.max(0, pista[0].length - posicionJugador1) + " metros");
@@ -235,7 +235,7 @@ public class Pista {
                 pista[0][posicionJugador1] = jugador1;
                 //--------------------------------------------------------------
                 pista[1][posicionJugador2] = ' ';
-                int avance2 = random.nextInt(0, resultadoDado);
+                int avance2 = random.nextInt(1, resultadoDado);
                 posicionJugador2 += avance2;
                 System.out.println(AZUL + " -------------------- El jugador 2  avanza " + avance2 + " metros -------------------- " + RESETEAR_COLOR);
                 System.out.println("Al jugador 2 le hacen falta " + Math.max(0, pista[0].length - posicionJugador2) + " metros");
@@ -282,7 +282,7 @@ public class Pista {
             System.out.println(AZUL + " -------------------- VEHÍCULOS -------------------- " + RESETEAR_COLOR);
             for (int i = 1; i <= numeroDeVehiculos; i++) {// for para poder mover los i+1 vehículos (máquina)
                 pista[i][posicionesVehiculos[i]] = ' ';// Resetea las posiciones atuales de los vehículos
-                int avanceAleatorio = random.nextInt(0, resultadoDados - 1) * 2;//Define un avance aleatorio para el vehículo i+1
+                int avanceAleatorio = random.nextInt(1, resultadoDados - 1) * 2;//Define un avance aleatorio para el vehículo i+1
                 posicionesVehiculos[i] += avanceAleatorio;// Guarda la posición del vehículo i+1 con el avance aleatorio
                 System.out.println("El vehículo: " + i + " '" + vehiculos[i] + "'" + " avanzó " + avanceAleatorio + " metros " + "le hacen falta " + Math.max(0, pista[0].length - posicionesVehiculos[i]));
                 if (posicionesVehiculos[i] >= pista[0].length) {//Verifica si ningún vehículo ha sobrepasado la meta o se encuentra en ella
