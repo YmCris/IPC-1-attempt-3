@@ -1,7 +1,7 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 /**
- * Clase encargada de crear objetos del tipo Personaje
+ * Clase encargada de crear objetos del tipo Aventurer
  *
  * @author YmCris
  * @since Mar 13, 2025
@@ -26,16 +26,15 @@ public class Personaje {
      * @param mana - Mana inicial del personaje
      * @param ataque - Ataque inicial del personaje
      * @param defensa - Defensa inicial del personaje
-     * @param simbolo - Simbolo por el cual se representará en la matriz
      * @param nombre - Nombre del personaje
      */
-    public Personaje(int vida, int mana, int ataque, int defensa, char simbolo, String nombre) {
+    public Personaje(int vida, int mana, int ataque, int defensa, String nombre) {
         this.vida = vida;
         this.mana = mana;
         this.ataque = ataque;
         this.defensa = defensa;
-        this.simbolo = simbolo;
         this.nombre = nombre;
+        this.simbolo = nombre.charAt(0);
     }
 
     //GETTERS & SETTERS --------------------------------------------------------
