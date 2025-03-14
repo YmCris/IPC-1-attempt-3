@@ -1,7 +1,10 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
+import java.util.Random;
+
 /**
- * Clase encargada de crear objetos del tipo Aventurer
+ * SuperClase encargada de crear objetos del tipo Personaje, de los cuales
+ * heredarán los objetos aventurero y pirata
  *
  * @author YmCris
  * @since Mar 13, 2025
@@ -9,16 +12,19 @@ package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 public class Personaje {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int vida;
-    private int mana;
-    private int ataque;
-    private int defensa;
-    private char simbolo;
+    protected int vida;
+    protected int mana;
+    protected int ataque;
+    protected int defensa;
+    protected char simbolo;
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
 
-    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    // INSTANCIAS --------------------------------------------------------------
+    Random random = new Random();
+
+    // MÉTODOS CONSTRUCTORES ---------------------------------------------------
     /**
      * Método creador de Personajes.
      *
@@ -37,6 +43,36 @@ public class Personaje {
         this.simbolo = nombre.charAt(0);
     }
 
+    /**
+     * Constructor vacio para el pirata
+     */
+    public Personaje() {
+
+    }
+
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de que el personaje reciba daño durante la batalla.
+     *
+     * @param daño - Daño que recibirá
+     */
+    protected void recibirDaño(int daño) {
+        this.setVida(this.getVida() - daño);
+        if (this.getVida() <= 0) {
+            this.setVida(0);
+        }
+    }
+
+    /**
+     * Método encargado de atacar a un personaje
+     *
+     * @param personaje - Personaje al cual se atacará
+     */
+    protected void atacar(Personaje personaje) {
+        int dañoARealizar = random.nextInt(0, this.getAtaque() - personaje.getDefensa() * 2);
+        personaje.recibirDaño(dañoARealizar);
+    }
+
     //GETTERS & SETTERS --------------------------------------------------------
     public int getVida() {
         return vida;
@@ -44,6 +80,9 @@ public class Personaje {
 
     public void setVida(int vida) {
         this.vida = vida;
+        if (this.vida < 0) {
+            this.vida = 0;
+        }
     }
 
     public int getMana() {
@@ -52,6 +91,9 @@ public class Personaje {
 
     public void setMana(int mana) {
         this.mana = mana;
+        if (this.mana < 0) {
+            this.mana = 0;
+        }
     }
 
     public int getAtaque() {

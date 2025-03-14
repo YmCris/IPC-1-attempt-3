@@ -1,7 +1,5 @@
 package ymcris.ipc1.proyecto1.treasurehunter.diseño;
 
-import java.util.Scanner;
-
 /**
  * Clase DiseñoMenus es la clase encargada de hacer más agradable todo el juego
  * de TreasureHunter.
@@ -21,8 +19,6 @@ public class DiseñoMenus {
     private final String RESETEAR = "\u001B[0m";
     //private final String VERDE = "\u001B[92m";
     //private final String MAGENTA = "\u001B[95m";
-    // INSTANCAS ---------------------------------------------------------------
-    Scanner scanner = new Scanner(System.in);
 
     // MÉTODOS -----------------------------------------------------------------
     /**
@@ -51,8 +47,6 @@ public class DiseñoMenus {
         System.out.println("");
         System.out.println("");
         System.out.println(AMARILLO + "Presione enter para continuar." + RESETEAR);
-        scanner.nextLine();
-        mostrarMenuPrincipal();
     }
 
     /**
@@ -67,9 +61,9 @@ public class DiseñoMenus {
         System.out.println("                                            ¦ [1] ¿Cómo Jugar Treasure Hunter?               ¦");
         System.out.println("                                            ¦ [2] Iniciar Nueva Partida                      ¦");
         System.out.println("                                            ¦ [3] Cargar Partida                             ¦");
-        System.out.println("                                            ¦ [3] Diseñar Mapas                              ¦");
-        System.out.println("                                            ¦ [4] Ver reportes                               ¦");
-        System.out.println("                                            ¦ [5] Salir del programa                         ¦");
+        System.out.println("                                            ¦ [4] Diseñar Mapas                              ¦");
+        System.out.println("                                            ¦ [5] Ver reportes                               ¦");
+        System.out.println("                                            ¦ [6] Salir del programa                         ¦");
         System.out.println("                                            ├------------------------------------------------┤");
         System.out.println("                                            ¦            -Seleccione una opción-             ¦");
         System.out.println("                                            └------------------------------------------------┘");

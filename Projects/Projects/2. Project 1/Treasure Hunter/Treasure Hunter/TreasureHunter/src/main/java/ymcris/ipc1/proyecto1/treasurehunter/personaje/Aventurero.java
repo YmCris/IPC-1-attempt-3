@@ -1,6 +1,7 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 import java.util.Arrays;
+import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -19,13 +20,15 @@ public class Aventurero extends Personaje {
     private int batallasHuidas;
     private int batallasGanadas;
     private int batallasPerdidas;
-    private int[][] posicionInicial;
     private int[][] posicionActual;
+    private int[][] posicionInicial;
     private int cantidadMovimientos;
     private int vidaPrevioAUnaBatalla;
     private int manaPrevioAUnaBatalla;
+    private int defensaPrevioAUnaBatalla;
 
     // INSTANCIAS --------------------------------------------------------------
+    Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
@@ -41,18 +44,21 @@ public class Aventurero extends Personaje {
     public Aventurero(int vida, int mana, int ataque, int defensa, String nombre) {
         super(vida, mana, ataque, defensa, nombre);
         this.batallas = 0;
-        this.vidaMaxima = 100;
         this.manaMaximo = 10;
+        this.vidaMaxima = 100;
         this.batallasHuidas = 0;
         this.batallasGanadas = 0;
         this.batallasPerdidas = 0;
         this.cantidadMovimientos = 0;
         this.manaPrevioAUnaBatalla = 10;
         this.vidaPrevioAUnaBatalla = 100;
+        this.defensaPrevioAUnaBatalla = defensa;
     }
 
+    // MÉTODOS -----------------------------------------------------------------
     /**
-     * Método encargado de mostrar las características del aventurero.
+     * Método encargado de mostrar las características más importantes del
+     * aventurero.
      */
     public void mostrarEstadoAventurero() {
         System.out.println("                        Las estadísticas del aventurero " + this.getNombre() + " son:");
@@ -61,13 +67,35 @@ public class Aventurero extends Personaje {
         System.out.println("    ·   Mana: " + this.getMana() + "/" + this.getManaMaximo());
         System.out.println("    ·   Ataque: " + this.getAtaque());
         System.out.println("    ·   Defensa: " + this.getDefensa());
-        System.out.println("    ·   Símbolo: " + this.getDefensa());
+        System.out.println("    ·   Símbolo: " + this.getSimbolo());
         System.out.println("    ·   Posición Actual:" + Arrays.toString(this.getPosicionActual()));
         System.out.println("    ·   Batallas Tenidas: " + this.getBatallas());
         System.out.println("    ·   Movimientos Realizados: " + this.getCantidadMovimientos());
         System.out.println("------------------------------------------------------------------------------------------");
         scanner.nextLine();
+    }
 
+    public void defender(int turnos, boolean afectoActivo) {
+        if (afectoActivo) {
+            if (this.getMana() >= 1) {
+                this.setDefensa((int) (this.getDefensa() + this.getDefensa() * 0.5));
+                this.setMana(this.getMana() - 1);
+            } else {
+                System.out.println("No tienes el mana suficiente");
+            }
+        } else {
+            System.out.println("La defensa no se acumula, no puedes defenderte");
+        }
+    }
+
+    public void curar() {
+        if (this.getMana() >= 1) {
+            int cantidadACurar = random.nextInt(0, 15);
+            this.setVida(this.getVida() + cantidadACurar);
+            this.setMana(this.getMana() - 1);
+        } else {
+            System.out.println("No tienes el mana suficiente");
+        }
     }
 
     // GETTERS & SETTERS -------------------------------------------------------
@@ -157,6 +185,22 @@ public class Aventurero extends Personaje {
 
     public void setManaPrevioAUnaBatalla(int manaPrevioAUnaBatalla) {
         this.manaPrevioAUnaBatalla = manaPrevioAUnaBatalla;
+    }
+
+    public int getDefensaPrevioAUnaBatalla() {
+        return defensaPrevioAUnaBatalla;
+    }
+
+    public void setDefensaPrevioAUnaBatalla(int defensaPrevioAUnaBatalla) {
+        this.defensaPrevioAUnaBatalla = defensaPrevioAUnaBatalla;
+    }
+
+    public Scanner getScanner() {
+        return scanner;
+    }
+
+    public void setScanner(Scanner scanner) {
+        this.scanner = scanner;
     }
 
 }
