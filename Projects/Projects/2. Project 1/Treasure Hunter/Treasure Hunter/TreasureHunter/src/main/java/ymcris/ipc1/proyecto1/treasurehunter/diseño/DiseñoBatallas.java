@@ -18,7 +18,6 @@ public class DiseñoBatallas {
      * @param aventurero - Aventurero que va a batallar.
      */
     public void verOpcionesBatalla(Aventurero aventurero) {
-        mostrarEscenarioBatalla();
         System.out.println("...............................................................................................................................................................");
         System.out.println(".    MOVIMIENTOS    .TURNO DE: " + aventurero.getNombre() + " '" + aventurero.getSimbolo() + "'" + "     .                                                                                                             .");
         System.out.println(".        ___        .VIDA: " + aventurero.getVida() + "/" + aventurero.getVidaMaxima() + "              .    ┌---------------------┐   ┌---------------------┐   ┌---------------------┐   ┌---------------------┐    .");
@@ -36,6 +35,8 @@ public class DiseñoBatallas {
      * jugador.
      */
     public void mostrarEscenarioBatalla() {
+        System.out.println("");
+        System.out.println("");
         System.out.println("""
                                                     :-=--==-:                                                                      =*@@@@%+:          -%#
                                                     +%%%%%###%#:                    *-                                          *%@@@@%*@@@@%  %+ =%@@@#-       =+

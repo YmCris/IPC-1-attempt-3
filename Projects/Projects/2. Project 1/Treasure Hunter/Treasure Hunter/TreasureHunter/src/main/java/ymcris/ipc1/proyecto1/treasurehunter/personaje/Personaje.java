@@ -19,7 +19,9 @@ public class Personaje {
     protected char simbolo;
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    private String nombre;
+    protected String nombre;
+    private final String CYAN;
+    private final String RESETEAR;
 
     // INSTANCIAS --------------------------------------------------------------
     Random random = new Random();
@@ -41,12 +43,16 @@ public class Personaje {
         this.defensa = defensa;
         this.nombre = nombre;
         this.simbolo = nombre.charAt(0);
+        this.CYAN = "\u001B[96m";
+        this.RESETEAR = "\u001B[0m";
     }
 
     /**
      * Constructor vacio para el pirata
      */
     public Personaje() {
+        this.CYAN = "\u001B[96m";
+        this.RESETEAR = "\u001B[0m";
 
     }
 
@@ -56,7 +62,7 @@ public class Personaje {
      *
      * @param daño - Daño que recibirá
      */
-    protected void recibirDaño(int daño) {
+    public void recibirDaño(int daño) {
         this.setVida(this.getVida() - daño);
         if (this.getVida() <= 0) {
             this.setVida(0);
@@ -68,9 +74,10 @@ public class Personaje {
      *
      * @param personaje - Personaje al cual se atacará
      */
-    protected void atacar(Personaje personaje) {
-        int dañoARealizar = random.nextInt(0, this.getAtaque() - personaje.getDefensa() * 2);
+    public void atacar(Personaje personaje) {
+        int dañoARealizar = random.nextInt(0, this.getAtaque() - personaje.getDefensa());
         personaje.recibirDaño(dañoARealizar);
+        System.out.println(CYAN + "              ------------------------- " + RESETEAR + this.getNombre() + " le ha realizado " + dañoARealizar + " de daño a " + personaje.getNombre() + ", le quedan " + personaje.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
     }
 
     //GETTERS & SETTERS --------------------------------------------------------

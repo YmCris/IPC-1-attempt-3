@@ -3,7 +3,9 @@ package ymcris.ipc1.proyecto1.treasurehunter;
 import java.util.InputMismatchException;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import java.util.Scanner;
+import ymcris.ipc1.proyecto1.treasurehunter.batalla.Batalla;
 import ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus;
+import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**
  * Clase Main, encargada de dar inicio al programa.
@@ -28,6 +30,9 @@ public class TreasureHunter {
      */
     public static void main(String[] args) {
         new DiseñoMenus().mostrarBienvenida();
+        Aventurero aventurero = new Aventurero(100, 10, 50, 15, "cristian");
+        Batalla batalla = new Batalla(aventurero);
+        batalla.pelear();
         do {//Para que nunca acabe el juego
             new TreasureHunter().mostrarMenuPrincipal();
         } while (true);
