@@ -75,7 +75,7 @@ public class Personaje {
      * @param personaje - Personaje al cual se atacará
      */
     public void atacar(Personaje personaje) {
-        int dañoARealizar = random.nextInt(0, this.getAtaque() - personaje.getDefensa());
+        int dañoARealizar = random.nextInt(0, (this.getAtaque() - personaje.getDefensa())+1);
         personaje.recibirDaño(dañoARealizar);
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + this.getNombre() + " le ha realizado " + dañoARealizar + " de daño a " + personaje.getNombre() + ", le quedan " + personaje.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
     }

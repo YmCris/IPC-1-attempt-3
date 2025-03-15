@@ -29,9 +29,11 @@ public class TreasureHunter {
      * @param args - paramétros para iniciar directamente en el jar
      */
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
         new DiseñoMenus().mostrarBienvenida();
-        Aventurero aventurero = new Aventurero(100, 10, 50, 15, "cristian");
-        Batalla batalla = new Batalla(aventurero);
+        scanner.nextLine();
+        Aventurero aventurero = new Aventurero(100, 10, 100, 15, "cristian");
+        Batalla batalla = new Batalla(aventurero,true);
         batalla.pelear();
         do {//Para que nunca acabe el juego
             new TreasureHunter().mostrarMenuPrincipal();

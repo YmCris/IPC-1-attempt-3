@@ -13,7 +13,11 @@ import java.util.Scanner;
  */
 public class Aventurero extends Personaje {
 
-// VARIABLES PRIMITIVAS --------------------------------------------------------
+    // VARIABLES DE REFENRENCIA ------------------------------------------------
+    private final String CYAN;
+    private final String RESETEAR;
+
+    // VARIABLES PRIMITIVAS --------------------------------------------------------
     private int batallas;
     private int vidaMaxima;
     private int manaMaximo;
@@ -43,6 +47,8 @@ public class Aventurero extends Personaje {
      */
     public Aventurero(int vida, int mana, int ataque, int defensa, String nombre) {
         super(vida, mana, ataque, defensa, nombre);
+        this.RESETEAR = "\u001B[0m";
+        this.CYAN = "\u001B[96m";
         this.batallas = 0;
         this.manaMaximo = 10;
         this.vidaMaxima = 100;
@@ -75,26 +81,32 @@ public class Aventurero extends Personaje {
         scanner.nextLine();
     }
 
-    public void defender(int turnos, boolean afectoActivo) {
-        if (afectoActivo) {
-            if (this.getMana() >= 1) {
-                this.setDefensa((int) (this.getDefensa() + this.getDefensa() * 0.5));
-                this.setMana(this.getMana() - 1);
-            } else {
-                System.out.println("No tienes el mana suficiente");
-            }
+    /**
+     * Método encargado de aumentar la defensa del jugador.
+     *
+     */
+    public void defender() {
+        if (this.getMana() >= 1) {
+            int defensaAAumentar = (int) (this.getDefensa() + this.getDefensa() * 0.5);
+            this.setDefensa(defensaAAumentar);
+            this.setMana(this.getMana() - 1);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " tu defensa ha aumentado " + this.getDefensa() * 0.5 + ", tienes " + this.getDefensa() + " puntos de defensa" + CYAN + " ------------------------- " + RESETEAR);
         } else {
-            System.out.println("La defensa no se acumula, no puedes defenderte");
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " no tienes el mana suficiente" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 
+    /**
+     * Método encargado de curar al personaje
+     */
     public void curar() {
         if (this.getMana() >= 1) {
-            int cantidadACurar = random.nextInt(0, 15);
+            int cantidadACurar = random.nextInt(0, 30);
             this.setVida(this.getVida() + cantidadACurar);
             this.setMana(this.getMana() - 1);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " te has curado " + cantidadACurar + " de vida, tienes " + this.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else {
-            System.out.println("No tienes el mana suficiente");
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " no tienes el mana suficiente" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 

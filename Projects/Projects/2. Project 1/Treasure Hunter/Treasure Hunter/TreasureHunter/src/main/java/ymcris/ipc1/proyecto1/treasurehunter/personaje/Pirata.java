@@ -21,6 +21,9 @@ public final class Pirata extends Personaje {
         this.defensa = random.nextInt(aventurero.getDefensa() - (aventurero.getDefensa()) / 2, aventurero.getDefensa() + (aventurero.getDefensa()) / 2);
     }
 
+    /**
+     * Método encargado de mostrar la información del pirata.
+     */
     public void mostrarInformacion() {
         System.out.println(NEGRO + "                        ------------------------- " + RESETEAR + this.getNombre() + ": " + "Vida: " + this.getVida() + " Mana: " + this.getMana() + " Ataque: " + this.getAtaque() + " Defensa: " + this.getDefensa() + NEGRO + " ------------------------- " + RESETEAR);
     }
