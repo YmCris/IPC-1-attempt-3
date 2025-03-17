@@ -24,8 +24,10 @@ public class Batalla {
     private final String MAGENTA;
     private final String RESETEAR;
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int opcionBatalla;
     private int opcion;
+    private int tipoDePuntos;
+    private int opcionBatalla;
+    private int puntosAQuitar;
     private boolean rendirse;
     private boolean puedeAbandonar;
 
@@ -33,7 +35,7 @@ public class Batalla {
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Batalla(Aventurero aventurero, boolean puedeAbandonar) {
+    public Batalla(Aventurero aventurero, boolean puedeAbandonar, int tipoDePuntos, int puntosAQuitar) {
         this.opcion = 0;
         this.opcionBatalla = 0;
         this.RESETEAR = "\u001B[0m";
@@ -43,6 +45,8 @@ public class Batalla {
         this.puedeAbandonar = puedeAbandonar;
         this.aventurero = aventurero;
         this.pirata = new Pirata(aventurero);
+        this.tipoDePuntos = tipoDePuntos;
+        this.puntosAQuitar = puntosAQuitar;
     }
 
     /**
@@ -113,6 +117,30 @@ public class Batalla {
             aventurero.setVida(aventurero.getVidaPrevioAUnaBatalla());
             aventurero.setMana(aventurero.getManaPrevioAUnaBatalla());
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + " Tienes " + aventurero.getVidaPrevioAUnaBatalla() + " puntos de vida y " + " Tienes " + aventurero.getManaPrevioAUnaBatalla() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
+            switch (tipoDePuntos) {
+                case 1 -> {
+                    //quita vida
+                    aventurero.setVida(aventurero.getVida() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de vida, tienes " + aventurero.getVida());
+                }
+                case 2 -> {
+                    //quita mana
+                    aventurero.setMana(aventurero.getMana() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de mana, tienes " + aventurero.getMana());
+                }
+                case 3 -> {
+                    //quita ataque
+                    aventurero.setAtaque(aventurero.getAtaque() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de ataque, tienes " + aventurero.getAtaque());
+                }
+                case 4 -> {
+                    //quita defensa
+                    aventurero.setDefensa(aventurero.getDefensa() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de defensa, tienes " + aventurero.getDefensa());
+                }
+                default -> {
+                }
+            }
         }
     }
 
@@ -127,7 +155,7 @@ public class Batalla {
             do {//Se evita que el usuario introduzca un número fuera de lo esperado
                 new DiseñoBatallas().mostrarEscenarioBatalla();//2. Mostrar escenario batalla
                 new DiseñoBatallas().verOpcionesBatalla(aventurero);//3. Mostrar opciones de batalla
-                try {
+                try {//se evita que introduzca un string
                     opcionBatalla = scanner.nextInt();
                 } catch (InputMismatchException e) {
                     System.out.println("Opción no válida, introduce una opción del [1-4]");
@@ -161,5 +189,4 @@ public class Batalla {
         } while (!batallaTerminada());//8. Verificar si el jugador sigue vivo
         aplicarEfectosPartidaTerminada();
     }
-
 }

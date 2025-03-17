@@ -1,7 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 import java.util.Arrays;
-import java.util.Random;
 import java.util.Scanner;
 
 /**
@@ -32,7 +31,6 @@ public class Aventurero extends Personaje {
     private int defensaPrevioAUnaBatalla;
 
     // INSTANCIAS --------------------------------------------------------------
-    Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------

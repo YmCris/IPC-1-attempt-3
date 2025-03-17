@@ -17,7 +17,7 @@ import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 public class TreasureHunter {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    int opcion = 0;
+    private int opcion = 0;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
@@ -33,7 +33,7 @@ public class TreasureHunter {
         new DiseñoMenus().mostrarBienvenida();
         scanner.nextLine();
         Aventurero aventurero = new Aventurero(100, 10, 100, 15, "cristian");
-        Batalla batalla = new Batalla(aventurero,true);
+        Batalla batalla = new Batalla(aventurero, true,0,0);
         batalla.pelear();
         do {//Para que nunca acabe el juego
             new TreasureHunter().mostrarMenuPrincipal();
@@ -52,10 +52,7 @@ public class TreasureHunter {
             try {//por si introduce un string
                 opcion = scanner.nextInt();
             } catch (InputMismatchException exception) {
-                System.out.println("Debes ingresar un número entre 1 y 6");
-                System.out.println("Presiona enter para continuar:");
-                scanner.nextLine();
-                opcion = 7;
+                opcion = 8;
             }
             switch (opcion) {//Opciones dentro del juego
                 case 1 ->
@@ -70,8 +67,6 @@ public class TreasureHunter {
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
                 case 6 ->
                     System.exit(0);
-                case 7 ->
-                    mostrarMenuPrincipal();
                 default -> {
                     System.out.println("Ingresa una opción válida [1-6]");
                     System.out.println("Presiona enter para continuar:");
