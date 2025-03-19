@@ -26,7 +26,7 @@ public class CasillaTrampa extends Casillas {
         this.cantidad = cantidad;
         this.quitaVida = quitaVida;
         this.puntosAQuitar = puntosAQuitar;
-        this.simbolo = NEGRO + "░" + RESETEAR;
+        this.simbolo = NEGRO + "░░" + RESETEAR;
     }
 
     @Override

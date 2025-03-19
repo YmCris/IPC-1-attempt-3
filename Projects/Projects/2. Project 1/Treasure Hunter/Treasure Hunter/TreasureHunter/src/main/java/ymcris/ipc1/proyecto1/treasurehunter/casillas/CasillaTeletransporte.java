@@ -30,7 +30,7 @@ public class CasillaTeletransporte extends Casillas {
         this.cantidad = cantidad;
         this.filaAMover = filaAMover;
         this.columnaAMover = columnaAMover;
-        this.simbolo = MAGENTA + "▒" + RESETEAR;
+        this.simbolo = MAGENTA + "▒▒" + RESETEAR;
         this.ubicacionAleatoria = ubicacionAleatoria;
     }
 

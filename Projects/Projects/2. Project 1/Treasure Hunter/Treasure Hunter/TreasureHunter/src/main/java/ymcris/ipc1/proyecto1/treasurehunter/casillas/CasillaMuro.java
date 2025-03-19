@@ -18,7 +18,7 @@ public class CasillaMuro extends Casillas {
         this.columna = columna;
         this.puedePasar = false;
         this.cantidad = cantidad;
-        this.simbolo = VERDE + "▓" + RESETEAR;
+        this.simbolo = VERDE + "▓▓" + RESETEAR;
     }
 
     @Override

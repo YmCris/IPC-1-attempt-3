@@ -26,7 +26,7 @@ public class CasillaPista extends Casillas {
         this.columna = columna;
         this.puedePasar = true;
         this.cantidad = cantidad;
-        this.simbolo = AMARILLO + "▒" + RESETEAR;
+        this.simbolo = AMARILLO + "▒▒" + RESETEAR;
         this.pistaEsDireccional = pistaEsDireccional;
     }
 

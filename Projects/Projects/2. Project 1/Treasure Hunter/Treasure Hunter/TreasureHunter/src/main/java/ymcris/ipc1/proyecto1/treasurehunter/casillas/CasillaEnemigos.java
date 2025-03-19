@@ -33,7 +33,7 @@ public class CasillaEnemigos extends Casillas {
         this.cantidad = cantidad;
         this.puedeEscapar = puedeEscapar;
         this.puntosAQuitar = puntosAQuitar;
-        this.simbolo = CYAN + "█" + RESETEAR;
+        this.simbolo = CYAN + "██" + RESETEAR;
         this.filaARetornar = filaARetornar;
         this.tipoDePuntos = tipoDePuntos;//1. Vida 2. Mana 3. Ataque 4. Defensa
         this.columnaARetornar = columnaARetornar;

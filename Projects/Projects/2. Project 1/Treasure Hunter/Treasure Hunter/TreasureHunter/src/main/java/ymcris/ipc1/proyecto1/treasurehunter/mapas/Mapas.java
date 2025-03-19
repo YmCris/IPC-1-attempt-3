@@ -9,7 +9,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
 
 /**
  * Clase Mapas es la Clase encargada de crear los mapas, modificar los mapas y
- * moverse dentro del mapa
+ * moverse dentro del tablero
  *
  * @author YmCris
  * @since Mar 17, 2025
@@ -18,7 +18,7 @@ public class Mapas {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
-    public static Casillas[][] mapa;
+    public static Casillas[][] tablero;
 
     /**
      *     // VARIABLES PRIMITIVAS
@@ -36,7 +36,6 @@ public class Mapas {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
     private int columnas;
-    private char[] simbolosColumnas = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z'};
     private CasillaTesoro tesoro;
     private CasillaPersonaje personaje;
 
@@ -47,54 +46,55 @@ public class Mapas {
         this.columnas = columnas;
         this.tesoro = tesoro;
         this.personaje = personaje;
-        mapa = new Casillas[filas][columnas];
+        tablero = new Casillas[filas][columnas];
     }
 
     // MÉTODOS -----------------------------------------------------------------
     public Casillas[][] crearMapa() {
-        for (int i = 0; i < mapa.length; i++) {//filas
-            for (int j = 0; j < mapa[i].length; j++) {//columnas
-                mapa[i][j] = new CasillaNormal(i, j, i * j);
+        for (int i = 0; i < tablero.length; i++) {//filas
+            for (int j = 0; j < tablero[i].length; j++) {//columnas
+                tablero[i][j] = new CasillaNormal(i, j, i * j);
             }
         }
-        return mapa;
+        return tablero;
     }
 
     public void mostrarMapa() {
+        String A = "0";
         //Marco superior de las letras
         System.out.print("___");
-        for (int i = 0; i < mapa[0].length; i++) {
-            System.out.print("__");
+        for (int i = 0; i < tablero[0].length; i++) {
+            System.out.print("___");
         }
         System.out.print("_");
         System.out.println("");
         //Marco de las Columnas letras
         System.out.print("|:v|");
-        for (int i = 0; i < mapa[0].length; i++) {
-            System.out.print(simbolosColumnas[i] + "|");
+        for (int i = 0; i < tablero[0].length; i++) {
+            if (i < 9) {
+                System.out.print(A + (i + 1) + "|");
+            } else {
+                System.out.print((i + 1) + "|");
+            }
         }
         System.out.println("");
         //Marco de las filas números
-        for (int i = 0; i < mapa.length; i++) {
+        for (int i = 0; i < tablero.length; i++) {
             if (i < 9) {
                 System.out.print("|" + 0 + (i + 1) + "|");
             } else if (i >= 9) {
                 System.out.print("|" + (i + 1) + "|");
             }
-            for (int j = 0; j < mapa[i].length; j++) {
-                System.out.print(mapa[i][j].getSimbolo());
-                System.out.print(NEGRO + "|" + RESETEAR);
+            for (int j = 0; j < tablero[i].length; j++) {
+                System.out.print(tablero[i][j].getSimbolo());
+                System.out.print(NEGRO + "░" + RESETEAR);
             }
             System.out.println("");
         }
     }
 
-    public void diseñarMapa() {
-
-    }
-
-    public Mapas modificarMapas(int fila, int columna, Casillas casillaAModificar) {
-        return this;
+    public void modificarMapas(int fila, int columna, Casillas casillaAModificar) {
+        Mapas.tablero[fila][columna] = casillaAModificar;
     }
 
     private void moverEnELMapa() {

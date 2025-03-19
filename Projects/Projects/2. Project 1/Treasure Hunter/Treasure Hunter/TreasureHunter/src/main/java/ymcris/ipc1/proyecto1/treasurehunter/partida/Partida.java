@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
@@ -32,9 +33,9 @@ public class Partida {
 
     // MÉTODOS -----------------------------------------------------------------
     public void iniciarNuevaPartida() {
-        System.out.println(" HOLA MUNDOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO");
-        mapa.crearMapa();
-        mapa.mostrarMapa();
-        mapa.diseñarMapa();
+        do {
+            mapa.mostrarMapa();
+            verOpcionesPartida();
+        } while (partidaTerminada);
     }
 }

@@ -27,7 +27,7 @@ public class CasillaEnergia extends Casillas {
         this.columna = columna;
         this.puedePasar = true;
         this.cantidad = cantidad;
-        this.simbolo = AZUL + "▒" + RESETEAR;
+        this.simbolo = AZUL + "▒▒" + RESETEAR;
     }
 
     // MÉTODOS SOBRE ESCRITOS --------------------------------------------------

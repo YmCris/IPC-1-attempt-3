@@ -19,7 +19,7 @@ public class CasillaTesoro extends Casillas {
         this.columna = columna;
         this.puedePasar = true;
         this.cantidad = cantidad;
-        this.simbolo = NEGRO + "░" + RESETEAR;
+        this.simbolo = NEGRO + "░░" + RESETEAR;
     }
 
     @Override

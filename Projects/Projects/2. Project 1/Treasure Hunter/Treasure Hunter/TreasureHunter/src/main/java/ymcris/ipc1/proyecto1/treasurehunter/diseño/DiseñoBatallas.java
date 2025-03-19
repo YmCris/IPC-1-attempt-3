@@ -32,18 +32,6 @@ public class DiseñoBatallas {
         System.out.println(".............................                                                                                                              .");
         System.out.println(".   Seleccione una opción   .                                                                                                              .");
         System.out.println("............................................................................................................................................");
-        /*
-        System.out.println(  "...............................................................................................................................................................");
-        System.out.println(".    MOVIMIENTOS    .TURNO DE: " + aventurero.getNombre() + " '" + aventurero.getSimbolo() + "'" + "     .                                                                                                             .");
-        System.out.println(".        ___        .VIDA: " + aventurero.getVida() + "/" + aventurero.getVidaMaxima() + "              .    ┌---------------------┐   ┌---------------------┐   ┌---------------------┐   ┌---------------------┐    .");
-        System.out.println(".       | W |       .MANA: " + aventurero.getMana() + "/" + aventurero.getManaMaximo() + "                .    ¦        ATACAR       ¦   ¦        CURAR        ¦   ¦       DEFENDER      ¦   ¦      ABANDONAR      ¦    .");
-        System.out.println(".   ___  ---  ___   .ATAQUE: " + aventurero.getAtaque() + "                .    ¦         [1]         ¦   ¦         [2]         ¦   ¦          [3]        ¦   ¦         [4]         ¦    .");
-        System.out.println(".  | A |     | D |  .DEFENSA: " + aventurero.getDefensa() + "                .    ¦                     ¦   ¦                     ¦   ¦                     ¦   ¦                     ¦    .");
-        System.out.println(".   ---  ___  ---   .BATALLAS: " + aventurero.getBatallas() + "                .    └---------------------┘   └---------------------┘   └---------------------┘   └---------------------┘    .");
-        System.out.println(".       | S |       .............................                                                                                                             .");
-        System.out.println(".        ---        .   Seleccione una opción   .                                                                                                             .");
-        System.out.println("...............................................................................................................................................................");
-         */
     }
 
     /**

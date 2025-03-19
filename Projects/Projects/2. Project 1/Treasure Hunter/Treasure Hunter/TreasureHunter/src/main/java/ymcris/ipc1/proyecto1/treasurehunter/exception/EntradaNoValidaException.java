@@ -28,8 +28,7 @@ public class EntradaNoValidaException extends Exception {
      */
     public static void errorEncontrado() {
         Scanner scanner = new Scanner(System.in);
-        System.out.println("");
-        System.out.println("Ingresa una opción válida");
+        System.out.println("Por favor ingresa una opción válida");
         System.out.println("Presiona enter para continuar");
         scanner.nextLine();
     }

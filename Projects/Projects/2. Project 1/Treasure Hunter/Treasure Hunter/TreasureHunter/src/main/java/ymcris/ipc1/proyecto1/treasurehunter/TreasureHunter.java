@@ -10,6 +10,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarB
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -65,8 +66,9 @@ public class TreasureHunter {
                     iniciarNuevaPartida();
                 case 3 ->//Carga una partida ya existente
                     new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
-                case 4 ->//Modifica un mapa ya existente
-                    new DiseñarMapas().crearMapa();
+                case 4 -> {//Modifica un mapa ya existente
+                    //new DiseñarMapas().diseñarMapas();
+                }
                 case 5 ->//Muestra los reportes del juego
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
                 case 6 ->//Sale del programa
@@ -89,8 +91,15 @@ public class TreasureHunter {
         System.out.println("\n".repeat(100));
         System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
         String nombreAventurero = scanner.nextLine();
-        aventurero = new Aventurero(250, 15, 100, 100, nombreAventurero);//Se crea el aventurero del jugador.
-        return aventurero;
+        if (nombreAventurero.isBlank()) {
+            System.out.println("No puedes tener un nombre vacío");
+            errorEncontrado();
+            crearJugador();
+        } else {
+            aventurero = new Aventurero(250, 15, 100, 100, nombreAventurero);//Se crea el aventurero del jugador.
+            return aventurero;
+        }
+        return null;
     }
 
     /**
@@ -116,11 +125,13 @@ public class TreasureHunter {
                     System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
                     String nombrePartida = scanner.nextLine();
                     if (nombrePartida.isBlank()) {
-                        System.out.println("No puede estar en blanco");
+                        System.out.println("El nombre de la partida no puede estar en blanco");
                         errorEncontrado();
                         iniciarNuevaPartida();
                     } else {
-                        Partida partida = new Partida(crearJugador(), new DiseñarMapas().crearMapa(), nombrePartida);
+                        Aventurero aventurero = crearJugador();
+                        DiseñarMapas nuevoMapa = new DiseñarMapas();
+                        Partida partida = new Partida(aventurero, nuevoMapa.crearMapa(), nombrePartida);
                         partida.iniciarNuevaPartida();//Inicia una nueva partida
                     }
                 }

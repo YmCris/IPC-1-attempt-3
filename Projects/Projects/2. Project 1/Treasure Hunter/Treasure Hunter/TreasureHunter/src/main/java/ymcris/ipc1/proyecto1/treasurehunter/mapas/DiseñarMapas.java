@@ -2,6 +2,7 @@ package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
@@ -18,8 +19,8 @@ public class DiseñarMapas {
     // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private Mapas mapaCreado;
     private String nombreMapa;
-    private CasillaTesoro tesoro;
-    private CasillaPersonaje personaje;
+    private CasillaTesoro casillaTesoro;
+    private CasillaPersonaje casillaAventurero;
     // ----------------------- VARIABLES PRIMITIVAS ----------------------------
     private int filaTesoro;
     private int filaJugador;
@@ -65,11 +66,15 @@ public class DiseñarMapas {
         } catch (InputMismatchException e) {
             errorEncontrado();
             scanner.nextLine();
-            crearMapa();
+            TreasureHunter inicio = new TreasureHunter();
+            inicio.verMenuPrincipal();
         }
-        this.personaje = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
-        this.tesoro = new CasillaTesoro(filaTesoro, columnaTesoro, 1);
-        this.mapaCreado = new Mapas(nombreMapa, numeroDeFilas, numeroDeColumnas, tesoro, personaje);
+        this.casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
+        this.casillaTesoro = new CasillaTesoro(filaTesoro, columnaTesoro, 1);
+        this.mapaCreado = new Mapas(nombreMapa, numeroDeFilas, numeroDeColumnas, casillaTesoro, casillaAventurero);
+        this.mapaCreado.crearMapa();
+        this.mapaCreado.modificarMapas(filaTesoro, columnaTesoro, casillaTesoro);
+        this.mapaCreado.modificarMapas(filaJugador, columnaJugador, casillaAventurero);
         return this.mapaCreado;
     }
 
@@ -78,26 +83,52 @@ public class DiseñarMapas {
      * dimensiones correctas.
      */
     private void realizarValidaciones() {
-        if (numeroDeFilas > 10 && numeroDeColumnas > 10) {//Validación para el tamaño del mapa
-            //todo en orden
-        } else if (filaTesoro >= 0 && filaTesoro < numeroDeFilas) {//Validación para el tesoro
-            //todo en orden
-        } else if (columnaTesoro >= 0 && columnaTesoro < numeroDeColumnas) {
-            //todo en orden
-        } else if (filaJugador >= 0 && filaJugador < numeroDeFilas) {//Validación para el jugador
-            //todo en orden
-        } else if (columnaJugador >= 0 && columnaJugador < numeroDeColumnas) {
-            //todo en orden
-        } else {
+        boolean nombreMapaVacio = nombreMapa.isBlank();
+        boolean dimensionesInvalidas = numeroDeFilas < 10 || numeroDeColumnas < 10;
+        boolean tesoroFueraDeRango = filaTesoro < 0 || filaTesoro >= numeroDeFilas || columnaTesoro < 0 || columnaTesoro >= numeroDeColumnas;
+        boolean jugadorFueraDeRango = filaJugador < 0 || filaJugador >= numeroDeFilas || columnaJugador < 0 || columnaJugador >= numeroDeColumnas;
+        if (nombreMapaVacio || dimensionesInvalidas || tesoroFueraDeRango || jugadorFueraDeRango) {
             System.out.println("No has introducido correctamente alguno de los siguientes datos:");
-            System.out.println("1) Mapa con dimensiones menores de 10*10");
-            System.out.println("2) La posición del tesoro no se encontraba dentro del rango del mapa");
-            System.out.println("3) La posición del jugador no se encontraba dentro del rango del mapa");
-            System.out.println("Vuelve a intentarlo evitando los errores mensionados");
-            scanner.nextLine();
+            if (nombreMapaVacio) {
+                System.out.println("0) El mapa no puede tener un nombre vacio");
+            }
+            if (dimensionesInvalidas) {
+                System.out.println("1) El mapa debe ser de al menos 10x10.");
+            }
+            if (tesoroFueraDeRango) {
+                System.out.println("2) La posición del tesoro debe estar dentro del rango del mapa.");
+            }
+            if (jugadorFueraDeRango) {
+                System.out.println("3) La posición del jugador debe estar dentro del rango del mapa.");
+            }
+            System.out.println("");
+            System.out.println("Vuelve a intentarlo evitando estos errores.");
+            errorEncontrado();
             scanner.nextLine();
             crearMapa();
-
         }
     }
+
+    /**
+     * Método encargado de modificar mapa
+     *
+     * @param mapa
+     * @return
+     */
+    public Mapas diseñarMapas(Mapas mapa) {
+        System.out.println("Las características del mapa son:");
+        System.out.println("FILAS: " + numeroDeFilas);
+        System.out.println("COlUMNAS: " + numeroDeColumnas);
+        System.out.println("POSICIÓN DEL TESORO: " + filaTesoro + "," + columnaTesoro);
+        System.out.println("POSICIÓN DEL JUGADOR: " + filaJugador + "," + columnaJugador);
+        //casillas normnales
+        //casillas trampa
+        //casillas pista
+        //casilla teletransporte
+        //casillas muro
+        //casillas energía
+        //casillas enemigo
+        return this.mapaCreado;
+    }
+
 }
