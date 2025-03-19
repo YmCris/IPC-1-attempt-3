@@ -66,7 +66,7 @@ public class TreasureHunter {
                 case 3 ->//Carga una partida ya existente
                     new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
                 case 4 ->//Modifica un mapa ya existente
-                    new DiseñarMapas().diseñarMapas();
+                    new DiseñarMapas().crearMapa();
                 case 5 ->//Muestra los reportes del juego
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
                 case 6 ->//Sale del programa
@@ -86,8 +86,8 @@ public class TreasureHunter {
      * @return Aventurero - Personaje del jugador.
      */
     private Aventurero crearJugador() {
-        scanner.nextLine();
-        System.out.println("Ingrese el nombre del nuevo aventurero:");
+        System.out.println("\n".repeat(100));
+        System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
         String nombreAventurero = scanner.nextLine();
         aventurero = new Aventurero(250, 15, 100, 100, nombreAventurero);//Se crea el aventurero del jugador.
         return aventurero;
@@ -111,8 +111,18 @@ public class TreasureHunter {
                     //archivo.elegirMapaExistente();
                 }
                 case 2 -> {//Juega con un nuevo mapa.
-                    Partida partida = new Partida(crearJugador(), new DiseñarMapas().diseñarMapas());
-                    partida.iniciarNuevaPartida();//Inicia una nueva partida
+                    scanner.nextLine();
+                    System.out.println("\n".repeat(100));
+                    System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
+                    String nombrePartida = scanner.nextLine();
+                    if (nombrePartida.isBlank()) {
+                        System.out.println("No puede estar en blanco");
+                        errorEncontrado();
+                        iniciarNuevaPartida();
+                    } else {
+                        Partida partida = new Partida(crearJugador(), new DiseñarMapas().crearMapa(), nombrePartida);
+                        partida.iniciarNuevaPartida();//Inicia una nueva partida
+                    }
                 }
                 case 3 ->//vuelve al menu
                     mostrarMenuPrincipal();

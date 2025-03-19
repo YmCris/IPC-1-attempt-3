@@ -4,6 +4,8 @@ import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaNormal;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.Casillas;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.NEGRO;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * Clase Mapas es la Clase encargada de crear los mapas, modificar los mapas y
@@ -34,6 +36,7 @@ public class Mapas {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
     private int columnas;
+    private char[] simbolosColumnas = {'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'Ñ', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'X', 'Y', 'Z'};
     private CasillaTesoro tesoro;
     private CasillaPersonaje personaje;
 
@@ -48,6 +51,48 @@ public class Mapas {
     }
 
     // MÉTODOS -----------------------------------------------------------------
+    public Casillas[][] crearMapa() {
+        for (int i = 0; i < mapa.length; i++) {//filas
+            for (int j = 0; j < mapa[i].length; j++) {//columnas
+                mapa[i][j] = new CasillaNormal(i, j, i * j);
+            }
+        }
+        return mapa;
+    }
+
+    public void mostrarMapa() {
+        //Marco superior de las letras
+        System.out.print("___");
+        for (int i = 0; i < mapa[0].length; i++) {
+            System.out.print("__");
+        }
+        System.out.print("_");
+        System.out.println("");
+        //Marco de las Columnas letras
+        System.out.print("|:v|");
+        for (int i = 0; i < mapa[0].length; i++) {
+            System.out.print(simbolosColumnas[i] + "|");
+        }
+        System.out.println("");
+        //Marco de las filas números
+        for (int i = 0; i < mapa.length; i++) {
+            if (i < 9) {
+                System.out.print("|" + 0 + (i + 1) + "|");
+            } else if (i >= 9) {
+                System.out.print("|" + (i + 1) + "|");
+            }
+            for (int j = 0; j < mapa[i].length; j++) {
+                System.out.print(mapa[i][j].getSimbolo());
+                System.out.print(NEGRO + "|" + RESETEAR);
+            }
+            System.out.println("");
+        }
+    }
+
+    public void diseñarMapa() {
+
+    }
+
     public Mapas modificarMapas(int fila, int columna, Casillas casillaAModificar) {
         return this;
     }
@@ -56,18 +101,4 @@ public class Mapas {
 
     }
 
-    public Casillas[][] crearMapa() {
-        for (int i = 0; i < mapa.length; i++) {//filas
-            for (int j = 0; j < mapa[i].length; j++) {//columnas
-                mapa[i][j] = new CasillaNormal(i, j, i * j);
-                System.out.print(mapa[i][j].getSimbolo());
-            }
-            System.out.println("");
-        }
-        return mapa;
-    }
-
-    private void mostrarMapa(Mapas mapa) {
-
-    }
 }
