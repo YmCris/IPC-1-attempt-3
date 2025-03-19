@@ -2,6 +2,8 @@ package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**

@@ -1,6 +1,9 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import java.util.Random;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**

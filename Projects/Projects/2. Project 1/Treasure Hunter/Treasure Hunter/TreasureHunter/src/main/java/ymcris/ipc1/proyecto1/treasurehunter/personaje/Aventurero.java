@@ -2,29 +2,28 @@ package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 import java.util.Arrays;
 import java.util.Scanner;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * SubClase encargada de crear aventureros y de realizar sus acciones durante
  * una batalla
  *
  * @author YmCris
+ * @see Personaje
  * @since Mar 13, 2025
  */
 public class Aventurero extends Personaje {
 
-    // VARIABLES DE REFENRENCIA ------------------------------------------------
-    private final String CYAN;
-    private final String RESETEAR;
-
     // VARIABLES PRIMITIVAS --------------------------------------------------------
     private int batallas;
-    private int vidaMaxima;
-    private int manaMaximo;
+    private int vidaTotal;
+    private int manaTotal;
     private int batallasHuidas;
     private int batallasGanadas;
     private int batallasPerdidas;
-    private int[][] posicionActual;
-    private int[][] posicionInicial;
+    //private int[][] posicionActual;
+    //private int[][] posicionInicial;
     private int cantidadMovimientos;
     private int vidaPrevioAUnaBatalla;
     private int manaPrevioAUnaBatalla;
@@ -45,17 +44,15 @@ public class Aventurero extends Personaje {
      */
     public Aventurero(int vida, int mana, int ataque, int defensa, String nombre) {
         super(vida, mana, ataque, defensa, nombre);
-        this.RESETEAR = "\u001B[0m";
-        this.CYAN = "\u001B[96m";
         this.batallas = 0;
-        this.manaMaximo = 10;
-        this.vidaMaxima = 100;
+        this.manaTotal = mana;
+        this.vidaTotal = vida;
         this.batallasHuidas = 0;
         this.batallasGanadas = 0;
         this.batallasPerdidas = 0;
         this.cantidadMovimientos = 0;
-        this.manaPrevioAUnaBatalla = 10;
-        this.vidaPrevioAUnaBatalla = 100;
+        this.manaPrevioAUnaBatalla = mana;
+        this.vidaPrevioAUnaBatalla = vida;
         this.defensaPrevioAUnaBatalla = defensa;
     }
 
@@ -65,17 +62,18 @@ public class Aventurero extends Personaje {
      * aventurero.
      */
     public void mostrarEstadoAventurero() {
-        System.out.println("                        Las estadísticas del aventurero " + this.getNombre() + " son:");
-        System.out.println("------------------------------------------------------------------------------------------");
-        System.out.println("    ·   Vida: " + this.getVida() + "/" + this.getVidaMaxima());
-        System.out.println("    ·   Mana: " + this.getMana() + "/" + this.getManaMaximo());
-        System.out.println("    ·   Ataque: " + this.getAtaque());
-        System.out.println("    ·   Defensa: " + this.getDefensa());
-        System.out.println("    ·   Símbolo: " + this.getSimbolo());
-        System.out.println("    ·   Posición Actual:" + Arrays.toString(this.getPosicionActual()));
-        System.out.println("    ·   Batallas Tenidas: " + this.getBatallas());
-        System.out.println("    ·   Movimientos Realizados: " + this.getCantidadMovimientos());
-        System.out.println("------------------------------------------------------------------------------------------");
+        System.out.println("            ..........................................................................................");
+        System.out.println("                                    Las estadísticas del aventurero " + this.getNombre() + " son:");
+        System.out.println("            ..........................................................................................");
+        System.out.println("                Vida: " + this.getVida() + "/" + this.getVidaMaxima());
+        System.out.println("                Mana: " + this.getMana() + "/" + this.getManaMaximo());
+        System.out.println("                Ataque: " + this.getAtaque());
+        System.out.println("                Defensa: " + this.getDefensa());
+        System.out.println("                Símbolo: " + this.getSimbolo());
+        System.out.println("                Posición Actual:" + "");
+        System.out.println("                Batallas Tenidas: " + this.getBatallas());
+        System.out.println("                Movimientos Realizados: " + this.getCantidadMovimientos());
+        System.out.println("            ..........................................................................................");
         scanner.nextLine();
     }
 
@@ -84,12 +82,12 @@ public class Aventurero extends Personaje {
      *
      */
     public void defender() {
-        if (this.getMana() >= 1) {
-            int defensaAAumentar = (int) (this.getDefensa() + this.getDefensa() * 0.5);
+        if (this.getMana() >= 1) {//Verifica si tiene mana para defenderse 
+            int defensaAAumentar = (int) (this.getDefensa() + this.getDefensa() * 0.5);//Aumenta su defensa según la fórmula
             this.setDefensa(defensaAAumentar);
-            this.setMana(this.getMana() - 1);
+            this.setMana(this.getMana() - 1);//quita mana
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " tu defensa ha aumentado " + this.getDefensa() * 0.5 + ", tienes " + this.getDefensa() + " puntos de defensa" + CYAN + " ------------------------- " + RESETEAR);
-        } else {
+        } else {//no tiene mana
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " no tienes el mana suficiente" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
@@ -98,12 +96,12 @@ public class Aventurero extends Personaje {
      * Método encargado de curar al personaje
      */
     public void curar() {
-        if (this.getMana() >= 1) {
-            int cantidadACurar = random.nextInt(0, 30);
+        if (this.getMana() >= 1) {//Verifiaca si tiene mana
+            int cantidadACurar = random.nextInt(0, 30);//Se cura según el rango de la fórmula
             this.setVida(this.getVida() + cantidadACurar);
             this.setMana(this.getMana() - 1);
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " te has curado " + cantidadACurar + " de vida, tienes " + this.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
-        } else {
+        } else {//no tiene mana
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " no tienes el mana suficiente" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
@@ -118,19 +116,19 @@ public class Aventurero extends Personaje {
     }
 
     public int getVidaMaxima() {
-        return vidaMaxima;
+        return vidaTotal;
     }
 
     public void setVidaMaxima(int vidaMaxima) {
-        this.vidaMaxima = vidaMaxima;
+        this.vidaTotal = vidaMaxima;
     }
 
     public int getManaMaximo() {
-        return manaMaximo;
+        return manaTotal;
     }
 
     public void setManaMaximo(int manaMaximo) {
-        this.manaMaximo = manaMaximo;
+        this.manaTotal = manaMaximo;
     }
 
     public int getBatallasHuidas() {
@@ -155,22 +153,6 @@ public class Aventurero extends Personaje {
 
     public void setBatallasPerdidas(int batallasPerdidas) {
         this.batallasPerdidas = batallasPerdidas;
-    }
-
-    public int[][] getPosicionInicial() {
-        return posicionInicial;
-    }
-
-    public void setPosicionInicial(int[][] posicionInicial) {
-        this.posicionInicial = posicionInicial;
-    }
-
-    public int[][] getPosicionActual() {
-        return posicionActual;
-    }
-
-    public void setPosicionActual(int[][] posicionActual) {
-        this.posicionActual = posicionActual;
     }
 
     public int getCantidadMovimientos() {

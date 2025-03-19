@@ -1,6 +1,8 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 import java.util.Random;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * SuperClase encargada de crear objetos del tipo Personaje, de los cuales
@@ -9,7 +11,7 @@ import java.util.Random;
  * @author YmCris
  * @since Mar 13, 2025
  */
-public class Personaje {
+public abstract class Personaje {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected int vida;
@@ -20,8 +22,6 @@ public class Personaje {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
-    private final String CYAN;
-    private final String RESETEAR;
 
     // INSTANCIAS --------------------------------------------------------------
     Random random = new Random();
@@ -43,26 +43,23 @@ public class Personaje {
         this.defensa = defensa;
         this.nombre = nombre;
         this.simbolo = nombre.charAt(0);
-        this.CYAN = "\u001B[96m";
-        this.RESETEAR = "\u001B[0m";
     }
 
     /**
-     * Constructor vacio para el pirata
+     * Constructor vacio para el pirata ya que el se instancia con un aventurero
+     * y de ahí se sacan sus atributos
      */
     public Personaje() {
-        this.CYAN = "\u001B[96m";
-        this.RESETEAR = "\u001B[0m";
-
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
-     * Método encargado de que el personaje reciba daño durante la batalla.
+     * Método encargado de que el personaje reciba daño durante la batalla,
+     * final porque no esta pensasod para que una clase hija lo sobreescriba
      *
      * @param daño - Daño que recibirá
      */
-    public void recibirDaño(int daño) {
+    public final void recibirDaño(int daño) {
         this.setVida(this.getVida() - daño);
         if (this.getVida() <= 0) {
             this.setVida(0);
@@ -70,12 +67,13 @@ public class Personaje {
     }
 
     /**
-     * Método encargado de atacar a un personaje
+     * Método encargado de atacar a un personaje, final porque no esta pensasod
+     * para que una clase hija lo sobreescriba
      *
      * @param personaje - Personaje al cual se atacará
      */
-    public void atacar(Personaje personaje) {
-        int dañoARealizar = random.nextInt(0, (this.getAtaque() - personaje.getDefensa())+1);
+    public final void atacar(Personaje personaje) {
+        int dañoARealizar = random.nextInt(0, (this.getAtaque() - personaje.getDefensa()) + 1);//Forma random de hacer que la defensa sirva para recibir daño
         personaje.recibirDaño(dañoARealizar);
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + this.getNombre() + " le ha realizado " + dañoARealizar + " de daño a " + personaje.getNombre() + ", le quedan " + personaje.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
     }

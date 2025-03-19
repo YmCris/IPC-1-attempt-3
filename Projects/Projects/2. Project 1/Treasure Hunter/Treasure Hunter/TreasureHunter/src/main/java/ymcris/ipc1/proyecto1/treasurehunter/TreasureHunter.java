@@ -1,14 +1,19 @@
 package ymcris.ipc1.proyecto1.treasurehunter;
 
+import java.util.Scanner;
 import java.util.InputMismatchException;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
-import java.util.Scanner;
-import ymcris.ipc1.proyecto1.treasurehunter.batalla.Batalla;
-import ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus;
+import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
+import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
 /**
- * Clase Main, encargada de dar inicio al programa.
+ * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
+ * proporcionar las opciones del programa.
  *
  * @author YmCris
  * @version 21.0.5
@@ -16,8 +21,12 @@ import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
  */
 public class TreasureHunter {
 
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    public static Aventurero aventurero;
+
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int opcion = 0;
+    private int opcionMenu = 0;
+    private int opcionMapas = 0;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
@@ -29,14 +38,9 @@ public class TreasureHunter {
      * @param args - paramétros para iniciar directamente en el jar
      */
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        new DiseñoMenus().mostrarBienvenida();
-        scanner.nextLine();
-        Aventurero aventurero = new Aventurero(100, 10, 100, 15, "cristian");
-        Batalla batalla = new Batalla(aventurero, true,0,0);
-        batalla.pelear();
+        mostrarBienvenida();
         do {//Para que nunca acabe el juego
-            new TreasureHunter().mostrarMenuPrincipal();
+            new TreasureHunter().verMenuPrincipal();
         } while (true);
     }
 
@@ -45,40 +49,81 @@ public class TreasureHunter {
      * Método encargado de mostrar el menú principal y evitar los errores que
      * esté pueda cometer
      */
-    private void mostrarMenuPrincipal() {
+    public void verMenuPrincipal() {
         scanner.nextLine();
         do {//Por si introduce un número que no es
-            new DiseñoMenus().mostrarMenuPrincipal();
+            mostrarMenuPrincipal();
             try {//por si introduce un string
-                opcion = scanner.nextInt();
+                opcionMenu = scanner.nextInt();
             } catch (InputMismatchException exception) {
-                opcion = 8;
+                opcionMenu = 8;
             }
-            switch (opcion) {//Opciones dentro del juego
-                case 1 ->
+            switch (opcionMenu) {//Opciones dentro del juego
+                case 1 ->//Muestra como jugar el juego
                     new ComoJugar().enseñarAJugar();
-                case 2 ->
-                    new ComoJugar().enseñarAJugar();//new Partida().iniciarNuevaPartida();
-                case 3 ->
+                case 2 ->//Inicia una nueva partida
+                    iniciarNuevaPartida();
+                case 3 ->//Carga una partida ya existente
                     new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
-                case 4 ->
-                    diseñarMapas();
-                case 5 ->
+                case 4 ->//Modifica un mapa ya existente
+                    new DiseñarMapas().diseñarMapas();
+                case 5 ->//Muestra los reportes del juego
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
-                case 6 ->
+                case 6 ->//Sale del programa
                     System.exit(0);
                 default -> {
-                    System.out.println("Ingresa una opción válida [1-6]");
-                    System.out.println("Presiona enter para continuar:");
+                    errorEncontrado();
                     scanner.nextLine();
                 }
             }
-        } while (opcion < 1 || opcion > 6);
+        } while (opcionMenu < 1 || opcionMenu > 6);
     }
 
     /**
-     * Método encargado de crear un nuevo mapa
+     * Método encargado de crear el jugador que estará activo durante la
+     * partida, ya sea con un mapa previamente cargado o con uno nuevo.
+     *
+     * @return Aventurero - Personaje del jugador.
      */
-    private void diseñarMapas() {
+    private Aventurero crearJugador() {
+        scanner.nextLine();
+        System.out.println("Ingrese el nombre del nuevo aventurero:");
+        String nombreAventurero = scanner.nextLine();
+        aventurero = new Aventurero(250, 15, 100, 100, nombreAventurero);//Se crea el aventurero del jugador.
+        return aventurero;
     }
+
+    /**
+     * Método encargado de iniciar una nueva partida preguntando si juega con un
+     * mapa ya existente o desea crear uno.
+     */
+    private void iniciarNuevaPartida() {
+        do {//por si pone un número que no es
+            mostrarOpcionesIniciarPartida();
+            try {//En dado caso ponga un string
+                opcionMapas = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                opcionMapas = 9;
+            }
+            switch (opcionMapas) {//Opciones al iniciar una nueva partida.
+                case 1 -> {//Juega con un mapa ya existente.
+                    //Archivo archivo = new Archivo();
+                    //archivo.elegirMapaExistente();
+                }
+                case 2 -> {//Juega con un nuevo mapa.
+                    Partida partida = new Partida(crearJugador(), new DiseñarMapas().diseñarMapas());
+                    partida.iniciarNuevaPartida();//Inicia una nueva partida
+                }
+                case 3 ->//vuelve al menu
+                    mostrarMenuPrincipal();
+                case 4 ->//sale del programa
+                    System.exit(0);
+                default -> {
+                    errorEncontrado();
+                    scanner.nextLine();
+                }
+            }
+        } while (opcionMapas < 0 || opcionMapas >= 5);
+    }
+
 }

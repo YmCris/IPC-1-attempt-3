@@ -1,5 +1,7 @@
 package ymcris.ipc1.proyecto1.treasurehunter.exception;
 
+import java.util.Scanner;
+
 /**
  * Clase encargada de crear la exception que se lanza cuando el usuario no
  * introduce la entrada que se espera.
@@ -17,6 +19,19 @@ public class EntradaNoValidaException extends Exception {
      */
     public EntradaNoValidaException(String message) {
         super(message);
+    }
+
+    /**
+     * Método encargado de informar al usuario que ha introducido un valor fuera
+     * del rango esperado y espera a que el usuario introduzca un salto de línea
+     * para poder continuar con la ejecución
+     */
+    public static void errorEncontrado() {
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("");
+        System.out.println("Ingresa una opción válida");
+        System.out.println("Presiona enter para continuar");
+        scanner.nextLine();
     }
 
 }

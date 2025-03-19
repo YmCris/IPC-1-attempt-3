@@ -1,5 +1,8 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.AMARILLO;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**

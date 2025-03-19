@@ -10,22 +10,22 @@ package ymcris.ipc1.proyecto1.treasurehunter.diseño;
 public class DiseñoMenus {
 
     // VARIABLES DE REFENCIA ---------------------------------------------------
-    private final String AZUL = "\u001B[94m";// todos los colores son brillantes
-    private final String CYAN = "\u001B[96m";
-    private final String ROJO = "\u001B[91m";
-    private final String NEGRO = "\u001B[90m";
-    private final String BLANCO = "\u001B[97m";
-    private final String AMARILLO = "\u001B[93m";
-    private final String RESETEAR = "\u001B[0m";
-    //private final String VERDE = "\u001B[92m";
-    //private final String MAGENTA = "\u001B[95m";
+    public static final String AZUL = "\u001B[94m";//casilas energía
+    public static final String CYAN = "\u001B[96m";//casillas enemigos
+    public static final String ROJO = "\u001B[91m";//
+    public static final String NEGRO = "\u001B[90m";//casillas tesoro, trampa y tesoro
+    public static final String BLANCO = "\u001B[97m";//casillas personaje
+    public static final String AMARILLO = "\u001B[93m";//casillas pista
+    public static final String RESETEAR = "\u001B[0m";//resetea
+    public static final String VERDE = "\u001B[92m";//casillas muro
+    public static final String MAGENTA = "\u001B[95m";//casilla teletransporte
 
     // MÉTODOS -----------------------------------------------------------------
     /**
      * Método encargado de darle la bienvenida al usuario al iniciar el
      * programa.
      */
-    public void mostrarBienvenida() {
+    public static void mostrarBienvenida() {
         System.out.println("\n".repeat(100));
         System.out.println(CYAN
                 + "                                     Aventurero, un mundo lleno de tesoros, peligros e innumerables desafíos y aventuras te espera\n"
@@ -53,15 +53,15 @@ public class DiseñoMenus {
      * Método encargado de mostrar las opciones que se tienen al ingresar al
      * juego.
      */
-    public void mostrarMenuPrincipal() {
+    public static void mostrarMenuPrincipal() {
         System.out.println("\n".repeat(100));
         System.out.println("                                            ┌------------------------------------------------┐");
         System.out.println("                                            |                 MENÚ PRINCIPAL                 |");
         System.out.println("                                            ├------------------------------------------------┤");
         System.out.println("                                            ¦ [1] ¿Cómo Jugar Treasure Hunter?               ¦");
         System.out.println("                                            ¦ [2] Iniciar Nueva Partida                      ¦");
-        System.out.println("                                            ¦ [3] Cargar Partida                             ¦");
-        System.out.println("                                            ¦ [4] Diseñar Mapas                              ¦");
+        System.out.println("                                            ¦ [3] Cargar Partida Existente                   ¦");
+        System.out.println("                                            ¦ [4] Diseñar Mapas Y Modificar Mapas            ¦");
         System.out.println("                                            ¦ [5] Ver reportes                               ¦");
         System.out.println("                                            ¦ [6] Salir del programa                         ¦");
         System.out.println("                                            ├------------------------------------------------┤");
@@ -71,9 +71,27 @@ public class DiseñoMenus {
     }
 
     /**
+     * Método encargado de mostrar que desea realizar el usuario.
+     */
+    public static void mostrarOpcionesIniciarPartida() {
+        System.out.println("\n".repeat(100));
+        System.out.println("                                            ┌------------------------------------------------┐");
+        System.out.println("                                            |             ¿Cón qué deseas jugar?             |");
+        System.out.println("                                            ├------------------------------------------------┤");
+        System.out.println("                                            ¦ [1] Jugar con un mapa ya existente             ¦");
+        System.out.println("                                            ¦ [2] Crear un nuevo mapa                        ¦");
+        System.out.println("                                            ¦ [3] Regresar                                   ¦");
+        System.out.println("                                            ¦ [4] Salir del programa                         ¦");
+        System.out.println("                                            ├------------------------------------------------┤");
+        System.out.println("                                            ¦            -Seleccione una opción-             ¦");
+        System.out.println("                                            └------------------------------------------------┘");
+        System.out.println("");
+    }
+
+    /**
      * Método encargado de mostrar una imagen llamativa para el videojuego.
      */
-    private void mostrarBrujula() {
+    private static void mostrarBrujula() {
         System.out.println(BLANCO + "                              .:::;&:                                                                                                               \n"
                 + "                              .X&&X+$.                 :;                                                                                           \n"
                 + "                               :X+X&$x                :+.                                                                                           \n"

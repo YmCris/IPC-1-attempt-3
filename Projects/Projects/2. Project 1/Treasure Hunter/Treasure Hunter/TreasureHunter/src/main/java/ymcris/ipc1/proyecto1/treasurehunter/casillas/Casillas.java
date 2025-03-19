@@ -13,31 +13,15 @@ public abstract class Casillas {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String simbolo;
-    protected final String AZUL;// casilla energía
-    protected final String CYAN;// casilla enemigos
-    protected final String VERDE;// casilla muro
-    protected final String NEGRO;// casilla tesoro, casilla trampa y casilla normal
-    protected final String BLANCO;// casilla personaje
-    protected final String MAGENTA;// casilla de teletransporte
-    protected final String RESETEAR;// para resetear los colores
-    protected final String AMARILLO;//casilla pista
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    protected int cantidad;
     protected int fila;
     protected int columna;
+    protected int cantidad;
     protected boolean puedePasar;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Casillas() {
-        this.CYAN = "\u001B[96m";
-        this.AZUL = "\u001B[94m";
-        this.VERDE = "\u001B[92m";
-        this.NEGRO = "\u001B[90m";
-        this.MAGENTA = "\u001B[95m";
-        this.BLANCO = "\u001B[97m";
-        this.RESETEAR = "\u001B[0m";
-        this.AMARILLO = "\u001B[93m";
         this.puedePasar = true;
     }
 
@@ -55,15 +39,17 @@ public abstract class Casillas {
      */
     protected abstract void mostrarMensaje();
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
      * Método encargado de modificar las caracteríticas de la casilla.
      *
      * @return Casilla modificada
      */
-    protected Casillas modificarCasillas() {
+    protected final Casillas modificarCasillas() {
         return this;
     }
 
+    // GETTERS & SETTERS -------------------------------------------------------
     public String getSimbolo() {
         return simbolo;
     }
@@ -86,6 +72,22 @@ public abstract class Casillas {
 
     public void setPuedePasar(boolean puedePasar) {
         this.puedePasar = puedePasar;
+    }
+
+    public int getFila() {
+        return fila;
+    }
+
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
+    public int getColumna() {
+        return columna;
+    }
+
+    public void setColumna(int columna) {
+        this.columna = columna;
     }
 
 }

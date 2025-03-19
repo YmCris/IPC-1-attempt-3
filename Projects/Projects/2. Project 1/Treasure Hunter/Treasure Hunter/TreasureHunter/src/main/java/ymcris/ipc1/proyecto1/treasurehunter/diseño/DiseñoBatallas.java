@@ -1,12 +1,16 @@
 package ymcris.ipc1.proyecto1.treasurehunter.diseño;
 
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * Clase DiseñoBatallas es la clase encargada de dar una vista más agradable al
  * Programa.
  *
  * @author YmCris
+ * @see DiseñoMenus
  * @since Mar 12, 2025
  */
 public class DiseñoBatallas {
@@ -19,7 +23,7 @@ public class DiseñoBatallas {
      */
     public void verOpcionesBatalla(Aventurero aventurero) {
         System.out.println("............................................................................................................................................");
-        System.out.println(". TURNO DE: " + aventurero.getNombre() + " '" + aventurero.getSimbolo() + "'" + "     .                                                                                                             .");
+        System.out.println(". TURNO DE: " + MAGENTA + aventurero.getNombre() + RESETEAR + " '" + ROJO + aventurero.getSimbolo() + RESETEAR + "'" + "     .                                                                                                             .");
         System.out.println(". VIDA: " + aventurero.getVida() + "/" + aventurero.getVidaMaxima() + "              .    ┌---------------------┐   ┌---------------------┐   ┌---------------------┐   ┌---------------------┐    .");
         System.out.println(". MANA: " + aventurero.getMana() + "/" + aventurero.getManaMaximo() + "                .    ¦        ATACAR       ¦   ¦        CURAR        ¦   ¦       DEFENDER      ¦   ¦      ABANDONAR      ¦    .");
         System.out.println(". ATAQUE: " + aventurero.getAtaque() + "                .    ¦         [1]         ¦   ¦         [2]         ¦   ¦          [3]        ¦   ¦         [4]         ¦    .");
