@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.AZUL;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
@@ -30,18 +31,20 @@ public class CasillaEnergia extends Casillas {
 
     // MÉTODOS SOBRE ESCRITOS --------------------------------------------------
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
         if (recuperaVida) {//recupera vida
             aventurero.setVida(aventurero.getVida() + puntosARecuperar);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getVida() + CYAN + " ------------------------- " + RESETEAR);
         } else if (!recuperaVida) {//recupera mana
             aventurero.setMana(aventurero.getMana() + puntosARecuperar);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getMana() + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 
     @Override
-    protected void mostrarMensaje() {
-        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + "aventurero.getName()" + " te haz topado con una casilla de energía" + CYAN + " ------------------------- " + RESETEAR);
-        //aplicarEfecto(aventurero);
+    public void mostrarMensaje() {
+        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla de energía" + CYAN + " ------------------------- " + RESETEAR);
+        aplicarEfecto(aventurero);
     }
 
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosARecuperar, boolean recuperaVida) {

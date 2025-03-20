@@ -21,12 +21,12 @@ public class CasillaPersonaje extends Casillas {
     }
 
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
         //No hace nada
     }
 
     @Override
-    protected void mostrarMensaje() {
+    public void mostrarMensaje() {
         //No muestra nada
     }
 

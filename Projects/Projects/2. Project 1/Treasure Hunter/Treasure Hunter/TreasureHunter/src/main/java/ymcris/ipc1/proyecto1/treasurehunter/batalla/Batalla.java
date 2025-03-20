@@ -33,12 +33,13 @@ public class Batalla {
     private boolean rendirse;
     private boolean defensaActiva;
     private boolean puedeAbandonar;
+    private boolean pierdePuntos;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Batalla(Aventurero aventurero, boolean puedeAbandonar, int tipoDePuntos, int puntosAQuitar) {
+    public Batalla(Aventurero aventurero, boolean pierdePuntos, boolean puedeAbandonar, int tipoDePuntos, int puntosAQuitar) {
         this.opcion = 0;
         this.rendirse = false;
         this.opcionBatalla = 0;
@@ -47,6 +48,7 @@ public class Batalla {
         this.tipoDePuntos = tipoDePuntos;
         this.puntosAQuitar = puntosAQuitar;
         this.puedeAbandonar = puedeAbandonar;
+        this.pierdePuntos = pierdePuntos;
         this.pirata = new Pirata(aventurero);
     }
 
@@ -135,22 +137,24 @@ public class Batalla {
         aventurero.setMana(aventurero.getManaPrevioAUnaBatalla());
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + " Tienes " + aventurero.getVidaPrevioAUnaBatalla() + " puntos de vida y " + " Tienes " + aventurero.getManaPrevioAUnaBatalla() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         //Aplica efectos Casilla
-        switch (tipoDePuntos) {
-            case 1 -> {//quita vida
-                aventurero.setVida(aventurero.getVida() - puntosAQuitar);
-                System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de vida, tienes " + aventurero.getVida());
-            }
-            case 2 -> {//quita mana
-                aventurero.setMana(aventurero.getMana() - puntosAQuitar);
-                System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de mana, tienes " + aventurero.getMana());
-            }
-            case 3 -> {//quita ataque
-                aventurero.setAtaque(aventurero.getAtaque() - puntosAQuitar);
-                System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de ataque, tienes " + aventurero.getAtaque());
-            }
-            case 4 -> {//quita defensa
-                aventurero.setDefensa(aventurero.getDefensa() - puntosAQuitar);
-                System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de defensa, tienes " + aventurero.getDefensa());
+        if (pierdePuntos = false) {
+            switch (tipoDePuntos) {
+                case 1 -> {//quita vida
+                    aventurero.setVida(aventurero.getVida() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de vida, tienes " + aventurero.getVida());
+                }
+                case 2 -> {//quita mana
+                    aventurero.setMana(aventurero.getMana() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de mana, tienes " + aventurero.getMana());
+                }
+                case 3 -> {//quita ataque
+                    aventurero.setAtaque(aventurero.getAtaque() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de ataque, tienes " + aventurero.getAtaque());
+                }
+                case 4 -> {//quita defensa
+                    aventurero.setDefensa(aventurero.getDefensa() - puntosAQuitar);
+                    System.out.println("Por el efecto de las casillas, has perdido " + puntosAQuitar + " de defensa, tienes " + aventurero.getDefensa());
+                }
             }
         }
     }

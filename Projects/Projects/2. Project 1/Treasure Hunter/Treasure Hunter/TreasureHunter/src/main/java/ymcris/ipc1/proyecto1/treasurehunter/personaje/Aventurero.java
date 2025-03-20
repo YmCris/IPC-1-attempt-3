@@ -1,6 +1,5 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
-import java.util.Arrays;
 import java.util.Scanner;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
@@ -23,7 +22,7 @@ public class Aventurero extends Personaje {
     private int batallasGanadas;
     private int batallasPerdidas;
     //private int[][] posicionActual;
-    //private int[][] posicionInicial;
+    private int[][] posicionInicial;
     private int cantidadMovimientos;
     private int vidaPrevioAUnaBatalla;
     private int manaPrevioAUnaBatalla;
@@ -54,6 +53,7 @@ public class Aventurero extends Personaje {
         this.manaPrevioAUnaBatalla = mana;
         this.vidaPrevioAUnaBatalla = vida;
         this.defensaPrevioAUnaBatalla = defensa;
+        this.posicionInicial = new int[1][1];
     }
 
     // MÉTODOS -----------------------------------------------------------------
@@ -193,6 +193,15 @@ public class Aventurero extends Personaje {
 
     public void setScanner(Scanner scanner) {
         this.scanner = scanner;
+    }
+
+    public int[][] getPosicionInicial() {
+        return posicionInicial;
+    }
+
+    public void setPosicionInicial(int fila, int columna) {
+        this.posicionInicial[1][0] = fila;
+        this.posicionInicial[0][1] = columna;
     }
 
 }

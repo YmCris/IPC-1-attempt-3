@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.NEGRO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
@@ -30,7 +31,7 @@ public class CasillaTrampa extends Casillas {
     }
 
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
         if (quitaVida) {//quita vida
             aventurero.setVida(aventurero.getVida() - puntosAQuitar);
         } else if (!quitaVida) {//quita mana
@@ -39,8 +40,8 @@ public class CasillaTrampa extends Casillas {
     }
 
     @Override
-    protected void mostrarMensaje() {
-        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + "aventurero.getName()" + " te haz topado con una casilla trampa" + CYAN + " ------------------------- " + RESETEAR);
+    public void mostrarMensaje() {
+        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla trampa" + CYAN + " ------------------------- " + RESETEAR);
         //aplicarEfecto(aventurero);
     }
 

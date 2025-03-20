@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
+import java.util.Scanner;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
@@ -23,6 +24,9 @@ public class Partida {
     // VARIBLES PRIMITIVAS -----------------------------------------------------
     private boolean partidaTerminada;
 
+    // INSTANCIAS --------------------------------------------------------------
+    Scanner scanner = new Scanner(System.in);
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Partida(Aventurero aventurero, Mapas mapa, String nombrePartida) {
         this.mapa = mapa;
@@ -34,8 +38,10 @@ public class Partida {
     // MÉTODOS -----------------------------------------------------------------
     public void iniciarNuevaPartida() {
         do {
-            mapa.mostrarMapa();
+            mapa.mostrarMapaCompleto();
             verOpcionesPartida();
-        } while (partidaTerminada);
+            String opcionPartida = scanner.nextLine();
+            mapa.seleccionarOpcionesPartida(opcionPartida);
+        } while (true);
     }
 }

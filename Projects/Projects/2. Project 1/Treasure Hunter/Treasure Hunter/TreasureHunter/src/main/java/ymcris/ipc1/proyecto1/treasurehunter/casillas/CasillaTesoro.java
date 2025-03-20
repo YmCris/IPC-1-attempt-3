@@ -23,11 +23,11 @@ public class CasillaTesoro extends Casillas {
     }
 
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
     }
 
     @Override
-    protected void mostrarMensaje() {
+    public void mostrarMensaje() {
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + "" + CYAN + " ------------------------- " + RESETEAR);
         //partidaTerminada = true;
     }

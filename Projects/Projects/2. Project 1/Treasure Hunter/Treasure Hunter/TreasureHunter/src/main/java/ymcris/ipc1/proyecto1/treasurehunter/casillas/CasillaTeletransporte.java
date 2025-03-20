@@ -1,6 +1,7 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import java.util.Random;
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
@@ -33,7 +34,7 @@ public class CasillaTeletransporte extends Casillas {
     }
 
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
         if (ubicacionAleatoria) {//la ubicación es aleatoria
             this.filaAMover = random.nextInt();
             this.columnaAMover = random.nextInt();
@@ -44,8 +45,8 @@ public class CasillaTeletransporte extends Casillas {
     }
 
     @Override
-    protected void mostrarMensaje() {
-        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + "aventurero.getName()" + " te haz topado con una casilla de teletransporte" + CYAN + " ------------------------- " + RESETEAR);
+    public void mostrarMensaje() {
+        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla de teletransporte" + CYAN + " ------------------------- " + RESETEAR);
         //aplicarEfecto(aventurero);
     }
 

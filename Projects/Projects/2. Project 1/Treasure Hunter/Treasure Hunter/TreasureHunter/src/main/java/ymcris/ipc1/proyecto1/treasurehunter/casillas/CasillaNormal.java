@@ -20,12 +20,12 @@ public class CasillaNormal extends Casillas {
     }
 
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
         this.puedePasar = true;
     }
 
     @Override
-    protected void mostrarMensaje() {
+    public void mostrarMensaje() {
         //No muestra nada
     }
 

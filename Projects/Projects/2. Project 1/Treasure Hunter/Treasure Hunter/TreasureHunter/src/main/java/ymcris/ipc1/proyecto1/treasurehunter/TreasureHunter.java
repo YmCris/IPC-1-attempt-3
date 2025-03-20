@@ -10,7 +10,6 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarB
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y

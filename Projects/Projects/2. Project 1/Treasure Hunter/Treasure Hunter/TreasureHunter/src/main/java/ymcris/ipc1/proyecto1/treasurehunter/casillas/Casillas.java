@@ -31,13 +31,13 @@ public abstract class Casillas {
      *
      * @param aventurero - el jugador
      */
-    protected abstract void aplicarEfecto(Aventurero aventurero);
+    public abstract void aplicarEfecto(Aventurero aventurero);
 
     /**
      * Método encargado de mostrar el mensaje de lo que ha hecho la casilla al
      * jugador.
      */
-    protected abstract void mostrarMensaje();
+    public abstract void mostrarMensaje();
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
@@ -45,7 +45,7 @@ public abstract class Casillas {
      *
      * @return Casilla modificada
      */
-    protected final Casillas modificarCasillas() {
+    public final Casillas modificarCasillas() {
         return this;
     }
 

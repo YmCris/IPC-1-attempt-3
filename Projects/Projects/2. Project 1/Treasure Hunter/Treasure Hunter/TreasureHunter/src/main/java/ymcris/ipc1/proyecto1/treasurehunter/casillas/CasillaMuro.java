@@ -20,12 +20,12 @@ public class CasillaMuro extends Casillas {
     }
 
     @Override
-    protected void aplicarEfecto(Aventurero aventurero) {
+    public void aplicarEfecto(Aventurero aventurero) {
         this.puedePasar = false;
     }
 
     @Override
-    protected void mostrarMensaje() {
+    public void mostrarMensaje() {
         // no muestra nada
     }
 
