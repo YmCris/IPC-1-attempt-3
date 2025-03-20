@@ -20,11 +20,9 @@ public class CasillaEnergia extends Casillas {
     private boolean recuperaVida;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public CasillaEnergia(int fila, int columna, int cantidad, int puntosARecuperar, boolean recuperaVida) {
+    public CasillaEnergia(int cantidad, int puntosARecuperar, boolean recuperaVida) {
         this.puntosARecuperar = puntosARecuperar;
         this.recuperaVida = recuperaVida;
-        this.fila = fila;
-        this.columna = columna;
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.simbolo = AZUL + "▒▒" + RESETEAR;
@@ -47,10 +45,10 @@ public class CasillaEnergia extends Casillas {
     }
 
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosARecuperar, boolean recuperaVida) {
-        this.fila=filaNueva;
-        this.columna=columnaNueva;
-        this.puntosARecuperar=puntosARecuperar;
-        this.recuperaVida=recuperaVida;
+        this.fila = filaNueva;
+        this.columna = columnaNueva;
+        this.puntosARecuperar = puntosARecuperar;
+        this.recuperaVida = recuperaVida;
         return this;
     }
 

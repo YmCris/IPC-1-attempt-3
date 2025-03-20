@@ -53,7 +53,7 @@ public class Mapas {
     public Casillas[][] crearMapa() {
         for (int i = 0; i < tablero.length; i++) {//filas
             for (int j = 0; j < tablero[i].length; j++) {//columnas
-                tablero[i][j] = new CasillaNormal(i, j, i * j);
+                tablero[i][j] = new CasillaNormal( i * j);
             }
         }
         return tablero;

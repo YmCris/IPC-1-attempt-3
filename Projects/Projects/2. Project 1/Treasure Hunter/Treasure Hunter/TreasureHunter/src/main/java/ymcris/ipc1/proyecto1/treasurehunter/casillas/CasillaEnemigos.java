@@ -22,13 +22,12 @@ public class CasillaEnemigos extends Casillas {
     private int puntosAQuitar;
     private int columnaARetornar;
     private boolean puedeEscapar;
+    private boolean pierdeEnergia;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
 
-    public CasillaEnemigos(int fila, int columna, int cantidad, boolean puedeEscapar, int filaARetornar, int columnaARetornar, int puntosAQuitar, int tipoDePuntos) {
-        this.fila = fila;
-        this.columna = columna;
+    public CasillaEnemigos(int cantidad, boolean puedeEscapar, boolean pierdeEnergia, int filaARetornar, int columnaARetornar, int puntosAQuitar, int tipoDePuntos) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.puedeEscapar = puedeEscapar;

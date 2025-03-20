@@ -21,9 +21,7 @@ public class CasillaPista extends Casillas {
     private boolean pistaEsDireccional;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public CasillaPista(int fila, int columna, int cantidad, boolean pistaEsDireccional) {
-        this.fila = fila;
-        this.columna = columna;
+    public CasillaPista( int cantidad, boolean pistaEsDireccional) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.simbolo = AMARILLO + "▒▒" + RESETEAR;

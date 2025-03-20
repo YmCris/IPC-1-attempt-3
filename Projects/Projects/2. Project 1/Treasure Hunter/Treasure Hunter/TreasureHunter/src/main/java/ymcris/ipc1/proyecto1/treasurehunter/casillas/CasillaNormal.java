@@ -13,9 +13,7 @@ import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
  */
 public class CasillaNormal extends Casillas {
 
-    public CasillaNormal(int fila, int columna, int cantidad) {
-        this.fila = fila;
-        this.columna = columna;
+    public CasillaNormal(int cantidad) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.simbolo = NEGRO + "░░" + RESETEAR;

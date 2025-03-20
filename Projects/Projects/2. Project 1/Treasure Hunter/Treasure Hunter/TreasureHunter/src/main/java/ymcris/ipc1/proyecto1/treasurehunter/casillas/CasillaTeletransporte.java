@@ -23,9 +23,7 @@ public class CasillaTeletransporte extends Casillas {
     // INSTANCIAS --------------------------------------------------------------
     Random random = new Random();
 
-    public CasillaTeletransporte(int fila, int columna, int cantidad, boolean ubicacionAleatoria, int filaAMover, int columnaAMover) {
-        this.fila = fila;
-        this.columna = columna;
+    public CasillaTeletransporte( int cantidad, boolean ubicacionAleatoria, int filaAMover, int columnaAMover) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.filaAMover = filaAMover;

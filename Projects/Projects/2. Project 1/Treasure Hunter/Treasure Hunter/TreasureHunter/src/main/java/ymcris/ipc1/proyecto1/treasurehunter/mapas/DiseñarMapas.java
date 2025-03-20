@@ -2,10 +2,17 @@ package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import java.util.Random;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnemigos;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnergia;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPista;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTrampa;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.Casillas;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
 /**
@@ -28,7 +35,14 @@ public class DiseñarMapas {
     private int numeroDeFilas;
     private int columnaJugador;
     private int numeroDeColumnas;
+    private int cantidadCasillasTrampa;
+    private int cantidadCasillasPista;
+    private int cantidadCasillasTeletransporte;
+    private int cantidadCasillasMuro;
+    private int cantidadCasillasEnergia;
+    private int cantidadCasillasEnemigos;
     // ----------------------------- INSTANCIAS --------------------------------
+    Random random = new Random();
     Scanner scanner = new Scanner(System.in);
 
     // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
@@ -75,6 +89,7 @@ public class DiseñarMapas {
         this.mapaCreado.crearMapa();
         this.mapaCreado.modificarMapas(filaTesoro, columnaTesoro, casillaTesoro);
         this.mapaCreado.modificarMapas(filaJugador, columnaJugador, casillaAventurero);
+        diseñarMapas();
         return this.mapaCreado;
     }
 
@@ -112,23 +127,146 @@ public class DiseñarMapas {
     /**
      * Método encargado de modificar mapa
      *
-     * @param mapa
      * @return
      */
-    public Mapas diseñarMapas(Mapas mapa) {
-        System.out.println("Las características del mapa son:");
-        System.out.println("FILAS: " + numeroDeFilas);
-        System.out.println("COlUMNAS: " + numeroDeColumnas);
-        System.out.println("POSICIÓN DEL TESORO: " + filaTesoro + "," + columnaTesoro);
-        System.out.println("POSICIÓN DEL JUGADOR: " + filaJugador + "," + columnaJugador);
-        //casillas normnales
-        //casillas trampa
-        //casillas pista
-        //casilla teletransporte
-        //casillas muro
-        //casillas energía
-        //casillas enemigo
+    public Mapas diseñarMapas() {
+        try {//Crea las casillas
+            diseñarCasillasTrampa();//casillas trampa
+            diseñarCasillasPista();//casillas pista
+            diseñarCasillasTeletransporte();//casilla teletransporte
+            diseñarCasillasEnergia();//casillas energía
+            diseñarCasillasEnemigos();//casillas enemigo
+        } catch (InputMismatchException e) {
+            System.out.println("Debes introducir un valor numérico");
+            errorEncontrado();
+            scanner.nextLine();
+            diseñarMapas();
+        }
         return this.mapaCreado;
+    }
+
+    private void diseñarCasillasTrampa() {
+        boolean quitaVida = false;
+        System.out.println("¿Cuántas casillas trampa desea tener?");
+        cantidadCasillasTrampa = scanner.nextInt();
+        System.out.println("Elija el efecto de la trampa");
+        System.out.println("[1] Quitar vida  [2] Quitar mana");
+        if (scanner.nextInt() == 1) {
+            quitaVida = true;
+        }
+        System.out.println("¿Cuántos puntos va a quitar?");
+        int puntosAQuitar = scanner.nextInt();
+        for (int i = 0; i < cantidadCasillasTrampa; i++) {
+            CasillaTrampa trampa = new CasillaTrampa(cantidadCasillasTrampa, puntosAQuitar, quitaVida);
+            agregarCasillasMapa(trampa, calcularFilaRandom(), calcularColumnaRandom());
+        }
+    }
+
+    private void diseñarCasillasPista() {
+        boolean esDireccional = false;
+        System.out.println("¿Cuántas casillas Pista desea tener?");
+        cantidadCasillasPista = scanner.nextInt();
+        System.out.println("¿Desea que la pista sea direccional (Norte, sur, este, oeste) o de aproximación (cerca, lejos, muy cerca, muy lejos)?");
+        System.out.println("[1] Pista direccional  [2] Pista de aproximación");
+        if (scanner.nextInt() == 1) {
+            esDireccional = true;
+        }
+        for (int i = 0; i < cantidadCasillasPista; i++) {
+            CasillaPista pista = new CasillaPista(cantidadCasillasPista, esDireccional);
+            agregarCasillasMapa(pista, calcularFilaRandom(), calcularColumnaRandom());
+        }
+    }
+
+    private void diseñarCasillasTeletransporte() {
+        boolean ubicacionAleatoria = false;
+        int filaTeletransporte = 0;
+        int columnaTeletransporte = 0;
+        System.out.println("¿Cuántas casillas Teletransporte desea tener?");
+        cantidadCasillasTeletransporte = scanner.nextInt();
+        System.out.println("¿Desea que la casilla teletransporte a un lugar aleatorio?");
+        System.out.println("[1] Si  [2] No");
+        if (scanner.nextInt() == 1) {
+            ubicacionAleatoria = true;
+        } else {
+            System.out.println("Ingrese la fila a la que se va a teletransportar el jugador:");
+            filaTeletransporte = scanner.nextInt();
+            System.out.println("Ingrese la columna a la que se va a teletransportar el jugador:");
+            columnaTeletransporte = scanner.nextInt();
+        }
+        for (int i = 0; i < cantidadCasillasTeletransporte; i++) {
+            CasillaTeletransporte teletransporte = new CasillaTeletransporte(cantidadCasillasTeletransporte, ubicacionAleatoria, filaTeletransporte, columnaTeletransporte);
+            agregarCasillasMapa(teletransporte, calcularFilaRandom(), calcularColumnaRandom());
+        }
+    }
+
+    private void diseñarCasillasEnergia() {
+        boolean recuperaVida = false;
+        System.out.println("¿Cuántas casillas Energía desea tener?");
+        cantidadCasillasEnergia = scanner.nextInt();
+        System.out.println("¿Qué desea que realice la casilla de energía?");
+        System.out.println("[1] Recuperar vida  [2] Recuperar mana");
+        if (scanner.nextInt() == 1) {
+            recuperaVida = true;
+        }
+        System.out.println("¿Cuántos puntos va a recuperar?");
+        int puntosARecuperar = scanner.nextInt();
+        for (int i = 0; i < cantidadCasillasEnergia; i++) {
+            CasillaEnergia energia = new CasillaEnergia(cantidadCasillasEnergia, puntosARecuperar, recuperaVida);
+            agregarCasillasMapa(energia, calcularFilaRandom(), calcularColumnaRandom());
+        }
+    }
+
+    private void diseñarCasillasEnemigos() {
+        boolean puedeEscapar = false;
+        boolean pierdePuntos = false;
+        int filaARetornar = 0;
+        int columnaARetornar = 0;
+        int puntosAQuitar = 0;
+        int tipoDePuntos = 0;
+        System.out.println("¿Cuántas casillas de enemigos desea tener?");
+        cantidadCasillasEnemigos = scanner.nextInt();
+        System.out.println("¿El jugador puede escapar de la batalla?  [1] Si [2] No ");
+        if (scanner.nextInt() == 1) {
+            puedeEscapar = true;
+        }
+        System.out.println("De perder una batalla ¿Qué desea que suceda?");
+        System.out.println("[1] Pierde Puntos [2] Es reubicado");
+        if (scanner.nextInt() == 1) {//1. Vida 2. Mana 3. Ataque 4. Defensa
+            System.out.println("¿Qué tipo de puntos se deben quitar? [1] Vida [2] Mana [3] Ataque [4] Defensa");
+            tipoDePuntos = scanner.nextInt();
+            System.out.println("¿Cuántos puntos debe quitar?");
+            puntosAQuitar = scanner.nextInt();
+            pierdePuntos = true;
+        } else {
+            System.out.println("Fila a donde será reubicado:");
+            filaARetornar = scanner.nextInt();
+            System.out.println("Columna a donde será reubicado:");
+            columnaARetornar = scanner.nextInt();
+        }
+        for (int i = 0; i < cantidadCasillasEnemigos; i++) {
+            CasillaEnemigos enemigo = new CasillaEnemigos(cantidadCasillasEnemigos, puedeEscapar, pierdePuntos, filaARetornar, columnaARetornar, puntosAQuitar, tipoDePuntos);
+
+        }
+    }
+
+    private int calcularFilaRandom() {
+        return random.nextInt(0, this.getNumeroDeFilas());
+    }
+
+    private int calcularColumnaRandom() {
+        return random.nextInt(0, this.getNumeroDeColumnas());
+    }
+
+    private void agregarCasillasMapa(Casillas casillas, int fila, int columna) {
+        mapaCreado.modificarMapas(fila, columna, casillas);
+    }
+
+    public int getNumeroDeFilas() {
+        return numeroDeFilas;
+    }
+
+    public int getNumeroDeColumnas() {
+        return numeroDeColumnas;
     }
 
 }

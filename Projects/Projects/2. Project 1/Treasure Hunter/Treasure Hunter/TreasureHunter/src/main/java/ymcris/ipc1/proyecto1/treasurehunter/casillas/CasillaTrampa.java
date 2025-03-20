@@ -19,7 +19,7 @@ public class CasillaTrampa extends Casillas {
     private boolean quitaVida;
 
     // MÉTODO COSNTRUCTOR ------------------------------------------------------
-    public CasillaTrampa(int fila, int columna, int cantidad, int puntosAQuitar, boolean quitaVida) {
+    public CasillaTrampa( int cantidad, int puntosAQuitar, boolean quitaVida) {
         this.fila = fila;
         this.columna = columna;
         this.puedePasar = true;

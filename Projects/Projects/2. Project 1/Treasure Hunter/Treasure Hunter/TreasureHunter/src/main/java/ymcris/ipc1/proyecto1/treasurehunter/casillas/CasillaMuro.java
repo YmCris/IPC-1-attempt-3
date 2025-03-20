@@ -13,9 +13,7 @@ import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
  */
 public class CasillaMuro extends Casillas {
 
-    public CasillaMuro(int fila, int columna, int cantidad) {
-        this.fila = fila;
-        this.columna = columna;
+    public CasillaMuro(int cantidad) {
         this.puedePasar = false;
         this.cantidad = cantidad;
         this.simbolo = VERDE + "▓▓" + RESETEAR;
