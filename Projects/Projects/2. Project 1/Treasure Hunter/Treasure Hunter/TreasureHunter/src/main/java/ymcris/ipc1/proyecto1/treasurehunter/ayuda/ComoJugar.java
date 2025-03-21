@@ -1,6 +1,5 @@
 package ymcris.ipc1.proyecto1.treasurehunter.ayuda;
 
-import java.util.Scanner;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 
 /**
@@ -11,9 +10,6 @@ import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
  * @since Mar 14, 2025
  */
 public class ComoJugar {
-
-    // INSTANCIAS --------------------------------------------------------------
-    Scanner scanner = new Scanner(System.in);
 
     // MÉTODOS -----------------------------------------------------------------
     /**

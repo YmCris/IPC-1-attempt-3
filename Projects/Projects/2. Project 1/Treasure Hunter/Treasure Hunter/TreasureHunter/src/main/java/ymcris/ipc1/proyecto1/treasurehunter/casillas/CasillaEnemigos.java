@@ -1,12 +1,12 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
-import java.util.InputMismatchException;
 import java.util.Scanner;
-import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import java.util.InputMismatchException;
 import ymcris.ipc1.proyecto1.treasurehunter.batalla.Batalla;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * Clase encargada de crear casillas del tipo enemigos las cuales harán que se
@@ -24,30 +24,44 @@ public class CasillaEnemigos extends Casillas {
     private int puntosAQuitar;
     private int columnaARetornar;
     private boolean puedeEscapar;
-    private boolean pierdeEnergia;
+    private boolean pierdePuntos;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
 
-    public CasillaEnemigos(int cantidad, boolean puedeEscapar, boolean pierdeEnergia, int filaARetornar, int columnaARetornar, int puntosAQuitar, int tipoDePuntos) {
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de inicializar las variables más importantes de la
+     * casilla enemigos.
+     *
+     * @param cantidad - cantidad de casillas enemigos que habrá en el mapa.
+     * @param puedeEscapar - Verifica si el jugador puede escapar de la batalla.
+     * @param pierdePuntos - Define si pierde energía o retorna a un lugar.
+     * @param filaARetornar - fila a donde retorna si pierde
+     * @param columnaARetornar - columna a donde retorna si pierde
+     * @param puntosAQuitar - Puntos a quitar si pierde una partida.
+     * @param tipoDePuntos - Tipo de puntos ha quitar si pierde una partida.
+     */
+    public CasillaEnemigos(int cantidad, boolean puedeEscapar, boolean pierdePuntos, int filaARetornar, int columnaARetornar, int puntosAQuitar, int tipoDePuntos) {
         this.puedePasar = true;
         this.cantidad = cantidad;
+        this.tipoDePuntos = tipoDePuntos;//1. Vida 2. Mana 3. Ataque 4. Defensa //default 1
         this.puedeEscapar = puedeEscapar;
-        this.puntosAQuitar = puntosAQuitar;
-        this.simbolo = CYAN + "██" + RESETEAR;
         this.filaARetornar = filaARetornar;
-        this.tipoDePuntos = tipoDePuntos;//1. Vida 2. Mana 3. Ataque 4. Defensa
+        this.puntosAQuitar = puntosAQuitar;
+        this.pierdePuntos = pierdePuntos;
+        this.simbolo = CYAN + "██" + RESETEAR;
         this.columnaARetornar = columnaARetornar;
     }
 
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
-        Batalla batalla = new Batalla(aventurero, pierdeEnergia, puedeEscapar, tipoDePuntos, puntosAQuitar);
+        Batalla batalla = new Batalla(aventurero, pierdePuntos, puedeEscapar, tipoDePuntos, puntosAQuitar);
         batalla.pelear();
         if (aventurero.getVida() < 0) {
-            if (pierdeEnergia == false) {
-                aventurero.setPosicionInicial(1, 1);
-                aventurero.setPosicionInicial(1, 1);
+            if (pierdePuntos == false) {// Es decir, es reubicado.
+                aventurero.setFilaJugador(filaARetornar);
+                aventurero.setColumnaJugador(columnaARetornar);
                 System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
             }
         }
@@ -56,15 +70,15 @@ public class CasillaEnemigos extends Casillas {
     @Override
     public void mostrarMensaje() {
         System.out.println("\n".repeat(100));
-        System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero" + aventurero.getNombre() + " haz pisado una casilla de enemigos" + CYAN + " ------------------------- " + RESETEAR);
-        System.out.println(CYAN + "                      ------------------------- " + RESETEAR + "¿Deseas escapar o pelear? [1] escapar, [2] pelear" + CYAN + " ------------------------- " + RESETEAR);
+        System.out.println(CYAN + "                    ------------------------- " + RESETEAR + "Aventurero" + aventurero.getNombre() + " haz pisado una casilla de enemigos" + CYAN + " ------------------------- " + RESETEAR);
+        System.out.println(CYAN + "                         ------------------------- " + RESETEAR + "¿Deseas escapar o pelear? [1] Escapar  [2] Pelear" + CYAN + " ------------------------- " + RESETEAR);
         try {
             opcion = scanner.nextInt();
         } catch (InputMismatchException e) {
             System.out.println("Debes ingresar un número");
             mostrarMensaje();
         }
-        if (opcion == 1 && puedeEscapar) {
+        if (opcion == 1 && puedeEscapar == true) {
             System.out.println("Aventurero " + aventurero.getNombre() + " has escapado de la batalla");
         } else if (opcion == 2) {
             aplicarEfecto(aventurero);

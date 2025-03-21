@@ -1,10 +1,10 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
-import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.NEGRO;
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**
  * Clase encargada de crear casillas del tipo trampa, el cual aplica un efecto
@@ -20,9 +20,14 @@ public class CasillaTrampa extends Casillas {
     private boolean quitaVida;
 
     // MÉTODO COSNTRUCTOR ------------------------------------------------------
-    public CasillaTrampa( int cantidad, int puntosAQuitar, boolean quitaVida) {
-        this.fila = fila;
-        this.columna = columna;
+    /**
+     * Crea una casilla trampa
+     *
+     * @param cantidad - cantidad de casillas trampa
+     * @param puntosAQuitar - puntos que quitará la casilla.
+     * @param quitaVida - si la casilla quita vida o mana.
+     */
+    public CasillaTrampa(int cantidad, int puntosAQuitar, boolean quitaVida) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.quitaVida = quitaVida;
@@ -34,15 +39,17 @@ public class CasillaTrampa extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         if (quitaVida) {//quita vida
             aventurero.setVida(aventurero.getVida() - puntosAQuitar);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else if (!quitaVida) {//quita mana
             aventurero.setMana(aventurero.getMana() - puntosAQuitar);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de mana tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 
     @Override
     public void mostrarMensaje() {
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla trampa" + CYAN + " ------------------------- " + RESETEAR);
-        //aplicarEfecto(aventurero);
+        aplicarEfecto(aventurero);
     }
 
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosAQuitar, boolean quitaVida) {

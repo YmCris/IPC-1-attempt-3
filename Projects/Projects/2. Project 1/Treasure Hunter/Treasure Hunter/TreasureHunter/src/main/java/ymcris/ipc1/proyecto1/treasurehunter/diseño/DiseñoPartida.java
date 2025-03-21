@@ -1,17 +1,13 @@
 package ymcris.ipc1.proyecto1.treasurehunter.diseño;
 
 /**
- *
+ * Clase encargada de mostrar el diseño durante una partida
  *
  * @author YmCris
  * @since Mar 19, 2025
  */
 public class DiseñoPartida {
 
-    // --------------------- VARIABLES DE REFERENCIA ---------------------------
-    // ----------------------- VARIABLES PRIMITIVAS ----------------------------
-    // ---------------------------- INSTANCIAS ---------------------------------
-    // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
     // ----------------------------- MÉTODOS -----------------------------------
     public static void verOpcionesPartida() {
         System.out.println("........................................................................................................................................");
@@ -26,5 +22,4 @@ public class DiseñoPartida {
         System.out.println("........................................................................................................................................");
     }
 
-    // ------------------------- GETTERS & SETTERS -----------------------------
 }

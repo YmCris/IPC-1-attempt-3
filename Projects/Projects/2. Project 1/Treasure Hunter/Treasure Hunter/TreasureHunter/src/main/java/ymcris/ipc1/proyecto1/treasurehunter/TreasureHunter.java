@@ -4,8 +4,10 @@ import java.util.Scanner;
 import java.util.InputMismatchException;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
-import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
+import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
@@ -88,6 +90,7 @@ public class TreasureHunter {
      */
     private Aventurero crearJugador() {
         System.out.println("\n".repeat(100));
+        System.out.println(ROJO + "AVENTURERO" + RESETEAR);
         System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
         String nombreAventurero = scanner.nextLine();
         if (nombreAventurero.isBlank()) {
@@ -95,7 +98,7 @@ public class TreasureHunter {
             errorEncontrado();
             crearJugador();
         } else {
-            aventurero = new Aventurero(250, 15, 100, 100, nombreAventurero);//Se crea el aventurero del jugador.
+            aventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
             return aventurero;
         }
         return null;
@@ -121,6 +124,7 @@ public class TreasureHunter {
                 case 2 -> {//Juega con un nuevo mapa.
                     scanner.nextLine();
                     System.out.println("\n".repeat(100));
+                    System.out.println(ROJO + "PARTIDA" + RESETEAR);
                     System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
                     String nombrePartida = scanner.nextLine();
                     if (nombrePartida.isBlank()) {

@@ -1,10 +1,10 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
-import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.AZUL;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**
  * Clase encargada de crear casillas del tipo energía la cual le brindarán al
@@ -21,6 +21,13 @@ public class CasillaEnergia extends Casillas {
     private boolean recuperaVida;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Crea una casilla energía
+     *
+     * @param cantidad - cantidad de casillas energía
+     * @param puntosARecuperar - puntos de vida o mana a recuperar.
+     * @param recuperaVida - si recupera vida = true
+     */
     public CasillaEnergia(int cantidad, int puntosARecuperar, boolean recuperaVida) {
         this.puntosARecuperar = puntosARecuperar;
         this.recuperaVida = recuperaVida;
@@ -34,10 +41,14 @@ public class CasillaEnergia extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         if (recuperaVida) {//recupera vida
             aventurero.setVida(aventurero.getVida() + puntosARecuperar);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getVida() + CYAN + " ------------------------- " + RESETEAR);
+            aventurero.setVidaMaxima(aventurero.getVidaMaxima() + puntosARecuperar);
+            aventurero.setVidaPrevioAUnaBatalla(aventurero.getVidaPrevioAUnaBatalla() + puntosARecuperar);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else if (!recuperaVida) {//recupera mana
             aventurero.setMana(aventurero.getMana() + puntosARecuperar);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getMana() + CYAN + " ------------------------- " + RESETEAR);
+            aventurero.setManaMaximo(aventurero.getManaMaximo() + puntosARecuperar);
+            aventurero.setManaPrevioAUnaBatalla(aventurero.getManaPrevioAUnaBatalla() + puntosARecuperar);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 

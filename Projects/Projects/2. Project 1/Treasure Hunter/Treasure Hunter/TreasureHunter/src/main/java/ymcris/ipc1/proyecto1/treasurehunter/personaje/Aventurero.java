@@ -21,8 +21,9 @@ public class Aventurero extends Personaje {
     private int batallasHuidas;
     private int batallasGanadas;
     private int batallasPerdidas;
-    //private int[][] posicionActual;
-    private int[][] posicionInicial;
+
+    private int filaJugador;
+    private int columnaJugador;
     private int cantidadMovimientos;
     private int vidaPrevioAUnaBatalla;
     private int manaPrevioAUnaBatalla;
@@ -53,7 +54,6 @@ public class Aventurero extends Personaje {
         this.manaPrevioAUnaBatalla = mana;
         this.vidaPrevioAUnaBatalla = vida;
         this.defensaPrevioAUnaBatalla = defensa;
-        this.posicionInicial = new int[1][1];
     }
 
     // MÉTODOS -----------------------------------------------------------------
@@ -195,13 +195,20 @@ public class Aventurero extends Personaje {
         this.scanner = scanner;
     }
 
-    public int[][] getPosicionInicial() {
-        return posicionInicial;
+    public int getFilaJugador() {
+        return filaJugador;
     }
 
-    public void setPosicionInicial(int fila, int columna) {
-        this.posicionInicial[1][0] = fila;
-        this.posicionInicial[0][1] = columna;
+    public void setFilaJugador(int filaJugador) {
+        this.filaJugador = filaJugador;
+    }
+
+    public int getColumnaJugador() {
+        return columnaJugador;
+    }
+
+    public void setColumnaJugador(int columnaJugador) {
+        this.columnaJugador = columnaJugador;
     }
 
 }

@@ -1,8 +1,8 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.VERDE;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.VERDE;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * Clase encargada de crear casillas del tipo muro, el cual impide el movimiento

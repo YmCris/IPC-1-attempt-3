@@ -25,16 +25,16 @@ public class Mapas {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
     private int columnas;
-    private CasillaTesoro casillaTesoro;
-    private CasillaPersonaje casillaAventurero;
+    public static CasillaTesoro casillaTesoro;
+    public static CasillaPersonaje casillaAventurero;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Mapas(String nombre, int filas, int columnas, CasillaTesoro tesoro, CasillaPersonaje personaje) {
         this.filas = filas;
         this.nombre = nombre;
         this.columnas = columnas;
-        this.casillaTesoro = tesoro;
-        this.casillaAventurero = personaje;
+        Mapas.casillaTesoro = tesoro;
+        Mapas.casillaAventurero = personaje;
         tablero = new Casillas[filas][columnas];
     }
 

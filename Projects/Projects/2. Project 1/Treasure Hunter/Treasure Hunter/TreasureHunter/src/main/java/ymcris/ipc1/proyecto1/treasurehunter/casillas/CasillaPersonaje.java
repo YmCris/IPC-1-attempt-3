@@ -1,9 +1,10 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Personaje;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
+import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * Clase encargada de crear casillas del tipo Personaje la cual es la casilla
@@ -16,8 +17,10 @@ public class CasillaPersonaje extends Casillas {
 
     public CasillaPersonaje(int fila, int columna, Personaje personaje) {
         this.fila = fila;
+        aventurero.setFilaJugador(fila);
         this.columna = columna;
-        this.simbolo = ROJO + " " + personaje.getNombre().charAt(0) + RESETEAR;
+        aventurero.setColumnaJugador(columna);
+        this.simbolo = ROJO + "░" + personaje.getNombre().charAt(0) + RESETEAR;
     }
 
     @Override
@@ -32,7 +35,9 @@ public class CasillaPersonaje extends Casillas {
 
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
         this.fila = filaNueva;
+        aventurero.setFilaJugador(filaNueva);
         this.columna = columnaNueva;
+        aventurero.setColumnaJugador(columnaNueva);
         return this;
     }
 

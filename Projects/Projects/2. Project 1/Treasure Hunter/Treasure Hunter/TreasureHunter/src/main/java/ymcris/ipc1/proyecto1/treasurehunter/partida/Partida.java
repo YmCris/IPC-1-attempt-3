@@ -1,9 +1,9 @@
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
 import java.util.Scanner;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
 
 /**
  * Clase partida es la Clase encargada de ser el motor del juego y realizar las
@@ -22,7 +22,7 @@ public class Partida {
     private String nombrePartida;
 
     // VARIBLES PRIMITIVAS -----------------------------------------------------
-    private boolean partidaTerminada;
+    public static boolean partidaTerminada;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
@@ -31,7 +31,7 @@ public class Partida {
     public Partida(Aventurero aventurero, Mapas mapa, String nombrePartida) {
         this.mapa = mapa;
         this.aventurero = aventurero;
-        this.partidaTerminada = false;
+        Partida.partidaTerminada = false;
         this.nombrePartida = nombrePartida;
     }
 

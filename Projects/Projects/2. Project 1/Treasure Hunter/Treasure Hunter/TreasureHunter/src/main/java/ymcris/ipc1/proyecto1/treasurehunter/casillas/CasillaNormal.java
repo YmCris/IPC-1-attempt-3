@@ -1,8 +1,8 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
+import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.NEGRO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 
 /**
  * Clase encargada de crear casillas del tipo normal, que no tienen ningun
