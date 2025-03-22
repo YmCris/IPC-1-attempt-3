@@ -18,8 +18,8 @@ public class Partida {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Mapas mapa;
-    private Aventurero aventurero;
     private String nombrePartida;
+    private Aventurero aventurero;
 
     // VARIBLES PRIMITIVAS -----------------------------------------------------
     public static boolean partidaTerminada;

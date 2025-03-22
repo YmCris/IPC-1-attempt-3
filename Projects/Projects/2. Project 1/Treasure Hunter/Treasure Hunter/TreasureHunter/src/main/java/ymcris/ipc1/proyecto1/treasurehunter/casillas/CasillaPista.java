@@ -58,25 +58,26 @@ public class CasillaPista extends Casillas {
             } else if (columnaAventurero < columnaTesoro && filaAventurero < filaTesoro) {//Está en el sureste//Sureste: se encuentra entre el sur y el este
                 System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace en el sureste" + CYAN + " ------------------------- " + RESETEAR);
             }
-        } else if (!pistaEsDireccional) {// pista es de cerca, lejos, etc
+        } else if (!pistaEsDireccional) {// pista es de aproximación cerca, lejos, etc
             int tamañoMapa = tablero.length;
-            int tamañoMuyLejano = (int) tamañoMapa / 4;
-            int tamañoLejano = (int) tamañoMapa / 8;
-            int tamañoMediano = (int) tamañoMapa / 16;
-            int tamañoCercano = (int) tamañoMapa / 32;
-            int tamañoMuyCercano = (int) tamañoMapa / 64;
-            if (filaTesoro * columnaTesoro <= tamañoMuyCercano) {//Muy cerca
-                System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace muy cerca" + CYAN + " ------------------------- " + RESETEAR);
-            } else if (filaTesoro * columnaTesoro <= tamañoCercano) {//cerca
-                System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace cerca" + CYAN + " ------------------------- " + RESETEAR);
-            } else if (filaTesoro * columnaTesoro <= tamañoMediano) {//Meidano
-                System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace a una media distancia" + CYAN + " ------------------------- " + RESETEAR);
-            } else if (filaTesoro * columnaTesoro <= tamañoLejano) {// Lejos
+            int tamañoMuyLejano = tamañoMapa;
+            int tamañoLejano = tamañoMapa / 2;
+            int tamañoMediano = tamañoMapa / 3;
+            int tamañoCercano = tamañoMapa / 5;
+            int tamañoMuyCercano = tamañoMapa / 8;
+            int distancia = Math.abs(filaTesoro - filaAventurero) + Math.abs(columnaTesoro - columnaAventurero);
+            if (distancia <= tamañoMuyCercano) {
+                System.out.println(CYAN + "                  ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace muy cerca" + CYAN + " ------------------------- " + RESETEAR);
+            } else if (distancia <= tamañoCercano) {
+                System.out.println(CYAN + "                   ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace cerca" + CYAN + " ------------------------- " + RESETEAR);
+            } else if (distancia <= tamañoMediano) {
+                System.out.println(CYAN + "           ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace a una media distancia" + CYAN + " ------------------------- " + RESETEAR);
+            } else if (distancia <= tamañoLejano) {
                 System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace lejos" + CYAN + " ------------------------- " + RESETEAR);
-            } else if (filaTesoro * columnaTesoro <= tamañoMuyLejano) {//MUY LEJOS
-                System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace muy lejos" + CYAN + " ------------------------- " + RESETEAR);
-            } else if (filaTesoro * columnaTesoro > tamañoMuyLejano) {//SUPEEER LEJOS
-                System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace Supeeeer lejos" + CYAN + " ------------------------- " + RESETEAR);
+            } else if (distancia <= tamañoMuyLejano) {
+                System.out.println(CYAN + "                 ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace muy lejos" + CYAN + " ------------------------- " + RESETEAR);
+            } else {
+                System.out.println(CYAN + "               ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " lo que buscas yace supeeeer lejos" + CYAN + " ------------------------- " + RESETEAR);
             }
         }
         cantidadPistasPartida++;

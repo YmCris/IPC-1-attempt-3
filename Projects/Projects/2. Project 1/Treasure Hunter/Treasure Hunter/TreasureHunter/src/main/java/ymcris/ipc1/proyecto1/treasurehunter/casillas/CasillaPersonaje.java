@@ -20,7 +20,7 @@ public class CasillaPersonaje extends Casillas {
         aventurero.setFilaJugador(fila);
         this.columna = columna;
         aventurero.setColumnaJugador(columna);
-        this.simbolo = ROJO + "░" + personaje.getNombre().charAt(0) + RESETEAR;
+        this.simbolo = ROJO + ":)" + RESETEAR;
     }
 
     @Override

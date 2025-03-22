@@ -19,6 +19,7 @@ public class CasillaTesoro extends Casillas {
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
      * Crea el tesoro
+     *
      * @param fila - fila donde estará el tesoro
      * @param columna - columna donde estará el tesoro
      */

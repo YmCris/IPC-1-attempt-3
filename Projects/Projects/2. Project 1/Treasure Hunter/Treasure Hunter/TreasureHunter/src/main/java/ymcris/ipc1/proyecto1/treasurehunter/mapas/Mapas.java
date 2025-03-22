@@ -39,7 +39,7 @@ public class Mapas {
     }
 
     // MÉTODOS -----------------------------------------------------------------
-    public Casillas[][] crearMapa() {
+    public Casillas[][] crearTablero() {
         for (int i = 0; i < tablero.length; i++) {//filas
             for (int j = 0; j < tablero[i].length; j++) {//columnas
                 tablero[i][j] = new CasillaNormal(i * j);
@@ -51,7 +51,7 @@ public class Mapas {
     public void mostrarMapaCompleto() {
         String A = "0";
         //Marco superior de las letras
-        System.out.print("___");
+        System.out.print("____");
         for (int i = 0; i < tablero[0].length; i++) {
             System.out.print("___");
         }
@@ -60,26 +60,32 @@ public class Mapas {
         //Marco de las Columnas letras
         System.out.print("|:v|");
         for (int i = 0; i < tablero[0].length; i++) {
-            if (i < 9) {
-                System.out.print(A + (i + 1) + "|");
+            if (i < 10) {
+                System.out.print(A + (i) + "|");
             } else {
-                System.out.print((i + 1) + "|");
+                System.out.print((i) + "|");
             }
         }
+        System.out.print("|");
         System.out.println("");
         //Marco de las filas números
         for (int i = 0; i < tablero.length; i++) {
-            if (i < 9) {
-                System.out.print("|" + 0 + (i + 1) + "|");
+            if (i < 10) {
+                System.out.print("|" + 0 + (i) + "|");
             } else if (i >= 9) {
-                System.out.print("|" + (i + 1) + "|");
+                System.out.print("|" + (i) + "|");
             }
             for (int j = 0; j < tablero[i].length; j++) {
                 System.out.print(tablero[i][j].getSimbolo());
                 System.out.print(NEGRO + "░" + RESETEAR);
             }
-            System.out.println("");
+            System.out.println("|");
         }
+        System.out.print("-----");
+        for (int i = 0; i < tablero[0].length; i++) {
+            System.out.print("---");
+        }
+        System.out.println("");
     }
 
     public void modificarMapas(int fila, int columna, Casillas casillaAModificar) {
@@ -98,7 +104,6 @@ public class Mapas {
                     //2.5 Guarda la casilla a la que se movio para que no se elimine
                     casillaAMover[0] = tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()];
                     casillaAMover[0].mostrarMensaje();
-                    casillaAMover[0].aplicarEfecto(aventurero);
                     //3. casilla del personaje cambia de posición hacia arriba i+1
                     tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaAventurero;
                     casillaAventurero.setFila(casillaAventurero.getFila() - 1);//Modifica la posición de la casilla del jugador
@@ -119,7 +124,6 @@ public class Mapas {
                     //2.5 Guarda la casilla a la que se movio para que no se elimine
                     casillaAMover[0] = tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()];
                     casillaAMover[0].mostrarMensaje();
-                    casillaAMover[0].aplicarEfecto(aventurero);
                     //3. casilla del personaje cambia de posición hacia arriba i+1
                     tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaAventurero;
                     casillaAventurero.setFila(casillaAventurero.getFila() + 1);//Modifica la posición de la casilla del jugador
@@ -140,7 +144,6 @@ public class Mapas {
                     //2.5 Guarda la casilla a la que se movio para que no se elimine
                     casillaAMover[0] = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1];
                     casillaAMover[0].mostrarMensaje();
-                    casillaAMover[0].aplicarEfecto(aventurero);
                     //3. casilla del personaje cambia de posición hacia arriba j-1
                     tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaAventurero;
                     casillaAventurero.setColumna(casillaAventurero.getColumna() - 1);//Modifica la posición de la casilla del jugador
@@ -161,7 +164,6 @@ public class Mapas {
                     //2.5 Guarda la casilla a la que se movio para que no se elimine
                     casillaAMover[0] = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1];
                     casillaAMover[0].mostrarMensaje();
-                    casillaAMover[0].aplicarEfecto(aventurero);
                     //3. casilla del personaje cambia de posición hacia arriba j-1
                     tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaAventurero;
                     casillaAventurero.setColumna(casillaAventurero.getColumna() + 1);//Modifica la posición de la casilla del jugador

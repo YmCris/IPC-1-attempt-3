@@ -43,12 +43,12 @@ public class CasillaEnergia extends Casillas {
             aventurero.setVida(aventurero.getVida() + puntosARecuperar);
             aventurero.setVidaMaxima(aventurero.getVidaMaxima() + puntosARecuperar);
             aventurero.setVidaPrevioAUnaBatalla(aventurero.getVidaPrevioAUnaBatalla() + puntosARecuperar);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
+            System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else if (!recuperaVida) {//recupera mana
             aventurero.setMana(aventurero.getMana() + puntosARecuperar);
             aventurero.setManaMaximo(aventurero.getManaMaximo() + puntosARecuperar);
             aventurero.setManaPrevioAUnaBatalla(aventurero.getManaPrevioAUnaBatalla() + puntosARecuperar);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
+            System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 

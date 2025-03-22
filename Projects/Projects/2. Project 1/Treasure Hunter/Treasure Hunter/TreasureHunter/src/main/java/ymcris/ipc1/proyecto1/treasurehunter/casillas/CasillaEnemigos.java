@@ -7,6 +7,7 @@ import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
 /**
  * Clase encargada de crear casillas del tipo enemigos las cuales harán que se
@@ -23,6 +24,7 @@ public class CasillaEnemigos extends Casillas {
     private int filaARetornar;
     private int puntosAQuitar;
     private int columnaARetornar;
+    private boolean seHaRendido;
     private boolean puedeEscapar;
     private boolean pierdePuntos;
 
@@ -56,34 +58,44 @@ public class CasillaEnemigos extends Casillas {
 
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
-        Batalla batalla = new Batalla(aventurero, pierdePuntos, puedeEscapar, tipoDePuntos, puntosAQuitar);
-        batalla.pelear();
-        if (aventurero.getVida() < 0) {
-            if (pierdePuntos == false) {// Es decir, es reubicado.
-                aventurero.setFilaJugador(filaARetornar);
-                aventurero.setColumnaJugador(columnaARetornar);
-                System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
+        if (seHaRendido == false) {
+            System.out.println("\n".repeat(100));
+            Batalla batalla = new Batalla(aventurero, pierdePuntos, puedeEscapar, tipoDePuntos, puntosAQuitar);
+            batalla.pelear();
+            if (aventurero.getVida() < 0) {
+                if (pierdePuntos == false) {// Es decir, es reubicado.
+                    aventurero.setFilaJugador(filaARetornar);
+                    aventurero.setColumnaJugador(columnaARetornar);
+                    System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
+                }
             }
         }
     }
 
     @Override
     public void mostrarMensaje() {
+        boolean desicionTomada = false;
         System.out.println("\n".repeat(100));
-        System.out.println(CYAN + "                    ------------------------- " + RESETEAR + "Aventurero" + aventurero.getNombre() + " haz pisado una casilla de enemigos" + CYAN + " ------------------------- " + RESETEAR);
-        System.out.println(CYAN + "                         ------------------------- " + RESETEAR + "¿Deseas escapar o pelear? [1] Escapar  [2] Pelear" + CYAN + " ------------------------- " + RESETEAR);
-        try {
-            opcion = scanner.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Debes ingresar un número");
-            mostrarMensaje();
-        }
-        if (opcion == 1 && puedeEscapar == true) {
-            System.out.println("Aventurero " + aventurero.getNombre() + " has escapado de la batalla");
-        } else if (opcion == 2) {
-            aplicarEfecto(aventurero);
-        } else {
-            mostrarMensaje();
+        System.out.println(CYAN + "                    ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz pisado una casilla de enemigos" + CYAN + " ------------------------- " + RESETEAR);
+        System.out.println(CYAN + "                     ------------------------- " + RESETEAR + "¿Deseas escapar o pelear? [1] Escapar  [2] Pelear" + CYAN + " ------------------------- " + RESETEAR);
+        while (desicionTomada == false) {
+            try {
+                opcion = scanner.nextInt();
+                if (opcion == 1 && puedeEscapar == true) {
+                    seHaRendido = true;
+                    System.out.println("\n".repeat(9));
+                    System.out.println("Aventurero " + aventurero.getNombre() + " has escapado de la batalla");
+                    desicionTomada = true;
+                } else if (opcion == 2) {
+                    aplicarEfecto(aventurero);
+                    desicionTomada = true;
+                }
+            } catch (InputMismatchException e) {
+                desicionTomada = false;
+                System.out.println("Debes ingresar un número");
+                errorEncontrado();
+                mostrarMensaje();
+            }
         }
     }
 

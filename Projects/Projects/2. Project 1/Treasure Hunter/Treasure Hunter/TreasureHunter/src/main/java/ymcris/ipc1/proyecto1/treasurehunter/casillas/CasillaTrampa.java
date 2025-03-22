@@ -39,10 +39,10 @@ public class CasillaTrampa extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         if (quitaVida) {//quita vida
             aventurero.setVida(aventurero.getVida() - puntosAQuitar);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
+            System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else if (!quitaVida) {//quita mana
             aventurero.setMana(aventurero.getMana() - puntosAQuitar);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de mana tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
+            System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de mana tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
 

@@ -44,9 +44,11 @@ public class CasillaTeletransporte extends Casillas {
         if (ubicacionAleatoria) {//la ubicación es aleatoria
             this.filaAMover = random.nextInt(0, filasMapa - 1);
             this.columnaAMover = random.nextInt(0, columnasMapa - 1);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
         } else if (!ubicacionAleatoria) {//el usuario introduce la ubicación
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
         }
     }
 

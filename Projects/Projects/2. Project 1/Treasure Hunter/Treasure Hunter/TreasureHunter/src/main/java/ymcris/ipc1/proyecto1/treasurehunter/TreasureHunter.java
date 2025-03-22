@@ -134,12 +134,12 @@ public class TreasureHunter {
                     } else {
                         Aventurero aventurero = crearJugador();
                         DiseñarMapas nuevoMapa = new DiseñarMapas();
-                        Partida partida = new Partida(aventurero, nuevoMapa.crearMapa(), nombrePartida);
+                        Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);
                         partida.iniciarNuevaPartida();//Inicia una nueva partida
                     }
                 }
                 case 3 ->//vuelve al menu
-                    mostrarMenuPrincipal();
+                    verMenuPrincipal();
                 case 4 ->//sale del programa
                     System.exit(0);
                 default -> {
