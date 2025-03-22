@@ -35,6 +35,7 @@ public class CasillaTrampa extends Casillas {
         this.simbolo = NEGRO + "░░" + RESETEAR;
     }
 
+    // MÉTODOS SOBRE ESCRITOS --------------------------------------------------
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
         if (quitaVida) {//quita vida
@@ -52,6 +53,7 @@ public class CasillaTrampa extends Casillas {
         aplicarEfecto(aventurero);
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosAQuitar, boolean quitaVida) {
         this.fila = filaNueva;
         this.columna = columnaNueva;

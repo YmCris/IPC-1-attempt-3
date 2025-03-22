@@ -28,6 +28,16 @@ public class CasillaTeletransporte extends Casillas {
     Random random = new Random();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de crear casillas de teletransporte
+     *
+     * @param cantidad - cantidad de casillas
+     * @param ubicacionAleatoria - true si lo es
+     * @param filaAMover - fila a donde se va a teletransportar
+     * @param columnaAMover - columna a donde se va a teletransportar
+     * @param filasMapa - filas que posee el mapa
+     * @param columnasMapa - columnas que posee el mapa
+     */
     public CasillaTeletransporte(int cantidad, boolean ubicacionAleatoria, int filaAMover, int columnaAMover, int filasMapa, int columnasMapa) {
         this.puedePasar = true;
         this.cantidad = cantidad;
@@ -39,6 +49,7 @@ public class CasillaTeletransporte extends Casillas {
         this.ubicacionAleatoria = ubicacionAleatoria;
     }
 
+    // MÉTODOS SOBREESCRITO ----------------------------------------------------
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
         if (ubicacionAleatoria) {//la ubicación es aleatoria
@@ -46,8 +57,12 @@ public class CasillaTeletransporte extends Casillas {
             this.columnaAMover = random.nextInt(0, columnasMapa - 1);
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
+            aventurero.setFilaJugador(filaAMover);
+            aventurero.setColumnaJugador(columnaAMover);
         } else if (!ubicacionAleatoria) {//el usuario introduce la ubicación
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
+            aventurero.setFilaJugador(filaAMover);
+            aventurero.setColumnaJugador(columnaAMover);
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
         }
     }
@@ -58,6 +73,7 @@ public class CasillaTeletransporte extends Casillas {
         aplicarEfecto(aventurero);
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int filaAMover, int columnaAMover, boolean ubicacionAleatoria) {
         this.fila = filaNueva;
         this.columna = columnaNueva;

@@ -28,6 +28,13 @@ public class Partida {
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de crear una partida
+     *
+     * @param aventurero - aventurero que va a jugar
+     * @param mapa - mapa en el que se va a desarrollar la batalla
+     * @param nombrePartida - nombre de la partida para guardarla
+     */
     public Partida(Aventurero aventurero, Mapas mapa, String nombrePartida) {
         this.mapa = mapa;
         this.aventurero = aventurero;
@@ -36,12 +43,16 @@ public class Partida {
     }
 
     // MÉTODOS -----------------------------------------------------------------
+    /**
+     * Método encargado de iniciar una nueva partida
+     */
     public void iniciarNuevaPartida() {
         do {
             mapa.mostrarMapaCompleto();
             verOpcionesPartida();
             String opcionPartida = scanner.nextLine();
             mapa.seleccionarOpcionesPartida(opcionPartida);
-        } while (true);
+        } while (partidaTerminada == false);
+        System.out.println("Waos has terminado");
     }
 }

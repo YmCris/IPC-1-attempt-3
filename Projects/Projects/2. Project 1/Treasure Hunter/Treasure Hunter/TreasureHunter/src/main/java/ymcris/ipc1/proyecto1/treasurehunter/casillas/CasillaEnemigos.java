@@ -56,6 +56,7 @@ public class CasillaEnemigos extends Casillas {
         this.columnaARetornar = columnaARetornar;
     }
 
+    // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
         if (seHaRendido == false) {
@@ -99,6 +100,7 @@ public class CasillaEnemigos extends Casillas {
         }
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int tipoDePuntos, int filaARetornar, int puntosAQuitar, int columnaARetornar) {
         this.fila = filaNueva;
         this.columna = columnaNueva;

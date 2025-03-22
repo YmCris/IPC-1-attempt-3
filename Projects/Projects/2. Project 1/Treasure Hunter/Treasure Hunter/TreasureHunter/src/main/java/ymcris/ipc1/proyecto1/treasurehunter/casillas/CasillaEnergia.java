@@ -58,6 +58,7 @@ public class CasillaEnergia extends Casillas {
         aplicarEfecto(aventurero);
     }
 
+    // MÉTODOS -----------------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosARecuperar, boolean recuperaVida) {
         this.fila = filaNueva;
         this.columna = columnaNueva;

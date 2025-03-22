@@ -13,12 +13,19 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
  */
 public class CasillaNormal extends Casillas {
 
+    // MÉTODO COSNTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de crear casillas normales (Pista)
+     *
+     * @param cantidad cantidad de casillas normales.
+     */
     public CasillaNormal(int cantidad) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.simbolo = NEGRO + "░░" + RESETEAR;
     }
 
+    // MÉTODOS SOBRE ESCRITOS --------------------------------------------------
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
         this.puedePasar = true;
@@ -29,6 +36,7 @@ public class CasillaNormal extends Casillas {
         //No muestra nada
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
         this.fila = filaNueva;
         this.columna = columnaNueva;

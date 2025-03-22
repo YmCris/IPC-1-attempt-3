@@ -21,7 +21,6 @@ public class Aventurero extends Personaje {
     private int batallasHuidas;
     private int batallasGanadas;
     private int batallasPerdidas;
-
     private int filaJugador;
     private int columnaJugador;
     private int cantidadMovimientos;
@@ -50,7 +49,7 @@ public class Aventurero extends Personaje {
         this.batallasHuidas = 0;
         this.batallasGanadas = 0;
         this.batallasPerdidas = 0;
-        this.cantidadMovimientos = 0;
+        this.cantidadMovimientos = 1;
         this.manaPrevioAUnaBatalla = mana;
         this.vidaPrevioAUnaBatalla = vida;
         this.defensaPrevioAUnaBatalla = defensa;
@@ -62,18 +61,18 @@ public class Aventurero extends Personaje {
      * aventurero.
      */
     public void mostrarEstadoAventurero() {
-        System.out.println("            ..........................................................................................");
+        System.out.println("                    ..........................................................................................");
         System.out.println("                                    Las estadísticas del aventurero " + this.getNombre() + " son:");
-        System.out.println("            ..........................................................................................");
-        System.out.println("                Vida: " + this.getVida() + "/" + this.getVidaMaxima());
-        System.out.println("                Mana: " + this.getMana() + "/" + this.getManaMaximo());
-        System.out.println("                Ataque: " + this.getAtaque());
-        System.out.println("                Defensa: " + this.getDefensa());
-        System.out.println("                Símbolo: " + this.getSimbolo());
-        System.out.println("                Posición Actual:" + "");
-        System.out.println("                Batallas Tenidas: " + this.getBatallas());
-        System.out.println("                Movimientos Realizados: " + this.getCantidadMovimientos());
-        System.out.println("            ..........................................................................................");
+        System.out.println("                    ..........................................................................................");
+        System.out.println("                        Vida: " + this.getVida() + "/" + this.getVidaMaxima());
+        System.out.println("                        Mana: " + this.getMana() + "/" + this.getManaMaximo());
+        System.out.println("                        Ataque: " + this.getAtaque());
+        System.out.println("                        Defensa: " + this.getDefensa());
+        System.out.println("                        Símbolo: " + this.getSimbolo());
+        System.out.println("                        Posición Actual: [" + filaJugador + "][" + columnaJugador + "]");
+        System.out.println("                        Batallas Tenidas: " + this.getBatallas());
+        System.out.println("                        Movimientos Realizados: " + this.getCantidadMovimientos());
+        System.out.println("                    ..........................................................................................");
         scanner.nextLine();
     }
 

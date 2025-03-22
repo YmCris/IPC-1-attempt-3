@@ -162,6 +162,10 @@ public class DiseñarMapas {
         return this.mapaCreado;
     }
 
+    /**
+     * Método encargado de diseñar casillas trampa, pidiendo todos sus
+     * paramétros necesarios y validando que sean correctos.
+     */
     private void diseñarCasillasTrampa() {
         boolean quitaVida = false;
         System.out.println("\n".repeat(100));
@@ -170,7 +174,7 @@ public class DiseñarMapas {
         cantidadCasillasTrampa = scanner.nextInt();
         if (limiteCantidadCasillas(cantidadCasillasTrampa)) {
             diseñarCasillasTrampa();
-        } else {
+        } else if (cantidadCasillasTrampa != 0) {
             System.out.println("Elija el efecto de la trampa");
             System.out.println("[1] Quitar vida  [2] Quitar mana");
             quitaVida = scanner.nextInt() == 1;
@@ -193,6 +197,10 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encargado de diseñar casillas pista, pidiendo todos sus paramétros
+     * necesarios y validando que sean correctos.
+     */
     private void diseñarCasillasPista() {
         boolean esDireccional;
         System.out.println("\n".repeat(100));
@@ -201,7 +209,7 @@ public class DiseñarMapas {
         cantidadCasillasPista = scanner.nextInt();
         if (limiteCantidadCasillas(cantidadCasillasPista)) {
             diseñarCasillasPista();
-        } else {
+        } else if (cantidadCasillasPista != 0) {
             System.out.println("¿Desea que la pista sea direccional (Norte, sur, este, oeste, noreste, noroesete, sureste, suroeste) o de aproximación (muy cerca, cerca, medio, lejos, muy lejos, super lejos)?");
             System.out.println("[1] Pista direccional  [2] Pista de aproximación");
             esDireccional = scanner.nextInt() == 1;
@@ -216,6 +224,10 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encargado de diseñar casillas teletransporte, pidiendo todos sus
+     * paramétros necesarios y validando que sean correctos.
+     */
     private void diseñarCasillasTeletransporte() {
         boolean ubicacionAleatoria = false;
         int filaTeletransporte = 0;
@@ -226,7 +238,7 @@ public class DiseñarMapas {
         cantidadCasillasTeletransporte = scanner.nextInt();
         if (limiteCantidadCasillas(cantidadCasillasTeletransporte)) {
             diseñarCasillasTeletransporte();
-        } else {
+        } else if (cantidadCasillasTeletransporte != 0) {
             System.out.println("¿Desea que la casilla teletransporte a un lugar aleatorio?");
             System.out.println("[1] Si  [2] No");
             if (scanner.nextInt() == 1) {
@@ -254,6 +266,10 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encargado de diseñar casillas energía, pidiendo todos sus
+     * paramétros necesarios y validando que sean correctos.
+     */
     private void diseñarCasillasEnergia() {
         boolean recuperaVida;
         System.out.println("\n".repeat(100));
@@ -262,7 +278,7 @@ public class DiseñarMapas {
         cantidadCasillasEnergia = scanner.nextInt();
         if (limiteCantidadCasillas(cantidadCasillasEnergia)) {
             diseñarCasillasEnergia();
-        } else {
+        } else if (cantidadCasillasEnergia != 0) {
             System.out.println("¿Qué desea que realice la casilla de energía?");
             System.out.println("[1] Recuperar vida  [2] Recuperar mana");
             recuperaVida = scanner.nextInt() == 1;
@@ -285,6 +301,10 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encargado de diseñar casillas enemigos, pidiendo todos sus
+     * paramétros necesarios y validando que sean correctos.
+     */
     private void diseñarCasillasEnemigos() {
         int filaARetornar = 0;
         int columnaARetornar = 0;
@@ -298,7 +318,7 @@ public class DiseñarMapas {
         cantidadCasillasEnemigos = scanner.nextInt();
         if (limiteCantidadCasillas(cantidadCasillasEnemigos)) {
             diseñarCasillasEnemigos();
-        } else {
+        } else if (cantidadCasillasEnemigos != 0) {
             System.out.println("¿El jugador puede escapar de la batalla?  [1] Si [2] No ");
             puedeEscapar = scanner.nextInt() == 1;
             System.out.println("De perder una batalla ¿Qué desea que suceda?");
@@ -341,6 +361,9 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encargado de diseñar casillas muros
+     */
     private void diseñarCasillasMuros() {
         int numeroDeCasillas = random.nextInt(3, mapaCreado.getColumnas());
         for (int i = 0; i < numeroDeCasillas; i++) {
@@ -353,6 +376,13 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encargado de verificar que el jugador no introduzca una cantidad
+     * de casillas negativa
+     *
+     * @param cantidad - cantidad a validar
+     * @return true si sale del límite
+     */
     private boolean limiteCantidadCasillas(int cantidad) {
         if (cantidad < 0) {
             System.out.println("No puedes tener casillas negativas");
@@ -363,18 +393,42 @@ public class DiseñarMapas {
         }
     }
 
+    /**
+     * Método encaragdo de calcular una fila random basado en el límite de las
+     * filas del mapa.
+     *
+     * @return numero random de fila
+     */
     private int calcularFilaRandom() {
         return random.nextInt(0, this.getNumeroDeFilas());
     }
 
+    /**
+     * Método encaragdo de calcular una columna random basado en el límite de
+     * las columnas del mapa.
+     *
+     * @return numero random de columna
+     */
     private int calcularColumnaRandom() {
         return random.nextInt(0, this.getNumeroDeColumnas());
     }
 
+    /**
+     * Método encargado de agregar casillas a el mapa creado
+     *
+     * @param casillas - casilla a agregar en el mapa
+     * @param fila - fila donde se agregará la casilla en el mapa
+     * @param columna - columna donde se agregará la casilla en el mapa
+     */
     private void agregarCasillasMapa(Casillas casillas, int fila, int columna) {
-        mapaCreado.modificarMapas(fila, columna, casillas);
+        try {
+            mapaCreado.modificarMapas(fila, columna, casillas);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            new TreasureHunter().verMenuPrincipal();
+        }
     }
 
+    // GETTERS -----------------------------------------------------------------
     public int getNumeroDeFilas() {
         return numeroDeFilas;
     }

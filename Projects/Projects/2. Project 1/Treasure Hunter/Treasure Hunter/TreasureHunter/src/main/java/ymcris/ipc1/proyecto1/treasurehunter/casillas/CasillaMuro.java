@@ -13,12 +13,19 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
  */
 public class CasillaMuro extends Casillas {
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de crear muros
+     *
+     * @param cantidad cantidad muros
+     */
     public CasillaMuro(int cantidad) {
         this.puedePasar = false;
         this.cantidad = cantidad;
         this.simbolo = VERDE + "▓▓" + RESETEAR;
     }
 
+    // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
         this.puedePasar = false;
@@ -29,6 +36,7 @@ public class CasillaMuro extends Casillas {
         // no muestra nada
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
         this.fila = filaNueva;
         this.columna = columnaNueva;

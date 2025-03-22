@@ -30,6 +30,7 @@ public class CasillaTesoro extends Casillas {
         this.simbolo = NEGRO + "░░" + RESETEAR;
     }
 
+    // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
     public void aplicarEfecto(Aventurero aventurero) {
         //No tiene efecto
@@ -42,6 +43,7 @@ public class CasillaTesoro extends Casillas {
         partidaTerminada = true;
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
         this.fila = filaNueva;
         this.columna = columnaNueva;
