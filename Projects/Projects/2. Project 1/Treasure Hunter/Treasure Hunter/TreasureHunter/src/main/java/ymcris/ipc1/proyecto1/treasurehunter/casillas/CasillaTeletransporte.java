@@ -7,6 +7,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaAventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.tablero;
 
 /**
  * Clase encargada de crear casillas del tipo teletransporte el cual le
@@ -55,7 +56,8 @@ public class CasillaTeletransporte extends Casillas {
         if (ubicacionAleatoria) {//la ubicación es aleatoria
             this.filaAMover = random.nextInt(0, filasMapa - 1);
             this.columnaAMover = random.nextInt(0, columnasMapa - 1);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
+            tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = new CasillaNormal(1);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + (filaAMover + 1) + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
             aventurero.setFilaJugador(filaAMover);
             aventurero.setColumnaJugador(columnaAMover);
@@ -64,6 +66,7 @@ public class CasillaTeletransporte extends Casillas {
             aventurero.setFilaJugador(filaAMover);
             aventurero.setColumnaJugador(columnaAMover);
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
+            tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = new CasillaNormal(1);
         }
     }
 

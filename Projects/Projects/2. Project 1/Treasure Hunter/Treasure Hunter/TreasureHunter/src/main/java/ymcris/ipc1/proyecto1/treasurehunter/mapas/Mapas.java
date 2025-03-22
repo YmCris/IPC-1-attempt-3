@@ -22,13 +22,14 @@ public class Mapas {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
+    private Casillas casillaTemporal;
     public static Casillas[][] tablero;
+    public static CasillaTesoro casillaTesoro;
+    public static CasillaPersonaje casillaAventurero;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
     private int columnas;
-    public static CasillaTesoro casillaTesoro;
-    public static CasillaPersonaje casillaAventurero;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
@@ -127,97 +128,14 @@ public class Mapas {
      * @param opcionPartida
      */
     public void seleccionarOpcionesPartida(String opcionPartida) {
-        Casillas[] casillaAMover = new Casillas[1];
-        Casillas[] casillaAnterior = new Casillas[1];
-        boolean seHaMovido = false;
         if (opcionPartida.toLowerCase().equals("w")) {//Se mueve hacia arriba.
-            //1. Verificar si el jugador se puede mover hacia arriba (No sale del límite de las filas del mapa)
-            if (casillaAventurero.getFila() > 0) {//Se puede mover
-                //2. Verificamos si arriba no hay un muro
-                if (tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()].isPuedePasar()) {//Puede pasar.
-                    aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
-                    //2.5 Guarda la casilla a la que se movio para que no se elimine
-                    casillaAMover[0] = tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()];
-                    casillaAMover[0].mostrarMensaje();
-                    //3. casilla del personaje cambia de posición hacia arriba i+1
-                    tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaAventurero;
-                    casillaAventurero.setFila(casillaAventurero.getFila() - 1);//Modifica la posición de la casilla del jugador
-                    aventurero.setFilaJugador(aventurero.getFilaJugador() - 1);
-                    //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                    if (seHaMovido == true) {//Por si ya se movió
-                        tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaAMover[0];
-                    } else {//Por si no se ha movido nunca
-                        tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = new CasillaNormal(1);
-                    }
-                    seHaMovido = true;
-                }
-            }
+            moverHaciaArriba();
         } else if (opcionPartida.toLowerCase().equals("s")) {//Se mueve hacia abajo
-            //1. Verificar si el jugador se puede mover hacia abajo (No sale del límite de las filas del mapa)
-            if (casillaAventurero.getFila() < this.getFilas() - 1) {//Se puede mover
-                //2. Verificamos si arriba no hay un muro
-                if (tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()].isPuedePasar()) {//Puede pasar.
-                    aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
-                    //2.5 Guarda la casilla a la que se movio para que no se elimine
-                    casillaAMover[0] = tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()];
-                    casillaAMover[0].mostrarMensaje();
-                    //3. casilla del personaje cambia de posición hacia arriba i+1
-                    tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaAventurero;
-                    casillaAventurero.setFila(casillaAventurero.getFila() + 1);//Modifica la posición de la casilla del jugador
-                    aventurero.setFilaJugador(aventurero.getFilaJugador() + 1);
-                    //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                    if (seHaMovido == true) {//Por si ya se movió
-                        tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaAMover[0];
-                    } else {//Por si no se ha movido nunca
-                        tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = new CasillaNormal(1);
-                    }
-                    seHaMovido = true;
-                }
-            }
+            moverHaciaAbajo();
         } else if (opcionPartida.toLowerCase().equals("a")) {//Se mueve hacia la izquierda
-            //1. Verificar si el jugador se puede mover hacia la izquierda (No sale del límite de las columnas del mapa)
-            if (casillaAventurero.getColumna() > 0) {//Se puede mover
-                //2. Verificamos si arriba no hay un muro
-                if (tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1].isPuedePasar()) {//Puede pasar.
-                    aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
-                    //2.5 Guarda la casilla a la que se movio para que no se elimine
-                    casillaAMover[0] = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1];
-                    casillaAMover[0].mostrarMensaje();
-                    //3. casilla del personaje cambia de posición hacia arriba j-1
-                    tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaAventurero;
-                    casillaAventurero.setColumna(casillaAventurero.getColumna() - 1);//Modifica la posición de la casilla del jugador
-                    aventurero.setColumnaJugador(aventurero.getColumnaJugador() - 1);
-                    //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                    if (seHaMovido == true) {//Por si ya se movió
-                        tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaAMover[0];
-                    } else {//Por si no se ha movido nunca
-                        tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = new CasillaNormal(1);
-                    }
-                    seHaMovido = true;
-                }
-            }
+            moverHaciaLaIzquierda();
         } else if (opcionPartida.toLowerCase().equals("d")) {//Se mueve hacia la derecha
-            //1. Verificar si el jugador se puede mover hacia la derecha (No sale del límite de las columnas del mapa)
-            if (casillaAventurero.getColumna() < this.getColumnas() - 1) {//Se puede mover
-                //2. Verificamos si arriba no hay un muro
-                if (tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1].isPuedePasar()) {//Puede pasar.
-                    aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
-                    //2.5 Guarda la casilla a la que se movio para que no se elimine
-                    casillaAMover[0] = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1];
-                    casillaAMover[0].mostrarMensaje();
-                    //3. casilla del personaje cambia de posición hacia arriba j-1
-                    tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaAventurero;
-                    casillaAventurero.setColumna(casillaAventurero.getColumna() + 1);//Modifica la posición de la casilla del jugador
-                    aventurero.setColumnaJugador(aventurero.getColumnaJugador() - 1);
-                    //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                    if (seHaMovido == true) {//Por si ya se movió
-                        tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaAMover[0];
-                    } else {//Por si no se ha movido nunca
-                        tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = new CasillaNormal(1);
-                    }
-                    seHaMovido = true;
-                }
-            }
+            moverHaciaLaDerecha();
         } else if (opcionPartida.equals("1")) {//Ve la pista más reciente
             if (pista == null) {
                 System.out.println("No has descubierto ninguna pista");
@@ -226,8 +144,11 @@ public class Mapas {
             }
         } else if (opcionPartida.equals("2")) { //Ve todas las pistas.
             for (String pista1 : pistas) {
-                if (pista1 == null) {
+                if (pistas[0] == null) {
                     System.out.println("No has descubierto ninguna pista");
+                    break;
+                }
+                if (pista1 == null) {
                     break;
                 } else {
                     System.out.println(pista1);
@@ -240,6 +161,97 @@ public class Mapas {
         } else if (opcionPartida.equals("5")) {//Regresa al menú principal
             new TreasureHunter().verMenuPrincipal();
         }
+    }
+
+    /**
+     * Metodo encargado de mover al jugador hacia arriba
+     */
+    private void moverHaciaArriba() {
+        //1. Verificar si el jugador se puede mover hacia arriba (No sale del límite de las filas del mapa)
+        if (casillaAventurero.getFila() > 0) {//Se puede mover
+            //2. Verificamos si arriba no hay un muro
+            if (tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()].isPuedePasar()) {//Puede pasar.
+                //2.5 Guarda la casilla a la que se movio para que no se elimine
+                casillaTemporal = tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()];//Guarda la casilla a donde se va a mover
+                aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
+                //2.9 Aplica el efecto de la casilla
+                casillaTemporal.mostrarMensaje();
+                //3. casilla del personaje cambia de posición hacia arriba i+1
+                tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaAventurero;
+                casillaAventurero.setFila(casillaAventurero.getFila() - 1);//Modifica la posición de la casilla aventurero y del jugador 
+                aventurero.setFilaJugador(aventurero.getFilaJugador() - 1);
+                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaTemporal;
+            }
+        }
+    }
+
+    /**
+     * Metodo encargado de mover al jugador hacia abajo
+     */
+    private void moverHaciaAbajo() {
+        //1. Verificar si el jugador se puede mover hacia abajo (No sale del límite de las filas del mapa)
+        if (casillaAventurero.getFila() < this.getFilas() - 1) {//Se puede mover
+            //2. Verificamos si arriba no hay un muro
+            if (tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()].isPuedePasar()) {//Puede pasar.
+                aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
+                //2.5 Guarda la casilla a la que se movio para que no se elimine
+                casillaTemporal = tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()];//Guarda la casilla a donde se va a mover
+                //2.9 Aplica el efecto de la casilla
+                casillaTemporal.mostrarMensaje();
+                //3. casilla del personaje cambia de posición hacia arriba i+1
+                tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaAventurero;
+                casillaAventurero.setFila(casillaAventurero.getFila() + 1);//Modifica la posición de la casilla del jugador
+                aventurero.setFilaJugador(aventurero.getFilaJugador() + 1);
+                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaTemporal;
+            }
+        }
+    }
+
+    /**
+     * Metodo encargado de mover al jugador hacia la derecha
+     */
+    private void moverHaciaLaDerecha() {
+        //1. Verificar si el jugador se puede mover hacia la derecha (No sale del límite de las columnas del mapa)
+        if (casillaAventurero.getColumna() < this.getColumnas() - 1) {//Se puede mover
+            //2. Verificamos si arriba no hay un muro
+            if (tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1].isPuedePasar()) {//Puede pasar.
+                aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
+                //2.5 Guarda la casilla a la que se movio para que no se elimine
+                casillaTemporal = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1];
+                casillaTemporal.mostrarMensaje();
+                //3. casilla del personaje cambia de posición hacia arriba j-1
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaAventurero;
+                casillaAventurero.setColumna(casillaAventurero.getColumna() + 1);//Modifica la posición de la casilla del jugador
+                aventurero.setColumnaJugador(aventurero.getColumnaJugador() + 1);
+                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaTemporal;
+            }
+        }
+    }
+
+    /**
+     * Metodo encargado de mover al jugador hacia la izquierda
+     */
+    private void moverHaciaLaIzquierda() {
+        //1. Verificar si el jugador se puede mover hacia la izquierda (No sale del límite de las columnas del mapa)
+        if (casillaAventurero.getColumna() > 0) {//Se puede mover
+            //2. Verificamos si arriba no hay un muro
+            if (tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1].isPuedePasar()) {//Puede pasar.
+                aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
+                //2.5 Guarda la casilla a la que se movio para que no se elimine
+                casillaTemporal = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1];
+                casillaTemporal.mostrarMensaje();
+                //3. casilla del personaje cambia de posición hacia arriba j-1
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaAventurero;
+                casillaAventurero.setColumna(casillaAventurero.getColumna() - 1);//Modifica la posición de la casilla del jugador
+                aventurero.setColumnaJugador(aventurero.getColumnaJugador() - 1);
+                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaTemporal;
+            }
+        }
+
     }
 
     // GETTERS -----------------------------------------------------------------

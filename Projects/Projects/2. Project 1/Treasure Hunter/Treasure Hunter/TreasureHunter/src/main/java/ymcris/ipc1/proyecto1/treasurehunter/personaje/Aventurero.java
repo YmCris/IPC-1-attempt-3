@@ -73,6 +73,8 @@ public class Aventurero extends Personaje {
         System.out.println("                        Batallas Tenidas: " + this.getBatallas());
         System.out.println("                        Movimientos Realizados: " + this.getCantidadMovimientos());
         System.out.println("                    ..........................................................................................");
+        System.out.println("");
+        System.out.println("Presione enter para continuar:");
         scanner.nextLine();
     }
 

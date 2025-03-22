@@ -194,6 +194,7 @@ public class Batalla {
                 try {//se evita que introduzca un string
                     opcionBatalla = scanner.nextInt();
                 } catch (InputMismatchException e) {
+                    scanner.nextLine();
                     opcionBatalla = 5;
                 }
                 switch (opcionBatalla) {//4. Seleccionar opción
