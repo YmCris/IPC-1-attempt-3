@@ -22,9 +22,9 @@ public class Mapas {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
     private Casillas casillaAMover = new CasillaNormal(1);
-    public static Casillas[][] tablero;
-    public static CasillaTesoro casillaTesoro;
-    public static CasillaPersonaje casillaAventurero;
+    private Casillas[][] tablero;
+    private CasillaTesoro casillaTesoro;
+    private CasillaPersonaje casillaAventurero;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
@@ -44,8 +44,8 @@ public class Mapas {
         this.filas = filas;
         this.nombre = nombre;
         this.columnas = columnas;
-        Mapas.casillaTesoro = tesoro;
-        Mapas.casillaAventurero = personaje;
+        this.casillaTesoro = tesoro;
+        this.casillaAventurero = personaje;
         tablero = new Casillas[filas][columnas];
     }
 
@@ -117,19 +117,8 @@ public class Mapas {
      * @param columna - casilla donde se implementará una casilla
      * @param casillaAModificar casilla que se implementará en el mapa
      */
-    public static void modificarMapas(int fila, int columna, Casillas casillaAModificar) {
-        Mapas.tablero[fila][columna] = casillaAModificar;
-    }
-    
-      /**
-     * Método encargado de modificar el mapa
-     *
-     * @param fila - fila donde se implementará una casilla
-     * @param columna - casilla donde se implementará una casilla
-     * @param casillaAModificar casilla que se implementará en el mapa
-     */
-    public void modificarTablero(int fila, int columna, Casillas casillaAModificar) {
-        tablero[fila][columna] = casillaAModificar;
+    public void modificarMapas(int fila, int columna, Casillas casillaAModificar) {
+        this.tablero[fila][columna] = casillaAModificar;
     }
 
     /**
@@ -271,16 +260,16 @@ public class Mapas {
                 }
             }
         }
-        
+
     }
 
     // GETTERS -----------------------------------------------------------------
     public int getFilas() {
         return filas;
     }
-    
+
     public int getColumnas() {
         return columnas;
     }
-    
+
 }

@@ -3,11 +3,12 @@ package ymcris.ipc1.proyecto1.treasurehunter;
 import java.io.File;
 import java.util.Scanner;
 import java.util.InputMismatchException;
-import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
+import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
@@ -16,8 +17,8 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarM
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -179,6 +180,9 @@ public class TreasureHunter {
             errorEncontrado();
             iniciarNuevaPartida();
         } else {
+            System.out.println("\n".repeat(100));
+            System.out.println(ROJO + "ELIJA SU MAPA:" + RESETEAR);
+            System.out.println("· INGRESE EL NÚMERO EN EL QUE SE ENCUENTRA EL MAPA CON EL QUE DESEA JUGAR:");
             mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
             int opcionArchivo = 0;
             try {
@@ -193,10 +197,12 @@ public class TreasureHunter {
                 errorEncontrado();
                 jugarConUnMapaExistente();
             } else {
+                scanner.nextLine();
+                Aventurero aventureroNuevo = crearJugador();
                 File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);
-                Aventurero aventurero = crearJugador();
-                RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido,aventurero);
-                Partida partida = new Partida(aventurero, recreador.recrearMapas(), nombrePartidaNueva);
+                RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventureroNuevo);
+                Mapas mapaYaExistente = recreador.recrearMapas();
+                Partida partida = new Partida(aventureroNuevo, mapaYaExistente, nombrePartidaNueva);
                 partida.iniciarNuevaPartida();//Inicia una nueva partida
             }
         }

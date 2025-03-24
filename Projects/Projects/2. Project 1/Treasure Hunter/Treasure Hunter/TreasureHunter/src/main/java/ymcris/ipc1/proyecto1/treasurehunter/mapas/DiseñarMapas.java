@@ -36,6 +36,7 @@ public class DiseñarMapas {
     private String nombreMapa;
     private CasillaTesoro casillaTesoro;
     private CasillaPersonaje casillaAventurero;
+    private Casillas[][] tablero;
     // ----------------------- VARIABLES PRIMITIVAS ----------------------------
     private int filaTesoro;
     private int filaJugador;
@@ -104,7 +105,7 @@ public class DiseñarMapas {
         this.casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
         this.casillaTesoro = new CasillaTesoro(filaTesoro, columnaTesoro);
         this.mapaCreado = new Mapas(nombreMapa, numeroDeFilas, numeroDeColumnas, casillaTesoro, casillaAventurero);
-        this.mapaCreado.crearTablero();
+        tablero = this.mapaCreado.crearTablero();
         this.mapaCreado.modificarMapas(filaTesoro, columnaTesoro, casillaTesoro);
         this.mapaCreado.modificarMapas(filaJugador, columnaJugador, casillaAventurero);
         diseñarMapas();
@@ -236,7 +237,7 @@ public class DiseñarMapas {
             añadirTextoEnArchivo(String.valueOf(cantidadCasillasPista), archivoMapa);
             añadirTextoEnArchivo(String.valueOf(esDireccional), archivoMapa);
             for (int i = 0; i < cantidadCasillasPista; i++) {
-                CasillaPista pista = new CasillaPista(cantidadCasillasPista, esDireccional);
+                CasillaPista pista = new CasillaPista(cantidadCasillasPista, esDireccional, casillaTesoro, casillaAventurero, tablero);
                 int filaRandom = calcularFilaRandom();
                 int columnaRandom = calcularColumnaRandom();
                 pista.setFila(filaRandom);
@@ -290,7 +291,7 @@ public class DiseñarMapas {
             añadirTextoEnArchivo(String.valueOf(numeroDeFilas), archivoMapa);
             añadirTextoEnArchivo(String.valueOf(numeroDeColumnas), archivoMapa);
             for (int i = 0; i < cantidadCasillasTeletransporte; i++) {
-                CasillaTeletransporte teletransporte = new CasillaTeletransporte(cantidadCasillasTeletransporte, ubicacionAleatoria, filaTeletransporte, columnaTeletransporte, this.getNumeroDeFilas(), this.getNumeroDeColumnas());
+                CasillaTeletransporte teletransporte = new CasillaTeletransporte(cantidadCasillasTeletransporte, ubicacionAleatoria, filaTeletransporte, columnaTeletransporte, this.getNumeroDeFilas(), this.getNumeroDeColumnas(), casillaAventurero, casillaTesoro, mapaCreado, tablero);
                 int filaRandom = calcularFilaRandom();
                 int columnaRandom = calcularColumnaRandom();
                 teletransporte.setFila(filaRandom);
@@ -400,7 +401,7 @@ public class DiseñarMapas {
             añadirTextoEnArchivo(String.valueOf(puntosAQuitar), archivoMapa);
             añadirTextoEnArchivo(String.valueOf(tipoDePuntos), archivoMapa);
             for (int i = 0; i < cantidadCasillasEnemigos; i++) {
-                CasillaEnemigos enemigo = new CasillaEnemigos(cantidadCasillasEnemigos, puedeEscapar, pierdePuntos, filaARetornar, columnaARetornar, puntosAQuitar, tipoDePuntos);
+                CasillaEnemigos enemigo = new CasillaEnemigos(cantidadCasillasEnemigos, puedeEscapar, pierdePuntos, filaARetornar, columnaARetornar, puntosAQuitar, tipoDePuntos, casillaAventurero, mapaCreado);
                 int filaRandom = calcularFilaRandom();
                 int columnaRandom = calcularColumnaRandom();
                 enemigo.setFila(filaRandom);

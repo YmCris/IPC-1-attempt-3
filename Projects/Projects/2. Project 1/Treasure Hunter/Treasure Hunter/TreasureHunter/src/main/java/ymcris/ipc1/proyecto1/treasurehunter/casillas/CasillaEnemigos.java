@@ -8,8 +8,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
-import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaAventurero;
-import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.modificarMapas;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 
 /**
  * Clase encargada de crear casillas del tipo enemigos las cuales harán que se
@@ -29,6 +28,8 @@ public class CasillaEnemigos extends Casillas {
     private boolean seHaRendido;
     private boolean puedeEscapar;
     private boolean pierdePuntos;
+    private CasillaPersonaje casillaAventurero;
+    private Mapas mapa;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
@@ -45,8 +46,10 @@ public class CasillaEnemigos extends Casillas {
      * @param columnaARetornar - columna a donde retorna si pierde
      * @param puntosAQuitar - Puntos a quitar si pierde una partida.
      * @param tipoDePuntos - Tipo de puntos ha quitar si pierde una partida.
+     * @param casillaAventurero
+     * @param mapa
      */
-    public CasillaEnemigos(int cantidad, boolean puedeEscapar, boolean pierdePuntos, int filaARetornar, int columnaARetornar, int puntosAQuitar, int tipoDePuntos) {
+    public CasillaEnemigos(int cantidad, boolean puedeEscapar, boolean pierdePuntos, int filaARetornar, int columnaARetornar, int puntosAQuitar, int tipoDePuntos, CasillaPersonaje casillaAventurero, Mapas mapa) {
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.tipoDePuntos = tipoDePuntos;//1. Vida 2. Mana 3. Ataque 4. Defensa //default 1
@@ -56,6 +59,8 @@ public class CasillaEnemigos extends Casillas {
         this.pierdePuntos = pierdePuntos;
         this.simbolo = CYAN + "██" + RESETEAR;
         this.columnaARetornar = columnaARetornar;
+        this.mapa = mapa;
+        this.casillaAventurero = casillaAventurero;
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
@@ -68,7 +73,7 @@ public class CasillaEnemigos extends Casillas {
             if (aventurero.getVida() <= 0) {
                 if (pierdePuntos == false) {// Es decir, es reubicado.
                     casillaAventurero.modificarCasillas(filaARetornar, columnaARetornar);
-                    modificarMapas(filaARetornar, columnaARetornar, casillaAventurero);
+                    mapa.modificarMapas(filaARetornar, columnaARetornar, casillaAventurero);
                     System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
                 }
             }

@@ -24,21 +24,22 @@ public class RecreadorDeMapas {
 
     public Mapas recrearMapas() {
         //1. Reimplementa todo el diseño DiseñarMapas().preguntarCaracterísticasMapa();
-        String nombreMapa = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 1);//nombreMapa
-        int filasMapa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 2));//filasMapas
-        int columnasMapa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 3)); //columnasMapas
-        int filaTesoro = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 4));//filaTesoro
-        int columnaTesoro = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 5));//columnaTesoro
+        String nombreMapa = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 0);//nombreMapa
+        int filasMapa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 1));//filasMapas
+        int columnasMapa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 2)); //columnasMapas
+        int filaTesoro = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 3));//filaTesoro
+        int columnaTesoro = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 4));//columnaTesoro
         //crearCasillaTesoro
         CasillaTesoro tesoro = new CasillaTesoro(filaTesoro, columnaTesoro);
-        int filaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 6));
-        int columnaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 7));
+        int filaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 5));
+        int columnaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 6));
         //crearCasillaPersonaje
         CasillaPersonaje casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
         Mapas mapa = new Mapas(nombreMapa, filasMapa, columnasMapa, tesoro, casillaAventurero);
         mapa.crearTablero();
-        mapa.modificarTablero(filaTesoro, columnaTesoro, tesoro);
-        mapa.modificarTablero(filaJugador, columnaJugador, casillaAventurero);
+        mapa.mostrarMapaCompleto();
+        mapa.modificarMapas(filaTesoro, columnaTesoro, tesoro);
+        mapa.modificarMapas(filaJugador, columnaJugador, casillaAventurero);
         //2. Reimplementar todo lo de DiseñarMapas().diseñarMapas();
         //crearMapa
         //RellenarNuevoMapa con casillas normales
@@ -50,7 +51,7 @@ public class RecreadorDeMapas {
         //crear casillas energía
         //crear casillas enemigos
         //Mapas mapa = new Mapas();
-        return null;
+        return mapa;
     }
 
     // --------------------- VARIABLES DE REFERENCIA ---------------------------

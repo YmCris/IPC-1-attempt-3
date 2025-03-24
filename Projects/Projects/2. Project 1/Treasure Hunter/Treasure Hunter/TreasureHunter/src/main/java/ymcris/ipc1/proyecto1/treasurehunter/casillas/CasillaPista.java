@@ -1,13 +1,10 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
-import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.tablero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
-import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaTesoro;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.AMARILLO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaAventurero;
 
 /**
  * Clase encargada de crear casillas del tipo pista la cual da información
@@ -21,6 +18,9 @@ public class CasillaPista extends Casillas {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     public static String pista;
     public static String[] pistas;
+    private CasillaTesoro casillaTesoro;
+    private CasillaPersonaje casillaAventurero;
+    private Casillas[][] tablero;
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private static int contador;
     private int cantidadPistasPartida;
@@ -32,14 +32,20 @@ public class CasillaPista extends Casillas {
      *
      * @param cantidad - cantidad de casillas pista durante una partida
      * @param pistaEsDireccional - true si lo es y false si es aproximada
+     * @param casillaTesoro
+     * @param casillaAventurero
+     * @param tablero
      */
-    public CasillaPista(int cantidad, boolean pistaEsDireccional) {
+    public CasillaPista(int cantidad, boolean pistaEsDireccional, CasillaTesoro casillaTesoro, CasillaPersonaje casillaAventurero, Casillas[][] tablero) {
         CasillaPista.contador = 0;
         this.puedePasar = true;
         this.cantidad = cantidad;
         this.simbolo = AMARILLO + "▒▒" + RESETEAR;
         this.pistaEsDireccional = pistaEsDireccional;
+        this.casillaTesoro = casillaTesoro;
+        this.casillaAventurero = casillaAventurero;
         CasillaPista.pistas = new String[90];
+        this.tablero = tablero;
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
