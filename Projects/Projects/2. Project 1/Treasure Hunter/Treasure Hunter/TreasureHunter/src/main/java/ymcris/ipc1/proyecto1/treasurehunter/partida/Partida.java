@@ -1,6 +1,9 @@
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
 import java.util.Scanner;
+import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
@@ -52,7 +55,22 @@ public class Partida {
             verOpcionesPartida();
             String opcionPartida = scanner.nextLine();
             mapa.seleccionarOpcionesPartida(opcionPartida);
+            if (aventurero.getVidaPrevioAUnaBatalla() == 0) {
+                System.out.println(MAGENTA + "                                AVENTURERO " + aventurero.getNombre() + " has fallado en tu misión de encontrar el tesoro más grande de todos" + RESETEAR);
+                System.out.println(MAGENTA + "            No te preocupes, Varios aventurero de gran renombre tampoco lo han conseguido hasta el momento, sigue intentando y algún día lo encontrarás" + RESETEAR);
+                partidaTerminada = true;
+                break;
+            }
+            if (opcionPartida.equals("5")) {
+                partidaTerminada = true;
+                break;
+            }
         } while (partidaTerminada == false);
-        System.out.println("Waos has terminado");
+        System.out.println("");
+        System.out.println("");
+        System.out.println("Presiona enter para volver al menú principal");
+        scanner.nextLine();
+        new TreasureHunter().verMenuPrincipal();
+
     }
 }

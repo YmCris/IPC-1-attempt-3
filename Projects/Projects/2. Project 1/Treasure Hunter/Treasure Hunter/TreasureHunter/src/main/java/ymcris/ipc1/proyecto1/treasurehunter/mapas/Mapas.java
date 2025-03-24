@@ -158,8 +158,6 @@ public class Mapas {
             aventurero.mostrarEstadoAventurero();
         } else if (opcionPartida.equals("4")) {//Guarda la partida
 
-        } else if (opcionPartida.equals("5")) {//Regresa al menú principal
-            new TreasureHunter().verMenuPrincipal();
         }
     }
 

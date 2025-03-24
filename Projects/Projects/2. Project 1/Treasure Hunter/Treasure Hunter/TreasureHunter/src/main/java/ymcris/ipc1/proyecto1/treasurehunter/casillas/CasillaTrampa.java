@@ -40,13 +40,15 @@ public class CasillaTrampa extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         if (quitaVida) {//quita vida
             aventurero.setVida(aventurero.getVida() - puntosAQuitar);
+            aventurero.setVidaPrevioAUnaBatalla(aventurero.getVidaPrevioAUnaBatalla() - puntosAQuitar);
             System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else if (!quitaVida) {//quita mana
             aventurero.setMana(aventurero.getMana() - puntosAQuitar);
+            aventurero.setManaPrevioAUnaBatalla(aventurero.getManaPrevioAUnaBatalla() - puntosAQuitar);
             System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de mana tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
-
+    
     @Override
     public void mostrarMensaje() {
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla trampa" + CYAN + " ------------------------- " + RESETEAR);
@@ -61,5 +63,5 @@ public class CasillaTrampa extends Casillas {
         this.puntosAQuitar = puntosAQuitar;
         return this;
     }
-
+    
 }

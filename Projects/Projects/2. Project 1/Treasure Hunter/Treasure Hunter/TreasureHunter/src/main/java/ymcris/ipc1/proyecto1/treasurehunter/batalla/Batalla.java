@@ -100,7 +100,7 @@ public class Batalla {
         //Aplica los efectos de la batalla
         this.aventurero.setBatallas(this.aventurero.getBatallas() + 1);
         this.aventurero.setBatallasGanadas(this.aventurero.getBatallasGanadas() + 1);
-        this.aventurero.setVida(aventurero.getVidaMaxima());
+        this.aventurero.setVida(aventurero.getVidaTotal());
         this.aventurero.setMana(aventurero.getManaMaximo());
         do {
             System.out.println("   Oh gran aventurero " + aventurero.getNombre() + " como agradecimiento por derrotar al temible pirata " + pirata.getNombre() + " los aldeanos se ofrecen a ayudarte en tu travesia");
@@ -120,7 +120,7 @@ public class Batalla {
                     System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " tu defensa ha aumentado 1, tienes " + aventurero.getDefensa() + " puntos de defensa" + CYAN + " ------------------------- " + RESETEAR);
                 }
                 case 3 -> {
-                    aventurero.setVidaMaxima(aventurero.getVida() + 1);
+                    aventurero.setVidaTotal(aventurero.getVida() + 1);
                     aventurero.setVida(aventurero.getVida() + 1);
                     System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " tu vida ha aumentado 1, tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
                 }

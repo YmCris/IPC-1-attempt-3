@@ -24,8 +24,8 @@ public class DiseñoBatallas {
     public void verOpcionesBatalla(Aventurero aventurero) {
         System.out.println("............................................................................................................................................");
         System.out.println(". TURNO DE: " + MAGENTA + aventurero.getNombre() + RESETEAR + " '" + ROJO + aventurero.getSimbolo() + RESETEAR + "'" + "     .                                                                                                             .");
-        System.out.println(". VIDA: " + aventurero.getVida() + "/" + aventurero.getVidaMaxima() + "              .    ┌---------------------┐   ┌---------------------┐   ┌---------------------┐   ┌---------------------┐    .");
-        System.out.println(". MANA: " + aventurero.getMana() + "/" + aventurero.getManaMaximo() + "                .    ¦        ATACAR       ¦   ¦        CURAR        ¦   ¦       DEFENDER      ¦   ¦      ABANDONAR      ¦    .");
+        System.out.println(". VIDA: " + aventurero.getVida() + "/" + aventurero.getVidaPrevioAUnaBatalla() + "/" + aventurero.getVidaTotal() + "              .    ┌---------------------┐   ┌---------------------┐   ┌---------------------┐   ┌---------------------┐    .");
+        System.out.println(". MANA: " + aventurero.getMana() + "/" + aventurero.getManaPrevioAUnaBatalla() + "/" + aventurero.getManaMaximo() + "                .    ¦        ATACAR       ¦   ¦        CURAR        ¦   ¦       DEFENDER      ¦   ¦      ABANDONAR      ¦    .");
         System.out.println(". ATAQUE: " + aventurero.getAtaque() + "                .    ¦         [1]         ¦   ¦         [2]         ¦   ¦          [3]        ¦   ¦         [4]         ¦    .");
         System.out.println(". DEFENSA: " + aventurero.getDefensa() + "                .    ¦                     ¦   ¦                     ¦   ¦                     ¦   ¦                     ¦    .");
         System.out.println(". BATALLAS: " + aventurero.getBatallas() + "                .    └---------------------┘   └---------------------┘   └---------------------┘   └---------------------┘    .");

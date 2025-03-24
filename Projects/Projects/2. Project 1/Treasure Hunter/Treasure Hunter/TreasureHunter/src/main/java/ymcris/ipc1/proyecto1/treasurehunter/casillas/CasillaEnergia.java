@@ -41,7 +41,7 @@ public class CasillaEnergia extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         if (recuperaVida) {//recupera vida
             aventurero.setVida(aventurero.getVida() + puntosARecuperar);
-            aventurero.setVidaMaxima(aventurero.getVidaMaxima() + puntosARecuperar);
+            aventurero.setVidaTotal(aventurero.getVidaTotal() + puntosARecuperar);
             aventurero.setVidaPrevioAUnaBatalla(aventurero.getVidaPrevioAUnaBatalla() + puntosARecuperar);
             System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz recuperado " + puntosARecuperar + " de vida tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
         } else if (!recuperaVida) {//recupera mana

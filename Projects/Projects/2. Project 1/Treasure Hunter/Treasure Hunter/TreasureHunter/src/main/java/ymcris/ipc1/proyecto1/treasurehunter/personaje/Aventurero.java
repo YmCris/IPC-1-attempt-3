@@ -64,8 +64,8 @@ public class Aventurero extends Personaje {
         System.out.println("                    ..........................................................................................");
         System.out.println("                                    Las estadísticas del aventurero " + this.getNombre() + " son:");
         System.out.println("                    ..........................................................................................");
-        System.out.println("                        Vida: " + this.getVida() + "/" + this.getVidaMaxima());
-        System.out.println("                        Mana: " + this.getMana() + "/" + this.getManaMaximo());
+        System.out.println("                        Vida: " + this.getVida() + "/" + this.getVidaPrevioAUnaBatalla() + "/" + this.getVidaTotal());
+        System.out.println("                        Mana: " + this.getMana() + "/" + this.getManaPrevioAUnaBatalla() + "/" + this.getManaMaximo());
         System.out.println("                        Ataque: " + this.getAtaque());
         System.out.println("                        Defensa: " + this.getDefensa());
         System.out.println("                        Símbolo: " + this.getSimbolo());
@@ -116,11 +116,11 @@ public class Aventurero extends Personaje {
         this.batallas = batallas;
     }
 
-    public int getVidaMaxima() {
+    public int getVidaTotal() {
         return vidaTotal;
     }
 
-    public void setVidaMaxima(int vidaMaxima) {
+    public void setVidaTotal(int vidaMaxima) {
         this.vidaTotal = vidaMaxima;
     }
 
@@ -170,6 +170,9 @@ public class Aventurero extends Personaje {
 
     public void setVidaPrevioAUnaBatalla(int vidaPrevioAUnaBatalla) {
         this.vidaPrevioAUnaBatalla = vidaPrevioAUnaBatalla;
+        if (this.vidaPrevioAUnaBatalla <= 0) {
+            this.vidaPrevioAUnaBatalla = 0;
+        }
     }
 
     public int getManaPrevioAUnaBatalla() {
@@ -178,6 +181,9 @@ public class Aventurero extends Personaje {
 
     public void setManaPrevioAUnaBatalla(int manaPrevioAUnaBatalla) {
         this.manaPrevioAUnaBatalla = manaPrevioAUnaBatalla;
+        if (this.manaPrevioAUnaBatalla <= 0) {
+            this.manaPrevioAUnaBatalla = 0;
+        }
     }
 
     public int getDefensaPrevioAUnaBatalla() {
@@ -186,14 +192,6 @@ public class Aventurero extends Personaje {
 
     public void setDefensaPrevioAUnaBatalla(int defensaPrevioAUnaBatalla) {
         this.defensaPrevioAUnaBatalla = defensaPrevioAUnaBatalla;
-    }
-
-    public Scanner getScanner() {
-        return scanner;
-    }
-
-    public void setScanner(Scanner scanner) {
-        this.scanner = scanner;
     }
 
     public int getFilaJugador() {

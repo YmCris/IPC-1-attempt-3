@@ -2,6 +2,10 @@ package ymcris.ipc1.proyecto1.treasurehunter;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaProyecto;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
@@ -27,7 +31,7 @@ public class TreasureHunter {
     public static Aventurero aventurero;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int opcionMenu = 0;
+    private int opcionMenuPrincipal = 0;
     private int opcionMapas = 0;
 
     // INSTANCIAS --------------------------------------------------------------
@@ -40,10 +44,11 @@ public class TreasureHunter {
      * @param args - paramétros para iniciar directamente en el jar
      */
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        crearCarpetas();
         mostrarBienvenida();
-        do {//Para que nunca acabe el juego
-            new TreasureHunter().verMenuPrincipal();
-        } while (true);
+        scanner.nextLine();
+        new TreasureHunter().verMenuPrincipal();
     }
 
     // MÉTODOS -----------------------------------------------------------------
@@ -52,34 +57,39 @@ public class TreasureHunter {
      * esté pueda cometer
      */
     public void verMenuPrincipal() {
-        scanner.nextLine();
         do {//Por si introduce un número que no es
             mostrarMenuPrincipal();
             try {//por si introduce un string
-                opcionMenu = scanner.nextInt();
+                opcionMenuPrincipal = scanner.nextInt();
             } catch (InputMismatchException exception) {
-                opcionMenu = 8;
+                opcionMenuPrincipal = 8;
             }
-            switch (opcionMenu) {//Opciones dentro del juego
-                case 1 ->//Muestra como jugar el juego
+            switch (opcionMenuPrincipal) {//Opciones dentro del juego
+                case 1://Muestra como jugar el juego
                     new ComoJugar().enseñarAJugar();
-                case 2 ->//Inicia una nueva partida
+                    break;
+                case 2://Inicia una nueva partida
                     iniciarNuevaPartida();
-                case 3 ->//Carga una partida ya existente
+                    break;
+                case 3://Carga una partida ya existente
                     new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
-                case 4 -> {//Modifica un mapa ya existente
+                    break;
+                case 4:
+//Modifica un mapa ya existente
                     //new DiseñarMapas().diseñarMapas();
-                }
-                case 5 ->//Muestra los reportes del juego
+                    break;
+                case 5://Muestra los reportes del juego
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
-                case 6 ->//Sale del programa
+                    break;
+                case 6://Sale del programa
                     System.exit(0);
-                default -> {
+                    break;
+                default:
                     errorEncontrado();
                     scanner.nextLine();
-                }
+                    break;
             }
-        } while (opcionMenu < 1 || opcionMenu > 6);
+        } while (opcionMenuPrincipal < 1 || opcionMenuPrincipal > 6);
     }
 
     /**
@@ -117,11 +127,12 @@ public class TreasureHunter {
                 opcionMapas = 9;
             }
             switch (opcionMapas) {//Opciones al iniciar una nueva partida.
-                case 1 -> {//Juega con un mapa ya existente.
-                    //Archivo archivo = new Archivo();
-                    //archivo.elegirMapaExistente();
-                }
-                case 2 -> {//Juega con un nuevo mapa.
+                case 1: //Juega con un mapa ya existente.
+                    scanner.nextLine();
+                    scanner.nextLine();
+                    mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
+                    break;
+                case 2://Juega con un nuevo mapa.
                     scanner.nextLine();
                     System.out.println("\n".repeat(100));
                     System.out.println(ROJO + "PARTIDA" + RESETEAR);
@@ -137,15 +148,17 @@ public class TreasureHunter {
                         Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);
                         partida.iniciarNuevaPartida();//Inicia una nueva partida
                     }
-                }
-                case 3 ->//vuelve al menu
+                    break;
+                case 3://vuelve al menu
                     verMenuPrincipal();
-                case 4 ->//sale del programa
+                    break;
+                case 4://sale del programa
                     System.exit(0);
-                default -> {
+                    break;
+                default:
                     errorEncontrado();
                     scanner.nextLine();
-                }
+                    break;
             }
         } while (opcionMapas < 0 || opcionMapas >= 5);
     }

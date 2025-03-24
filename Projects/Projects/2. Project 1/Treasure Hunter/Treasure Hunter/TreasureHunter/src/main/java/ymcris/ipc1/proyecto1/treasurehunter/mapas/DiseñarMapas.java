@@ -15,6 +15,8 @@ import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
@@ -88,6 +90,7 @@ public class DiseñarMapas {
             TreasureHunter inicio = new TreasureHunter();
             inicio.verMenuPrincipal();
         }
+        crearArchivo(this.nombreMapa, rutaCarpetaMapas);
         this.casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
         this.casillaTesoro = new CasillaTesoro(filaTesoro, columnaTesoro);
         this.mapaCreado = new Mapas(nombreMapa, numeroDeFilas, numeroDeColumnas, casillaTesoro, casillaAventurero);
@@ -166,7 +169,7 @@ public class DiseñarMapas {
      * Método encargado de diseñar casillas trampa, pidiendo todos sus
      * paramétros necesarios y validando que sean correctos.
      */
-    private void diseñarCasillasTrampa() {
+    private void diseñarCasillasTrampa() throws InputMismatchException {
         boolean quitaVida = false;
         System.out.println("\n".repeat(100));
         System.out.println(ROJO + "CASILLAS TRAMPA" + RESETEAR);
@@ -201,7 +204,7 @@ public class DiseñarMapas {
      * Método encargado de diseñar casillas pista, pidiendo todos sus paramétros
      * necesarios y validando que sean correctos.
      */
-    private void diseñarCasillasPista() {
+    private void diseñarCasillasPista() throws InputMismatchException {
         boolean esDireccional;
         System.out.println("\n".repeat(100));
         System.out.println(ROJO + "CASILLAS PISTA" + RESETEAR);
@@ -228,7 +231,7 @@ public class DiseñarMapas {
      * Método encargado de diseñar casillas teletransporte, pidiendo todos sus
      * paramétros necesarios y validando que sean correctos.
      */
-    private void diseñarCasillasTeletransporte() {
+    private void diseñarCasillasTeletransporte() throws InputMismatchException {
         boolean ubicacionAleatoria = false;
         int filaTeletransporte = 0;
         int columnaTeletransporte = 0;
@@ -270,7 +273,7 @@ public class DiseñarMapas {
      * Método encargado de diseñar casillas energía, pidiendo todos sus
      * paramétros necesarios y validando que sean correctos.
      */
-    private void diseñarCasillasEnergia() {
+    private void diseñarCasillasEnergia() throws InputMismatchException {
         boolean recuperaVida;
         System.out.println("\n".repeat(100));
         System.out.println(ROJO + "CASILLAS DE ENERGÍA" + RESETEAR);
@@ -305,7 +308,7 @@ public class DiseñarMapas {
      * Método encargado de diseñar casillas enemigos, pidiendo todos sus
      * paramétros necesarios y validando que sean correctos.
      */
-    private void diseñarCasillasEnemigos() {
+    private void diseñarCasillasEnemigos() throws InputMismatchException {
         int filaARetornar = 0;
         int columnaARetornar = 0;
         int puntosAQuitar = 0;
@@ -424,6 +427,7 @@ public class DiseñarMapas {
         try {
             mapaCreado.modificarMapas(fila, columna, casillas);
         } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Ha ocurrido un error grandísimo");
             new TreasureHunter().verMenuPrincipal();
         }
     }
