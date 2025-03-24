@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
+import java.io.File;
 import java.util.Random;
 import java.util.Scanner;
 import java.util.InputMismatchException;
@@ -15,6 +16,7 @@ import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
@@ -30,6 +32,7 @@ public class DiseñarMapas {
 
     // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private Mapas mapaCreado;
+    private File archivoMapa;
     private String nombreMapa;
     private CasillaTesoro casillaTesoro;
     private CasillaPersonaje casillaAventurero;
@@ -90,7 +93,14 @@ public class DiseñarMapas {
             TreasureHunter inicio = new TreasureHunter();
             inicio.verMenuPrincipal();
         }
-        crearArchivo(this.nombreMapa, rutaCarpetaMapas);
+        archivoMapa = crearArchivo(this.nombreMapa, rutaCarpetaMapas);
+        añadirTextoEnArchivo(nombreMapa, archivoMapa);
+        añadirTextoEnArchivo(String.valueOf(numeroDeFilas), archivoMapa);
+        añadirTextoEnArchivo(String.valueOf(numeroDeColumnas), archivoMapa);
+        añadirTextoEnArchivo(String.valueOf(filaTesoro), archivoMapa);
+        añadirTextoEnArchivo(String.valueOf(columnaTesoro), archivoMapa);
+        añadirTextoEnArchivo(String.valueOf(filaJugador), archivoMapa);
+        añadirTextoEnArchivo(String.valueOf(columnaJugador), archivoMapa);
         this.casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
         this.casillaTesoro = new CasillaTesoro(filaTesoro, columnaTesoro);
         this.mapaCreado = new Mapas(nombreMapa, numeroDeFilas, numeroDeColumnas, casillaTesoro, casillaAventurero);
@@ -109,8 +119,9 @@ public class DiseñarMapas {
         boolean nombreMapaVacio = nombreMapa.isBlank();
         boolean dimensionesInvalidas = numeroDeFilas < 25 || numeroDeColumnas < 25;
         boolean tesoroFueraDeRango = filaTesoro < 0 || filaTesoro >= numeroDeFilas || columnaTesoro < 0 || columnaTesoro >= numeroDeColumnas;
+        boolean tesoroYJugadorFueradeRango = filaJugador == filaTesoro && columnaTesoro == columnaJugador;
         boolean jugadorFueraDeRango = filaJugador < 0 || filaJugador >= numeroDeFilas || columnaJugador < 0 || columnaJugador >= numeroDeColumnas;
-        if (nombreMapaVacio || dimensionesInvalidas || tesoroFueraDeRango || jugadorFueraDeRango) {
+        if (nombreMapaVacio || dimensionesInvalidas || tesoroFueraDeRango || jugadorFueraDeRango || tesoroYJugadorFueradeRango) {
             System.out.println("No has introducido correctamente alguno de los siguientes datos:");
             if (nombreMapaVacio) {
                 System.out.println("0) El mapa no puede tener un nombre vacio");
@@ -123,6 +134,9 @@ public class DiseñarMapas {
             }
             if (jugadorFueraDeRango) {
                 System.out.println("3) La posición del jugador debe estar dentro del rango del mapa");
+            }
+            if (tesoroYJugadorFueradeRango) {
+                System.out.println("4) La posición del jugador y del tesoro deben ser distintas");
             }
             System.out.println("");
             System.out.println("Vuelve a intentarlo evitando estos errores.");
@@ -145,8 +159,8 @@ public class DiseñarMapas {
             System.out.println(ROJO + "DISEÑO DE CASILLAS" + RESETEAR);
             System.out.println("Durante la creación de las casillas asegurate de:");
             System.out.println("1. Ingresar un número");
-            System.out.println("2. No ingresar cantidades negativas");
-            System.out.println("Si no quieres casillas de un tipo pon 0, si no eliges una opción dada entre [1] o [2], se tomará la segunda");
+            System.out.println("2. No ingresar cantidades negativas, ni 0, ni muy grandes");
+            System.out.println("3. Si no eliges una opción dada entre [1] o [2], se tomará la segunda");
             System.out.println("Presione enter para continuar");
             scanner.nextLine();
             scanner.nextLine();
@@ -175,9 +189,9 @@ public class DiseñarMapas {
         System.out.println(ROJO + "CASILLAS TRAMPA" + RESETEAR);
         System.out.println("¿Cuántas casillas trampa desea tener?");
         cantidadCasillasTrampa = scanner.nextInt();
-        if (limiteCantidadCasillas(cantidadCasillasTrampa)) {
+        if (sobrepasaElLimiteCantidadCasillas(cantidadCasillasTrampa)) {
             diseñarCasillasTrampa();
-        } else if (cantidadCasillasTrampa != 0) {
+        } else {
             System.out.println("Elija el efecto de la trampa");
             System.out.println("[1] Quitar vida  [2] Quitar mana");
             quitaVida = scanner.nextInt() == 1;
@@ -188,6 +202,9 @@ public class DiseñarMapas {
                 errorEncontrado();
                 diseñarCasillasTrampa();
             } else {
+                añadirTextoEnArchivo(String.valueOf(cantidadCasillasTrampa), archivoMapa);
+                añadirTextoEnArchivo(String.valueOf(puntosAQuitar), archivoMapa);
+                añadirTextoEnArchivo(String.valueOf(quitaVida), archivoMapa);
                 for (int i = 0; i < cantidadCasillasTrampa; i++) {
                     CasillaTrampa trampa = new CasillaTrampa(cantidadCasillasTrampa, puntosAQuitar, quitaVida);
                     int filaRandom = calcularFilaRandom();
@@ -210,12 +227,14 @@ public class DiseñarMapas {
         System.out.println(ROJO + "CASILLAS PISTA" + RESETEAR);
         System.out.println("¿Cuántas casillas Pista desea tener?");
         cantidadCasillasPista = scanner.nextInt();
-        if (limiteCantidadCasillas(cantidadCasillasPista)) {
+        if (sobrepasaElLimiteCantidadCasillas(cantidadCasillasPista)) {
             diseñarCasillasPista();
-        } else if (cantidadCasillasPista != 0) {
+        } else {
             System.out.println("¿Desea que la pista sea direccional (Norte, sur, este, oeste, noreste, noroesete, sureste, suroeste) o de aproximación (muy cerca, cerca, medio, lejos, muy lejos, super lejos)?");
             System.out.println("[1] Pista direccional  [2] Pista de aproximación");
             esDireccional = scanner.nextInt() == 1;
+            añadirTextoEnArchivo(String.valueOf(cantidadCasillasPista), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(esDireccional), archivoMapa);
             for (int i = 0; i < cantidadCasillasPista; i++) {
                 CasillaPista pista = new CasillaPista(cantidadCasillasPista, esDireccional);
                 int filaRandom = calcularFilaRandom();
@@ -239,9 +258,9 @@ public class DiseñarMapas {
         System.out.println(ROJO + "CASILLAS DE TELETRANSPORTE" + RESETEAR);
         System.out.println("¿Cuántas casillas Teletransporte desea tener?");
         cantidadCasillasTeletransporte = scanner.nextInt();
-        if (limiteCantidadCasillas(cantidadCasillasTeletransporte)) {
+        if (sobrepasaElLimiteCantidadCasillas(cantidadCasillasTeletransporte)) {
             diseñarCasillasTeletransporte();
-        } else if (cantidadCasillasTeletransporte != 0) {
+        } else {
             System.out.println("¿Desea que la casilla teletransporte a un lugar aleatorio?");
             System.out.println("[1] Si  [2] No");
             if (scanner.nextInt() == 1) {
@@ -251,13 +270,25 @@ public class DiseñarMapas {
                 filaTeletransporte = scanner.nextInt();
                 System.out.println("Ingrese la columna a la que se va a teletransportar el jugador:");
                 columnaTeletransporte = scanner.nextInt();
-                if (filaTeletransporte >= numeroDeFilas || columnaTeletransporte >= numeroDeColumnas || filaTeletransporte < 0 || columnaTeletransporte < 0) {
-                    System.out.println("La posición a teletransportar debe de estar en el rango del mapa");
-                    scanner.nextLine();
+                if (filaTeletransporte == filaTesoro && columnaTeletransporte == columnaTesoro) {
+                    System.out.println("No puedes teletransportarte a la posición del tesoro");
                     errorEncontrado();
                     diseñarCasillasTeletransporte();
+                } else {
+                    if (filaTeletransporte >= numeroDeFilas || columnaTeletransporte >= numeroDeColumnas || filaTeletransporte < 0 || columnaTeletransporte < 0) {
+                        System.out.println("La posición a teletransportar debe de estar en el rango del mapa");
+                        scanner.nextLine();
+                        errorEncontrado();
+                        diseñarCasillasTeletransporte();
+                    }
                 }
             }
+            añadirTextoEnArchivo(String.valueOf(cantidadCasillasTeletransporte), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(ubicacionAleatoria), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(filaTeletransporte), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(columnaTeletransporte), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(numeroDeFilas), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(numeroDeColumnas), archivoMapa);
             for (int i = 0; i < cantidadCasillasTeletransporte; i++) {
                 CasillaTeletransporte teletransporte = new CasillaTeletransporte(cantidadCasillasTeletransporte, ubicacionAleatoria, filaTeletransporte, columnaTeletransporte, this.getNumeroDeFilas(), this.getNumeroDeColumnas());
                 int filaRandom = calcularFilaRandom();
@@ -279,9 +310,9 @@ public class DiseñarMapas {
         System.out.println(ROJO + "CASILLAS DE ENERGÍA" + RESETEAR);
         System.out.println("¿Cuántas casillas Energía desea tener?");
         cantidadCasillasEnergia = scanner.nextInt();
-        if (limiteCantidadCasillas(cantidadCasillasEnergia)) {
+        if (sobrepasaElLimiteCantidadCasillas(cantidadCasillasEnergia)) {
             diseñarCasillasEnergia();
-        } else if (cantidadCasillasEnergia != 0) {
+        } else {
             System.out.println("¿Qué desea que realice la casilla de energía?");
             System.out.println("[1] Recuperar vida  [2] Recuperar mana");
             recuperaVida = scanner.nextInt() == 1;
@@ -292,6 +323,9 @@ public class DiseñarMapas {
                 errorEncontrado();
                 diseñarCasillasEnergia();
             } else {
+                añadirTextoEnArchivo(String.valueOf(cantidadCasillasEnergia), archivoMapa);
+                añadirTextoEnArchivo(String.valueOf(puntosARecuperar), archivoMapa);
+                añadirTextoEnArchivo(String.valueOf(recuperaVida), archivoMapa);
                 for (int i = 0; i < cantidadCasillasEnergia; i++) {
                     CasillaEnergia energia = new CasillaEnergia(cantidadCasillasEnergia, puntosARecuperar, recuperaVida);
                     int filaRandom = calcularFilaRandom();
@@ -319,9 +353,9 @@ public class DiseñarMapas {
         System.out.println(ROJO + "CASILLAS DE ENEMIGOS" + RESETEAR);
         System.out.println("¿Cuántas casillas de enemigos desea tener?");
         cantidadCasillasEnemigos = scanner.nextInt();
-        if (limiteCantidadCasillas(cantidadCasillasEnemigos)) {
+        if (sobrepasaElLimiteCantidadCasillas(cantidadCasillasEnemigos)) {
             diseñarCasillasEnemigos();
-        } else if (cantidadCasillasEnemigos != 0) {
+        } else {
             System.out.println("¿El jugador puede escapar de la batalla?  [1] Si [2] No ");
             puedeEscapar = scanner.nextInt() == 1;
             System.out.println("De perder una batalla ¿Qué desea que suceda?");
@@ -347,12 +381,24 @@ public class DiseñarMapas {
                 filaARetornar = scanner.nextInt();
                 System.out.println("Columna a donde será reubicado:");
                 columnaARetornar = scanner.nextInt();
+                if (filaARetornar == filaTesoro && columnaARetornar == columnaTesoro) {
+                    System.out.println("No te puedes rehubicar en la posición del tesoro");
+                    errorEncontrado();
+                    diseñarCasillasEnemigos();
+                }
                 if (filaARetornar >= numeroDeFilas || columnaARetornar >= numeroDeColumnas || filaARetornar < 0 || columnaARetornar < 0) {
                     System.out.println("La ubicacación a retornar debe estar en el rango del mapa");
                     errorEncontrado();
                     diseñarCasillasEnemigos();
                 }
             }
+            añadirTextoEnArchivo(String.valueOf(cantidadCasillasEnemigos), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(puedeEscapar), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(pierdePuntos), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(filaARetornar), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(columnaARetornar), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(puntosAQuitar), archivoMapa);
+            añadirTextoEnArchivo(String.valueOf(tipoDePuntos), archivoMapa);
             for (int i = 0; i < cantidadCasillasEnemigos; i++) {
                 CasillaEnemigos enemigo = new CasillaEnemigos(cantidadCasillasEnemigos, puedeEscapar, pierdePuntos, filaARetornar, columnaARetornar, puntosAQuitar, tipoDePuntos);
                 int filaRandom = calcularFilaRandom();
@@ -368,7 +414,8 @@ public class DiseñarMapas {
      * Método encargado de diseñar casillas muros
      */
     private void diseñarCasillasMuros() {
-        int numeroDeCasillas = random.nextInt(3, mapaCreado.getColumnas());
+        int numeroDeCasillas = random.nextInt(3, mapaCreado.getColumnas() + 4);
+        añadirTextoEnArchivo(String.valueOf(numeroDeCasillas), archivoMapa);
         for (int i = 0; i < numeroDeCasillas; i++) {
             CasillaMuro muro = new CasillaMuro(numeroDeCasillas);
             int filaRandom = calcularFilaRandom();
@@ -386,9 +433,9 @@ public class DiseñarMapas {
      * @param cantidad - cantidad a validar
      * @return true si sale del límite
      */
-    private boolean limiteCantidadCasillas(int cantidad) {
-        if (cantidad < 0) {
-            System.out.println("No puedes tener casillas negativas");
+    private boolean sobrepasaElLimiteCantidadCasillas(int cantidad) {
+        if (cantidad <= 0 || cantidad >= (int) (numeroDeFilas * numeroDeColumnas) / 2) {//evita que no tenga casillas de un tipo o que rellene todo el mapa con un solo tipo de casillas
+            System.out.println("No puedes tener esa cantidad de casillas");
             errorEncontrado();
             return true;
         } else {

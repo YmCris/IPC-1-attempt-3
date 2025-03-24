@@ -45,6 +45,20 @@ public class Archivos {
         carpetaJugadores.mkdirs();
     }
 
+    /**
+     * Método encargado de mostrar cuántos elementos se encuentran en una
+     * carpeta
+     *
+     * @param rutaCarpeta - ruta de la carpeta de donde se límitarán los
+     * archivos
+     * @return cantidad de elementos en la carpeta
+     */
+    public static int obtenerCuantosElementosTieneUnaCarpeta(String rutaCarpeta) {
+        File carpetaArchivos = new File(rutaCarpeta);
+        String[] nombreDeArchivosEnCarpeta = carpetaArchivos.list();
+        return nombreDeArchivosEnCarpeta.length;
+    }
+
     //-------------------------- MÉTODOS SOBRE ARCHIVOS ------------------------
     /**
      * Método encargado de crear archivos de texto. Es decir va a crear los
@@ -53,7 +67,7 @@ public class Archivos {
      * @param nombreArchivo Nombre que tendrá el archivo
      * @param rutaCarpeta - ruta del lugar donde se va a guardar el archivo
      */
-    public static void crearArchivo(String nombreArchivo, String rutaCarpeta) {
+    public static File crearArchivo(String nombreArchivo, String rutaCarpeta) {
         try {
             File file = new File(rutaCarpeta + File.separator + nombreArchivo + ".txt");
             if (file.exists()) {
@@ -61,10 +75,12 @@ public class Archivos {
                 System.out.println("Su nombre es: " + file.getName());
             } else {
                 file.createNewFile();
+                return file;
             }
         } catch (IOException e) {
             System.out.println("Ha habido un error al crear el archivo " + nombreArchivo + e.getMessage());
         }
+        return null;
     }
 
     /**

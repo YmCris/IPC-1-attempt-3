@@ -185,6 +185,7 @@ public class Batalla {
         do {
             if (contador <= 0) {
                 defensaActiva = false;
+                aventurero.setDefensa(aventurero.getDefensaPrevioAUnaBatalla());
                 contador = 3;
             }
             pirata.mostrarInformacion();//1. Mostrar información del pirata

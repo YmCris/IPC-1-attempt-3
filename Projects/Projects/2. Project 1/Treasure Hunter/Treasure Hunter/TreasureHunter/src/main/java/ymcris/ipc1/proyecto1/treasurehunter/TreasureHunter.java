@@ -1,21 +1,23 @@
 package ymcris.ipc1.proyecto1.treasurehunter;
 
+import java.io.File;
 import java.util.Scanner;
 import java.util.InputMismatchException;
 import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaProyecto;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -128,26 +130,10 @@ public class TreasureHunter {
             }
             switch (opcionMapas) {//Opciones al iniciar una nueva partida.
                 case 1: //Juega con un mapa ya existente.
-                    scanner.nextLine();
-                    scanner.nextLine();
-                    mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
+                    jugarConUnMapaExistente();
                     break;
                 case 2://Juega con un nuevo mapa.
-                    scanner.nextLine();
-                    System.out.println("\n".repeat(100));
-                    System.out.println(ROJO + "PARTIDA" + RESETEAR);
-                    System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
-                    String nombrePartida = scanner.nextLine();
-                    if (nombrePartida.isBlank()) {
-                        System.out.println("El nombre de la partida no puede estar en blanco");
-                        errorEncontrado();
-                        iniciarNuevaPartida();
-                    } else {
-                        Aventurero aventurero = crearJugador();
-                        DiseñarMapas nuevoMapa = new DiseñarMapas();
-                        Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);
-                        partida.iniciarNuevaPartida();//Inicia una nueva partida
-                    }
+                    jugarConUnNuevoMapa();
                     break;
                 case 3://vuelve al menu
                     verMenuPrincipal();
@@ -161,6 +147,59 @@ public class TreasureHunter {
                     break;
             }
         } while (opcionMapas < 0 || opcionMapas >= 5);
+    }
+
+    private void jugarConUnNuevoMapa() {
+        scanner.nextLine();
+        System.out.println("\n".repeat(100));
+        System.out.println(ROJO + "PARTIDA" + RESETEAR);
+        System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
+        String nombrePartida = scanner.nextLine();
+        if (nombrePartida.isBlank()) {
+            System.out.println("El nombre de la partida no puede estar en blanco");
+            errorEncontrado();
+            iniciarNuevaPartida();
+        } else {
+            Aventurero aventurero = crearJugador();
+            DiseñarMapas nuevoMapa = new DiseñarMapas();
+            Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);
+            partida.iniciarNuevaPartida();//Inicia una nueva partida
+        }
+
+    }
+
+    private void jugarConUnMapaExistente() {
+        scanner.nextLine();
+        System.out.println("\n".repeat(100));
+        System.out.println(ROJO + "PARTIDA" + RESETEAR);
+        System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
+        String nombrePartidaNueva = scanner.nextLine();
+        if (nombrePartidaNueva.isBlank()) {
+            System.out.println("El nombre de la partida no puede estar en blanco");
+            errorEncontrado();
+            iniciarNuevaPartida();
+        } else {
+            mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
+            int opcionArchivo = 0;
+            try {
+                opcionArchivo = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Debes introducir un valor numérico");
+                errorEncontrado();
+                jugarConUnMapaExistente();
+            }
+            if (opcionArchivo < 0 || opcionArchivo > obtenerCuantosElementosTieneUnaCarpeta(Archivos.rutaCarpetaMapas) - 1) {
+                System.out.println("No existe ese archivo");
+                errorEncontrado();
+                jugarConUnMapaExistente();
+            } else {
+                File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);
+                Aventurero aventurero = crearJugador();
+                RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido,aventurero);
+                Partida partida = new Partida(aventurero, recreador.recrearMapas(), nombrePartidaNueva);
+                partida.iniciarNuevaPartida();//Inicia una nueva partida
+            }
+        }
     }
 
 }

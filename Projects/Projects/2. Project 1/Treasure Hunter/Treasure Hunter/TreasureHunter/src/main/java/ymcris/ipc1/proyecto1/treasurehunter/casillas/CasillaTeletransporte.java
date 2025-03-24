@@ -7,6 +7,8 @@ import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaAventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaTesoro;
+import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.modificarMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.tablero;
 
 /**
@@ -56,17 +58,19 @@ public class CasillaTeletransporte extends Casillas {
         if (ubicacionAleatoria) {//la ubicación es aleatoria
             this.filaAMover = random.nextInt(0, filasMapa - 1);
             this.columnaAMover = random.nextInt(0, columnasMapa - 1);
-            tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = new CasillaNormal(1);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + (filaAMover + 1) + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
+            if (filaAMover == casillaTesoro.getFila() && columnaAMover == casillaTesoro.getColumna()) {
+                this.filaAMover = random.nextInt(0, filasMapa - 1);
+                this.columnaAMover = random.nextInt(0, columnasMapa - 1);
+            }
+            CasillaNormal normal = new CasillaNormal(1);
+            modificarMapas(casillaAventurero.getFila(), casillaAventurero.getColumna(), normal);
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
-            aventurero.setFilaJugador(filaAMover);
-            aventurero.setColumnaJugador(columnaAMover);
+            modificarMapas(filaAMover, columnaAMover, casillaAventurero);
         } else if (!ubicacionAleatoria) {//el usuario introduce la ubicación
+            tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = new CasillaNormal(1);//Quita la casilla del aventurero y pone una normal
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
-            aventurero.setFilaJugador(filaAMover);
-            aventurero.setColumnaJugador(columnaAMover);
-            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + filaAMover + "][" + columnaAMover + CYAN + "] ------------------------- " + RESETEAR);
-            tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = new CasillaNormal(1);
+            modificarMapas(filaAMover, columnaAMover, casillaAventurero);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + (filaAMover) + "][" + (columnaAMover) + CYAN + "] ------------------------- " + RESETEAR);
         }
     }
 

@@ -1,6 +1,5 @@
 package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
-import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.Casillas;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaNormal;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
@@ -22,7 +21,7 @@ public class Mapas {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
-    private Casillas casillaTemporal;
+    private Casillas casillaAMover = new CasillaNormal(1);
     public static Casillas[][] tablero;
     public static CasillaTesoro casillaTesoro;
     public static CasillaPersonaje casillaAventurero;
@@ -118,8 +117,19 @@ public class Mapas {
      * @param columna - casilla donde se implementará una casilla
      * @param casillaAModificar casilla que se implementará en el mapa
      */
-    public void modificarMapas(int fila, int columna, Casillas casillaAModificar) {
+    public static void modificarMapas(int fila, int columna, Casillas casillaAModificar) {
         Mapas.tablero[fila][columna] = casillaAModificar;
+    }
+    
+      /**
+     * Método encargado de modificar el mapa
+     *
+     * @param fila - fila donde se implementará una casilla
+     * @param columna - casilla donde se implementará una casilla
+     * @param casillaAModificar casilla que se implementará en el mapa
+     */
+    public void modificarTablero(int fila, int columna, Casillas casillaAModificar) {
+        tablero[fila][columna] = casillaAModificar;
     }
 
     /**
@@ -169,17 +179,23 @@ public class Mapas {
         if (casillaAventurero.getFila() > 0) {//Se puede mover
             //2. Verificamos si arriba no hay un muro
             if (tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()].isPuedePasar()) {//Puede pasar.
-                //2.5 Guarda la casilla a la que se movio para que no se elimine
-                casillaTemporal = tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()];//Guarda la casilla a donde se va a mover
+                //2.4 Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = casillaAMover;
+                //2.5 Guarda la casilla a la que se va a mover para que no se elimine
+                casillaAMover = tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()];//Guarda la casilla a donde se va a mover
                 aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
-                //2.9 Aplica el efecto de la casilla
-                casillaTemporal.mostrarMensaje();
+                //2.6 Aplica el efecto de la casilla
+                casillaAMover.mostrarMensaje();
                 //3. casilla del personaje cambia de posición hacia arriba i+1
-                tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaAventurero;
-                casillaAventurero.setFila(casillaAventurero.getFila() - 1);//Modifica la posición de la casilla aventurero y del jugador 
-                aventurero.setFilaJugador(aventurero.getFilaJugador() - 1);
-                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaTemporal;
+                if (casillaAventurero.getFila() >= 1) {
+                    tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaAventurero;
+                    casillaAventurero.setFila(casillaAventurero.getFila() - 1);//Modifica la posición de la casilla aventurero y del jugador 
+                    aventurero.setFilaJugador(aventurero.getFilaJugador() - 1);
+                } else {
+                    tablero[0][casillaAventurero.getColumna()] = casillaAventurero;
+                    casillaAventurero.setFila(0);//Modifica la posición de la casilla aventurero y del jugador 
+                    aventurero.setFilaJugador(0);
+                }
             }
         }
     }
@@ -192,17 +208,17 @@ public class Mapas {
         if (casillaAventurero.getFila() < this.getFilas() - 1) {//Se puede mover
             //2. Verificamos si arriba no hay un muro
             if (tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()].isPuedePasar()) {//Puede pasar.
+                //2.4 Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = casillaAMover;
                 aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
                 //2.5 Guarda la casilla a la que se movio para que no se elimine
-                casillaTemporal = tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()];//Guarda la casilla a donde se va a mover
+                casillaAMover = tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()];//Guarda la casilla a donde se va a mover
                 //2.9 Aplica el efecto de la casilla
-                casillaTemporal.mostrarMensaje();
+                casillaAMover.mostrarMensaje();
                 //3. casilla del personaje cambia de posición hacia arriba i+1
                 tablero[casillaAventurero.getFila() + 1][casillaAventurero.getColumna()] = casillaAventurero;
                 casillaAventurero.setFila(casillaAventurero.getFila() + 1);//Modifica la posición de la casilla del jugador
                 aventurero.setFilaJugador(aventurero.getFilaJugador() + 1);
-                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                tablero[casillaAventurero.getFila() - 1][casillaAventurero.getColumna()] = casillaTemporal;
             }
         }
     }
@@ -215,16 +231,16 @@ public class Mapas {
         if (casillaAventurero.getColumna() < this.getColumnas() - 1) {//Se puede mover
             //2. Verificamos si arriba no hay un muro
             if (tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1].isPuedePasar()) {//Puede pasar.
+                //2.4 Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = casillaAMover;
                 aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
                 //2.5 Guarda la casilla a la que se movio para que no se elimine
-                casillaTemporal = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1];
-                casillaTemporal.mostrarMensaje();
+                casillaAMover = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1];
+                casillaAMover.mostrarMensaje();
                 //3. casilla del personaje cambia de posición hacia arriba j-1
                 tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaAventurero;
                 casillaAventurero.setColumna(casillaAventurero.getColumna() + 1);//Modifica la posición de la casilla del jugador
                 aventurero.setColumnaJugador(aventurero.getColumnaJugador() + 1);
-                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaTemporal;
             }
         }
     }
@@ -237,28 +253,34 @@ public class Mapas {
         if (casillaAventurero.getColumna() > 0) {//Se puede mover
             //2. Verificamos si arriba no hay un muro
             if (tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1].isPuedePasar()) {//Puede pasar.
+                //2.4 Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
+                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = casillaAMover;
                 aventurero.setCantidadMovimientos(aventurero.getCantidadMovimientos() + 1);
                 //2.5 Guarda la casilla a la que se movio para que no se elimine
-                casillaTemporal = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1];
-                casillaTemporal.mostrarMensaje();
+                casillaAMover = tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1];
+                casillaAMover.mostrarMensaje();
                 //3. casilla del personaje cambia de posición hacia arriba j-1
-                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaAventurero;
-                casillaAventurero.setColumna(casillaAventurero.getColumna() - 1);//Modifica la posición de la casilla del jugador
-                aventurero.setColumnaJugador(aventurero.getColumnaJugador() - 1);
-                //4. Se limpia la casilla anterior del personaje, a la casilla que era antes de que el pasará sobre ella
-                tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() + 1] = casillaTemporal;
+                if (casillaAventurero.getColumna() >= 1) {
+                    tablero[casillaAventurero.getFila()][casillaAventurero.getColumna() - 1] = casillaAventurero;
+                    casillaAventurero.setColumna(casillaAventurero.getColumna() - 1);//Modifica la posición de la casilla del jugador
+                    aventurero.setColumnaJugador(aventurero.getColumnaJugador() - 1);
+                } else {
+                    tablero[casillaAventurero.getFila()][0] = casillaAventurero;
+                    casillaAventurero.setColumna(0);
+                    aventurero.setColumnaJugador(0);
+                }
             }
         }
-
+        
     }
 
     // GETTERS -----------------------------------------------------------------
     public int getFilas() {
         return filas;
     }
-
+    
     public int getColumnas() {
         return columnas;
     }
-
+    
 }

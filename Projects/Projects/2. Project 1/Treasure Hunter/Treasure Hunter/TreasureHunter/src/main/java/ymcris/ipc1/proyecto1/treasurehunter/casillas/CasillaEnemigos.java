@@ -8,6 +8,8 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
+import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.casillaAventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas.modificarMapas;
 
 /**
  * Clase encargada de crear casillas del tipo enemigos las cuales harán que se
@@ -19,7 +21,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaExce
 public class CasillaEnemigos extends Casillas {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int opcion;
+    private int opcionBatalla;
     private int tipoDePuntos;
     private int filaARetornar;
     private int puntosAQuitar;
@@ -63,10 +65,10 @@ public class CasillaEnemigos extends Casillas {
             System.out.println("\n".repeat(100));
             Batalla batalla = new Batalla(aventurero, pierdePuntos, puedeEscapar, tipoDePuntos, puntosAQuitar);
             batalla.pelear();
-            if (aventurero.getVida() < 0) {
+            if (aventurero.getVida() <= 0) {
                 if (pierdePuntos == false) {// Es decir, es reubicado.
-                    aventurero.setFilaJugador(filaARetornar);
-                    aventurero.setColumnaJugador(columnaARetornar);
+                    casillaAventurero.modificarCasillas(filaARetornar, columnaARetornar);
+                    modificarMapas(filaARetornar, columnaARetornar, casillaAventurero);
                     System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
                 }
             }
@@ -75,29 +77,32 @@ public class CasillaEnemigos extends Casillas {
 
     @Override
     public void mostrarMensaje() {
-        boolean desicionTomada = false;
-        System.out.println("\n".repeat(100));
-        System.out.println(CYAN + "                    ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz pisado una casilla de enemigos" + CYAN + " ------------------------- " + RESETEAR);
-        System.out.println(CYAN + "                     ------------------------- " + RESETEAR + "¿Deseas escapar o pelear? [1] Escapar  [2] Pelear" + CYAN + " ------------------------- " + RESETEAR);
-        while (desicionTomada == false) {
+        int opcionBatalla = 0;
+        do {
             try {
-                opcion = scanner.nextInt();
-                if (opcion == 1 && puedeEscapar == true) {
+                System.out.println("\n".repeat(100));
+                System.out.println(CYAN + "                    ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz pisado una casilla de enemigos" + CYAN + " ------------------------- " + RESETEAR);
+                System.out.println(CYAN + "                     ------------------------- " + RESETEAR + "¿Deseas escapar o pelear? [1] Escapar  [2] Pelear" + CYAN + " ------------------------- " + RESETEAR);
+                opcionBatalla = scanner.nextInt();
+                if (opcionBatalla == 1 && puedeEscapar == true) {
                     seHaRendido = true;
                     System.out.println("\n".repeat(9));
                     System.out.println("Aventurero " + aventurero.getNombre() + " has escapado de la batalla");
-                    desicionTomada = true;
-                } else if (opcion == 2) {
+                    break;
+                } else if (opcionBatalla == 1 && puedeEscapar == false) {
+                    scanner.nextLine();
+                    System.out.println("No puede huir de la batalla, debes pelear");
+                    mostrarMensaje();
+                } else if (opcionBatalla == 2) {
                     aplicarEfecto(aventurero);
-                    desicionTomada = true;
+                    break;
                 }
             } catch (InputMismatchException e) {
-                desicionTomada = false;
                 System.out.println("Debes ingresar un número");
                 errorEncontrado();
                 mostrarMensaje();
             }
-        }
+        } while (opcionBatalla <= 0 || opcionBatalla >= 3);
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------

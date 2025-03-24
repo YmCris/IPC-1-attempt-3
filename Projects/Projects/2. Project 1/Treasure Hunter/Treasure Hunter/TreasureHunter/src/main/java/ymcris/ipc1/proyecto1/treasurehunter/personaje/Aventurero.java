@@ -49,7 +49,7 @@ public class Aventurero extends Personaje {
         this.batallasHuidas = 0;
         this.batallasGanadas = 0;
         this.batallasPerdidas = 0;
-        this.cantidadMovimientos = 1;
+        this.cantidadMovimientos = 0;
         this.manaPrevioAUnaBatalla = mana;
         this.vidaPrevioAUnaBatalla = vida;
         this.defensaPrevioAUnaBatalla = defensa;
@@ -69,7 +69,7 @@ public class Aventurero extends Personaje {
         System.out.println("                        Ataque: " + this.getAtaque());
         System.out.println("                        Defensa: " + this.getDefensa());
         System.out.println("                        Símbolo: " + this.getSimbolo());
-        System.out.println("                        Posición Actual: [" + filaJugador + "][" + columnaJugador + "]");
+        System.out.println("                        Posición Aventurero: [" + filaJugador + "][" + columnaJugador + "]");
         System.out.println("                        Batallas Tenidas: " + this.getBatallas());
         System.out.println("                        Movimientos Realizados: " + this.getCantidadMovimientos());
         System.out.println("                    ..........................................................................................");
