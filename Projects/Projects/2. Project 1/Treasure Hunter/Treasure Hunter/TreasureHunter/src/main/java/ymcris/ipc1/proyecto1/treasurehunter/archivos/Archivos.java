@@ -1,11 +1,11 @@
 package ymcris.ipc1.proyecto1.treasurehunter.archivos;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 
 /**
  * Clase Archivos es la clase encargada de crear, leer y escribir en archivos de
@@ -23,8 +23,6 @@ public class Archivos {
     public static String rutaCarpetaMapas;
     public static String rutaCarpetaPartidas;
     public static String rutaCarpetaJugadores;
-    public static File[] archivosDeTextoEnCarpeta;
-    public static String[] nombreDeArchivosEnCarpeta;
     public static String rutaProyecto = System.getProperty("user.dir");
 
     // ----------------------------- MÉTODOS -----------------------------------
@@ -77,7 +75,7 @@ public class Archivos {
      */
     public static void mostrarArchivosEnCarpeta(String ruta) {
         File carpetaArchivos = new File(ruta);
-        nombreDeArchivosEnCarpeta = carpetaArchivos.list();
+        String[] nombreDeArchivosEnCarpeta = carpetaArchivos.list();
         for (int i = 0; i < nombreDeArchivosEnCarpeta.length; i++) {
             System.out.print(i + " ");
             if (nombreDeArchivosEnCarpeta[i].toLowerCase().endsWith(".txt")) {
@@ -93,12 +91,12 @@ public class Archivos {
      *
      * @param ruta - carpeta donde se va a encontrar el archivo
      * @param indice - posición donde se encuentra el archivo.
-     * @return File - archivo a modificar.
+     * @return File - archivo a modificar o a utilizar.
      */
     public static File elegirArchivoDeTexto(String ruta, int indice) {
         try {
             File archivos = new File(ruta);
-            archivosDeTextoEnCarpeta = archivos.listFiles();
+            File[] archivosDeTextoEnCarpeta = archivos.listFiles();
             return archivosDeTextoEnCarpeta[indice];
         } catch (Exception e) {
             System.out.println("No se ha podido devolber el archivo");
@@ -205,7 +203,8 @@ public class Archivos {
 
     /**
      * Método encargado de retornar una línea específica de un archivo de texto
-     * para usarla
+     * para usarla (Usar atributos guardados en los archivos, como para usar
+     * mapas ya creados)
      *
      * @param file - archivo en el cual se va a obtener la línea.
      * @param linea - línea de donde se quiere obtener esa información
@@ -215,17 +214,15 @@ public class Archivos {
         try (BufferedReader leer = new BufferedReader(new FileReader(file))) {
             String valor;
             int contador = 0;
-
-            // Leer línea por línea hasta llegar a la deseada
             while ((valor = leer.readLine()) != null) {
                 if (contador == linea) {
-                    return valor; // Retorna la línea cuando el contador coincide con la línea deseada
+                    return valor;
                 }
                 contador++;
             }
         } catch (IOException e) {
             System.out.println("Error al leer el archivo: " + e.getMessage());
         }
-        return null; // Si la línea no existe, devuelve null
+        return null;
     }
 }
