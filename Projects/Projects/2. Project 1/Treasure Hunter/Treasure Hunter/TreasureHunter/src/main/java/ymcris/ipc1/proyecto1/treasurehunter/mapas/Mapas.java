@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
+import java.util.Random;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.Casillas;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaNormal;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
@@ -261,6 +262,16 @@ public class Mapas {
             }
         }
 
+    }
+
+    public int numeroRandomFilas() {
+        Random random = new Random();
+        return random.nextInt(0, filas);
+    }
+
+    public int numeroRandomColumnas() {
+        Random random = new Random();
+        return random.nextInt(0, columnas);
     }
 
     // GETTERS -----------------------------------------------------------------

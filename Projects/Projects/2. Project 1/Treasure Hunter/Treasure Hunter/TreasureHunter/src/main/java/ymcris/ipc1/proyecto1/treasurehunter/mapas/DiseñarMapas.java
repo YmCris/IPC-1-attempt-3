@@ -165,12 +165,12 @@ public class DiseñarMapas {
             System.out.println("Presione enter para continuar");
             scanner.nextLine();
             scanner.nextLine();
-            diseñarCasillasMuros();//casillas muro
             diseñarCasillasTrampa();//casillas trampa
             diseñarCasillasPista();//casillas pista
             diseñarCasillasTeletransporte();//casilla teletransporte
             diseñarCasillasEnergia();//casillas energía
             diseñarCasillasEnemigos();//casillas enemigo
+            diseñarCasillasMuros();//casillas muro
         } catch (InputMismatchException e) {
             System.out.println("Debes introducir un valor numérico");
             errorEncontrado();

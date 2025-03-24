@@ -20,7 +20,6 @@ import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 public class CasillaEnemigos extends Casillas {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int opcionBatalla;
     private int tipoDePuntos;
     private int filaARetornar;
     private int puntosAQuitar;
@@ -95,17 +94,18 @@ public class CasillaEnemigos extends Casillas {
                     System.out.println("Aventurero " + aventurero.getNombre() + " has escapado de la batalla");
                     break;
                 } else if (opcionBatalla == 1 && puedeEscapar == false) {
-                    scanner.nextLine();
                     System.out.println("No puede huir de la batalla, debes pelear");
-                    mostrarMensaje();
+                    scanner.nextLine();
+                    aplicarEfecto(aventurero);
+                    break;
                 } else if (opcionBatalla == 2) {
                     aplicarEfecto(aventurero);
                     break;
                 }
             } catch (InputMismatchException e) {
                 System.out.println("Debes ingresar un número");
+                scanner.nextLine();
                 errorEncontrado();
-                mostrarMensaje();
             }
         } while (opcionBatalla <= 0 || opcionBatalla >= 3);
     }
