@@ -61,7 +61,7 @@ public class DiseñoMenus {
         System.out.println("                                            ¦ [1] ¿Cómo Jugar Treasure Hunter?               ¦");
         System.out.println("                                            ¦ [2] Iniciar Nueva Partida                      ¦");
         System.out.println("                                            ¦ [3] Cargar Partida Existente                   ¦");
-        System.out.println("                                            ¦ [4] Diseñar Mapas Y Modificar Mapas            ¦");
+        System.out.println("                                            ¦ [4] Editar Mapas                               ¦");
         System.out.println("                                            ¦ [5] Ver reportes                               ¦");
         System.out.println("                                            ¦ [6] Salir del programa                         ¦");
         System.out.println("                                            ├------------------------------------------------┤");
@@ -86,6 +86,40 @@ public class DiseñoMenus {
         System.out.println("                                            ¦            -Seleccione una opción-             ¦");
         System.out.println("                                            └------------------------------------------------┘");
         System.out.println("");
+    }
+
+    public static void mostrarOpcionesEditarMapa() {
+        System.out.println("┌------------------------------------------------------------------------------------------┐");
+        System.out.println("|                       ¿Qué carácterística del mapa desea editar?                         |");
+        System.out.println("├------------------------------------------------------------------------------------------┤");
+        System.out.println("|        [ 0] Nombre del mapa                                                              |");
+        System.out.println("|        [ 1] Número de filas del mapa                                                     |");
+        System.out.println("|        [ 2] Número de columnas del mapa                                                  |");
+        System.out.println("|        [ 3] Fila en la que se encuentra el tesoro                                        |");
+        System.out.println("|        [ 4] Columna en la que se encuentra el tesoro                                     |");
+        System.out.println("|        [ 5] Fila en la que se encuentra el jugador                                       |");
+        System.out.println("|        [ 6] Columna en la que se encuentra el jugador                                    |");
+        System.out.println("|        [ 7] Cantidad de casillas trampa                                                  |");
+        System.out.println("|        [ 8] Puntos que quitan las trampas                                                |");
+        System.out.println("|        [ 9] Efecto de la trampa                                                          |");
+        System.out.println("|        [10] Cantidad de casillas Pista                                                   |");
+        System.out.println("|        [11] Tipo de pista                                                                |");
+        System.out.println("|        [12] Cantidad de casillas Teletransporte                                          |");
+        System.out.println("|        [13] Tipo de teletransportación                                                   |");
+        System.out.println("|        [14] Fila a retornar en la casilla teletransporte                                 |");
+        System.out.println("|        [15] Columna a retornar en la casilla teletransporte                              |");
+        System.out.println("|        [18] Cantidad de casillas de energía                                              |");
+        System.out.println("|        [19] Puntos a restarurar                                                          |");
+        System.out.println("|        [20] Efecto de la casilla energía                                                 |");
+        System.out.println("|        [21] Cantidad de casillas enemigos                                                |");
+        System.out.println("|        [22] Puede escapar de la batalla                                                  |");
+        System.out.println("|        [23] Si pierede puntos o es reubicado                                             |");
+        System.out.println("|        [24] Fila a retornar si pierde                                                    |");
+        System.out.println("|        [25] Columna a retornar si pierde                                                 |");
+        System.out.println("|        [26] Puntos a quitar                                                              |");
+        System.out.println("|        [27] Tipo de puntos a quitar                                                      |");
+        System.out.println("|        [28] Numero de casillas muro                                                      |");
+        System.out.println("└------------------------------------------------------------------------------------------┘");
     }
 
     /**

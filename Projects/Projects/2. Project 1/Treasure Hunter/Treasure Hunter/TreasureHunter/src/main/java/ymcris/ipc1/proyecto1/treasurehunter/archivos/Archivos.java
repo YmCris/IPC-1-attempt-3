@@ -59,6 +59,17 @@ public class Archivos {
         return nombreDeArchivosEnCarpeta.length;
     }
 
+    public static int obtenerCuantasLineasTieneUnArchivo(File archivo) {
+        int contador = 0;
+        try (FileReader reader = new FileReader(archivo); BufferedReader leer = new BufferedReader(reader)) {
+            while (leer.readLine() != null) {
+                contador++;
+            }
+        } catch (Exception e) {
+        }
+        return contador;
+    }
+
     //-------------------------- MÉTODOS SOBRE ARCHIVOS ------------------------
     /**
      * Método encargado de crear archivos de texto. Es decir va a crear los
@@ -188,8 +199,11 @@ public class Archivos {
     public static void leerTodoElTextoDeUnArchivo(File file) {
         try (FileReader reader = new FileReader(file); BufferedReader read = new BufferedReader(reader);) {//Instancia un nuevo reader
             String valor;
+            int contador = 0;
             while ((valor = read.readLine()) != null) {
-                System.out.println(valor);
+                System.out.print(contador + " ");
+                System.out.print(valor);
+                System.out.println("");
             }
         } catch (IOException e) {
             System.out.println("Ha habido un error en la lectura del archivo");

@@ -76,6 +76,7 @@ public class CasillaTeletransporte extends Casillas {
             mapa.modificarMapas(casillaAventurero.getFila(), casillaAventurero.getColumna(), normal);
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);
             mapa.modificarMapas(filaAMover, columnaAMover, casillaAventurero);
+            System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz teletransportado a la casilla [" + (filaAMover + 1) + "][" + (columnaAMover + 1) + CYAN + "] ------------------------- " + RESETEAR);
         } else if (!ubicacionAleatoria) {//el usuario introduce la ubicación
             tablero[casillaAventurero.getFila()][casillaAventurero.getColumna()] = new CasillaNormal(1);//Quita la casilla del aventurero y pone una normal
             casillaAventurero.modificarCasillas(filaAMover, columnaAMover);

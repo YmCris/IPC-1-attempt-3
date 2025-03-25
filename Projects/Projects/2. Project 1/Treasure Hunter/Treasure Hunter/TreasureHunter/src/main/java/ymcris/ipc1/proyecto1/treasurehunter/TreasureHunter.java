@@ -3,6 +3,7 @@ package ymcris.ipc1.proyecto1.treasurehunter;
 import java.io.File;
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
@@ -12,13 +13,15 @@ import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.elegirArchivoDeTexto;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -51,7 +54,9 @@ public class TreasureHunter {
         crearCarpetas();
         mostrarBienvenida();
         scanner.nextLine();
-        new TreasureHunter().verMenuPrincipal();
+        while (true) {
+            new TreasureHunter().verMenuPrincipal();
+        }
     }
 
     // MÉTODOS -----------------------------------------------------------------
@@ -77,9 +82,8 @@ public class TreasureHunter {
                 case 3://Carga una partida ya existente
                     new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
                     break;
-                case 4:
-//Modifica un mapa ya existente
-                    //new DiseñarMapas().diseñarMapas();
+                case 4://Modifica un mapa ya existente
+                    editarMapa();
                     break;
                 case 5://Muestra los reportes del juego
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
@@ -171,40 +175,78 @@ public class TreasureHunter {
 
     private void jugarConUnMapaExistente() {
         scanner.nextLine();
-        System.out.println("\n".repeat(100));
-        System.out.println(ROJO + "PARTIDA" + RESETEAR);
-        System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
-        String nombrePartidaNueva = scanner.nextLine();
-        if (nombrePartidaNueva.isBlank()) {
-            System.out.println("El nombre de la partida no puede estar en blanco");
-            errorEncontrado();
-            iniciarNuevaPartida();
+        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) <= 0) {
+            System.out.println("No tienes mapas creados");
+            System.out.println("Presiona enter para regresar al menú principal:");
+            scanner.nextLine();
+            verMenuPrincipal();
         } else {
             System.out.println("\n".repeat(100));
-            System.out.println(ROJO + "ELIJA SU MAPA:" + RESETEAR);
-            System.out.println("· INGRESE EL NÚMERO EN EL QUE SE ENCUENTRA EL MAPA CON EL QUE DESEA JUGAR:");
-            mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
-            int opcionArchivo = 0;
-            try {
-                opcionArchivo = scanner.nextInt();
-            } catch (InputMismatchException e) {
-                System.out.println("Debes introducir un valor numérico");
+            System.out.println(ROJO + "PARTIDA" + RESETEAR);
+            System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
+            String nombrePartidaNueva = scanner.nextLine();
+            if (nombrePartidaNueva.isBlank()) {
+                System.out.println("El nombre de la partida no puede estar en blanco");
                 errorEncontrado();
-                jugarConUnMapaExistente();
-            }
-            if (opcionArchivo < 0 || opcionArchivo > obtenerCuantosElementosTieneUnaCarpeta(Archivos.rutaCarpetaMapas) - 1) {
-                System.out.println("No existe ese archivo");
-                errorEncontrado();
-                jugarConUnMapaExistente();
+                iniciarNuevaPartida();
             } else {
-                scanner.nextLine();
-                Aventurero aventureroNuevo = crearJugador();
-                File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);
-                RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventureroNuevo);
-                Mapas mapaYaExistente = recreador.recrearMapas();
-                Partida partida = new Partida(aventureroNuevo, mapaYaExistente, nombrePartidaNueva);
-                partida.iniciarNuevaPartida();//Inicia una nueva partida
+                System.out.println("\n".repeat(100));
+                System.out.println(ROJO + "ELIJA SU MAPA:" + RESETEAR);
+                System.out.println("· INGRESE EL NÚMERO EN EL QUE SE ENCUENTRA EL MAPA CON EL QUE DESEA JUGAR:");
+                mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
+                int opcionArchivo = 0;
+                try {
+                    opcionArchivo = scanner.nextInt();
+                } catch (InputMismatchException e) {
+                    System.out.println("Debes introducir un valor numérico");
+                    errorEncontrado();
+                    jugarConUnMapaExistente();
+                }
+                if (opcionArchivo < 0 || opcionArchivo > obtenerCuantosElementosTieneUnaCarpeta(Archivos.rutaCarpetaMapas) - 1) {
+                    System.out.println("No existe ese archivo");
+                    errorEncontrado();
+                    jugarConUnMapaExistente();
+                } else {
+                    scanner.nextLine();
+                    Aventurero aventureroNuevo = crearJugador();
+                    File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);
+                    RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventureroNuevo);
+                    Mapas mapaYaExistente = recreador.recrearMapas();
+                    Partida partida = new Partida(aventureroNuevo, mapaYaExistente, nombrePartidaNueva);
+                    partida.iniciarNuevaPartida();//Inicia una nueva partida
+                }
             }
+        }
+    }
+
+    private void editarMapa() {
+        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) > 0) {
+            try {
+                //1. Mostrar todos los mapas
+                mostrarArchivosEnCarpeta(rutaCarpetaMapas);
+                //2. Pedir que mapa quiere modificar
+                System.out.println("¿Qué mapa desea modificar?");
+                int opcionMapaAEditar = scanner.nextInt();
+                if (opcionMapaAEditar < 0 || opcionMapaAEditar >= obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas)) {
+                    System.out.println("No existe ese mapa");
+                    errorEncontrado();
+                    editarMapa();
+                } else {
+                    File mapaAModificar = elegirArchivoDeTexto(rutaCarpetaMapas, opcionMapaAEditar);
+                    EditorDeMapas editor = new EditorDeMapas(mapaAModificar);
+                    editor.editarMapa();
+                }
+            } catch (InputMismatchException e) {
+                System.out.println("La opción es un número");
+            } catch (NullPointerException ex) {
+                System.out.println("No tienes mapas todavía");
+            }
+        } else {
+            scanner.nextLine();
+            System.out.println("No tienes mapas aun, crealos en la sección de crear mapas");
+            System.out.println("Presiona enter para continuar");
+            scanner.nextLine();
+            verMenuPrincipal();
         }
     }
 
