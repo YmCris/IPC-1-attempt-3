@@ -7,24 +7,24 @@ import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.elegirArchivoDeTexto;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -141,7 +141,7 @@ public class TreasureHunter {
             errorEncontrado();
             iniciarNuevaPartida();
         } else {
-            Aventurero aventurero = crearJugador();//Crea el aventurero
+            aventurero = crearJugador();//Crea el aventurero
             DiseñarMapas nuevoMapa = new DiseñarMapas();//Diseña el mapa a jugar
             Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);//Crea una nueva partida
             partida.iniciarNuevaPartida();//Inicia una nueva partida
@@ -187,11 +187,11 @@ public class TreasureHunter {
                     jugarConUnMapaExistente();
                 } else {//Pasa todas las validaciones
                     scanner.nextLine();
-                    Aventurero aventureroNuevo = crearJugador();//Crea un aventurero
+                    aventurero = crearJugador();//Crea un aventurero
                     File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);//Obtiene el archivo de la carpeta
-                    RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventureroNuevo);//Crea un recreador de mapas
+                    RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventurero);//Crea un recreador de mapas
                     Mapas mapaYaExistente = recreador.recrearMapas();//Crea un mapa recreandolo desde el archivo mapaElegido
-                    Partida partida = new Partida(aventureroNuevo, mapaYaExistente, nombrePartidaNueva);//Crea una nueva partida
+                    Partida partida = new Partida(aventurero, mapaYaExistente, nombrePartidaNueva);//Crea una nueva partida
                     partida.iniciarNuevaPartida();//Inicia una nueva partida
                 }
             }
@@ -216,8 +216,8 @@ public class TreasureHunter {
         } else {
             File archivoJugador = crearArchivo(nombreAventurero, rutaCarpetaJugadores);
             añadirTextoEnArchivo(nombreAventurero, archivoJugador);
-            aventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
-            return aventurero;
+            Aventurero nuevoAventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
+            return nuevoAventurero;
         }
         return null;
     }

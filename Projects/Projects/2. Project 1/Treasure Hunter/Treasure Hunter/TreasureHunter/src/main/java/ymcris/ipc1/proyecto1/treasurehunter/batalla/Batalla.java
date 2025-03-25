@@ -49,7 +49,6 @@ public class Batalla {
      * @param puntosAQuitar - cantidad de puntos a quitar.
      */
     public Batalla(Aventurero aventurero, boolean pierdePuntos, boolean puedeAbandonar, int tipoDePuntos, int puntosAQuitar) {
-        this.aventurero.setBatallas(this.aventurero.getBatallas() + 1);
         this.opcion = 0;
         this.rendirse = false;
         this.opcionBatalla = 0;
@@ -60,6 +59,7 @@ public class Batalla {
         this.puntosAQuitar = puntosAQuitar;
         this.puedeAbandonar = puedeAbandonar;
         this.pirata = new Pirata(aventurero);//Crea el pirata
+        this.aventurero.setBatallas(this.aventurero.getBatallas() + 1);
     }
 
     /**
