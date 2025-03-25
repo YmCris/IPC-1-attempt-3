@@ -18,11 +18,11 @@ public class Aventurero extends Personaje {
     private int batallas;
     private int vidaTotal;
     private int manaTotal;
+    private int filaJugador;
+    private int columnaJugador;
     private int batallasHuidas;
     private int batallasGanadas;
     private int batallasPerdidas;
-    private int filaJugador;
-    private int columnaJugador;
     private int cantidadMovimientos;
     private int vidaPrevioAUnaBatalla;
     private int manaPrevioAUnaBatalla;

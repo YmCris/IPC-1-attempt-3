@@ -26,20 +26,21 @@ public class Archivos {
     public static String rutaProyecto = System.getProperty("user.dir");
 
     // ----------------------------- MÉTODOS -----------------------------------
+    // --------------------- MÉTODOS SOBRE CARPETAS-----------------------------
     /**
      * Método encargado de crear las carpetas en donde se van a guardar los
      * mapas, jugadores y partidas.
      */
     public static void crearCarpetas() {
-        //Mapas
+        //1. Crea la carpeta para los Mapas
         rutaCarpetaMapas = rutaProyecto + File.separator + "Mapas";
         carpetaMapas = new File(rutaCarpetaMapas);
         carpetaMapas.mkdirs();
-        //Partidas
+        //1. Crea la carpeta para las Partidas
         rutaCarpetaPartidas = rutaProyecto + File.separator + "Partidas";
         carpetaPartidas = new File(rutaCarpetaPartidas);
         carpetaPartidas.mkdirs();
-        //Jugadores
+        //1. Crea la carpeta para los Jugadores
         rutaCarpetaJugadores = rutaProyecto + File.separator + "Jugadores";
         carpetaJugadores = new File(rutaCarpetaJugadores);
         carpetaJugadores.mkdirs();
@@ -59,15 +60,22 @@ public class Archivos {
         return nombreDeArchivosEnCarpeta.length;
     }
 
-    public static int obtenerCuantasLineasTieneUnArchivo(File archivo) {
-        int contador = 0;
-        try (FileReader reader = new FileReader(archivo); BufferedReader leer = new BufferedReader(reader)) {
-            while (leer.readLine() != null) {
-                contador++;
+    /**
+     * Método encargado de mostrar los archivos que existen en una carpeta (Como
+     * para mostrar las partidas existentes o mapas existentes)
+     *
+     * @param ruta - ruta donde se extraerán todos los archivos
+     */
+    public static void mostrarArchivosEnCarpeta(String ruta) {
+        File carpetaArchivos = new File(ruta);
+        String[] nombreDeArchivosEnCarpeta = carpetaArchivos.list();
+        for (int i = 0; i < nombreDeArchivosEnCarpeta.length; i++) {
+            System.out.print(i + " ");
+            if (nombreDeArchivosEnCarpeta[i].toLowerCase().endsWith(".txt")) {
+                System.out.print(nombreDeArchivosEnCarpeta[i].substring(0, nombreDeArchivosEnCarpeta[i].length() - 4));
             }
-        } catch (Exception e) {
+            System.out.println("");
         }
-        return contador;
     }
 
     //-------------------------- MÉTODOS SOBRE ARCHIVOS ------------------------
@@ -77,6 +85,7 @@ public class Archivos {
      *
      * @param nombreArchivo Nombre que tendrá el archivo
      * @param rutaCarpeta - ruta del lugar donde se va a guardar el archivo
+     * @return archivo creado
      */
     public static File crearArchivo(String nombreArchivo, String rutaCarpeta) {
         try {
@@ -95,21 +104,20 @@ public class Archivos {
     }
 
     /**
-     * Método encargado de mostrar los archivos que existen en una carpeta (Como
-     * para mostrar las partidas existentes o mapas existentes)
+     * Método encargado de obtener cuantas líneas hay en un archivo de texto
      *
-     * @param ruta - ruta donde se extraerán todos los archivos
+     * @param archivo - archivo en el cual se vana leer las líneas.
+     * @return numero de líneas que yace en él.
      */
-    public static void mostrarArchivosEnCarpeta(String ruta) {
-        File carpetaArchivos = new File(ruta);
-        String[] nombreDeArchivosEnCarpeta = carpetaArchivos.list();
-        for (int i = 0; i < nombreDeArchivosEnCarpeta.length; i++) {
-            System.out.print(i + " ");
-            if (nombreDeArchivosEnCarpeta[i].toLowerCase().endsWith(".txt")) {
-                System.out.print(nombreDeArchivosEnCarpeta[i].substring(0, nombreDeArchivosEnCarpeta[i].length() - 4));
+    public static int obtenerCuantasLineasTieneUnArchivo(File archivo) {
+        int contador = 0;
+        try (FileReader reader = new FileReader(archivo); BufferedReader leer = new BufferedReader(reader)) {
+            while (leer.readLine() != null) {
+                contador++;
             }
-            System.out.println("");
+        } catch (Exception e) {
         }
+        return contador;
     }
 
     /**
@@ -195,9 +203,10 @@ public class Archivos {
      * Método encargado de leer todo el contenido de un archivo de texto
      *
      * @param file - archivo del cual se va a leer.
+     * @deprecated
      */
     public static void leerTodoElTextoDeUnArchivo(File file) {
-        try (FileReader reader = new FileReader(file); BufferedReader read = new BufferedReader(reader);) {//Instancia un nuevo reader
+        try (FileReader reader = new FileReader(file); BufferedReader read = new BufferedReader(reader);) {
             String valor;
             int contador = 0;
             while ((valor = read.readLine()) != null) {
@@ -215,6 +224,7 @@ public class Archivos {
      * índice (algo así como para mostrarle al usuario qué va a editar)
      *
      * @param file
+     * @deprecated
      */
     public static void mostrarTodoElTextoDeUnArchivoConIndice(File file) {
         try (FileReader reader = new FileReader(file); BufferedReader read = new BufferedReader(reader);) {//Instancia un nuevo reader

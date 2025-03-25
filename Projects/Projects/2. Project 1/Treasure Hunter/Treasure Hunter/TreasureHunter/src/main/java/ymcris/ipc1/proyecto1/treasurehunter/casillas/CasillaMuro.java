@@ -5,10 +5,11 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.VERDE;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
- * Clase encargada de crear casillas del tipo muro, el cual impide el movimiento
- * del jugador.
+ * CasillaMuro es una clase hija encargada de crear casillas del tipo muro, el
+ * cual impide el movimiento del jugador.
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaMuro extends Casillas {
@@ -34,13 +35,6 @@ public class CasillaMuro extends Casillas {
     @Override
     public void mostrarMensaje() {
         // no muestra nada
-    }
-
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        return this;
     }
 
 }

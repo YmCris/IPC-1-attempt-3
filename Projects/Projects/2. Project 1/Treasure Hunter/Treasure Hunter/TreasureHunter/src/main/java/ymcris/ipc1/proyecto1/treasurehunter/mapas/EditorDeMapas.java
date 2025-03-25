@@ -3,22 +3,22 @@ package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 import java.io.File;
 import java.util.Scanner;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantasLineasTieneUnArchivo;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.sobreEscribirUnaLineaDeArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesEditarMapa;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.sobreEscribirUnaLineaDeArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantasLineasTieneUnArchivo;
 
 /**
  * Clase encargada de editar los mapas persistentes desde los archivos
  *
  * @author YmCris
+ * @see DiseñarMapas
  * @since Mar 24, 2025
  */
 public class EditorDeMapas {
 
     // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private File mapaAEditar;
-    // ----------------------- VARIABLES PRIMITIVAS ----------------------------
     // ---------------------------- INSTANCIAS ---------------------------------
     Scanner scanner = new Scanner(System.in);
 
@@ -28,11 +28,14 @@ public class EditorDeMapas {
     }
 
     // ----------------------------- MÉTODOS -----------------------------------
+    /**
+     * Método encargado de editar un mapa através de archivo
+     */
     public void editarMapa() {
         while (true) {
             try {
                 //3. Mostrar todas las características del mapa
-                mostrarOpcionesEditarMapa();
+                mostrarOpcionesEditarMapa(mapaAEditar);
                 //4. Pedir qué línea va a modificar
                 int opcionAModificar = scanner.nextInt();
                 scanner.nextLine();
@@ -94,8 +97,13 @@ public class EditorDeMapas {
         }
     }
 
+    /**
+     * Método encargado de modificar un número para introducirlo en el mapa
+     *
+     * @return numero nuevo
+     */
     public int modificarUnNúmero() {
-        int nuevoValor = 0;
+        int nuevoValor;
         while (true) {
             try {
                 System.out.println("¿Cuál es el nuevo valor?");
@@ -114,6 +122,11 @@ public class EditorDeMapas {
         }
     }
 
+    /**
+     * Permite cambiar el nombre de un mapa
+     *
+     * @return nuevo nombre del mapa
+     */
     public String modificarUnTexto() {
         while (true) {
             System.out.println("Cuál es el nuevo nombre");
@@ -125,10 +138,4 @@ public class EditorDeMapas {
             }
         }
     }
-
-    public void modificarUnBooolean() {
-        System.out.println("¿Cuál?");
-    }
-
-    // ------------------------- GETTERS & SETTERS -----------------------------
 }

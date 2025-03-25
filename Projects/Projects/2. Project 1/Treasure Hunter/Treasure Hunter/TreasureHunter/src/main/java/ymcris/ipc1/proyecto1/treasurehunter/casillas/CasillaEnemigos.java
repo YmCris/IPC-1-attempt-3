@@ -2,22 +2,28 @@ package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import java.util.Scanner;
 import java.util.InputMismatchException;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.batalla.Batalla;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 
 /**
- * Clase encargada de crear casillas del tipo enemigos las cuales harán que se
- * inicie una pele y se determinen las consecuencias en el mapa.
+ * ClaseEnemigos es una clase hija que es la Clase encargada de crear casillas
+ * del tipo enemigos las cuales harán que se inicie una pele y se determinen las
+ * consecuencias en el mapa.
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaEnemigos extends Casillas {
+
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    private Mapas mapa;
+    private CasillaPersonaje casillaAventurero;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tipoDePuntos;
@@ -27,8 +33,6 @@ public class CasillaEnemigos extends Casillas {
     private boolean seHaRendido;
     private boolean puedeEscapar;
     private boolean pierdePuntos;
-    private CasillaPersonaje casillaAventurero;
-    private Mapas mapa;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
@@ -108,17 +112,6 @@ public class CasillaEnemigos extends Casillas {
                 errorEncontrado();
             }
         } while (opcionBatalla <= 0 || opcionBatalla >= 3);
-    }
-
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int tipoDePuntos, int filaARetornar, int puntosAQuitar, int columnaARetornar) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        this.tipoDePuntos = tipoDePuntos;
-        this.filaARetornar = filaARetornar;
-        this.puntosAQuitar = puntosAQuitar;
-        this.columnaARetornar = columnaARetornar;
-        return this;
     }
 
 }

@@ -4,8 +4,8 @@ import java.util.Scanner;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 
 /**
- * Clase encargada de brindar al usuario los conocimientos básicos para jugar
- * Treasure Hunter.
+ * CómoJugar es la clase encargada de brindar al usuario los conocimientos
+ * básicos para jugar Treasure Hunter.
  *
  * @author YmCris
  * @since Mar 14, 2025

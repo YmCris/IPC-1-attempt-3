@@ -11,8 +11,8 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
 /**
- * Clase encargada de hacer que el aventurero y el pirata se madreen hasta que
- * uno gane.
+ * Clase Batalla es la clase encargada de hacer que el aventurero y el pirata se
+ * madreen hasta que uno gane y aplicar los efectos de la batalla al jugador
  *
  * @author YmCris
  * @see Pirata

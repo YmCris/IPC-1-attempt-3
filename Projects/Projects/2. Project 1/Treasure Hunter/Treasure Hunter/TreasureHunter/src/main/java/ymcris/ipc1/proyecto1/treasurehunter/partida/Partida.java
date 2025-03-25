@@ -1,11 +1,11 @@
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
 import java.util.Scanner;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
+import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
-import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
 
 /**

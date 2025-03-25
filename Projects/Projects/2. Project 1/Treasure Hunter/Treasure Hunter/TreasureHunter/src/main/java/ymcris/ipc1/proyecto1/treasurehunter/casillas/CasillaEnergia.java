@@ -7,11 +7,12 @@ import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
- * Clase encargada de crear casillas del tipo energía la cual le brindarán al
- * aventurero una ayuda durante su travesia.
+ * ClaseEnergía es una clase hija encargada de crear casillas del tipo energía
+ * la cual le brindarán al aventurero una ayuda durante su travesia.
  *
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaEnergia extends Casillas {
@@ -56,15 +57,6 @@ public class CasillaEnergia extends Casillas {
     public void mostrarMensaje() {
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla de energía" + CYAN + " ------------------------- " + RESETEAR);
         aplicarEfecto(aventurero);
-    }
-
-    // MÉTODOS -----------------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosARecuperar, boolean recuperaVida) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        this.puntosARecuperar = puntosARecuperar;
-        this.recuperaVida = recuperaVida;
-        return this;
     }
 
 }

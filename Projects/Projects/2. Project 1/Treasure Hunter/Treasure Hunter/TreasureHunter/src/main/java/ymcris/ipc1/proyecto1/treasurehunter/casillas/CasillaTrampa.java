@@ -7,10 +7,11 @@ import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
- * Clase encargada de crear casillas del tipo trampa, el cual aplica un efecto
- * negativo en el aventurero.
+ * CasillaTrampa es una clase hija encargada de crear casillas del tipo trampa,
+ * el cual aplica un efecto negativo en el aventurero.
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaTrampa extends Casillas {
@@ -48,20 +49,11 @@ public class CasillaTrampa extends Casillas {
             System.out.println(CYAN + "         ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " haz perdido " + puntosAQuitar + " de mana tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
         }
     }
-    
+
     @Override
     public void mostrarMensaje() {
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla trampa" + CYAN + " ------------------------- " + RESETEAR);
         aplicarEfecto(aventurero);
     }
 
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int puntosAQuitar, boolean quitaVida) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        this.quitaVida = quitaVida;
-        this.puntosAQuitar = puntosAQuitar;
-        return this;
-    }
-    
 }

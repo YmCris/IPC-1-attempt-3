@@ -1,26 +1,29 @@
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import java.util.Random;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 
 /**
- * Clase encargada de crear casillas del tipo teletransporte el cual le
- * permitira al aventurero moverse por donde sea en el mapa.
+ * CasillaTeletransporte es una clase hija encargada de crear casillas del tipo
+ * teletransporte el cual le permitira al aventurero moverse por donde sea en el
+ * mapa.
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaTeletransporte extends Casillas {
 
-    private CasillaPersonaje casillaAventurero;
-    private CasillaTesoro casillaTesoro;
+    // VARIABLES DE REFERENCIA -------------------------------------------------
     private Mapas mapa;
     private Casillas[][] tablero;
+    private CasillaTesoro casillaTesoro;
+    private CasillaPersonaje casillaAventurero;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filasMapa;
@@ -89,16 +92,6 @@ public class CasillaTeletransporte extends Casillas {
     public void mostrarMensaje() {
         System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " te haz topado con una casilla de teletransporte" + CYAN + " ------------------------- " + RESETEAR);
         aplicarEfecto(aventurero);
-    }
-
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva, int filaAMover, int columnaAMover, boolean ubicacionAleatoria) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        this.filaAMover = filaAMover;
-        this.columnaAMover = columnaAMover;
-        this.ubicacionAleatoria = ubicacionAleatoria;
-        return this;
     }
 
 }

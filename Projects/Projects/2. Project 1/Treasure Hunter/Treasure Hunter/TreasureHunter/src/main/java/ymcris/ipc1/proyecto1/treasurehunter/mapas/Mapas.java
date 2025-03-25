@@ -22,10 +22,10 @@ public class Mapas {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
-    private Casillas casillaAMover = new CasillaNormal(1);
     private Casillas[][] tablero;
     private CasillaTesoro casillaTesoro;
     private CasillaPersonaje casillaAventurero;
+    private Casillas casillaAMover = new CasillaNormal(1);
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
@@ -264,11 +264,21 @@ public class Mapas {
 
     }
 
+    /**
+     * Calcula un número random de para asignarlo a la fila de una casilla
+     *
+     * @return número random dentro de rango de las filas
+     */
     public int numeroRandomFilas() {
         Random random = new Random();
         return random.nextInt(0, filas);
     }
 
+    /**
+     * Calcula un número random para asignarlo a una columna de una casilla
+     *
+     * @return número random dentro de rango de las columnas
+     */
     public int numeroRandomColumnas() {
         Random random = new Random();
         return random.nextInt(0, columnas);

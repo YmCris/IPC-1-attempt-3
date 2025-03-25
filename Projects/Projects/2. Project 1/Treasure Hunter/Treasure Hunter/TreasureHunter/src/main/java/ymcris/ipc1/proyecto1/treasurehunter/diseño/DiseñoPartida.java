@@ -9,6 +9,9 @@ package ymcris.ipc1.proyecto1.treasurehunter.diseño;
 public class DiseñoPartida {
 
     // ----------------------------- MÉTODOS -----------------------------------
+    /**
+     * Método encargado de mostrar las opciones que se tienen durante la partida
+     */
     public static void verOpcionesPartida() {
         System.out.println("........................................................................................................................................");
         System.out.println(".    MOVIMIENTOS    .                                                                                                                  .");
@@ -17,9 +20,9 @@ public class DiseñoPartida {
         System.out.println(".   ___  ---  ___   .   ¦       [1]       ¦   ¦       [2]       ¦   ¦       [3]       ¦   ¦       [4]       ¦   ¦       [5]       ¦    .");
         System.out.println(".  | A |     | D |  .   └-----------------┘   └-----------------┘   └-----------------┘   └-----------------┘   └-----------------┘    .");
         System.out.println(".   ---  ___  ---   .                                                                                                                  .");
-        System.out.println(".       | S |       .............................                                                                                      .");
-        System.out.println(".        ---        .   Seleccione una opción   .                                                                                      .");
-        System.out.println("........................................................................................................................................");
+        System.out.println(".       | S |       .                                           ┌--------------------------┐                                           .");
+        System.out.println(".        ---        .                                           |  Seleccione una opción   |                                           .");
+        System.out.println("................................................................└..........................┘............................................");
     }
 
 }

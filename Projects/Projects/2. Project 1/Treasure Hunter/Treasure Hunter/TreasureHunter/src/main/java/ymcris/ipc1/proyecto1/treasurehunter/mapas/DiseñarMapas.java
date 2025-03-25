@@ -16,16 +16,18 @@ import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
 /**
- * Clase encargada de crear y dieñar las casillas y los mapas.
+ * Clase DiseñarMapas es la clase encargada de crear y dieñar las casillas y los
+ * mapas.
  *
  * @author YmCris
+ * @see Mapas
  * @since Mar 18, 2025
  */
 public class DiseñarMapas {
@@ -34,9 +36,9 @@ public class DiseñarMapas {
     private Mapas mapaCreado;
     private File archivoMapa;
     private String nombreMapa;
+    private Casillas[][] tablero;
     private CasillaTesoro casillaTesoro;
     private CasillaPersonaje casillaAventurero;
-    private Casillas[][] tablero;
     // ----------------------- VARIABLES PRIMITIVAS ----------------------------
     private int filaTesoro;
     private int filaJugador;

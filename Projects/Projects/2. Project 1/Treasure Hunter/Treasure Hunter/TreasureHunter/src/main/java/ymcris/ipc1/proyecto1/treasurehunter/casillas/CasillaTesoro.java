@@ -8,10 +8,11 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
 import static ymcris.ipc1.proyecto1.treasurehunter.partida.Partida.partidaTerminada;
 
 /**
- * Clase encargada de crear casillas del tipo tesoro las cuales representan el
- * tesoro unico del juego
+ * CasillaTesoro es una clas hija encargada de crear casillas del tipo tesoro
+ * las cuales representan el tesoro del juego
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaTesoro extends Casillas {
@@ -41,13 +42,6 @@ public class CasillaTesoro extends Casillas {
         System.out.println(MAGENTA + "                                        AVENTURERO " + aventurero.getNombre() + " has hallado el tesoro más grande de todos" + RESETEAR);
         System.out.println(MAGENTA + "                             Luego de incanzables recorridos, batallas, y frustraciones, tu travesia ha llegado a su fin" + RESETEAR);
         partidaTerminada = true;
-    }
-
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        return this;
     }
 
 }

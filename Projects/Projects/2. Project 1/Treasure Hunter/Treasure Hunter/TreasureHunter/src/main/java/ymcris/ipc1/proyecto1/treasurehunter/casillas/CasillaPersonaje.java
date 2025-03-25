@@ -7,10 +7,12 @@ import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
- * Clase encargada de crear casillas del tipo Personaje la cual es la casilla
- * que irá moviendo al personaje durante todo el mapa
+ * CasillaPersonaje es una clase hija encargada de crear casillas del tipo
+ * Personaje la cual es la casilla que irá moviendo al personaje durante todo el
+ * mapa
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaPersonaje extends Casillas {
@@ -27,7 +29,7 @@ public class CasillaPersonaje extends Casillas {
         aventurero.setFilaJugador(fila);
         this.columna = columna;
         aventurero.setColumnaJugador(columna);
-        this.simbolo = ROJO + ":)" + RESETEAR;
+        this.simbolo = ROJO + "░░" + RESETEAR;
     }
 
     //MÉTODOS SOBRE ESCRITOS ---------------------------------------------------
@@ -42,6 +44,15 @@ public class CasillaPersonaje extends Casillas {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de modificar la fila y columna del jugador y de la
+     * casilla
+     *
+     * @param filaNueva - Fila a la cual se reubicará el jugador y su casilla
+     * @param columnaNueva - Columna a la cual se reubicará el jugador y su
+     * casilla
+     * @return CasillaModificada
+     */
     protected Casillas modificarCasillas(int filaNueva, int columnaNueva) {
         this.fila = filaNueva;
         aventurero.setFilaJugador(filaNueva);

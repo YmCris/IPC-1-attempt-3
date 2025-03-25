@@ -8,20 +8,20 @@ import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
+import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.elegirArchivoDeTexto;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.elegirArchivoDeTexto;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
-import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -34,11 +34,11 @@ import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
 public class TreasureHunter {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    public static Aventurero aventurero;
+    public static Aventurero aventurero;//¿Por qué es estático, no sé, pero así funciona?
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int opcionMenuPrincipal = 0;
     private int opcionMapas = 0;
+    private int opcionMenuPrincipal = 0;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
@@ -73,52 +73,25 @@ public class TreasureHunter {
                 opcionMenuPrincipal = 8;
             }
             switch (opcionMenuPrincipal) {//Opciones dentro del juego
-                case 1://Muestra como jugar el juego
+                case 1 -> //Como jugar el Treasure Hunter
                     new ComoJugar().enseñarAJugar();
-                    break;
-                case 2://Inicia una nueva partida
+                case 2 -> //Jugar una nueva partida
                     iniciarNuevaPartida();
-                    break;
-                case 3://Carga una partida ya existente
+                case 3 -> //Jugar una partida existente
                     new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
-                    break;
-                case 4://Modifica un mapa ya existente
+                case 4 -> //Modifica un mapa ya existente
                     editarMapa();
-                    break;
-                case 5://Muestra los reportes del juego
+                case 5 -> //Ver reportes del juego
                     new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
-                    break;
-                case 6://Sale del programa
+                case 6 -> //Sale del programa
                     System.exit(0);
-                    break;
-                default:
+                default -> {
                     errorEncontrado();
                     scanner.nextLine();
-                    break;
+                }
             }
+            //Opciones dentro del juego
         } while (opcionMenuPrincipal < 1 || opcionMenuPrincipal > 6);
-    }
-
-    /**
-     * Método encargado de crear el jugador que estará activo durante la
-     * partida, ya sea con un mapa previamente cargado o con uno nuevo.
-     *
-     * @return Aventurero - Personaje del jugador.
-     */
-    private Aventurero crearJugador() {
-        System.out.println("\n".repeat(100));
-        System.out.println(ROJO + "AVENTURERO" + RESETEAR);
-        System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
-        String nombreAventurero = scanner.nextLine();
-        if (nombreAventurero.isBlank()) {
-            System.out.println("No puedes tener un nombre vacío");
-            errorEncontrado();
-            crearJugador();
-        } else {
-            aventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
-            return aventurero;
-        }
-        return null;
     }
 
     /**
@@ -134,26 +107,26 @@ public class TreasureHunter {
                 opcionMapas = 9;
             }
             switch (opcionMapas) {//Opciones al iniciar una nueva partida.
-                case 1: //Juega con un mapa ya existente.
+                case 1 -> //Juega con un mapa ya existente.
                     jugarConUnMapaExistente();
-                    break;
-                case 2://Juega con un nuevo mapa.
+                case 2 -> //Juega con un nuevo mapa.
                     jugarConUnNuevoMapa();
-                    break;
-                case 3://vuelve al menu
+                case 3 -> //vuelve al menu
                     verMenuPrincipal();
-                    break;
-                case 4://sale del programa
+                case 4 -> //sale del programa
                     System.exit(0);
-                    break;
-                default:
+                default -> {
                     errorEncontrado();
                     scanner.nextLine();
-                    break;
+                }
             }
+            //Opciones al iniciar una nueva partida.
         } while (opcionMapas < 0 || opcionMapas >= 5);
     }
 
+    /**
+     * Método encargado de iniciar una partida con un nuevo mapa
+     */
     private void jugarConUnNuevoMapa() {
         scanner.nextLine();
         System.out.println("\n".repeat(100));
@@ -165,22 +138,25 @@ public class TreasureHunter {
             errorEncontrado();
             iniciarNuevaPartida();
         } else {
-            Aventurero aventurero = crearJugador();
-            DiseñarMapas nuevoMapa = new DiseñarMapas();
-            Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);
+            Aventurero aventurero = crearJugador();//Crea el aventurero
+            DiseñarMapas nuevoMapa = new DiseñarMapas();//Diseña el mapa a jugar
+            Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);//Crea una nueva partida
             partida.iniciarNuevaPartida();//Inicia una nueva partida
         }
 
     }
 
+    /**
+     * Método encargado de iniciar una nueva partida con un mapa ya existente
+     */
     private void jugarConUnMapaExistente() {
         scanner.nextLine();
-        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) <= 0) {
+        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) <= 0) {//Verifica si tiene mapas creados.
             System.out.println("No tienes mapas creados");
             System.out.println("Presiona enter para regresar al menú principal:");
             scanner.nextLine();
             verMenuPrincipal();
-        } else {
+        } else {//Si tiene mapas creados:
             System.out.println("\n".repeat(100));
             System.out.println(ROJO + "PARTIDA" + RESETEAR);
             System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
@@ -206,21 +182,47 @@ public class TreasureHunter {
                     System.out.println("No existe ese archivo");
                     errorEncontrado();
                     jugarConUnMapaExistente();
-                } else {
+                } else {//Pasa todas las validaciones
                     scanner.nextLine();
-                    Aventurero aventureroNuevo = crearJugador();
-                    File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);
-                    RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventureroNuevo);
-                    Mapas mapaYaExistente = recreador.recrearMapas();
-                    Partida partida = new Partida(aventureroNuevo, mapaYaExistente, nombrePartidaNueva);
+                    Aventurero aventureroNuevo = crearJugador();//Crea un aventurero
+                    File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);//Obtiene el archivo de la carpeta
+                    RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventureroNuevo);//Crea un recreador de mapas
+                    Mapas mapaYaExistente = recreador.recrearMapas();//Crea un mapa recreandolo desde el archivo mapaElegido
+                    Partida partida = new Partida(aventureroNuevo, mapaYaExistente, nombrePartidaNueva);//Crea una nueva partida
                     partida.iniciarNuevaPartida();//Inicia una nueva partida
                 }
             }
         }
     }
 
+    /**
+     * Método encargado de crear el jugador que estará activo durante la
+     * partida, ya sea con un mapa previamente cargado o con uno nuevo.
+     *
+     * @return Aventurero - Aventurero del jugador.
+     */
+    private Aventurero crearJugador() {
+        System.out.println("\n".repeat(100));
+        System.out.println(ROJO + "AVENTURERO" + RESETEAR);
+        System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
+        String nombreAventurero = scanner.nextLine();
+        if (nombreAventurero.isBlank()) {
+            System.out.println("No puedes tener un nombre vacío");
+            errorEncontrado();
+            crearJugador();
+        } else {
+            aventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
+            return aventurero;
+        }
+        return null;
+    }
+
+    /**
+     * Método encargado de realizar las validaciones correspondientes para
+     * editar un mapa ya existente
+     */
     private void editarMapa() {
-        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) > 0) {
+        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) > 0) {//Verifica si tiene mapas ya creados
             try {
                 //1. Mostrar todos los mapas
                 mostrarArchivosEnCarpeta(rutaCarpetaMapas);
@@ -231,17 +233,17 @@ public class TreasureHunter {
                     System.out.println("No existe ese mapa");
                     errorEncontrado();
                     editarMapa();
-                } else {
-                    File mapaAModificar = elegirArchivoDeTexto(rutaCarpetaMapas, opcionMapaAEditar);
-                    EditorDeMapas editor = new EditorDeMapas(mapaAModificar);
-                    editor.editarMapa();
+                } else {//Modificar mapa
+                    File mapaAModificar = elegirArchivoDeTexto(rutaCarpetaMapas, opcionMapaAEditar);//Obtiene el mapa a modificar
+                    EditorDeMapas editor = new EditorDeMapas(mapaAModificar);//Le pasa el mapa a la clase
+                    editor.editarMapa();//editos lo edita
                 }
             } catch (InputMismatchException e) {
                 System.out.println("La opción es un número");
             } catch (NullPointerException ex) {
                 System.out.println("No tienes mapas todavía");
             }
-        } else {
+        } else {//No tiene mapas creados
             scanner.nextLine();
             System.out.println("No tienes mapas aun, crealos en la sección de crear mapas");
             System.out.println("Presiona enter para continuar");

@@ -7,10 +7,11 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.AMARILLO
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
- * Clase encargada de crear casillas del tipo pista la cual da información
- * acerca del paradero del tesoro.
+ * CasillaPista es un clase hija encargada de crear casillas del tipo pista la
+ * cual da información acerca del paradero del tesoro.
  *
  * @author YmCris
+ * @see Casillas
  * @since Mar 15, 2025
  */
 public class CasillaPista extends Casillas {
@@ -18,9 +19,10 @@ public class CasillaPista extends Casillas {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     public static String pista;
     public static String[] pistas;
+    private Casillas[][] tablero;
     private CasillaTesoro casillaTesoro;
     private CasillaPersonaje casillaAventurero;
-    private Casillas[][] tablero;
+
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private static int contador;
     private int cantidadPistasPartida;
@@ -66,13 +68,6 @@ public class CasillaPista extends Casillas {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    protected Casillas modificarCasillas(int filaNueva, int columnaNueva, boolean pistaEsDireccional) {
-        this.fila = filaNueva;
-        this.columna = columnaNueva;
-        this.pistaEsDireccional = pistaEsDireccional;
-        return this;
-    }
-
     /**
      * Método encargado de calcular si la pista es direccional
      */
@@ -176,14 +171,4 @@ public class CasillaPista extends Casillas {
             System.out.println(pista);
         }
     }
-
-    // GETTERS -----------------------------------------------------------------
-    public String getPista() {
-        return pista;
-    }
-
-    public String[] getPistas() {
-        return pistas;
-    }
-
 }

@@ -33,25 +33,4 @@ public class EntradaNoValidaException extends Exception {
         scanner.nextLine();
     }
 
-    /**
-     * Método encargado de informar al usuario que su entrada no esta dentro del
-     * rango esperado o que no es coherente.
-     *
-     * @param limiteInferior
-     * @param valorInferior
-     * @param limiteSuperior
-     * @param valorSuperior
-     */
-    public static void validarValores(int limiteInferior, int valorInferior, int limiteSuperior, int valorSuperior) {
-        if (valorInferior < limiteInferior) {
-            System.out.println("El valor " + valorInferior + " debe ser mayor que " + limiteInferior);
-        }
-        if (valorSuperior > limiteSuperior) {
-            System.out.println("El valor " + valorSuperior + " debe ser mayor que " + limiteSuperior);
-        }
-        if (valorInferior < limiteInferior || valorSuperior > limiteSuperior) {
-            errorEncontrado();
-        }
-    }
-
 }

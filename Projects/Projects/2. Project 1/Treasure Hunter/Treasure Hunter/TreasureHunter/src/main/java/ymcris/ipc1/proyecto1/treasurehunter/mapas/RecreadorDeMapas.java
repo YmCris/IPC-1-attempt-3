@@ -1,37 +1,41 @@
 package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
 import java.io.File;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.Casillas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
-import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
-import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerUnaLineaDeUnArchivoDeTextoConUnIndice;
-import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnemigos;
-import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnergia;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaMuro;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPista;
-import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTesoro;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTrampa;
-import ymcris.ipc1.proyecto1.treasurehunter.casillas.Casillas;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnergia;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnemigos;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
+import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerUnaLineaDeUnArchivoDeTextoConUnIndice;
 
 /**
- *
+ * Clase encargadda de editar un mapa ya existente.
  *
  * @author YmCris
+ * @see DiseñarMapas
  * @since Mar 24, 2025
  */
 public class RecreadorDeMapas {
 
+    // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private File mapaEnArchivo;
     private Aventurero aventurero;
     private Casillas[][] tablero;
 
+    // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
     public RecreadorDeMapas(File mapaEnArchivo, Aventurero aventurero) {
         this.mapaEnArchivo = mapaEnArchivo;
         this.aventurero = aventurero;
     }
 
+    // ----------------------------- MÉTODOS -----------------------------------
     public Mapas recrearMapas() {
         //1. Reimplementa todo el diseño DiseñarMapas().preguntarCaracterísticasMapa();
         String nombreMapa = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 0);//nombreMapa
@@ -107,10 +111,4 @@ public class RecreadorDeMapas {
         return mapa;
     }
 
-    // --------------------- VARIABLES DE REFERENCIA ---------------------------
-    // ----------------------- VARIABLES PRIMITIVAS ----------------------------
-    // ---------------------------- INSTANCIAS ---------------------------------
-    // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
-    // ----------------------------- MÉTODOS -----------------------------------
-    // ------------------------- GETTERS & SETTERS -----------------------------
 }
