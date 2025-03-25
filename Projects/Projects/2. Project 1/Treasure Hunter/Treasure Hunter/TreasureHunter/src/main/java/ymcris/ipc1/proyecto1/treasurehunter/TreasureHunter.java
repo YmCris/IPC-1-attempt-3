@@ -7,6 +7,8 @@ import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
 import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
@@ -22,6 +24,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArch
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -211,6 +214,8 @@ public class TreasureHunter {
             errorEncontrado();
             crearJugador();
         } else {
+            File archivoJugador = crearArchivo(nombreAventurero, rutaCarpetaJugadores);
+            añadirTextoEnArchivo(nombreAventurero, archivoJugador);
             aventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
             return aventurero;
         }
@@ -239,9 +244,13 @@ public class TreasureHunter {
                     editor.editarMapa();//editos lo edita
                 }
             } catch (InputMismatchException e) {
+                scanner.nextLine();
                 System.out.println("La opción es un número");
+                errorEncontrado();
+                editarMapa();
             } catch (NullPointerException ex) {
                 System.out.println("No tienes mapas todavía");
+                errorEncontrado();
             }
         } else {//No tiene mapas creados
             scanner.nextLine();

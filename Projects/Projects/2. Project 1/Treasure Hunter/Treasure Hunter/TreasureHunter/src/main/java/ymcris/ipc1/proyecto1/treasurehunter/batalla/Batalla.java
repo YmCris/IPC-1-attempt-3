@@ -49,6 +49,7 @@ public class Batalla {
      * @param puntosAQuitar - cantidad de puntos a quitar.
      */
     public Batalla(Aventurero aventurero, boolean pierdePuntos, boolean puedeAbandonar, int tipoDePuntos, int puntosAQuitar) {
+        this.aventurero.setBatallas(this.aventurero.getBatallas() + 1);
         this.opcion = 0;
         this.rendirse = false;
         this.opcionBatalla = 0;
@@ -98,7 +99,6 @@ public class Batalla {
      */
     private void aplicarEfectosAventureroGanador() {
         //Aplica los efectos de la batalla
-        this.aventurero.setBatallas(this.aventurero.getBatallas() + 1);
         this.aventurero.setBatallasGanadas(this.aventurero.getBatallasGanadas() + 1);
         this.aventurero.setVida(aventurero.getVidaTotal());
         this.aventurero.setMana(aventurero.getManaMaximo());
@@ -117,15 +117,18 @@ public class Batalla {
                 }
                 case 2 -> {
                     aventurero.setDefensa(aventurero.getDefensa() + 1);
+                    aventurero.setDefensaPrevioAUnaBatalla(aventurero.getDefensa() + 1);
                     System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " tu defensa ha aumentado 1, tienes " + aventurero.getDefensa() + " puntos de defensa" + CYAN + " ------------------------- " + RESETEAR);
                 }
                 case 3 -> {
                     aventurero.setVidaTotal(aventurero.getVida() + 1);
+                    aventurero.setVidaPrevioAUnaBatalla(aventurero.getVida() + 1);
                     aventurero.setVida(aventurero.getVida() + 1);
                     System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " tu vida ha aumentado 1, tienes " + aventurero.getVida() + " puntos de vida" + CYAN + " ------------------------- " + RESETEAR);
                 }
                 case 4 -> {
                     aventurero.setManaMaximo(aventurero.getMana() + 1);
+                    aventurero.setManaPrevioAUnaBatalla(aventurero.getMana() + 1);
                     aventurero.setMana(aventurero.getMana() + 1);
                     System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + aventurero.getNombre() + " tu mana ha aumentado 1, tienes " + aventurero.getMana() + " puntos de mana" + CYAN + " ------------------------- " + RESETEAR);
                 }

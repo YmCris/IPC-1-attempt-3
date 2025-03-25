@@ -69,8 +69,9 @@ public class Archivos {
     public static void mostrarArchivosEnCarpeta(String ruta) {
         File carpetaArchivos = new File(ruta);
         String[] nombreDeArchivosEnCarpeta = carpetaArchivos.list();
+        System.out.println("");
         for (int i = 0; i < nombreDeArchivosEnCarpeta.length; i++) {
-            System.out.print(i + " ");
+            System.out.print("[" + i + "]" + " ");
             if (nombreDeArchivosEnCarpeta[i].toLowerCase().endsWith(".txt")) {
                 System.out.print(nombreDeArchivosEnCarpeta[i].substring(0, nombreDeArchivosEnCarpeta[i].length() - 4));
             }
@@ -101,6 +102,18 @@ public class Archivos {
             System.out.println("Ha habido un error al crear el archivo " + nombreArchivo + e.getMessage());
         }
         return null;
+    }
+
+    /**
+     * Método encargado de eliminar un archivo de texto (Por si algo cae en un
+     * catch)
+     *
+     * @param archivo - archivo a eliminar
+     */
+    public static void eliminarArchivo(File archivo) {
+        if (archivo.exists()) {
+            archivo.delete();
+        }
     }
 
     /**

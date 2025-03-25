@@ -97,39 +97,40 @@ public class DiseñoMenus {
      * @param mapaEnArchivo
      */
     public static void mostrarOpcionesEditarMapa(File mapaEnArchivo) {
-        System.out.println("┌------------------------------------------------------------------------------------------┐");
-        System.out.println("                       ¿Qué carácterística del mapa desea editar?                         ");
-        System.out.println("├------------------------------------------------------------------------------------------");
-        System.out.println("        [ 0] Nombre del mapa ........................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 0));
-        System.out.println("        [ 1] Número de filas del mapa ............................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 1));
-        System.out.println("        [ 2] Número de columnas del mapa ............................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 2));
-        System.out.println("        [ 3] Fila en la que se encuentra el tesoro .................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 3));
-        System.out.println("        [ 4] Columna en la que se encuentra el tesoro ............... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 4));
-        System.out.println("        [ 5] Fila en la que se encuentra el jugador ................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 5));
-        System.out.println("        [ 6] Columna en la que se encuentra el jugador .............. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 6));
-        System.out.println("        [ 7] Cantidad de casillas trampa ............................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 7));
-        System.out.println("        [ 8] Puntos que quitan las trampas  ......................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 8));
-        System.out.println("        [ 9] Efecto de la trampa .................................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 9)));
-        System.out.println("        [10] Cantidad de casillas Pista ............................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 10));
-        System.out.println("        [11] Tipo de pista .......................................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 11)));
-        System.out.println("        [12] Cantidad de casillas Teletransporte .................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 12));
-        System.out.println("        [13] Tipo de teletransportación ............................. " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 13)));
-        System.out.println("        [14] Fila a retornar en la casilla teletransporte ........... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 14));
-        System.out.println("        [15] Columna a retornar en la casilla teletransporte ........ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 15));
-        System.out.println("        [18] Cantidad de casillas de energía ........................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 18));
-        System.out.println("        [19] Puntos a restarurar .................................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 19));
-        System.out.println("        [20] Efecto de la casilla energía ........................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 20)));
-        System.out.println("        [21] Cantidad de casillas enemigos .......................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 21));
-        System.out.println("        [22] Puede escapar de la batalla ............................ " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 22)));
-        System.out.println("        [23] Si pierede puntos o es reubicado ....................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 23)));
-        System.out.println("        [24] Fila a retornar si pierde .............................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 24));
-        System.out.println("        [25] Columna a retornar si pierde ........................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 25));
-        System.out.println("        [26] Puntos a quitar ........................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 26));
-        System.out.println("        [27] Tipo de puntos a quitar ................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 27));
-        System.out.println("        [28] Numero de casillas muro ................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 28));
-        System.out.println("└-----------------------------------------------------------------------------------------┘");
+        System.out.println("\n".repeat(100));
+        System.out.println("                ----------------------------------------------------------------------------------------- ");
+        System.out.println("                                      ¿Qué carácterística del mapa desea editar?                         ");
+        System.out.println("                ----------------------------------------------------------------------------------------- ");
+        System.out.println("                       [ 0] Nombre del mapa ........................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 0));
+        System.out.println("                       [ 1] Número de filas del mapa ............................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 1));
+        System.out.println("                       [ 2] Número de columnas del mapa ............................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 2));
+        System.out.println("                       [ 3] Fila en la que se encuentra el tesoro .................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 3));
+        System.out.println("                       [ 4] Columna en la que se encuentra el tesoro ............... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 4));
+        System.out.println("                       [ 5] Fila en la que se encuentra el jugador ................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 5));
+        System.out.println("                       [ 6] Columna en la que se encuentra el jugador .............. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 6));
+        System.out.println("                       [ 7] Cantidad de casillas trampa ............................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 7));
+        System.out.println("                       [ 8] Puntos que quitan las trampas  ......................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 8));
+        System.out.println("                       [ 9] Efecto de la trampa .................................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 9)));
+        System.out.println("                       [10] Cantidad de casillas Pista ............................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 10));
+        System.out.println("                       [11] Tipo de pista .......................................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 11)));
+        System.out.println("                       [12] Cantidad de casillas Teletransporte .................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 12));
+        System.out.println("                       [13] Tipo de teletransportación ............................. " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 13)));
+        System.out.println("                       [14] Fila a retornar en la casilla teletransporte ........... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 14));
+        System.out.println("                       [15] Columna a retornar en la casilla teletransporte ........ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 15));
+        System.out.println("                       [18] Cantidad de casillas de energía ........................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 18));
+        System.out.println("                       [19] Puntos a restarurar .................................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 19));
+        System.out.println("                       [20] Efecto de la casilla energía ........................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 20)));
+        System.out.println("                       [21] Cantidad de casillas enemigos .......................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 21));
+        System.out.println("                       [22] Puede escapar de la batalla ............................ " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 22)));
+        System.out.println("                       [23] Si pierede puntos o es reubicado ....................... " + convertirBooleanoAInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 23)));
+        System.out.println("                       [24] Fila a retornar si pierde .............................. " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 24));
+        System.out.println("                       [25] Columna a retornar si pierde ........................... " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 25));
+        System.out.println("                       [26] Puntos a quitar ........................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 26));
+        System.out.println("                       [27] Tipo de puntos a quitar ................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 27));
+        System.out.println("                       [28] Numero de casillas muro ................................ " + obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 28));
+        System.out.println("                ----------------------------------------------------------------------------------------- ");
     }
-
+    
     public static String convertirBooleanoAInt(String booleano) {
         if (booleano.equals("true")) {
             return "1";

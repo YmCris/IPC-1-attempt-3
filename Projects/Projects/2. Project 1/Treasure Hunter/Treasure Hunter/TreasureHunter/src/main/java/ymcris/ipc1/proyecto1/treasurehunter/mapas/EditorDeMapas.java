@@ -83,6 +83,7 @@ public class EditorDeMapas {
                 }
                 break;
             } catch (Exception e) {
+                scanner.nextLine();
                 System.out.println("Debes introducir un valor numérico");
                 errorEncontrado();
                 editarMapa();

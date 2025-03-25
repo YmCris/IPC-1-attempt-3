@@ -18,7 +18,7 @@ public abstract class Personaje {
     protected int mana;
     protected int ataque;
     protected int defensa;
-    protected char simbolo;
+    protected String simbolo;
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
@@ -42,7 +42,7 @@ public abstract class Personaje {
         this.ataque = ataque;
         this.defensa = defensa;
         this.nombre = nombre;
-        this.simbolo = nombre.charAt(0);
+        this.simbolo = ":)";
     }
 
     /**
@@ -117,12 +117,8 @@ public abstract class Personaje {
         this.defensa = defensa;
     }
 
-    public char getSimbolo() {
+    public String getSimbolo() {
         return simbolo;
-    }
-
-    public void setSimbolo(char simbolo) {
-        this.simbolo = simbolo;
     }
 
     public String getNombre() {

@@ -71,6 +71,9 @@ public class CasillaEnemigos extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         if (seHaRendido == false) {
             System.out.println("\n".repeat(100));
+            if (puntosAQuitar == 0) {
+                puntosAQuitar = 20;
+            }
             Batalla batalla = new Batalla(aventurero, pierdePuntos, puedeEscapar, tipoDePuntos, puntosAQuitar);
             batalla.pelear();
             if (aventurero.getVida() <= 0) {
@@ -103,6 +106,7 @@ public class CasillaEnemigos extends Casillas {
                     aplicarEfecto(aventurero);
                     break;
                 } else if (opcionBatalla == 2) {
+                    seHaRendido = false;
                     aplicarEfecto(aventurero);
                     break;
                 }

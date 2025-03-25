@@ -29,7 +29,7 @@ public class CasillaPersonaje extends Casillas {
         aventurero.setFilaJugador(fila);
         this.columna = columna;
         aventurero.setColumnaJugador(columna);
-        this.simbolo = ROJO + "░░" + RESETEAR;
+        this.simbolo = ROJO + ":)" + RESETEAR;
     }
 
     //MÉTODOS SOBRE ESCRITOS ---------------------------------------------------
