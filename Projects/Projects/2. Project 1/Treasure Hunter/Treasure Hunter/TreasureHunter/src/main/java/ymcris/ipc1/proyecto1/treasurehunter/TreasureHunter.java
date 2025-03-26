@@ -6,6 +6,7 @@ import java.util.InputMismatchException;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.ayuda.ComoJugar;
 import ymcris.ipc1.proyecto1.treasurehunter.partida.Partida;
+import ymcris.ipc1.proyecto1.treasurehunter.reportes.Reportes;
 import ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.DiseñarMapas;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.EditorDeMapas;
@@ -17,15 +18,17 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchiv
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearCarpetas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarBienvenida;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaPartidas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.elegirArchivoDeTexto;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.existeElArchivoEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
-import ymcris.ipc1.proyecto1.treasurehunter.reportes.Reportes;
+import ymcris.ipc1.proyecto1.treasurehunter.partida.RecreadorDePartida;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -82,7 +85,7 @@ public class TreasureHunter {
                 case 2 -> //Jugar una nueva partida
                     iniciarNuevaPartida();
                 case 3 -> //Jugar una partida existente
-                    new ComoJugar().enseñarAJugar();//new Archivo().cargarPartida();
+                    elegirPartidaExistente();
                 case 4 -> //Modifica un mapa ya existente
                     editarMapa();
                 case 5 -> //Ver reportes del juego
@@ -112,9 +115,9 @@ public class TreasureHunter {
             }
             switch (opcionMapas) {//Opciones al iniciar una nueva partida.
                 case 1 -> //Juega con un mapa ya existente.
-                    jugarConUnMapaExistente();
+                    crearPartidaConUnMapaExistente();
                 case 2 -> //Juega con un nuevo mapa.
-                    jugarConUnNuevoMapa();
+                    crearPartidaConUnNuevoMapa();
                 case 3 -> //vuelve al menu
                     verMenuPrincipal();
                 case 4 -> //sale del programa
@@ -129,32 +132,72 @@ public class TreasureHunter {
     }
 
     /**
-     * Método encargado de iniciar una partida con un nuevo mapa
+     * Método encargado de crear el jugador que estará activo durante la
+     * partida, ya sea con un mapa previamente cargado o con uno nuevo.
+     *
+     * @return Aventurero - Aventurero del jugador.
      */
-    private void jugarConUnNuevoMapa() {
-        scanner.nextLine();
-        System.out.println("\n".repeat(100));
-        System.out.println(ROJO + "PARTIDA" + RESETEAR);
-        System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
-        String nombrePartida = scanner.nextLine();
-        if (nombrePartida.isBlank()) {
-            System.out.println("El nombre de la partida no puede estar en blanco");
-            errorEncontrado();
-            iniciarNuevaPartida();
-        } else {
-            aventurero = crearJugador();//Crea el aventurero
-            DiseñarMapas nuevoMapa = new DiseñarMapas();//Diseña el mapa a jugar
-            Partida partida = new Partida(aventurero, nuevoMapa.preguntarCaracteristicasMapa(), nombrePartida);//Crea una nueva partida
-            partida.iniciarNuevaPartida();//Inicia una nueva partida
-        }
-
+    private Aventurero crearJugador() {
+        do {
+            boolean todoEnOrden = true;
+            System.out.println("\n".repeat(100));
+            System.out.println(ROJO + "AVENTURERO" + RESETEAR);
+            System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
+            String nombreAventurero = scanner.nextLine().toLowerCase();
+            if (nombreAventurero.isBlank()) {
+                todoEnOrden = false;
+                System.out.println("No puedes tener un nombre vacío");
+                errorEncontrado();
+            }
+            if (existeElArchivoEnCarpeta(rutaCarpetaJugadores, nombreAventurero) == true) {
+                todoEnOrden = false;
+                errorEncontrado();
+            }
+            if (todoEnOrden == true) {
+                if (!nombreAventurero.isBlank() && existeElArchivoEnCarpeta(rutaCarpetaMapas, nombreAventurero) == false) {
+                    File archivoJugador = crearArchivo(nombreAventurero, rutaCarpetaJugadores);
+                    Aventurero nuevoAventurero = new Aventurero(nombreAventurero, false, 0, 0, 0, 0, 0, false, 250, 250, 250, 20, 20, 20, 100, 20, 20, 0, 0, archivoJugador);
+                    nuevoAventurero.guardarAvanceEnArchivo();
+                    return nuevoAventurero;
+                }
+            }
+        } while (true);
     }
 
-    /**
-     * Método encargado de iniciar una nueva partida con un mapa ya existente
-     */
-    private void jugarConUnMapaExistente() {
+    private String pedirNombrePartida() {
+        do {
+            System.out.println("\n".repeat(100));
+            System.out.println(ROJO + "PARTIDA" + RESETEAR);
+            System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
+            String nombrePartida = scanner.nextLine().toLowerCase();
+            if (nombrePartida.isBlank()) {
+                System.out.println("El nombre de la partida no puede estar en blanco");
+                errorEncontrado();
+            } else {
+                if (existeElArchivoEnCarpeta(rutaCarpetaPartidas, nombrePartida) == true) {
+                    errorEncontrado();
+                } else {
+                    return nombrePartida;
+                }
+            }
+        } while (true);
+    }
+
+    private void crearPartidaConUnNuevoMapa() {
         scanner.nextLine();
+        aventurero = crearJugador();//Crea el aventurero
+        DiseñarMapas nuevoMapa = new DiseñarMapas();//Diseña el mapa a jugar
+        Mapas mapa = nuevoMapa.preguntarCaracteristicasMapa();
+        String nombrePartida = pedirNombrePartida();//Obtiene el nombre de la partida
+        File archivoPartida = crearArchivo(nombrePartida, rutaCarpetaPartidas);//Crea ka partida en archivo
+        añadirTextoEnArchivo(nombrePartida, archivoPartida);
+        añadirTextoEnArchivo(mapa.getNombre(), archivoPartida);
+        añadirTextoEnArchivo(aventurero.getNombre(), archivoPartida);
+        Partida partida = new Partida(aventurero, mapa, nombrePartida);//Crea una nueva partida
+        partida.iniciarNuevaPartida();//Inicia una nueva partida
+    }
+
+    private void crearPartidaConUnMapaExistente() {
         if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaMapas) <= 0) {//Verifica si tiene mapas creados.
             System.out.println("No tienes mapas creados");
             System.out.println("Presiona enter para regresar al menú principal:");
@@ -162,65 +205,37 @@ public class TreasureHunter {
             verMenuPrincipal();
         } else {//Si tiene mapas creados:
             System.out.println("\n".repeat(100));
-            System.out.println(ROJO + "PARTIDA" + RESETEAR);
-            System.out.println("· INGRESE EL NOMBRE DE LA PARTIDA:");
-            String nombrePartidaNueva = scanner.nextLine();
-            if (nombrePartidaNueva.isBlank()) {
-                System.out.println("El nombre de la partida no puede estar en blanco");
+            System.out.println(ROJO + "ELIJA SU MAPA:" + RESETEAR);
+            System.out.println("· INGRESE EL NÚMERO EN EL QUE SE ENCUENTRA EL MAPA CON EL QUE DESEA JUGAR:");
+            mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
+            int opcionArchivo = 0;
+            try {
+                opcionArchivo = scanner.nextInt();
+            } catch (InputMismatchException e) {
+                System.out.println("Debes introducir un valor numérico");
                 errorEncontrado();
-                iniciarNuevaPartida();
-            } else {
-                System.out.println("\n".repeat(100));
-                System.out.println(ROJO + "ELIJA SU MAPA:" + RESETEAR);
-                System.out.println("· INGRESE EL NÚMERO EN EL QUE SE ENCUENTRA EL MAPA CON EL QUE DESEA JUGAR:");
-                mostrarArchivosEnCarpeta(Archivos.rutaCarpetaMapas);
-                int opcionArchivo = 0;
-                try {
-                    opcionArchivo = scanner.nextInt();
-                } catch (InputMismatchException e) {
-                    System.out.println("Debes introducir un valor numérico");
-                    errorEncontrado();
-                    jugarConUnMapaExistente();
-                }
-                if (opcionArchivo < 0 || opcionArchivo > obtenerCuantosElementosTieneUnaCarpeta(Archivos.rutaCarpetaMapas) - 1) {
-                    System.out.println("No existe ese archivo");
-                    errorEncontrado();
-                    jugarConUnMapaExistente();
-                } else {//Pasa todas las validaciones
-                    scanner.nextLine();
-                    aventurero = crearJugador();//Crea un aventurero
-                    File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);//Obtiene el archivo de la carpeta
-                    RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventurero);//Crea un recreador de mapas
-                    Mapas mapaYaExistente = recreador.recrearMapas();//Crea un mapa recreandolo desde el archivo mapaElegido
-                    Partida partida = new Partida(aventurero, mapaYaExistente, nombrePartidaNueva);//Crea una nueva partida
-                    partida.iniciarNuevaPartida();//Inicia una nueva partida
-                }
+                scanner.nextLine();
+                crearPartidaConUnMapaExistente();
+            }
+            if (opcionArchivo < 0 || opcionArchivo > obtenerCuantosElementosTieneUnaCarpeta(Archivos.rutaCarpetaMapas) - 1) {
+                System.out.println("No existe ese archivo");
+                errorEncontrado();
+                crearPartidaConUnMapaExistente();
+            } else {//Pasa todas las validaciones
+                scanner.nextLine();
+                aventurero = crearJugador();//Crea un aventurero
+                String nombrePartidaNueva = pedirNombrePartida();//Pide el nombre de la partida
+                File mapaElegido = Archivos.elegirArchivoDeTexto(Archivos.rutaCarpetaMapas, opcionArchivo);//Obtiene el archivo de la carpeta
+                RecreadorDeMapas recreador = new RecreadorDeMapas(mapaElegido, aventurero);//Crea un recreador de mapas
+                Mapas mapaYaExistente = recreador.recrearMapas();//Crea un mapa recreandolo desde el archivo mapaElegido
+                File archivoPartida = crearArchivo(nombrePartidaNueva, rutaCarpetaPartidas);//Crea el archivo de la partida
+                añadirTextoEnArchivo(nombrePartidaNueva, archivoPartida);
+                añadirTextoEnArchivo(mapaYaExistente.getNombre(), archivoPartida);
+                añadirTextoEnArchivo(aventurero.getNombre(), archivoPartida);
+                Partida partida = new Partida(aventurero, mapaYaExistente, nombrePartidaNueva);//Crea una nueva partida
+                partida.iniciarNuevaPartida();//Inicia una nueva partida
             }
         }
-    }
-
-    /**
-     * Método encargado de crear el jugador que estará activo durante la
-     * partida, ya sea con un mapa previamente cargado o con uno nuevo.
-     *
-     * @return Aventurero - Aventurero del jugador.
-     */
-    private Aventurero crearJugador() {
-        System.out.println("\n".repeat(100));
-        System.out.println(ROJO + "AVENTURERO" + RESETEAR);
-        System.out.println("· INGRESE EL NOMBRE DEL NUEVO AVENTURERO:");
-        String nombreAventurero = scanner.nextLine();
-        if (nombreAventurero.isBlank()) {
-            System.out.println("No puedes tener un nombre vacío");
-            errorEncontrado();
-            crearJugador();
-        } else {
-            File archivoJugador = crearArchivo(nombreAventurero, rutaCarpetaJugadores);
-            añadirTextoEnArchivo(nombreAventurero, archivoJugador);
-            Aventurero nuevoAventurero = new Aventurero(250, 15, 100, 20, nombreAventurero);//Se crea el aventurero del jugador.
-            return nuevoAventurero;
-        }
-        return null;
     }
 
     /**
@@ -260,6 +275,26 @@ public class TreasureHunter {
             scanner.nextLine();
             verMenuPrincipal();
         }
+    }
+
+    private void elegirPartidaExistente() {
+        int indiceArchivo = 0;
+        do {
+            System.out.println(ROJO + "Estas son las partidas que existen:" + RESETEAR);
+            mostrarArchivosEnCarpeta(rutaCarpetaPartidas);
+            System.out.println("¿Qué partida deseas jugar?");
+            indiceArchivo = 0;
+            try {
+                indiceArchivo = scanner.nextInt();
+                scanner.nextLine();
+            } catch (InputMismatchException e) {
+                System.out.println("Debes colocar un número");
+                errorEncontrado();
+            }
+        } while (indiceArchivo < 0 || indiceArchivo > obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaPartidas));
+        File archivoPartida = elegirArchivoDeTexto(rutaCarpetaPartidas, indiceArchivo);
+        RecreadorDePartida recreador = new RecreadorDePartida(archivoPartida);
+        recreador.iniciarPartida();
     }
 
 }

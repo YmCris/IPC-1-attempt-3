@@ -103,6 +103,7 @@ public class CasillaEnemigos extends Casillas {
                 } else if (opcionBatalla == 1 && puedeEscapar == false) {
                     System.out.println("No puede huir de la batalla, debes pelear");
                     scanner.nextLine();
+                    scanner.nextLine();
                     aplicarEfecto(aventurero);
                     break;
                 } else if (opcionBatalla == 2) {

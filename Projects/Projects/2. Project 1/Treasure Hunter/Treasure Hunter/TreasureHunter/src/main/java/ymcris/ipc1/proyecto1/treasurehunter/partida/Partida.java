@@ -4,6 +4,7 @@ import java.util.Scanner;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.MAGENTA;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoPartida.verOpcionesPartida;
@@ -51,6 +52,9 @@ public class Partida {
      */
     public void iniciarNuevaPartida() {
         do {
+            System.out.println(ROJO + "Mapa: " + mapa.getNombre() + RESETEAR);
+            System.out.println(ROJO + "Partida: " + nombrePartida + RESETEAR);
+            System.out.println(ROJO + "Aventurero: " + aventurero.getNombre() + RESETEAR);
             mapa.mostrarMapaCompleto();
             verOpcionesPartida();
             String opcionPartida = scanner.nextLine();

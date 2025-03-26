@@ -106,7 +106,7 @@ public class Reportes {
             //4. Ordenar el arreglo de jugadores ganadores en base a sus movimientos (De Manera ascendente)
             File[] arregloOrdenado = ordenarAscendentementePorBurbuja(jugadoresGanadores);
             //5. Leer el arreglo posición en posición impriFmiendo las primeras 6 líneas (ahí se colocarán todo lo requerido)
-            System.out.println(ROJO + "                       Estos son los jugadores ganadores ordenados según su cantidad de movimientos de manera ascendente:" + RESETEAR + "");
+            System.out.println(ROJO + "                     Estos son los jugadores ganadores ordenados según su cantidad de batallas ganadas de manera ascendente:" + RESETEAR + "");
             System.out.println("");
             for (int i = 0; i < arregloOrdenado.length; i++) {
                 System.out.println("┌----------------------------------------------------------------------------------------------------------------------------------------------------" + "");
@@ -244,7 +244,7 @@ public class Reportes {
                 for (int i = inicio; i < fin; i++) {
                     File elemento1 = arregloAOrdenar[i];
                     File elemento2 = arregloAOrdenar[i + 1];
-                    if (Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(elemento1, 2)) > Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(elemento2, 2))) {
+                    if (Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(elemento1, 4)) > Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(elemento2, 4))) {
                         arregloAOrdenar[i] = elemento2;
                         arregloAOrdenar[i + 1] = elemento1;
                         hayCambio = true;

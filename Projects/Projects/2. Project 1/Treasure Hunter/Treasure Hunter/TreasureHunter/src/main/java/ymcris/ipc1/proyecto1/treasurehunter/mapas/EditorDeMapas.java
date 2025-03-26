@@ -48,7 +48,13 @@ public class EditorDeMapas {
                         String nuevoString = modificarUnTexto();
                         sobreEscribirUnaLineaDeArchivo(nuevoString, mapaAEditar, opcionAModificar);
                         //entero
-                    } else if (opcionAModificar == 1 || opcionAModificar == 2 || opcionAModificar == 3 || opcionAModificar == 4 || opcionAModificar == 5 || opcionAModificar == 6 || opcionAModificar == 7 || opcionAModificar == 8 || opcionAModificar == 10 || opcionAModificar == 12 || opcionAModificar == 14 || opcionAModificar == 15 || opcionAModificar == 18 || opcionAModificar == 19 || opcionAModificar == 21 || opcionAModificar == 24 || opcionAModificar == 25 || opcionAModificar == 26 || opcionAModificar == 27 || opcionAModificar == 28) {
+                    } else if (opcionAModificar == 1 || opcionAModificar == 2) {//Tamaño del mapa
+                        int nuevoTamaño = modificarUnNúmeroTamañoMapa();
+                        sobreEscribirUnaLineaDeArchivo(String.valueOf(nuevoTamaño), mapaAEditar, opcionAModificar);
+                    } else if (opcionAModificar == 3 || opcionAModificar == 4) {//Posición tesoro
+                        int nuevaPosicionTesoro = modificarPosicionDelTesoro();
+                        sobreEscribirUnaLineaDeArchivo(String.valueOf(nuevaPosicionTesoro), mapaAEditar, opcionAModificar);
+                    } else if (opcionAModificar == 5 || opcionAModificar == 6 || opcionAModificar == 7 || opcionAModificar == 8 || opcionAModificar == 10 || opcionAModificar == 12 || opcionAModificar == 14 || opcionAModificar == 15 || opcionAModificar == 18 || opcionAModificar == 19 || opcionAModificar == 21 || opcionAModificar == 24 || opcionAModificar == 25 || opcionAModificar == 26 || opcionAModificar == 27 || opcionAModificar == 28) {
                         int nuevoValor = modificarUnNúmero();
                         sobreEscribirUnaLineaDeArchivo(String.valueOf(nuevoValor), mapaAEditar, opcionAModificar);
                         //Boolean
@@ -103,14 +109,57 @@ public class EditorDeMapas {
      *
      * @return numero nuevo
      */
-    public int modificarUnNúmero() {
+    private int modificarUnNúmero() {
         int nuevoValor;
         while (true) {
             try {
                 System.out.println("¿Cuál es el nuevo valor?");
                 nuevoValor = scanner.nextInt();
+                scanner.nextLine();
                 if (nuevoValor <= 0) {
                     System.out.println("No puedes colocar esa cantidad");
+                    System.out.println("Presiona enter para continuar");
+                    scanner.nextLine();
+                } else {
+                    return nuevoValor;
+                }
+            } catch (Exception e) {
+                System.out.println("Tienes que introducir un número.");
+                errorEncontrado();
+            }
+        }
+    }
+
+    private int modificarUnNúmeroTamañoMapa() {
+        int nuevoValor;
+        while (true) {
+            try {
+                System.out.println("¿Cuál es el nuevo valor?");
+                nuevoValor = scanner.nextInt();
+                scanner.nextLine();
+                if (nuevoValor <= 29) {
+                    System.out.println("El tamaño debe ser igual o mayor a 30");
+                    System.out.println("Presiona enter para continuar");
+                    scanner.nextLine();
+                } else {
+                    return nuevoValor;
+                }
+            } catch (Exception e) {
+                System.out.println("Tienes que introducir un número.");
+                errorEncontrado();
+            }
+        }
+    }
+
+    private int modificarPosicionDelTesoro() {
+        int nuevoValor;
+        while (true) {
+            try {
+                System.out.println("¿Cuál es el nuevo valor?");
+                nuevoValor = scanner.nextInt();
+                scanner.nextLine();
+                if (nuevoValor <= 0) {
+                    System.out.println("El tesoro no puede estar en una posición menor o igual 0");
                     System.out.println("Presiona enter para continuar");
                     scanner.nextLine();
                 } else {
@@ -131,7 +180,7 @@ public class EditorDeMapas {
     public String modificarUnTexto() {
         while (true) {
             System.out.println("Cuál es el nuevo nombre");
-            String nuevoNombre = scanner.nextLine();
+            String nuevoNombre = scanner.nextLine().toLowerCase();
             if (!nuevoNombre.isBlank()) {
                 return nuevoNombre;
             } else {

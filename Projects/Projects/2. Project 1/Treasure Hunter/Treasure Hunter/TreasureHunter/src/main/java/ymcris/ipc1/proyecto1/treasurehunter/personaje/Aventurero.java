@@ -1,6 +1,10 @@
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
+import java.io.File;
 import java.util.Scanner;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
@@ -12,7 +16,9 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
  * @see Personaje
  * @since Mar 13, 2025
  */
-public class Aventurero extends Personaje {
+public final class Aventurero extends Personaje {
+
+    private File archivoJugador;
 
     // VARIABLES PRIMITIVAS --------------------------------------------------------
     private int batallas;
@@ -27,32 +33,32 @@ public class Aventurero extends Personaje {
     private int vidaPrevioAUnaBatalla;
     private int manaPrevioAUnaBatalla;
     private int defensaPrevioAUnaBatalla;
+    private boolean haEncontradoTesoro;
+    private boolean haPerdido;
 
     // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    /**
-     * Método constructor encargado de crear un Aventurero.
-     *
-     * @param vida - Vida inicial del aventurero
-     * @param mana - Mana inicial del aventurero
-     * @param ataque - Ataque inicial del aventurero
-     * @param defensa - Defensa inicial del aventurero
-     * @param nombre - Nombre del aventurero
-     */
-    public Aventurero(int vida, int mana, int ataque, int defensa, String nombre) {
+    public Aventurero(String nombre, boolean haEncontradoTesoro, int cantidadMovimientos, int batallas, int batallasGanadas, int batallasPerdidas, int batallasHuidas, boolean haPerdido, int vida,
+            int vidaPrevioAUnaBatalla, int vidaTotal, int mana, int manaPrevioAUnaBatalla, int manaTotal, int ataque, int defensa, int defensaPrevioAUnaBatalla, int filaJugador, int columnaJugador,
+            File archivoJugador) {
         super(vida, mana, ataque, defensa, nombre);
-        this.batallas = 0;
-        this.manaTotal = mana;
-        this.vidaTotal = vida;
-        this.batallasHuidas = 0;
-        this.batallasGanadas = 0;
-        this.batallasPerdidas = 0;
-        this.cantidadMovimientos = 0;
-        this.manaPrevioAUnaBatalla = mana;
-        this.vidaPrevioAUnaBatalla = vida;
-        this.defensaPrevioAUnaBatalla = defensa;
+        this.batallas = batallas;//
+        this.vidaTotal = vidaTotal;//
+        this.manaTotal = manaTotal;//
+        this.filaJugador = filaJugador;//
+        this.columnaJugador = columnaJugador;//
+        this.batallasHuidas = batallasHuidas;//
+        this.archivoJugador = archivoJugador;//
+        this.batallasGanadas = batallasGanadas;//
+        this.batallasPerdidas = batallasPerdidas;//
+        this.cantidadMovimientos = cantidadMovimientos;//
+        this.vidaPrevioAUnaBatalla = vidaPrevioAUnaBatalla;//
+        this.manaPrevioAUnaBatalla = manaPrevioAUnaBatalla;//
+        this.defensaPrevioAUnaBatalla = defensaPrevioAUnaBatalla;//
+        this.haEncontradoTesoro = haEncontradoTesoro;///
+        this.haPerdido = haPerdido;
     }
 
     // MÉTODOS -----------------------------------------------------------------
@@ -105,6 +111,38 @@ public class Aventurero extends Personaje {
         } else {//no tiene mana
             System.out.println(CYAN + "              ------------------------- " + RESETEAR + "Aventurero " + this.getNombre() + " no tienes el mana suficiente" + CYAN + " ------------------------- " + RESETEAR);
         }
+    }
+
+    public void guardarAvanceEnArchivo() {
+        //0. si existe el archivo del jugador lo borra (Mejor reescribirlo que intendar editar línea por línea)
+        if (archivoJugador.exists()) {
+            archivoJugador.delete();//Elimina el archivo
+        }
+        //1. Recrea el archivo del jugador
+        this.archivoJugador = crearArchivo(this.getNombre().toLowerCase(), rutaCarpetaJugadores);//Lo vuelve a crear (osea lo hace para que este vacio)
+        if (archivoJugador.exists()) {//Verifica que si exista
+            //2. Rellena el archivo del jugador con su getters en las líneas correspondientes
+            añadirTextoEnArchivo(this.getNombre(), archivoJugador);//0 nombre del jugador
+            añadirTextoEnArchivo(String.valueOf(haEncontradoTesoro), archivoJugador);//1 haEcontrado el tesoro si ha ganado (Encontro el tesoro) 
+            añadirTextoEnArchivo(String.valueOf(this.getCantidadMovimientos()), archivoJugador);//2. numero de movimientos 
+            añadirTextoEnArchivo(String.valueOf(this.getBatallas()), archivoJugador);//3. Cantidad de combates 
+            añadirTextoEnArchivo(String.valueOf(this.getBatallasGanadas()), archivoJugador);//4. combates ganados 
+            añadirTextoEnArchivo(String.valueOf(this.getBatallasPerdidas()), archivoJugador);//5. combates perdidos 
+            añadirTextoEnArchivo(String.valueOf(this.batallasHuidas), archivoJugador);//6. combates huidos
+            añadirTextoEnArchivo(String.valueOf(this.isHaPerdido()), archivoJugador);//7. haPerdido(Se ha quedado sin vida por trampas o penalizaciones)
+            añadirTextoEnArchivo(String.valueOf(this.getVida()), archivoJugador);//8. Vida
+            añadirTextoEnArchivo(String.valueOf(this.getVidaPrevioAUnaBatalla()), archivoJugador);//9. Vida previo a un combate
+            añadirTextoEnArchivo(String.valueOf(this.getVidaTotal()), archivoJugador);//10. vida total
+            añadirTextoEnArchivo(String.valueOf(this.getMana()), archivoJugador);//11. mana
+            añadirTextoEnArchivo(String.valueOf(this.getManaPrevioAUnaBatalla()), archivoJugador);//12. mana previo a un combate
+            añadirTextoEnArchivo(String.valueOf(this.getManaMaximo()), archivoJugador);//13. mana total
+            añadirTextoEnArchivo(String.valueOf(this.getAtaque()), archivoJugador);//14. ataque
+            añadirTextoEnArchivo(String.valueOf(this.getDefensa()), archivoJugador);//15. defensa
+            añadirTextoEnArchivo(String.valueOf(this.getDefensaPrevioAUnaBatalla()), archivoJugador);//16. defensa previo  a un combate
+            añadirTextoEnArchivo(String.valueOf(this.getFilaJugador()), archivoJugador);//14. fila jugador
+            añadirTextoEnArchivo(String.valueOf(this.getColumnaJugador()), archivoJugador);//15. columna jugador
+        }
+        //3. Ya
     }
 
     // GETTERS & SETTERS -------------------------------------------------------
@@ -208,6 +246,22 @@ public class Aventurero extends Personaje {
 
     public void setColumnaJugador(int columnaJugador) {
         this.columnaJugador = columnaJugador;
+    }
+
+    public boolean isHaEncontradoTesoro() {
+        return haEncontradoTesoro;
+    }
+
+    public void setHaEncontradoTesoro(boolean haEncontradoTesoro) {
+        this.haEncontradoTesoro = haEncontradoTesoro;
+    }
+
+    public boolean isHaPerdido() {
+        return haPerdido;
+    }
+
+    public void setHaPerdido(boolean haPerdido) {
+        this.haPerdido = haPerdido;
     }
 
 }

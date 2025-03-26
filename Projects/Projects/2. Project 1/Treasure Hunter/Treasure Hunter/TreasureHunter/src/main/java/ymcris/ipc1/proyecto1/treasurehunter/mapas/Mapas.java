@@ -157,7 +157,7 @@ public class Mapas {
         } else if (opcionPartida.equals("3")) {//Ve el estado
             aventurero.mostrarEstadoAventurero();
         } else if (opcionPartida.equals("4")) {//Guarda la partida
-
+            aventurero.guardarAvanceEnArchivo();
         }
     }
 
@@ -291,6 +291,10 @@ public class Mapas {
 
     public int getColumnas() {
         return columnas;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
 }

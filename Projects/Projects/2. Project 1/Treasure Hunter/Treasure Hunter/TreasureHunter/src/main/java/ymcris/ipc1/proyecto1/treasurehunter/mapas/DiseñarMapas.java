@@ -21,6 +21,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchiv
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.eliminarArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.existeElArchivoEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
 /**
@@ -70,7 +71,7 @@ public class DiseñarMapas {
                 //0. Preguntar detalles del mapa
                 System.out.println(ROJO + "MAPA" + RESETEAR);
                 System.out.println("· INGRESE EL NOMBRE DEL MAPA:");//Preguntar el nombre del mapa
-                this.nombreMapa = scanner.nextLine();
+                this.nombreMapa = scanner.nextLine().toLowerCase();
                 System.out.println("· INGRESE EL NÚMERO DE FILAS DEL MAPA:");//Preguntar el número de filas
                 this.numeroDeFilas = scanner.nextInt();
                 System.out.println("· INGRESE EL NÚMERO DE COLUMNAS DEL MAPA:");//Preguntar el número de columnas
@@ -122,12 +123,14 @@ public class DiseñarMapas {
      * dimensiones correctas.
      */
     private boolean tieneErrores() {
+        boolean mapaExiste = existeElArchivoEnCarpeta(rutaCarpetaMapas, nombreMapa);
         boolean nombreMapaVacio = nombreMapa.isBlank();
+        boolean posicionInvalidaDelTesoro = filaTesoro == 0 && columnaTesoro == 00;
         boolean dimensionesInvalidas = numeroDeFilas < 25 || numeroDeColumnas < 25;
         boolean tesoroFueraDeRango = filaTesoro < 0 || filaTesoro >= numeroDeFilas || columnaTesoro < 0 || columnaTesoro >= numeroDeColumnas;
         boolean tesoroYJugadorFueradeRango = filaJugador == filaTesoro && columnaTesoro == columnaJugador;
         boolean jugadorFueraDeRango = filaJugador < 0 || filaJugador >= numeroDeFilas || columnaJugador < 0 || columnaJugador >= numeroDeColumnas;
-        if (nombreMapaVacio || dimensionesInvalidas || tesoroFueraDeRango || jugadorFueraDeRango || tesoroYJugadorFueradeRango) {
+        if (nombreMapaVacio || dimensionesInvalidas || tesoroFueraDeRango || jugadorFueraDeRango || tesoroYJugadorFueradeRango || posicionInvalidaDelTesoro || mapaExiste) {
             System.out.println("No has introducido correctamente alguno de los siguientes datos:");
             if (nombreMapaVacio) {
                 System.out.println("0) El mapa no puede tener un nombre vacio");
@@ -143,6 +146,12 @@ public class DiseñarMapas {
             }
             if (tesoroYJugadorFueradeRango) {
                 System.out.println("4) La posición del jugador y del tesoro deben ser distintas");
+            }
+            if (posicionInvalidaDelTesoro) {
+                System.out.println("5) El tesoro no puede estar en la posición 0,0");
+            }
+            if (mapaExiste) {
+                System.out.println("6) Ya existe un mapa con ese nombre");
             }
             System.out.println("");
             System.out.println("Vuelve a intentarlo evitando estos errores.");

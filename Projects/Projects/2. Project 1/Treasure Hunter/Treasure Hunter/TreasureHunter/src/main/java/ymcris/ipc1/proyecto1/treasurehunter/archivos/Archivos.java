@@ -91,17 +91,37 @@ public class Archivos {
     public static File crearArchivo(String nombreArchivo, String rutaCarpeta) {
         try {
             File file = new File(rutaCarpeta + File.separator + nombreArchivo + ".txt");
-            if (file.exists()) {
-                System.out.println("El archivo ya existe");
-                System.out.println("Su nombre es: " + file.getName());
-            } else {
-                file.createNewFile();
-                return file;
-            }
+            file.createNewFile();
+            return file;
         } catch (IOException e) {
-            System.out.println("Ha habido un error al crear el archivo " + nombreArchivo + e.getMessage());
+            System.out.println("No se pudo crear el archivo ");
         }
         return null;
+    }
+
+    /**
+     * Método encargado de verificar si no existe un archivo con un nombre en
+     * especifico en una carpeta
+     *
+     * @param rutaCarpeta - Carpeta donde se va a verificar si existe el archivo
+     * @param nombreArchivo - nombre del archivo a verificar
+     * @return true si existe
+     */
+    public static boolean existeElArchivoEnCarpeta(String rutaCarpeta, String nombreArchivo) {
+        File file = new File(rutaCarpeta);
+        File[] archivosEnCarpeta = file.listFiles();
+        String nombreBuscado = nombreArchivo + ".txt";
+        for (File archivosEnCarpeta1 : archivosEnCarpeta) {
+            if (archivosEnCarpeta1.getName().equalsIgnoreCase(nombreBuscado)) {
+                System.out.println("No puedes usar ese nombre, porque que ya existe");
+                System.out.println("Los nombres que no puedes tener son:");
+                for (File file1 : archivosEnCarpeta) {
+                    System.out.println(file1.getName().substring(0, file1.getName().length() - 4));
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

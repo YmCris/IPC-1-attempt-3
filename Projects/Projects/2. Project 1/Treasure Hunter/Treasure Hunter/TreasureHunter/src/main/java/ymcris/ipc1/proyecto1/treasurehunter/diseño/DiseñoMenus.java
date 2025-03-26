@@ -136,17 +136,17 @@ public class DiseñoMenus {
      */
     public static void mostrarOpcionesReportes() {
         System.out.println("\n".repeat(100));
-        System.out.println("                                ┌------------------------------------------------------------------------┐");
-        System.out.println("                                |                          ¿Qué desea visualizar?                        |");
-        System.out.println("                                ├------------------------------------------------------------------------┤");
-        System.out.println("                                ¦ [1] Jugadores que han encontrado el tesoro ordenados descendentemente  ¦");
-        System.out.println("                                ¦ [2] Jugadores que han encontrado el tesoro ordenados ascendentemente   ¦");
-        System.out.println("                                ¦ [3] Jugadores que han perdido una partida                              ¦");
-        System.out.println("                                ¦ [4] Regresar                                                           ¦");
-        System.out.println("                                ¦ [5] Salir del programa                                                 ¦");
-        System.out.println("                                ├------------------------------------------------------------------------┤");
-        System.out.println("                                ¦                          -Seleccione una opción-                       ¦");
-        System.out.println("                                └------------------------------------------------------------------------┘");
+        System.out.println("                                ┌--------------------------------------------------------------------------┐");
+        System.out.println("                                |                           ¿Qué desea visualizar?                         |");
+        System.out.println("                                ├--------------------------------------------------------------------------┤");
+        System.out.println("                                ¦ [1] Jugadores que han encontrado el tesoro ordenados por movimientos     ¦");
+        System.out.println("                                ¦ [2] Jugadores que han encontrado el tesoro ordenados por batalla ganadas ¦");
+        System.out.println("                                ¦ [3] Jugadores que han perdido una partida                                ¦");
+        System.out.println("                                ¦ [4] Regresar                                                             ¦");
+        System.out.println("                                ¦ [5] Salir del programa                                                   ¦");
+        System.out.println("                                ├--------------------------------------------------------------------------┤");
+        System.out.println("                                ¦                           -Seleccione una opción-                        ¦");
+        System.out.println("                                └--------------------------------------------------------------------------┘");
         System.out.println("");
     }
 
