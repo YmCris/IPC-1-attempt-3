@@ -25,6 +25,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArch
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarOpcionesIniciarPartida;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantosElementosTieneUnaCarpeta;
+import ymcris.ipc1.proyecto1.treasurehunter.reportes.Reportes;
 
 /**
  * Clase Treasure Hunter es la clase Main, encargada de dar inicio al programa y
@@ -85,7 +86,7 @@ public class TreasureHunter {
                 case 4 -> //Modifica un mapa ya existente
                     editarMapa();
                 case 5 -> //Ver reportes del juego
-                    new ComoJugar().enseñarAJugar();//new Reportes().mostrarReportes();
+                    new Reportes().solicitarOpcionReportes();
                 case 6 -> //Sale del programa
                     System.exit(0);
                 default -> {

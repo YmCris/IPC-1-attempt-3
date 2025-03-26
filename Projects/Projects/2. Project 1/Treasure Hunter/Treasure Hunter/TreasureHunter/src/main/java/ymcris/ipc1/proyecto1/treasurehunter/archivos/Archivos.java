@@ -152,6 +152,18 @@ public class Archivos {
         return null;
     }
 
+    public static File[] obtenerArregloDeArchivosDeUnaCarpeta(String rutaCarpeta) {
+        File[] arregloDeArchivos;
+        try {
+            File carpeta = new File(rutaCarpeta);
+            arregloDeArchivos = carpeta.listFiles();
+            return arregloDeArchivos;
+        } catch (Exception e) {
+            System.out.println("No se ha podido obtener el número de archivos en una carpeta");
+        }
+        return null;
+    }
+
     //-------------------- MÉTODOS PARA ESCRIBIR EN ARCHIVOS -------------------
     /**
      * Método encargado de añadir texto en un archivo ya existente (Osea para
