@@ -2,6 +2,8 @@ package ymcris.ipc1.proyecto1.treasurehunter.ayuda;
 
 import java.util.Scanner;
 import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
+import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 
 /**
  * CómoJugar es la clase encargada de brindar al usuario los conocimientos
@@ -12,6 +14,7 @@ import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
  */
 public class ComoJugar {
 
+    // INSTANCIAS --------------------------------------------------------------
     Scanner scanner = new Scanner(System.in);
 
     // MÉTODOS -----------------------------------------------------------------
@@ -22,7 +25,7 @@ public class ComoJugar {
     public void enseñarAJugar() {
         System.out.println("\n".repeat(100));
         System.out.println("                ┌---------------------------------------------------------------------------------------------┐");
-        System.out.println("                |                                         TREASURE HUNTER                                     |");
+        System.out.println("                |                                        " + ROJO + "TREASURE HUNTER" + RESETEAR + "                                      |");
         System.out.println("                ├---------------------------------------------------------------------------------------------┤");
         System.out.println("                |[1] ¿Qué es Treasure Hunter?                                                                 |");
         System.out.println("                |    Treasuhe Hunter es un juego de emoción en el que podrá jugar un gran juego de aventuras  |");
@@ -34,6 +37,8 @@ public class ComoJugar {
         System.out.println("                |    Encuentra el tesoro escondido en el mapa                                                 |");
         System.out.println("                |[5] ¿Cómo Pierdo en Treasure Hunter?                                                         |");
         System.out.println("                |    Quédate sin puntos de vida en el transcurso de la partida                                |");
+        System.out.println("                ├---------------------------------------------------------------------------------------------┤");
+        System.out.println("                |     Para obtener una mejor experiencia, visualice el manual de usuario proporcionado        |");
         System.out.println("                └---------------------------------------------------------------------------------------------┘");
         System.out.println("");
         System.out.println("");

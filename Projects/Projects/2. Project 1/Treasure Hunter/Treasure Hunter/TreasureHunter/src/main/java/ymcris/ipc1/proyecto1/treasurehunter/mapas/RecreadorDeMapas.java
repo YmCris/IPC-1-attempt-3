@@ -24,16 +24,29 @@ public class RecreadorDeMapas {
 
     // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private File mapaEnArchivo;
-    private Aventurero aventureroMapaRecreado;
     private Casillas[][] tablero;
+    private Aventurero aventureroMapaRecreado;
 
     // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
+    /**
+     * Constructor encargado de inicializar los parámetros necesarios para
+     * recrear un mapa
+     *
+     * @param mapaEnArchivo - Archivo de texto del mapa a recrear
+     * @param aventurero - aventurero del jugador
+     */
     public RecreadorDeMapas(File mapaEnArchivo, Aventurero aventurero) {
         this.mapaEnArchivo = mapaEnArchivo;
         this.aventureroMapaRecreado = aventurero;
     }
 
     // ----------------------------- MÉTODOS -----------------------------------
+    /**
+     * Método encargado de obtener la información del archivo mapa para poder
+     * crear un nuevo mapa recreandolo
+     *
+     * @return mapaRecreado con sus atributos guardados desde archivos de texto
+     */
     public Mapas recrearMapas() {
         //1. Reimplementa todo el diseño DiseñarMapas().preguntarCaracterísticasMapa();
         String nombreMapa = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 0);//nombreMapa

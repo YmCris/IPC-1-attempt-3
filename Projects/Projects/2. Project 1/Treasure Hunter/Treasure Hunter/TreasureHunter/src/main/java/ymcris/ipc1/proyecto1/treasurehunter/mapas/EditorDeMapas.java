@@ -9,7 +9,8 @@ import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaExce
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuantasLineasTieneUnArchivo;
 
 /**
- * Clase encargada de editar los mapas persistentes desde los archivos
+ * EditorDeMapas es la clase encargada de editar los mapas persistentes desde
+ * los archivos
  *
  * @author YmCris
  * @see DiseñarMapas
@@ -19,6 +20,7 @@ public class EditorDeMapas {
 
     // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private File mapaAEditar;
+
     // ---------------------------- INSTANCIAS ---------------------------------
     Scanner scanner = new Scanner(System.in);
 
@@ -135,6 +137,12 @@ public class EditorDeMapas {
         }
     }
 
+    /**
+     * Método encargado de modificar un número pero del tamaño (fila o columna)
+     * del mapa
+     *
+     * @return numero validado
+     */
     private int modificarUnNúmeroTamañoMapa() {
         int nuevoValor;
         while (true) {
@@ -157,6 +165,12 @@ public class EditorDeMapas {
         }
     }
 
+    /**
+     * Método encargado de modificar un número de la posición del tesoro para
+     * evitar que crashee todo
+     *
+     * @return posición validada
+     */
     private int modificarPosicionDelTesoro() {
         int nuevoValor;
         while (true) {

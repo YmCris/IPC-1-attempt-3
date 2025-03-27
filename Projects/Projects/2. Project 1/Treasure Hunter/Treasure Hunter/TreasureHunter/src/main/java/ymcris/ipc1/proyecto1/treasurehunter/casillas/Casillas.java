@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con las casillas
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.casillas;
 
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;

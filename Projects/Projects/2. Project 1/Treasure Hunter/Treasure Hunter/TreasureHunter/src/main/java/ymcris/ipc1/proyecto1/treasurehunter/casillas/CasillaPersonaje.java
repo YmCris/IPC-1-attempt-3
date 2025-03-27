@@ -17,6 +17,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
  */
 public class CasillaPersonaje extends Casillas {
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
      * Método encargado de crear la casilla del personaje
      *

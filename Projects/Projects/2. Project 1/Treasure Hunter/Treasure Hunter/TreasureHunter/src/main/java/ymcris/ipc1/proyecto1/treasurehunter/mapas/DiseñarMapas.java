@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con los mapas
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.mapas;
 
 import java.io.File;
@@ -18,9 +21,9 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.eliminarArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.eliminarArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.existeElArchivoEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.exception.EntradaNoValidaException.errorEncontrado;
 
@@ -41,6 +44,7 @@ public class DiseñarMapas {
     private Casillas[][] tablero;
     private CasillaTesoro casillaTesoro;
     private CasillaPersonaje casillaAventurero;
+
     // ----------------------- VARIABLES PRIMITIVAS ----------------------------
     private int filaTesoro;
     private int filaJugador;
@@ -53,6 +57,7 @@ public class DiseñarMapas {
     private int cantidadCasillasEnergia;
     private int cantidadCasillasEnemigos;
     private int cantidadCasillasTeletransporte;
+
     // ----------------------------- INSTANCIAS --------------------------------
     Random random = new Random();
     Scanner scanner = new Scanner(System.in);

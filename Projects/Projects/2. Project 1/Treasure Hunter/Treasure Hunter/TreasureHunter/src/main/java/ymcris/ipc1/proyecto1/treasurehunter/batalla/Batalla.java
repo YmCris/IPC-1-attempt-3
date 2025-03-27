@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con la batalla
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.batalla;
 
 import java.util.Scanner;

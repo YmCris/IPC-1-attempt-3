@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con los diseños del programa
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.diseño;
 
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
@@ -15,6 +18,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
  */
 public class DiseñoBatallas {
 
+    // MÉTODOS -----------------------------------------------------------------
     /**
      * Método encargado de mostrar las opciones que tiene el aventurero al
      * desarrollarse una batalla.

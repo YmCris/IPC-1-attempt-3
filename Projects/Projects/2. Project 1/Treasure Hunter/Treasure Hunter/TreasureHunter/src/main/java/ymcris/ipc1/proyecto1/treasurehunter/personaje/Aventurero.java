@@ -2,11 +2,11 @@ package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 import java.io.File;
 import java.util.Scanner;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.CYAN;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.crearArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
 
 /**
  * SubClase encargada de crear aventureros y de realizar sus acciones durante
@@ -18,9 +18,10 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
  */
 public final class Aventurero extends Personaje {
 
+    // VARIABLES DE REFERENCIA -------------------------------------------------
     private File archivoJugador;
 
-    // VARIABLES PRIMITIVAS --------------------------------------------------------
+    // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int batallas;
     private int vidaTotal;
     private int manaTotal;
@@ -113,6 +114,11 @@ public final class Aventurero extends Personaje {
         }
     }
 
+    /**
+     * Método encargado de actualizar la información del jugador en el archivo
+     * borrandolo y volviendolo a crear para evitar problemas de
+     * sobreescribimiento
+     */
     public void guardarAvanceEnArchivo() {
         //0. si existe el archivo del jugador lo borra (Mejor reescribirlo que intendar editar línea por línea)
         if (archivoJugador.exists()) {

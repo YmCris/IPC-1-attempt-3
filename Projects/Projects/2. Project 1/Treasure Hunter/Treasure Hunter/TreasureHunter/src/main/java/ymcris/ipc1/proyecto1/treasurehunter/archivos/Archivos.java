@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los métodos necesarios para trabajar con archivos de texto
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.archivos;
 
 import java.io.File;
@@ -100,6 +103,30 @@ public class Archivos {
     }
 
     /**
+     * Método SUPER IMPORTANTE encargado de destruir archivos que no cuentan con
+     * las líneas requeridas para el funcionamiento del programa, ya que un
+     * archivo con menos líneas o más lineas de lo que se espera afecta todo el
+     * programa haciendolo casi inservible
+     *
+     * @param rutaCarpetaArchivos - Ruta donde se evaluarán los archivos
+     * @param numeroDeLineas - número de líneas que deben tener los archivos
+     */
+    public static void destructorDeArchivos(String rutaCarpetaArchivos, int numeroDeLineas) {
+        File file = new File(rutaCarpetaArchivos);//0. crea la carpeta
+        if (file.listFiles() != null) {
+            File[] archivosExistentes = file.listFiles();//1. Obtener un arreglo de todos los archivos
+            for (File archivosExistente : archivosExistentes) {//2. Recorrer cada uno de ellos
+                if (obtenerCuantasLineasTieneUnArchivo(archivosExistente) == numeroDeLineas) {//3. Verificar si el número de líneas de esos archivos son los que deberían tener
+                    //Todo en orden;
+                } else {
+                    System.out.println("Se ha eliminado el archivo: " + archivosExistente.getName() + " porque ha sido modificado");
+                    archivosExistente.delete();
+                }
+            }
+        }
+    }
+
+    /**
      * Método encargado de verificar si no existe un archivo con un nombre en
      * especifico en una carpeta
      *
@@ -172,6 +199,13 @@ public class Archivos {
         return null;
     }
 
+    /**
+     * Método encargado de obtener un arreglo de archivos de texto en base a la
+     * ruta de una carpeta
+     *
+     * @param rutaCarpeta - ruta donde se encuentran los archivos
+     * @return arreglo de todos los archivos en una carpeta
+     */
     public static File[] obtenerArregloDeArchivosDeUnaCarpeta(String rutaCarpeta) {
         File[] arregloDeArchivos;
         try {
@@ -243,48 +277,6 @@ public class Archivos {
         }
     }
     //---------------------- MÉTODOS PARA LEER EN ARCHIVOS ---------------------
-
-    /**
-     * Método encargado de leer todo el contenido de un archivo de texto
-     *
-     * @param file - archivo del cual se va a leer.
-     * @deprecated
-     */
-    public static void leerTodoElTextoDeUnArchivo(File file) {
-        try (FileReader reader = new FileReader(file); BufferedReader read = new BufferedReader(reader);) {
-            String valor;
-            int contador = 0;
-            while ((valor = read.readLine()) != null) {
-                System.out.print(contador + " ");
-                System.out.print(valor);
-                System.out.println("");
-            }
-        } catch (IOException e) {
-            System.out.println("Ha habido un error en la lectura del archivo");
-        }
-    }
-
-    /**
-     * Método encargado de leer todo el contenido de un archivo de texto con un
-     * índice (algo así como para mostrarle al usuario qué va a editar)
-     *
-     * @param file
-     * @deprecated
-     */
-    public static void mostrarTodoElTextoDeUnArchivoConIndice(File file) {
-        try (FileReader reader = new FileReader(file); BufferedReader read = new BufferedReader(reader);) {//Instancia un nuevo reader
-            String valor;
-            int contador = 0;
-            while ((valor = read.readLine()) != null) {
-                System.out.print(contador + " ");
-                System.out.print(valor);
-                System.out.println("");
-                contador++;
-            }
-        } catch (IOException e) {
-            System.out.println("Ha habido un error en la lectura del archivo");
-        }
-    }
 
     /**
      * Método encargado de retornar una línea específica de un archivo de texto

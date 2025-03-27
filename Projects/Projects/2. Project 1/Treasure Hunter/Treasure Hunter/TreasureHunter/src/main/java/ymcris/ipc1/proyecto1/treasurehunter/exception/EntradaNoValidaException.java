@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con las exceptions
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.exception;
 
 import java.util.Scanner;
@@ -11,6 +14,7 @@ import java.util.Scanner;
  */
 public class EntradaNoValidaException extends Exception {
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
      * Método Constructor encargado de capturar el mensaje.
      *
@@ -21,6 +25,7 @@ public class EntradaNoValidaException extends Exception {
         super(message);
     }
 
+    // MÉTODOS -----------------------------------------------------------------
     /**
      * Método encargado de informar al usuario que ha introducido un valor fuera
      * del rango esperado y espera a que el usuario introduzca un salto de línea

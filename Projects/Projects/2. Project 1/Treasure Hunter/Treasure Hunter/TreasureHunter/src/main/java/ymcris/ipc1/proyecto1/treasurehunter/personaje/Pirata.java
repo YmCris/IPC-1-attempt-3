@@ -14,6 +14,12 @@ import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR
 public final class Pirata extends Personaje {
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método constructor encargado de construir un pirata iniciando sus
+     * atributos en base a un aventurero
+     *
+     * @param aventurero Aventurero con el que peleará
+     */
     public Pirata(Aventurero aventurero) {
         //En base a las fórmulas dadas se inicializan los atributos del pirata.
         this.nombre = "Barba Negra";

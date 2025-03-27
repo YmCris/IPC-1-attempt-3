@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con los personajes
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.personaje;
 
 import java.util.Random;

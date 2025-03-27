@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con los reportes
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.reportes;
 
 import java.io.File;

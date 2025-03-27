@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementan todos los recursos relacionados con las partidas
+ */
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
 import java.util.Scanner;

@@ -1,3 +1,6 @@
+/**
+ * Paquete donde se implementa el main
+ */
 package ymcris.ipc1.proyecto1.treasurehunter;
 
 import java.io.File;
@@ -23,6 +26,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpeta
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.elegirArchivoDeTexto;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.añadirTextoEnArchivo;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.destructorDeArchivos;
 import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.mostrarMenuPrincipal;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.mostrarArchivosEnCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.existeElArchivoEnCarpeta;
@@ -41,7 +45,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerCuan
 public class TreasureHunter {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    public static Aventurero aventurero;//Estático porque no depende de una instancia, sino al contexto estático del programa
+    public static Aventurero aventurero;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int opcionMapas = 0;
@@ -59,6 +63,9 @@ public class TreasureHunter {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         crearCarpetas();
+        destructorDeArchivos(rutaCarpetaMapas,29);
+        destructorDeArchivos(rutaCarpetaPartidas,3);
+        destructorDeArchivos(rutaCarpetaJugadores,19);
         mostrarBienvenida();
         scanner.nextLine();
         while (true) {
@@ -84,8 +91,10 @@ public class TreasureHunter {
                     new ComoJugar().enseñarAJugar();
                 case 2 -> //Jugar una nueva partida
                     iniciarNuevaPartida();
-                case 3 -> //Jugar una partida existente
+                case 3 -> {//Jugar una partida existente
                     elegirPartidaExistente();
+                    break;
+                }
                 case 4 -> //Modifica un mapa ya existente
                     editarMapa();
                 case 5 -> //Ver reportes del juego
@@ -214,6 +223,7 @@ public class TreasureHunter {
             System.out.println("No tienes mapas creados");
             System.out.println("Presiona enter para regresar al menú principal:");
             scanner.nextLine();
+            scanner.nextLine();
             verMenuPrincipal();
         } else {//Si sí tiene mapas creados:
             System.out.println("\n".repeat(100));
@@ -295,28 +305,35 @@ public class TreasureHunter {
      * otras clases)
      */
     private void elegirPartidaExistente() {
-        boolean todoEnOrden;
-        int indiceArchivo = 0;
-        do {
-            System.out.println("\n".repeat(100));
-            System.out.println(ROJO + "Estas son las partidas que existen:" + RESETEAR);
-            mostrarArchivosEnCarpeta(rutaCarpetaPartidas);
-            System.out.println("¿Qué partida deseas jugar?");
-            indiceArchivo = 0;
-            try {
-                todoEnOrden = true;
-                indiceArchivo = scanner.nextInt();
-                scanner.nextLine();
-            } catch (InputMismatchException e) {
-                todoEnOrden = false;
-                System.out.println("Debes colocar un número");
-                errorEncontrado();
+        if (obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaPartidas) > 0) {
+            boolean todoEnOrden;
+            int indiceArchivo = 0;
+            do {
+                System.out.println("\n".repeat(100));
+                System.out.println(ROJO + "Estas son las partidas que existen:" + RESETEAR);
+                mostrarArchivosEnCarpeta(rutaCarpetaPartidas);
+                System.out.println("¿Qué partida deseas jugar?");
+                indiceArchivo = 0;
+                try {
+                    todoEnOrden = true;
+                    indiceArchivo = scanner.nextInt();
+                    scanner.nextLine();
+                } catch (InputMismatchException e) {
+                    todoEnOrden = false;
+                    System.out.println("Debes colocar un número");
+                    errorEncontrado();
+                }
+            } while (indiceArchivo < 0 || indiceArchivo > obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaPartidas) - 1);
+            if (todoEnOrden) {
+                File archivoPartida = elegirArchivoDeTexto(rutaCarpetaPartidas, indiceArchivo);
+                RecreadorDePartida recreador = new RecreadorDePartida(archivoPartida);
+                recreador.iniciarPartida();
             }
-        } while (indiceArchivo < 0 || indiceArchivo > obtenerCuantosElementosTieneUnaCarpeta(rutaCarpetaPartidas)-1);
-        if (todoEnOrden) {
-            File archivoPartida = elegirArchivoDeTexto(rutaCarpetaPartidas, indiceArchivo);
-            RecreadorDePartida recreador = new RecreadorDePartida(archivoPartida);
-            recreador.iniciarPartida();
+        } else {
+            System.out.println("No tienes partidas jugadas aún, dirigete en la opción 2 del menú principal y juega alguna");
+            scanner.nextLine();
+            scanner.nextLine();
+            verMenuPrincipal();
         }
     }
 

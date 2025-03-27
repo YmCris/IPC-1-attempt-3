@@ -1,15 +1,17 @@
 package ymcris.ipc1.proyecto1.treasurehunter.partida;
 
 import java.io.File;
+import java.util.Scanner;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.Mapas;
+import ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter;
 import ymcris.ipc1.proyecto1.treasurehunter.personaje.Aventurero;
 import ymcris.ipc1.proyecto1.treasurehunter.mapas.RecreadorDeMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.TreasureHunter.aventurero;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaMapas;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.sobreEscribirUnaLineaDeArchivo;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerArregloDeArchivosDeUnaCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerUnaLineaDeUnArchivoDeTextoConUnIndice;
-import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.sobreEscribirUnaLineaDeArchivo;
 
 /**
  * RecreadorDePartida es la clase encargada de crecrear una partida obteniendo
@@ -26,32 +28,62 @@ public class RecreadorDePartida {
     private File archivoPartida;
     private File archivoJugador;
 
+    // ---------------------------- INSTANCIAS ---------------------------------
+    Scanner scanner = new Scanner(System.in);
+
     // ----------------------- VARIABLES PRIMITIVAS ----------------------------
     int filaJugador;
     int columnaJugador;
 
-    // ---------------------------- INSTANCIAS ---------------------------------
     // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
+    /**
+     * Método encargado de recrear una partida en base a un archivo partida
+     *
+     * @param archivoPartida - archivo donde se encuentran el nombre del jugador
+     * y del mapa
+     */
     public RecreadorDePartida(File archivoPartida) {
         this.archivoPartida = archivoPartida;
     }
 
     // ----------------------------- MÉTODOS -----------------------------------
+    /**
+     * Método encargado de iniciar la partida con los paramétros inicializados
+     * con los otros métodos
+     */
     public void iniciarPartida() {
         String nombrePartida = obtenerNombrePartida();
         obtenerArchivoJugador();
         obtenerArchivoMapa();
         recrearJugador();
-        Mapas mapaRecreado = recrearMapa();
-        Partida partida = new Partida(aventurero, mapaRecreado, nombrePartida);
-        partida.iniciarNuevaPartida();
+        if (obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 1).equals("true") || obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 7).equals("true")) {
+            System.out.println("No puedes jugar esta partida porque ya terminó");
+            System.out.println("Presiona enter para regresar al menú principal");
+            scanner.nextLine();
+            new TreasureHunter().verMenuPrincipal();
+        } else {
+            Mapas mapaRecreado = recrearMapa();
+            Partida partida = new Partida(aventurero, mapaRecreado, nombrePartida);
+            partida.iniciarNuevaPartida();
+        }
     }
 
+    /**
+     * Método encargado de obtener el nombre de la partida a partid de su
+     * archivo
+     *
+     * @return nombre de la partida
+     */
     private String obtenerNombrePartida() {
         String nombrePartida = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoPartida, 0);
         return nombrePartida;
     }
 
+    /**
+     * Método encargado de obtener el archivo del mapa a partir de su nombre
+     *
+     * @return archivo del mapa a recrear
+     */
     private File obtenerArchivoMapa() {
         String nombreArchivoMapa = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoPartida, 1) + ".txt";
         File[] todosLosMapas = obtenerArregloDeArchivosDeUnaCarpeta(rutaCarpetaMapas);
@@ -64,6 +96,11 @@ public class RecreadorDePartida {
         return null;
     }
 
+    /**
+     * Método encargado de obtener el archivo del jugador a partir de su nombre
+     *
+     * @return archivo del jugador que estaba jugando la partida
+     */
     private File obtenerArchivoJugador() {
         String nombreArchivoJugador = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoPartida, 2) + ".txt";
         File[] todosLosJugadores = obtenerArregloDeArchivosDeUnaCarpeta(rutaCarpetaJugadores);
@@ -76,6 +113,12 @@ public class RecreadorDePartida {
         return null;
     }
 
+    /**
+     * Método encargado de recrear el mapa a través de su archivo obtenido de
+     * otro método
+     *
+     * @return Mapa ya recreado
+     */
     private Mapas recrearMapa() {
         //Modifica el archivo de texto para que cambie su posición
         sobreEscribirUnaLineaDeArchivo(String.valueOf(filaJugador), archivoMapa, 5);
@@ -86,6 +129,10 @@ public class RecreadorDePartida {
 
     }
 
+    /**
+     * Método encargado de recrear al jugador creando uno nuevo a partir de
+     * todos sus atributos colocados en su archivo
+     */
     private void recrearJugador() {
         String nombreJugador = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 0);//0 Nombre 
         boolean haEncontradoTesoro = Boolean.parseBoolean(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 1));//1 haEcontrado el tesoro si ha ganado (Encontro el tesoro) 

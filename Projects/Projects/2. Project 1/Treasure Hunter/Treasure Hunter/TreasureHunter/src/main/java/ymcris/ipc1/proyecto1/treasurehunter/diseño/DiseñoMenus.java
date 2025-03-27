@@ -150,6 +150,13 @@ public class DiseñoMenus {
         System.out.println("");
     }
 
+    /**
+     * Método encargado de convertir un booleano a un string para luego pasarlo
+     * a un entero
+     *
+     * @param booleano - booleano que se verificara si es true o false
+     * @return 1 si es true, 2 si es cualquier otra coas
+     */
     public static String convertirBooleanoAInt(String booleano) {
         if (booleano.equals("true")) {
             return "1";
