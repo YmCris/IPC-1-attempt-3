@@ -141,6 +141,7 @@ public final class Aventurero extends Personaje {
             añadirTextoEnArchivo(String.valueOf(this.getDefensaPrevioAUnaBatalla()), archivoJugador);//16. defensa previo  a un combate
             añadirTextoEnArchivo(String.valueOf(this.getFilaJugador()), archivoJugador);//14. fila jugador
             añadirTextoEnArchivo(String.valueOf(this.getColumnaJugador()), archivoJugador);//15. columna jugador
+            System.out.println("Se ha guardado el avance de la partida");
         }
         //3. Ya
     }

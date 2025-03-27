@@ -11,8 +11,6 @@ import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnergia;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaEnemigos;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaPersonaje;
 import ymcris.ipc1.proyecto1.treasurehunter.casillas.CasillaTeletransporte;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.ROJO;
-import static ymcris.ipc1.proyecto1.treasurehunter.diseño.DiseñoMenus.RESETEAR;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerUnaLineaDeUnArchivoDeTextoConUnIndice;
 
 /**
@@ -26,20 +24,19 @@ public class RecreadorDeMapas {
 
     // --------------------- VARIABLES DE REFERENCIA ---------------------------
     private File mapaEnArchivo;
-    private Aventurero aventurero;
+    private Aventurero aventureroMapaRecreado;
     private Casillas[][] tablero;
 
     // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
     public RecreadorDeMapas(File mapaEnArchivo, Aventurero aventurero) {
         this.mapaEnArchivo = mapaEnArchivo;
-        this.aventurero = aventurero;
+        this.aventureroMapaRecreado = aventurero;
     }
 
     // ----------------------------- MÉTODOS -----------------------------------
     public Mapas recrearMapas() {
         //1. Reimplementa todo el diseño DiseñarMapas().preguntarCaracterísticasMapa();
         String nombreMapa = obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 0);//nombreMapa
-        System.out.println(ROJO + "MAPA: " + RESETEAR + nombreMapa);
         int filasMapa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 1));//filasMapas
         int columnasMapa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 2)); //columnasMapas
         int filaTesoro = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 3));//filaTesoro
@@ -49,7 +46,7 @@ public class RecreadorDeMapas {
         int filaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 5));//filajugador
         int columnaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(mapaEnArchivo, 6));//columna jugador
         //crearCasillaPersonaje
-        CasillaPersonaje casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventurero);
+        CasillaPersonaje casillaAventurero = new CasillaPersonaje(filaJugador, columnaJugador, aventureroMapaRecreado);
         //2. Crear el tablero, implementar las casillas jugador y tesoro
         Mapas mapa = new Mapas(nombreMapa, filasMapa, columnasMapa, tesoro, casillaAventurero);
         tablero = mapa.crearTablero();

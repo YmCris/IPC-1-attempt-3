@@ -78,9 +78,9 @@ public class CasillaEnemigos extends Casillas {
             batalla.pelear();
             if (aventurero.getVida() <= 0) {
                 if (pierdePuntos == false) {// Es decir, es reubicado.
+                    System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
                     casillaAventurero.modificarCasillas(filaARetornar, columnaARetornar);
                     mapa.modificarMapas(filaARetornar, columnaARetornar, casillaAventurero);
-                    System.out.println("Oh no aventurero " + aventurero.getNombre() + " Al perder la batalla has caido a la posición " + filaARetornar + "," + columnaARetornar + " del mapa");
                 }
             }
         }

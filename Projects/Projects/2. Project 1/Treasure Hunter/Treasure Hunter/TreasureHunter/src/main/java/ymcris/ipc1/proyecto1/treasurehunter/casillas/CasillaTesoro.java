@@ -36,12 +36,14 @@ public class CasillaTesoro extends Casillas {
     public void aplicarEfecto(Aventurero aventurero) {
         //No tiene efecto
     }
-
+    
     @Override
     public void mostrarMensaje() {
         System.out.println(MAGENTA + "                                        AVENTURERO " + aventurero.getNombre() + " has hallado el tesoro más grande de todos" + RESETEAR);
         System.out.println(MAGENTA + "                             Luego de incanzables recorridos, batallas, y frustraciones, tu travesia ha llegado a su fin" + RESETEAR);
+        aventurero.setHaEncontradoTesoro(true);
+        aventurero.setHaPerdido(false);
         partidaTerminada = true;
     }
-
+    
 }

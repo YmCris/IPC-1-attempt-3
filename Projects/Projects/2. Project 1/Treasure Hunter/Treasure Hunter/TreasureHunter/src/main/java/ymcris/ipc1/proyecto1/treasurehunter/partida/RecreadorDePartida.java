@@ -9,6 +9,7 @@ import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpeta
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.rutaCarpetaJugadores;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerArregloDeArchivosDeUnaCarpeta;
 import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.obtenerUnaLineaDeUnArchivoDeTextoConUnIndice;
+import static ymcris.ipc1.proyecto1.treasurehunter.archivos.Archivos.sobreEscribirUnaLineaDeArchivo;
 
 /**
  * RecreadorDePartida es la clase encargada de crecrear una partida obteniendo
@@ -26,6 +27,9 @@ public class RecreadorDePartida {
     private File archivoJugador;
 
     // ----------------------- VARIABLES PRIMITIVAS ----------------------------
+    int filaJugador;
+    int columnaJugador;
+
     // ---------------------------- INSTANCIAS ---------------------------------
     // ------------------------ MÉTODO CONSTRUCTOR -----------------------------
     public RecreadorDePartida(File archivoPartida) {
@@ -73,6 +77,9 @@ public class RecreadorDePartida {
     }
 
     private Mapas recrearMapa() {
+        //Modifica el archivo de texto para que cambie su posición
+        sobreEscribirUnaLineaDeArchivo(String.valueOf(filaJugador), archivoMapa, 5);
+        sobreEscribirUnaLineaDeArchivo(String.valueOf(columnaJugador), archivoMapa, 6);
         RecreadorDeMapas mapaRecreador = new RecreadorDeMapas(archivoMapa, aventurero);
         Mapas mapaRecreado = mapaRecreador.recrearMapas();
         return mapaRecreado;
@@ -97,8 +104,8 @@ public class RecreadorDePartida {
         int ataque = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 14));//14. ataque
         int defensa = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 15));//15. defensa
         int defensaPrevioAUnaBatalla = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 16));//16. defensa previo  a un combate
-        int filaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 17));//14. fila jugador
-        int columnaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 18));//15. columna jugador
+        filaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 17));//14. fila jugador
+        columnaJugador = Integer.parseInt(obtenerUnaLineaDeUnArchivoDeTextoConUnIndice(archivoJugador, 18));//15. columna jugador
         aventurero = new Aventurero(nombreJugador, haEncontradoTesoro, numeroMovimientos, batallas, batallasGanadas, batallasPerdidas, batallasHuidas, haPerdido, vida, vidaPrevioAUnaBatalla, vidaTotal, mana, manaPrevioAUnaBatalla, manaTotal, ataque, defensa, defensaPrevioAUnaBatalla, filaJugador, columnaJugador, archivoJugador);
     }
 

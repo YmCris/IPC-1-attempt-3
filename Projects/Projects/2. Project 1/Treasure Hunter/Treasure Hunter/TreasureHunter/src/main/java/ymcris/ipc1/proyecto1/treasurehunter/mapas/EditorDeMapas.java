@@ -36,9 +36,13 @@ public class EditorDeMapas {
             try {
                 //3. Mostrar todas las características del mapa
                 mostrarOpcionesEditarMapa(mapaAEditar);
+                System.out.println("Presione 99 para regresar al menú principal");
                 //4. Pedir qué línea va a modificar
                 int opcionAModificar = scanner.nextInt();
                 scanner.nextLine();
+                if (opcionAModificar == 99) {
+                    new TreasureHunter().verMenuPrincipal();
+                }
                 if (opcionAModificar < 0 || opcionAModificar > obtenerCuantasLineasTieneUnArchivo(mapaAEditar)) {
                     System.out.println("No puedes modificar algo que no existe");
                 } else {
@@ -124,6 +128,7 @@ public class EditorDeMapas {
                     return nuevoValor;
                 }
             } catch (Exception e) {
+                scanner.nextLine();
                 System.out.println("Tienes que introducir un número.");
                 errorEncontrado();
             }
@@ -145,6 +150,7 @@ public class EditorDeMapas {
                     return nuevoValor;
                 }
             } catch (Exception e) {
+                scanner.nextLine();
                 System.out.println("Tienes que introducir un número.");
                 errorEncontrado();
             }
@@ -159,13 +165,14 @@ public class EditorDeMapas {
                 nuevoValor = scanner.nextInt();
                 scanner.nextLine();
                 if (nuevoValor <= 0) {
-                    System.out.println("El tesoro no puede estar en una posición menor o igual 0");
+                    System.out.println("El tesoro no puede estar en una posición menor a 0");
                     System.out.println("Presiona enter para continuar");
                     scanner.nextLine();
                 } else {
                     return nuevoValor;
                 }
             } catch (Exception e) {
+                scanner.nextLine();
                 System.out.println("Tienes que introducir un número.");
                 errorEncontrado();
             }
