@@ -37,7 +37,7 @@ public class CasillaTeletransporte extends Casillas {
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
-     * Método encargado de crear casillas de teletransporte
+     * Método encargado de cmaparear casillas de teletransporte
      *
      * @param cantidad - cantidad de casillas
      * @param ubicacionAleatoria - true si lo es
