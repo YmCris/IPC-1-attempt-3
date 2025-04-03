@@ -1,0 +1,48 @@
+package ymcris.ipc1.practica2.codengames.frontend;
+
+import java.awt.Graphics;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ * Clase JPanelPersonalizado crea un panel personalizado
+ *
+ * @author YmCris
+ * @since Apr 3, 2025
+ */
+public class JPanelPersonalizado extends JLabel {
+
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    private final String path;
+
+    // VARIABLES PRIMITIVAS ----------------------------------------------------
+    private int alto;
+    private int ancho;
+
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método constructor encargado de inicializar los atributos para modificar
+     *
+     * @param panel - Panel en el cual se va a mostrar el JLabel
+     * @param path - Ruta donde se encuentra la imagen a colocar
+     */
+    public JPanelPersonalizado(JPanel panel, String path) {
+        this.path = path;
+        this.ancho = panel.getWidth();
+        this.alto = panel.getHeight();
+        this.setSize(ancho, alto);
+        //JPanelPersonalizado panelDiseñado = new JPanelPersonalizado(pnlMenu, rutaImagenMenu);
+        //pnlMenu.add(panelDiseñado).repaint();//Añade el panel diseñado al pnlMenu
+        //pnlMenu.setOpaque(false);//Hace que pinte todos los pixeles 
+        //pnlMenu.setBorder(null);//Le quita el borde (No lo necesita ya que queda completo)
+        //pnlMenu.setBackground(new Color(0, 0, 0, 0));//Hace que quede su fondo transpartente, en dado caso este sea menor al tamaño del panel.
+    }
+
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    @Override
+    public void paint(Graphics grafico) {
+        ImageIcon imagen = new ImageIcon(getClass().getResource(path));
+        grafico.drawImage(imagen.getImage(), 0, 0, ancho, alto, null);
+    }
+}
