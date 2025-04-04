@@ -1,12 +1,13 @@
-package ymcris.ipc1.practica2.codengames.frontend;
+package ymcris.ipc1.practica2.codengames.a.frontend;
 
 import java.awt.Graphics;
-import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.ImageIcon;
 
 /**
- * Clase JPanelPersonalizado crea un panel personalizado
+ * Clase JPanelPersonalizado crea un panel personalizado para poder ponerle una
+ * imagen
  *
  * @author YmCris
  * @since Apr 3, 2025
@@ -39,7 +40,7 @@ public class JPanelPersonalizado extends JLabel {
         //pnlMenu.setBackground(new Color(0, 0, 0, 0));//Hace que quede su fondo transpartente, en dado caso este sea menor al tamaño del panel.
     }
 
-    // MÉTODOS CONCRETOS -------------------------------------------------------
+    // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
     public void paint(Graphics grafico) {
         ImageIcon imagen = new ImageIcon(getClass().getResource(path));
