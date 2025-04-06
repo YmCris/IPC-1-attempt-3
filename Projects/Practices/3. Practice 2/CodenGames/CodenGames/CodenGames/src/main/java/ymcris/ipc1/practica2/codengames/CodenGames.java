@@ -4,12 +4,13 @@
  */
 package ymcris.ipc1.practica2.codengames;
 
-import ymcris.ipc1.practica2.codengames.a.frontend.MenuPrincipal;
+import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 
 /**
  * Clase CodenGames es la clase encargada de dar inicio al programa
  *
  * @author YmCris
+ * @see JFMenuPrincipal
  * @since Apr 3, 2025
  */
 public class CodenGames {
@@ -20,8 +21,7 @@ public class CodenGames {
      * @param args shortcuts del programa (no hay)
      */
     public static void main(String[] args) {
-        System.out.println("Hola Tilín");
-        MenuPrincipal menu = new MenuPrincipal();
+        JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
     }
 }

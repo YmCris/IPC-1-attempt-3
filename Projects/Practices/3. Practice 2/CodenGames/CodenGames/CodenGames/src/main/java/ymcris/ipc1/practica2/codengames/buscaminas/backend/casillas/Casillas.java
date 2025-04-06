@@ -54,6 +54,14 @@ public abstract class Casillas {
         return estaCubierta;
     }
 
+    public int getFilaCasilla() {
+        return filaCasilla;
+    }
+
+    public int getColumnaCasilla() {
+        return columnaCasilla;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setContineMina(boolean contineMina) {
         this.contineMina = contineMina;

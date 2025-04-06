@@ -12,6 +12,7 @@ public class CasillasNormales extends Casillas {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private boolean hayMinasAdyacentes;
     private int cantidadDeMinasAdyacentes;
+    private boolean contieneMinaAdyacente;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
@@ -47,6 +48,10 @@ public class CasillasNormales extends Casillas {
         return cantidadDeMinasAdyacentes;
     }
 
+    public boolean ContieneMinaAdyacente() {
+        return contieneMinaAdyacente;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setHayMinasAdyacentes(boolean hayMinasAdyacentes) {
         this.hayMinasAdyacentes = hayMinasAdyacentes;
@@ -54,6 +59,10 @@ public class CasillasNormales extends Casillas {
 
     public void setCantidadDeMinasAdyacentes(int cantidadDeMinasAdyacentes) {
         this.cantidadDeMinasAdyacentes = cantidadDeMinasAdyacentes;
+    }
+
+    public void setContieneMinaAdyacente(boolean contieneMinaAdyacente) {
+        this.contieneMinaAdyacente = contieneMinaAdyacente;
     }
 
 }

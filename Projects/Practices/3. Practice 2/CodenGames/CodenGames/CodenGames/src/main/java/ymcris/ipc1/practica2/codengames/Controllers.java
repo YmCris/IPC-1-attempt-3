@@ -14,22 +14,12 @@ import javax.swing.JFrame;
  */
 public abstract class Controllers {
 
-    // VARIABLES DE REFERENCIA -------------------------------------------------
-    protected JFrame frame;
-    protected String avatar;
-
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected boolean pasoPruebas;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    /**
-     * Método constructor encargado de inicializar los conceptos más importantes
-     * de los controllers
-     *
-     * @param frame - Frame en el cual se trabajará (Frontend)
-     */
-    public Controllers(JFrame frame) {
-        this.frame = frame;
+    public Controllers() {
+
     }
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------

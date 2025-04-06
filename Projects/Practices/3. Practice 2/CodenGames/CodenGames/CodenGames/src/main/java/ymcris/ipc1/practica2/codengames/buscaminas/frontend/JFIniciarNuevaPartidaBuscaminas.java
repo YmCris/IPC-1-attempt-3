@@ -1,5 +1,5 @@
 /*
- * Paquete encargado de mostrar todo el frontend relacionado a buscaminas
+ * Paquete encargado de mostrar todo el frontend relacionado a jBuscaminas
  */
 package ymcris.ipc1.practica2.codengames.buscaminas.frontend;
 
@@ -8,21 +8,21 @@ import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
-import ymcris.ipc1.practica2.codengames.a.frontend.MenuPrincipal;
-import static ymcris.ipc1.practica2.codengames.a.frontend.MenuPrincipal.musicaMenu;
+import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
+import static ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal.musicaMenu;
 
 /**
  *
  * @author YmCris
  */
-public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
+public class JFIniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
 
     private static String rutaImagenMenu = "/fondominas.png";
-
+    public static BuscaminasController jBuscaminas = new BuscaminasController();
     /**
      * Creates new form IniciarNuevaPartidaBuscaminas
      */
-    public IniciarNuevaPartidaBuscaminas() {
+    public JFIniciarNuevaPartidaBuscaminas() {
         initComponents();
         JPanelPersonalizado panelDiseñado = new JPanelPersonalizado(pnlInformacionBuscaminas, rutaImagenMenu);
         pnlInformacionBuscaminas.add(panelDiseñado).repaint();//Añade el panel diseñado al pnlMenu
@@ -61,7 +61,6 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Iniciar Nueva Partida Buscaminas");
         setBackground(new java.awt.Color(0, 0, 0));
-        setMaximumSize(new java.awt.Dimension(0, 0));
         setName("jFrameInicioBuscaminas"); // NOI18N
 
         pnlInformacionBuscaminas.setBackground(new java.awt.Color(0, 0, 0));
@@ -99,6 +98,7 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
         btnGuardar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnGuardar.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardar.setText("GUARDAR");
+        btnGuardar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
@@ -108,6 +108,7 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
         txtFilas.setBackground(new java.awt.Color(0, 0, 0));
         txtFilas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtFilas.setForeground(new java.awt.Color(255, 255, 255));
+        txtFilas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtFilas.setCaretColor(new java.awt.Color(0, 0, 0));
         txtFilas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -118,16 +119,19 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
         txtAvatar.setBackground(new java.awt.Color(0, 0, 0));
         txtAvatar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtAvatar.setForeground(new java.awt.Color(255, 255, 255));
+        txtAvatar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtAvatar.setCaretColor(new java.awt.Color(0, 0, 0));
 
         txtMinas.setBackground(new java.awt.Color(0, 0, 0));
         txtMinas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtMinas.setForeground(new java.awt.Color(255, 255, 255));
+        txtMinas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtMinas.setCaretColor(new java.awt.Color(0, 0, 0));
 
         txtColumnas.setBackground(new java.awt.Color(0, 0, 0));
         txtColumnas.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         txtColumnas.setForeground(new java.awt.Color(255, 255, 255));
+        txtColumnas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtColumnas.setCaretColor(new java.awt.Color(0, 0, 0));
 
         btnMusica.setBackground(new java.awt.Color(0, 0, 0));
@@ -221,7 +225,7 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
                         .addComponent(txtAvatar, javax.swing.GroupLayout.PREFERRED_SIZE, 49, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(32, 32, 32))
                     .addGroup(pnlInformacionBuscaminasLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 170, Short.MAX_VALUE)
                         .addComponent(jLabel2)
                         .addGap(18, 18, 18)))
                 .addGroup(pnlInformacionBuscaminasLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -267,17 +271,18 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        BuscaminasController buscaminas = new BuscaminasController(this);
         //1. Situación donde el usuario no ingresa nada y guarda.
         if (txtAvatar.getText().isBlank() || txtFilas.getText().isBlank() || txtColumnas.getText().isBlank() || txtMinas.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Debes rellenar todos los espacios", "ERROR", JOptionPane.WARNING_MESSAGE);
         } else {
             //2. Situación donde el usuario no introduce el tipo de entradas requeridas.
             try {
-                if (buscaminas.todoEnOrden(txtAvatar.getText(), Integer.parseInt(txtFilas.getText()), Integer.parseInt(txtColumnas.getText()), Integer.parseInt(txtMinas.getText())) == true) {
+                if (jBuscaminas.todoEnOrden(txtAvatar.getText(), Integer.parseInt(txtFilas.getText()), Integer.parseInt(txtColumnas.getText()), Integer.parseInt(txtMinas.getText())) == true) {
                     System.out.println(" se crea el mapas");
+                    musicaMenu.stop();
+                    this.dispose();
                 } else {//3. Situación en donde el usuario se ha equivocado al introducir un valor fuera de un rango
-                    String mensajeError = buscaminas.encontrarErrores(txtAvatar.getText(), Integer.parseInt(txtFilas.getText()), Integer.parseInt(txtColumnas.getText()), Integer.parseInt(txtMinas.getText()));
+                    String mensajeError = jBuscaminas.encontrarErrores(txtAvatar.getText(), Integer.parseInt(txtFilas.getText()), Integer.parseInt(txtColumnas.getText()), Integer.parseInt(txtMinas.getText()));
                     JOptionPane.showMessageDialog(null, mensajeError, "ERROR", JOptionPane.WARNING_MESSAGE);
                 }
             } catch (InputMismatchException | NumberFormatException e) {
@@ -302,7 +307,7 @@ public class IniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         musicaMenu.stop();
-        MenuPrincipal menu = new MenuPrincipal();
+        JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnSalirActionPerformed

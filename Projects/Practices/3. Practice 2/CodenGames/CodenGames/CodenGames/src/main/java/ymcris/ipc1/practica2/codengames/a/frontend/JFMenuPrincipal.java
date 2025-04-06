@@ -11,38 +11,38 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import ymcris.ipc1.practica2.codengames.buscaminas.frontend.IniciarNuevaPartidaBuscaminas;
+import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas;
 
 /**
- * Clase MenuPrincipal es el frame que muestra todo el menú principal
+ * Clase JFMenuPrincipal es el frame que muestra todo el menú principal
  *
  * @author YmCris
  * @since Apr 4, 2025
  */
-public class MenuPrincipal extends javax.swing.JFrame {
+public class JFMenuPrincipal extends javax.swing.JFrame {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     public static Clip musicaMenu;
-    private String rutaImagenMenu;
+    private static final String RUTA_IMAGEN_MENU = "/fondoOficial.png";
+    private static final String NOMBRE_CANCION_MENU = "/sonidoMenu.wav";
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     /**
      * Método constructor encargado de inicializar los componentes importantes
      * del jFrame ademas de ponerle musiquita.
      */
-    public MenuPrincipal() {
-        this.rutaImagenMenu = "/fondoOficial.png";
+    public JFMenuPrincipal() {
         //1. Inicializar todos los elementos importantes del JFrame
         initComponents();
         //2. Modificar atributos del frame para que sea más chido
         this.setResizable(false);//Para que no se deforme todo
         this.setLocationRelativeTo(null);//Lo centra
         //3. Ponerle un fondo chingon al panel.
-        JPanelPersonalizado panelDiseñado = new JPanelPersonalizado(pnlMenu, rutaImagenMenu);
+        JPanelPersonalizado panelDiseñado = new JPanelPersonalizado(pnlMenu, RUTA_IMAGEN_MENU);
         pnlMenu.add(panelDiseñado).repaint();//Añade el panel diseñado al pnlMenu
         //4. Poner musica
         try {
-            URL rutaMusica = getClass().getResource("/sonidoMenu.wav");
+            URL rutaMusica = getClass().getResource(NOMBRE_CANCION_MENU);
             if (rutaMusica == null) {
                 System.out.println("No se encontró el archivo, ya valiste");
             } else {
@@ -245,9 +245,15 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void btnHunterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHunterActionPerformed
     }//GEN-LAST:event_btnHunterActionPerformed
 
+    /**
+     * Método encargado de iniciar el frame para pedir los datos necesarios del
+     * buscaminas
+     *
+     * @param evt evento
+     */
     private void btnBuscaminasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaminasActionPerformed
         musicaMenu.stop();
-        IniciarNuevaPartidaBuscaminas buscaminas = new IniciarNuevaPartidaBuscaminas();
+        JFIniciarNuevaPartidaBuscaminas buscaminas = new JFIniciarNuevaPartidaBuscaminas();
         buscaminas.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBuscaminasActionPerformed
@@ -260,7 +266,6 @@ public class MenuPrincipal extends javax.swing.JFrame {
         if (musicaMenu.isActive()) {
             musicaMenu.stop();
         } else if (!musicaMenu.isActive()) {
-            musicaMenu.stop();
             musicaMenu.loop(Clip.LOOP_CONTINUOUSLY);
         }
     }//GEN-LAST:event_btnMusicaActionPerformed
