@@ -36,8 +36,16 @@ public abstract class Controllers {
     public abstract boolean todoEnOrden(String avatar, int numero1, int numero2, int numero3);
 
     /**
-     * Método encargado de incializar el juego en base a si se han pasado las
-     * pruebas.
+     * Método encargado de iniciar el juego (Es decir la creación de los
+     * elementos en el backend y mostrado en el frontend) en base a si se han
+     * pasado las pruebas.
      */
     public abstract void iniciarJuego();
+
+    /**
+     * Método abstracto encargado de jugar el videojuego en el backen
+     * (Importante porque de lo contrarío no habría un orden entre el backend y
+     * frontend)
+     */
+    public abstract void jugar();
 }

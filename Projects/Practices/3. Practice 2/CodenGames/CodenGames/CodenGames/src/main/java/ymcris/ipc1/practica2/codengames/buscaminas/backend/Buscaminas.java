@@ -3,7 +3,6 @@ package ymcris.ipc1.practica2.codengames.buscaminas.backend;
 import javax.swing.Timer;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.jugador.Jugador;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.tablero.Tablero;
-import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
 import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas.jBuscaminas;
 
 /**
@@ -55,6 +54,7 @@ public class Buscaminas {
     }
 
     public void recibirInformacionCasilla(int filaCasilla, int columnaCasilla) {
+        System.out.println("Buscacaminas obtuvo del controller: fila = " + filaCasilla + " columna = " + columnaCasilla);
         this.filaCasilla = filaCasilla;
         this.columnaCasilla = columnaCasilla;
     }
@@ -76,20 +76,22 @@ public class Buscaminas {
     private void seleccionarOpciones() {
         switch (opcionJuego) {
             case 1:
-                tablero.marcarMinas(filaCasilla, columnaCasilla);
+                tablero.getTablero()[filaCasilla][columnaCasilla].setEstaMarcada(true);
+                jBuscaminas.recibirMinaMarcada(filaCasilla, columnaCasilla);
                 contadorDeMinasMarcadas++;
                 break;
             case 2:
                 tablero.descubrirCasillas(filaCasilla, columnaCasilla);
                 break;
             default:
-                System.out.println("Ha habido un error");
+                System.out.println("Ha habido un error en la opción que ha tomado el jugador (No debería de pasar)");
                 break;
         }
     }
 
     public void iniciarPartida() {
         opcionJuego = jBuscaminas.getOpcionJuego();
+        System.out.println(opcionJuego);
         seleccionarOpciones();
     }
 

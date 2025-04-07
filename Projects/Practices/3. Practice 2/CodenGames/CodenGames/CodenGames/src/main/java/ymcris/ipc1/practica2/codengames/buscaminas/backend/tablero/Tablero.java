@@ -112,9 +112,6 @@ public class Tablero {
     }
 
     // MÉTODOS DURANTE EL JUEGO ------------------------------------------------
-    public void marcarMinas(int filaCasilla, int columnaCasilla) {
-    }
-
     public void descubrirCasillas(int filaCasilla, int columnaCasilla) {
         Casillas casilla = tablero[filaCasilla][columnaCasilla];
         System.out.println("genero el efecto domino");
@@ -134,7 +131,7 @@ public class Tablero {
             //2. Recorrer todas las casillas que esten a su alrededor (fila por fila) (columna por columna)y verificar si tienen mina.
             for (int i = 0; i < tablero.length; i++) {
                 for (int j = 0; j < tablero[0].length; j++) {
-
+                    
                 }
             }
             //2.1 Lo que hay que hacer es una especie de marco sobre la mina y descubrirla (El marco termina cuando hay minas)
@@ -159,13 +156,17 @@ public class Tablero {
     public int getFilasTablero() {
         return filasTablero;
     }
-
+    
     public int getColumnasTablero() {
         return columnasTablero;
     }
-
+    
     public int getCantidadDeMinas() {
         return cantidadDeMinas;
     }
 
+    public Casillas[][] getTablero() {
+        return tablero;
+    }
+    
 }

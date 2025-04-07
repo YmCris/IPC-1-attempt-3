@@ -17,7 +17,7 @@ public class BuscaminasController extends Controllers {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String avatar;
     private Buscaminas buscaminas;
-    private JFrame buscaminasFrame;
+    private JFBuscaminas buscaminasFrame;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int opcionJuego;
@@ -44,6 +44,45 @@ public class BuscaminasController extends Controllers {
         }
     }
 
+    @Override
+    public void iniciarJuego() {
+        this.buscaminas = new Buscaminas(avatar, filasTablero, columnasTablero, cantidadDeMinas);
+        this.buscaminasFrame = new JFBuscaminas();
+        this.buscaminasFrame.setVisible(true);
+    }
+
+    @Override
+    public void jugar() {
+        buscaminas.iniciarPartida();
+    }
+
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de recibir datos del JFBuscaminas para posteriormente
+     * enviarselos al backend y generar la acción.
+     *
+     * @param filaCasilla - fila de la casilla presionada
+     * @param columnaCasilla - columna de la casilla presionada
+     */
+    public void recibirDatosCasillas(int filaCasilla, int columnaCasilla) {
+        buscaminas.recibirInformacionCasilla(filaCasilla, columnaCasilla);
+    }
+    
+    public void recibirMinaMarcada(int filaCasilla, int columnaCasilla) {
+        buscaminasFrame.setFilaCasilla(filaCasilla);
+        buscaminasFrame.setColumnaCasilla(columnaCasilla);
+    }
+
+    /**
+     * Método encargado de encontrar los errores y proporcionar un mensaje que
+     * posteriormente será mostrado por el jBuscaminasFrame
+     *
+     * @param avatar - avatar a verificar si esta en blanco
+     * @param filas - filas a verificar para el tamaño del tablero
+     * @param columnas - columnas a verificar para el tamaño del tablero
+     * @param minas - minas a verificar por el tamaño del tablero.
+     * @return un mensaje de error en dado caso lo haya.
+     */
     public String encontrarErrores(String avatar, int filas, int columnas, int minas) {
         if (avatar.isBlank()) {
             return "No puedes tener un nombre en blanco";
@@ -60,18 +99,7 @@ public class BuscaminasController extends Controllers {
         }
     }
 
-    @Override
-    public void iniciarJuego() {
-        this.buscaminas = new Buscaminas(avatar, filasTablero, columnasTablero, cantidadDeMinas);
-        this.buscaminasFrame = new JFBuscaminas();
-        this.buscaminasFrame.setVisible(true);
-        buscaminas.iniciarPartida();
-    }
-
-    public void recibirDatosCasillas(int filaCasilla, int columnaCasilla) {
-        buscaminas.recibirInformacionCasilla(filaCasilla, columnaCasilla);
-    }
-
+    // GETTERS -----------------------------------------------------------------
     public String getAvatar() {
         return avatar;
     }
@@ -92,6 +120,7 @@ public class BuscaminasController extends Controllers {
         return opcionJuego;
     }
 
+    // SETTERS -----------------------------------------------------------------
     public void setOpcionJuego(int opcionJuego) {
         this.opcionJuego = opcionJuego;
     }

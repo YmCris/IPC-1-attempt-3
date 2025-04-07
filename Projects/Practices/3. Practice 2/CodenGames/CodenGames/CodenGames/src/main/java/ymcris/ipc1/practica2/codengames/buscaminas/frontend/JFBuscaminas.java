@@ -1,25 +1,27 @@
 package ymcris.ipc1.practica2.codengames.buscaminas.frontend;
 
+import java.net.URL;
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.io.IOException;
+import javax.swing.JOptionPane;
+import javax.sound.sampled.Clip;
+import javax.swing.BorderFactory;
+import javax.swing.JToggleButton;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-import java.net.URL;
-import javax.sound.sampled.AudioInputStream;
+import javax.swing.border.BevelBorder;
 import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.BorderFactory;
-import javax.swing.JOptionPane;
-import javax.swing.JToggleButton;
-import javax.swing.border.BevelBorder;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
 import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas.jBuscaminas;
 
 /**
+ * JBuscaminas Frame es el frame encargado de mostrar todo el juego de
+ * buscaminas y de comunicarle lo sucedido a buscaminas controller.
  *
  * @author YmCris
  * @see Buscaminas
@@ -29,22 +31,27 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
     // CONSTANTES --------------------------------------------------------------
     private static final String NOMBRE_MUSICA_BUSCAMINAS = "/misterioMinas.wav";
+    private static final String NOMBRE_IMAGEN_BANDERITA = "/banderita.png";
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String avatar;
-    private JToggleButton[][] botones;
     private Clip musicaBuscaminas;
+    private JToggleButton[][] botones;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    private int filaCasilla;
     private int filasTablero;
+    private int columnaCasilla;
     private int columnasTablero;
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFBuscaminas() {
         initComponents();
         this.avatar = jBuscaminas.getAvatar();
         lblNombreJugador.setText("PARTIDA DE " + avatar.toUpperCase());
         this.filasTablero = jBuscaminas.getFilasTablero();
         this.columnasTablero = jBuscaminas.getColumnasTablero();
+        jBuscaminas.setOpcionJuego(2);
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         agregarBotonesAPanel();
@@ -65,6 +72,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
         btnMarcarMinas.setEnabled(false);
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
     private void agregarBotonesAPanel() {
         botones = new JToggleButton[filasTablero][columnasTablero];
         pnlTablero.setLayout(new GridLayout(filasTablero, columnasTablero));
@@ -78,14 +86,22 @@ public class JFBuscaminas extends javax.swing.JFrame {
                 final int columna = j;
                 botones[i][j].addActionListener(new ActionListener() {
                     @Override
-                    public void actionPerformed(ActionEvent e) {
-                        if (botones[fila][columna].isSelected()) {
-                            jBuscaminas.recibirDatosCasillas(fila, columna);
-                            botones[fila][columna].setEnabled(false);
+                    public void actionPerformed(ActionEvent evento) {
+                        if (jBuscaminas.getOpcionJuego() == 1) {
+                            if (botones[fila][columna].isSelected()) {
+                                botones[fila][columna].setText("🚩");
+                            } else {
+                                botones[fila][columna].setText("");
+                            }
+                        } else {
+                            if (!botones[fila][columna].getText().equals("🚩")) {
+                                jBuscaminas.recibirDatosCasillas(fila, columna);
+                                jBuscaminas.jugar();
+                                botones[fila][columna].setEnabled(false);
+                            }
                         }
                     }
                 });
-
                 pnlTablero.add(botones[i][j]);
             }
         }
@@ -116,6 +132,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Buscaminas");
+        setBackground(new java.awt.Color(51, 51, 51));
 
         pnlBotones.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -365,22 +382,40 @@ public class JFBuscaminas extends javax.swing.JFrame {
     }//GEN-LAST:event_txtTiempoJugadoActionPerformed
 
     private void btnMarcarMinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarMinasActionPerformed
-        jBuscaminas.setOpcionJuego(1);
         if (btnMarcarMinas.isSelected()) {
+            jBuscaminas.setOpcionJuego(1);
             btnDescubrirCasillas.setEnabled(false);
         } else if (!btnMarcarMinas.isSelected()) {
+            //Marcar el otro boton como abilitado y seleccionado
             btnDescubrirCasillas.setEnabled(true);
+            btnDescubrirCasillas.setSelected(true);
+            jBuscaminas.setOpcionJuego(2);
+            //Desseleccionar este y deshabilitarlo
+            btnMarcarMinas.setEnabled(false);
+            btnMarcarMinas.setSelected(false);
         }
     }//GEN-LAST:event_btnMarcarMinasActionPerformed
 
     private void btnDescubrirCasillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescubrirCasillasActionPerformed
-        jBuscaminas.setOpcionJuego(2);
         if (btnDescubrirCasillas.isSelected()) {
+            jBuscaminas.setOpcionJuego(2);
             btnMarcarMinas.setEnabled(false);
         } else if (!btnDescubrirCasillas.isSelected()) {
+            //Marcar el otro boton como abilitado y seleccionado
             btnMarcarMinas.setEnabled(true);
+            btnMarcarMinas.setSelected(true);
+            jBuscaminas.setOpcionJuego(1);
+            //Desseleccionar este y deshabilitarlo
+            btnDescubrirCasillas.setEnabled(false);
+            btnDescubrirCasillas.setSelected(false);
+
         }
     }//GEN-LAST:event_btnDescubrirCasillasActionPerformed
+
+    private void marcarCasilla() {
+        botones[filaCasilla][columnaCasilla].setBackground(Color.red);
+        botones[filaCasilla][columnaCasilla].setText("BANDERA");
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -401,4 +436,13 @@ public class JFBuscaminas extends javax.swing.JFrame {
     private javax.swing.JTextField txtMinasRestantes;
     private javax.swing.JTextField txtTiempoJugado;
     // End of variables declaration//GEN-END:variables
+
+    public void setFilaCasilla(int filaCasilla) {
+        this.filaCasilla = filaCasilla;
+    }
+
+    public void setColumnaCasilla(int columnaCasilla) {
+        this.columnaCasilla = columnaCasilla;
+    }
+
 }
