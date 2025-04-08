@@ -52,9 +52,9 @@ public class Tablero {
                 tablero[i][j] = new CasillasNormales(false, 0, i, j, false, false, true);
             }
         }
-        System.out.println("Se crea el tablero backend");
+        System.out.println("Se crea el tablero backend de tamaño filas = " + tablero.length + " columnas = " + tablero[0].length);
         agregarMinas();
-        System.out.println("Se han agregado las minas");
+        System.out.println("Se han agregado las " + cantidadDeMinas + " minas");
     }
 
     /**
@@ -66,7 +66,19 @@ public class Tablero {
             int filaRandom = random.nextInt(1, tablero.length);
             int columnaRandom = random.nextInt(1, tablero[0].length);
             //1. Agregar las minas al tablero.
-            tablero[filaRandom][columnaRandom] = new CasillasMina(filaRandom, columnaRandom, true, false, true);
+            if (tablero[filaRandom][columnaRandom].ContineMina()) {//Si ya hay una mina en esa posición, la agrega en una donde no haya
+                boolean minaAgregada = false;
+                for (int j = 0; j < tablero.length && !minaAgregada; j++) {//filas
+                    for (int k = 0; k < tablero[0].length && !minaAgregada; k++) {//columnas
+                        if (tablero[j][k].ContineMina() == false) {
+                            tablero[j][k] = new CasillasMina(j, k, true, false, true);
+                            minaAgregada = true;
+                        }
+                    }
+                }
+            } else {
+                tablero[filaRandom][columnaRandom] = new CasillasMina(filaRandom, columnaRandom, true, false, true);
+            }
             //2. Marcar las adyacentes a estas como casillasMinaAdyacentes = true;
             try {
                 //marco superior
@@ -108,14 +120,15 @@ public class Tablero {
             } catch (ArrayIndexOutOfBoundsException | ClassCastException e) {//No es lo mejor, pero de lo contrarío habrían muchos ifs
             }
         }
-        
+
     }
 
     // MÉTODOS DURANTE EL JUEGO ------------------------------------------------
     public void descubrirCasillas(int filaCasilla, int columnaCasilla) {
         Casillas casilla = tablero[filaCasilla][columnaCasilla];
-        System.out.println("genero el efecto domino");
         generarEfectoDomino(casilla);
+        System.out.println("Se descubre la casilla fila = " + filaCasilla + " columna = " + columnaCasilla);
+        System.out.println("Tiene mina " + casilla.ContineMina());
     }
 
     /**
@@ -131,7 +144,7 @@ public class Tablero {
             //2. Recorrer todas las casillas que esten a su alrededor (fila por fila) (columna por columna)y verificar si tienen mina.
             for (int i = 0; i < tablero.length; i++) {
                 for (int j = 0; j < tablero[0].length; j++) {
-                    
+
                 }
             }
             //2.1 Lo que hay que hacer es una especie de marco sobre la mina y descubrirla (El marco termina cuando hay minas)
@@ -156,11 +169,11 @@ public class Tablero {
     public int getFilasTablero() {
         return filasTablero;
     }
-    
+
     public int getColumnasTablero() {
         return columnasTablero;
     }
-    
+
     public int getCantidadDeMinas() {
         return cantidadDeMinas;
     }
@@ -168,5 +181,5 @@ public class Tablero {
     public Casillas[][] getTablero() {
         return tablero;
     }
-    
+
 }

@@ -24,11 +24,10 @@ public class Buscaminas {
     private int opcionJuego;
     private int filaCasilla;
     private int columnaCasilla;
-    private boolean partidaTerminada;
     private boolean seGuardaRegistro;
-    private int contadorDeMinasMarcadas;
+    public static boolean partidaTerminadaBuscaminas;
+    public static int contadorDeMinasMarcadas;
 
-    // INSTANCIAS --------------------------------------------------------------
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Buscaminas(String avatar, int filasTablero, int columnasTablero, int cantidadDeMinas) {
         this.jugador = new Jugador(avatar, 0);
@@ -45,16 +44,15 @@ public class Buscaminas {
      */
     private boolean verificarPartidaTerminada() {
         terminarPartidaPorMina(filaCasilla, columnaCasilla);
-        if (partidaTerminada && seGuardaRegistro) {
-            //Se agrega a los reportes
+        if (partidaTerminadaBuscaminas && seGuardaRegistro) {
+            System.out.println("Se ha perdido la partida por mina, entonces se guarda el registro");
             return true;
         } else {
-            return partidaTerminada;
+            return partidaTerminadaBuscaminas;
         }
     }
 
     public void recibirInformacionCasilla(int filaCasilla, int columnaCasilla) {
-        System.out.println("Buscacaminas obtuvo del controller: fila = " + filaCasilla + " columna = " + columnaCasilla);
         this.filaCasilla = filaCasilla;
         this.columnaCasilla = columnaCasilla;
     }
@@ -69,16 +67,18 @@ public class Buscaminas {
     private void terminarPartidaPorMina(int fila, int columna) {
         if (tablero.tieneMina(fila, columna)) {
             seGuardaRegistro = true;
-            partidaTerminada = true;
+            partidaTerminadaBuscaminas = true;
+            contadorDeMinasMarcadas=0;
         }
     }
 
     private void seleccionarOpciones() {
         switch (opcionJuego) {
             case 1:
+                System.out.println("Se MARCA la casilla fila = " + filaCasilla + " columna = " + columnaCasilla);
                 tablero.getTablero()[filaCasilla][columnaCasilla].setEstaMarcada(true);
-                jBuscaminas.recibirMinaMarcada(filaCasilla, columnaCasilla);
                 contadorDeMinasMarcadas++;
+                System.out.println("Minas marcadas " + contadorDeMinasMarcadas);
                 break;
             case 2:
                 tablero.descubrirCasillas(filaCasilla, columnaCasilla);
@@ -89,12 +89,18 @@ public class Buscaminas {
         }
     }
 
-    public void iniciarPartida() {
+    public void descubrirCasillas() {
+        if (!verificarPartidaTerminada()) {
+            opcionJuego = jBuscaminas.getOpcionJuego();
+            System.out.println(opcionJuego);
+            seleccionarOpciones();
+        }
+    }
+
+    public void marcarCasillas() {
         opcionJuego = jBuscaminas.getOpcionJuego();
         System.out.println(opcionJuego);
         seleccionarOpciones();
     }
-
-    // GETTERS -----------------------------------------------------------------
-    // SETTERS -----------------------------------------------------------------
+    
 }

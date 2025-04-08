@@ -11,6 +11,7 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas;
 
 /**
@@ -34,6 +35,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     public JFMenuPrincipal() {
         //1. Inicializar todos los elementos importantes del JFrame
         initComponents();
+        partidaTerminadaBuscaminas=false;
         //2. Modificar atributos del frame para que sea más chido
         this.setResizable(false);//Para que no se deforme todo
         this.setLocationRelativeTo(null);//Lo centra

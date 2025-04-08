@@ -16,15 +16,16 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
 import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
 import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas.jBuscaminas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 
 /**
  * JBuscaminas Frame es el frame encargado de mostrar todo el juego de
  * buscaminas y de comunicarle lo sucedido a buscaminas controller.
  *
  * @author YmCris
- * @see Buscaminas
  * @see BuscaminasController
  */
 public class JFBuscaminas extends javax.swing.JFrame {
@@ -90,13 +91,29 @@ public class JFBuscaminas extends javax.swing.JFrame {
                         if (jBuscaminas.getOpcionJuego() == 1) {
                             if (botones[fila][columna].isSelected()) {
                                 botones[fila][columna].setText("🚩");
+                                jBuscaminas.recibirDatosCasillas(fila, columna);
+                                jBuscaminas.setOpcionJuego(1);
+                                jBuscaminas.jugar();
                             } else {
                                 botones[fila][columna].setText("");
+                                contadorDeMinasMarcadas = contadorDeMinasMarcadas - 1;
                             }
+                            txtMinasMarcadas.setText(String.valueOf(contadorDeMinasMarcadas));
                         } else {
+                            if (botones[fila][columna].getText().equals("🚩")) {
+                                botones[fila][columna].setSelected(true);
+                            }
                             if (!botones[fila][columna].getText().equals("🚩")) {
                                 jBuscaminas.recibirDatosCasillas(fila, columna);
-                                jBuscaminas.jugar();
+                                if (partidaTerminadaBuscaminas == false) {
+                                    jBuscaminas.setOpcionJuego(2);
+                                    jBuscaminas.jugar();
+                                    if (partidaTerminadaBuscaminas == true) {
+                                        JOptionPane.showMessageDialog(null, "HAS ENCONTRADO UNA MINA, HAS PERDIDO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
+                                        eliminarFrame();
+                                        new JFMenuPrincipal().setVisible(true);
+                                    }
+                                }
                                 botones[fila][columna].setEnabled(false);
                             }
                         }
@@ -107,6 +124,11 @@ public class JFBuscaminas extends javax.swing.JFrame {
         }
         pnlTablero.revalidate();
         pnlTablero.repaint();
+    }
+
+    private void eliminarFrame() {
+        musicaBuscaminas.stop();
+        this.dispose();
     }
 
     @SuppressWarnings("unchecked")
@@ -269,6 +291,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
         txtTiempoJugado.setEditable(false);
         txtTiempoJugado.setBackground(new java.awt.Color(51, 51, 51));
+        txtTiempoJugado.setForeground(new java.awt.Color(255, 255, 255));
         txtTiempoJugado.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtTiempoJugado.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -282,6 +305,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
         txtMinasMarcadas.setEditable(false);
         txtMinasMarcadas.setBackground(new java.awt.Color(51, 51, 51));
+        txtMinasMarcadas.setForeground(new java.awt.Color(255, 255, 255));
         txtMinasMarcadas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtMinasMarcadas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -291,6 +315,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
         txtMinasRestantes.setEditable(false);
         txtMinasRestantes.setBackground(new java.awt.Color(51, 51, 51));
+        txtMinasRestantes.setForeground(new java.awt.Color(255, 255, 255));
         txtMinasRestantes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
 
         lblMinasRestantes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -411,11 +436,6 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
         }
     }//GEN-LAST:event_btnDescubrirCasillasActionPerformed
-
-    private void marcarCasilla() {
-        botones[filaCasilla][columnaCasilla].setBackground(Color.red);
-        botones[filaCasilla][columnaCasilla].setText("BANDERA");
-    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

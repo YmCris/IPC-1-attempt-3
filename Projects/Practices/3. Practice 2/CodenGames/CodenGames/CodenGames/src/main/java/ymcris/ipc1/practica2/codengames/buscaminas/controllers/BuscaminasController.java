@@ -1,9 +1,9 @@
 package ymcris.ipc1.practica2.codengames.buscaminas.controllers;
 
-import javax.swing.JFrame;
 import ymcris.ipc1.practica2.codengames.Controllers;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFBuscaminas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 
 /**
  * Clase BuscaminasController Es la clase Controller que se encarga de
@@ -53,7 +53,11 @@ public class BuscaminasController extends Controllers {
 
     @Override
     public void jugar() {
-        buscaminas.iniciarPartida();
+        if (partidaTerminadaBuscaminas == false && opcionJuego == 2) {
+            buscaminas.descubrirCasillas();
+        } else {
+            buscaminas.marcarCasillas();
+        }
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
@@ -66,11 +70,6 @@ public class BuscaminasController extends Controllers {
      */
     public void recibirDatosCasillas(int filaCasilla, int columnaCasilla) {
         buscaminas.recibirInformacionCasilla(filaCasilla, columnaCasilla);
-    }
-    
-    public void recibirMinaMarcada(int filaCasilla, int columnaCasilla) {
-        buscaminasFrame.setFilaCasilla(filaCasilla);
-        buscaminasFrame.setColumnaCasilla(columnaCasilla);
     }
 
     /**
