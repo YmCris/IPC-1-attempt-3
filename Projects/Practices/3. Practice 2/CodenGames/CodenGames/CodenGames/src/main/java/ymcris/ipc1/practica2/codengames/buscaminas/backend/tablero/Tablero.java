@@ -21,7 +21,8 @@ public class Tablero {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filasTablero;
     private int columnasTablero;
-    private int cantidadDeMinas;
+    private int cantidadDeCasillasMina;
+    private int cantidadDeCasillasNormales;
 
     // INSTANCIAS --------------------------------------------------------------
     private Random random = new Random();
@@ -38,7 +39,8 @@ public class Tablero {
     public Tablero(int filasTablero, int columnasTablero, int cantidadDeMinas) {
         this.filasTablero = filasTablero;
         this.columnasTablero = columnasTablero;
-        this.cantidadDeMinas = cantidadDeMinas;
+        this.cantidadDeCasillasMina = cantidadDeMinas;
+        this.cantidadDeCasillasNormales = (filasTablero * columnasTablero) - cantidadDeMinas;
         this.tablero = new Casillas[filasTablero][columnasTablero];
     }
 
@@ -54,7 +56,7 @@ public class Tablero {
         }
         System.out.println("Se crea el tablero backend de tamaño filas = " + tablero.length + " columnas = " + tablero[0].length);
         agregarMinas();
-        System.out.println("Se han agregado las " + cantidadDeMinas + " minas");
+        System.out.println("Se han agregado las " + cantidadDeCasillasMina + " minas");
     }
 
     /**
@@ -62,73 +64,43 @@ public class Tablero {
      * true a las a sus casillas normales aledañas.
      */
     private void agregarMinas() {
-        for (int i = 0; i < cantidadDeMinas; i++) {
-            int filaRandom = random.nextInt(1, tablero.length);
-            int columnaRandom = random.nextInt(1, tablero[0].length);
-            //1. Agregar las minas al tablero.
-            if (tablero[filaRandom][columnaRandom].ContineMina()) {//Si ya hay una mina en esa posición, la agrega en una donde no haya
-                boolean minaAgregada = false;
-                for (int j = 0; j < tablero.length && !minaAgregada; j++) {//filas
-                    for (int k = 0; k < tablero[0].length && !minaAgregada; k++) {//columnas
-                        if (tablero[j][k].ContineMina() == false) {
-                            tablero[j][k] = new CasillasMina(j, k, true, false, true);
-                            minaAgregada = true;
-                        }
-                    }
-                }
-            } else {
-                tablero[filaRandom][columnaRandom] = new CasillasMina(filaRandom, columnaRandom, true, false, true);
-            }
-            //2. Marcar las adyacentes a estas como casillasMinaAdyacentes = true;
-            try {
-                //marco superior
-                if (tablero[filaRandom - 1][columnaRandom - 1] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                if (tablero[filaRandom - 1][columnaRandom] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                if (tablero[filaRandom - 1][columnaRandom + 1] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                //marco inferior
-                if (tablero[filaRandom + 1][columnaRandom - 1] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                if (tablero[filaRandom + 1][columnaRandom] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                if (tablero[filaRandom + 1][columnaRandom + 1] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                //Marco izquierdo
-                if (tablero[filaRandom][columnaRandom - 1] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-                //Marco Derecho
-                if (tablero[filaRandom][columnaRandom + 1] instanceof CasillasNormales normal) {
-                    normal.setContieneMinaAdyacente(true);
-                    normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
-                }
-            } catch (ArrayIndexOutOfBoundsException | ClassCastException e) {//No es lo mejor, pero de lo contrarío habrían muchos ifs
+        int minasColocadas = 0;
+        while (minasColocadas < cantidadDeCasillasMina) {
+            int fila = random.nextInt(tablero.length);
+            int columna = random.nextInt(tablero[0].length);
+            if (!tablero[fila][columna].ContineMina()) {
+                tablero[fila][columna] = new CasillasMina(fila, columna, true, false, true);
+                marcarCasillasAdyacentes(fila, columna);
+                minasColocadas++;
             }
         }
+    }
 
+    private void marcarCasillasAdyacentes(int fila, int columna) {
+        for (int i = -1; i <= 1; i++) {//Filas 
+            for (int j = -1; j <= 1; j++) {// Columnas 
+                if (i == 0 && j == 0) {//Posición de la casilla
+                    continue;//Salta la mina, ya que no se quiere hacer nada con está
+                }
+                int filaAdyacente = fila + i;
+                int columnaAdyacente = columna + j;
+                if (filaAdyacente >= 0 && filaAdyacente < tablero.length && columnaAdyacente >= 0 && columnaAdyacente < tablero[0].length) {//Para que no se marquen fuera del tablero
+                    if (tablero[filaAdyacente][columnaAdyacente] instanceof CasillasNormales normal) {
+                        normal.setContieneMinaAdyacente(true);
+                        normal.setCantidadDeMinasAdyacentes(normal.getCantidadDeMinasAdyacentes() + 1);
+                    }
+                }
+            }
+        }
     }
 
     // MÉTODOS DURANTE EL JUEGO ------------------------------------------------
     public void descubrirCasillas(int filaCasilla, int columnaCasilla) {
         Casillas casilla = tablero[filaCasilla][columnaCasilla];
+        casilla.setEstaCubierta(false);
         generarEfectoDomino(casilla);
         System.out.println("Se descubre la casilla fila = " + filaCasilla + " columna = " + columnaCasilla);
-        System.out.println("Tiene mina " + casilla.ContineMina());
+        System.out.println("Tiene mina " + casilla.ContineMina() + " esta cubierta: " + casilla.EstaCubierta());
     }
 
     /**
@@ -139,18 +111,32 @@ public class Tablero {
     private void generarEfectoDomino(Casillas casilla) {
         if (!casilla.ContineMina()) {//No se generá un efecto domino sobre una mina, ya que se termina el juego
             //1. Obtener la posición de la casilla.
-            int filaCasilla = casilla.getFilaCasilla();
-            int columnaCasilla = casilla.getColumnaCasilla();
-            //2. Recorrer todas las casillas que esten a su alrededor (fila por fila) (columna por columna)y verificar si tienen mina.
-            for (int i = 0; i < tablero.length; i++) {
-                for (int j = 0; j < tablero[0].length; j++) {
+            try {
+                CasillasNormales casillaNormal = (CasillasNormales) casilla;//Casteamos la casilla para verificar el efecto domino
+                if (!casillaNormal.ContieneMinaAdyacente()) {//No hay minas adyacentes por lo tanto esta libre para hacer el efecto domino
+                    System.out.println("Se genera el efecto Domino");
+                    int filaCasilla = casilla.getFilaCasilla();
+                    int columnaCasilla = casilla.getColumnaCasilla();
+                    //2. Recorrer todas las casillas que esten a su alrededor (fila por fila) (columna por columna)y verificar si tienen mina.
+                    for (int i = 0; i < tablero.length; i++) {
+                        for (int j = 0; j < tablero[0].length; j++) {
 
+                        }
+                    }
+                    //2.1 Lo que hay que hacer es una especie de marco sobre la mina y descubrirla (El marco termina cuando hay minas)
+                    //2.1.1 Encontrar la altura del marco.
+                    //3. Se descubren las minas.
+                } else {
+                    descubrirCasillasAdyacentes(casillaNormal);
                 }
+            } catch (ClassCastException e) {
             }
-            //2.1 Lo que hay que hacer es una especie de marco sobre la mina y descubrirla (El marco termina cuando hay minas)
-            //2.1.1 Encontrar la altura del marco.
-            //3. Se descubren las minas.
         }
+    }
+
+    public String descubrirCasillasAdyacentes(CasillasNormales casilla) {
+        int cantidadDeMinasAdyacentes = casilla.getCantidadDeMinasAdyacentes();
+        return String.valueOf(cantidadDeMinasAdyacentes);
     }
 
     // FUNCIONES ---------------------------------------------------------------
@@ -165,6 +151,26 @@ public class Tablero {
         return tablero[fila][columna].ContineMina();
     }
 
+    public boolean verificarJugadorGanador() {
+        int contadorCasillasMina = 0;
+        int contadorCasillasNormales = 0;
+        for (Casillas[] tablero1 : tablero) {
+            for (int j = 0; j < tablero1.length; j++) {
+                if (tablero1[j] instanceof CasillasNormales) {
+                    if (!tablero1[j].EstaCubierta()) {//La casilla normal está descubierta
+                        contadorCasillasNormales++;
+                    }
+                }
+                if (tablero1[j] instanceof CasillasMina) {
+                    if (tablero1[j].EstaMarcada()) {//La casilla mina está marcada
+                        contadorCasillasMina++;
+                    }
+                }
+            }
+        }
+        return contadorCasillasMina == cantidadDeCasillasMina && contadorCasillasNormales == cantidadDeCasillasNormales;
+    }
+
     // GETTERS -----------------------------------------------------------------
     public int getFilasTablero() {
         return filasTablero;
@@ -175,7 +181,7 @@ public class Tablero {
     }
 
     public int getCantidadDeMinas() {
-        return cantidadDeMinas;
+        return cantidadDeCasillasMina;
     }
 
     public Casillas[][] getTablero() {

@@ -4,6 +4,7 @@ import ymcris.ipc1.practica2.codengames.Controllers;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
+import ymcris.ipc1.practica2.codengames.buscaminas.backend.casillas.CasillasNormales;
 
 /**
  * Clase BuscaminasController Es la clase Controller que se encarga de
@@ -25,14 +26,14 @@ public class BuscaminasController extends Controllers {
     private int columnasTablero;
     private int cantidadDeMinas;
 
-    // MÉTODO CONSTRUCTOR ------------------------------------------------------ñ
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public BuscaminasController() {
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
     public boolean todoEnOrden(String avatar, int filas, int columnas, int minas) throws NumberFormatException {
-        if (avatar.isBlank() || filas < 10 || columnas < 10 || minas < 1 || minas > filas * columnas) {
+        if (avatar.isBlank() || filas < 5 || columnas < 5 || minas < 1 || minas > filas * columnas) {
             return false;
         } else {
             this.avatar = avatar;
@@ -85,10 +86,10 @@ public class BuscaminasController extends Controllers {
     public String encontrarErrores(String avatar, int filas, int columnas, int minas) {
         if (avatar.isBlank()) {
             return "No puedes tener un nombre en blanco";
-        } else if (filas < 10) {
-            return "Las filas tienen que ser mayor a 10";
-        } else if (columnas < 10) {
-            return "Las columnas tienen que ser mayor a 10";
+        } else if (filas < 5) {
+            return "Las filas tienen que ser mayor a 5";
+        } else if (columnas < 5) {
+            return "Las columnas tienen que ser mayor a 5";
         } else if (minas < 1) {
             return "Tienes que tener almenos una mina";
         } else if (minas > filas * columnas) {
@@ -96,6 +97,15 @@ public class BuscaminasController extends Controllers {
         } else {
             return "";
         }
+    }
+
+    public String cantidadDeMinasAdyacentes() {
+        try {
+            CasillasNormales casilla = (CasillasNormales) buscaminas.getTablero().getTablero()[buscaminas.getFilaCasilla()][buscaminas.getColumnaCasilla()];
+            return buscaminas.getTablero().descubrirCasillasAdyacentes(casilla);
+        } catch (ClassCastException e) {
+        }
+        return "";
     }
 
     // GETTERS -----------------------------------------------------------------

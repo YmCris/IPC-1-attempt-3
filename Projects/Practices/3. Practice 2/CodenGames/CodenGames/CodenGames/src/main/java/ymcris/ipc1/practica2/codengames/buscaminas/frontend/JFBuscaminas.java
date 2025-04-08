@@ -17,6 +17,7 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
 import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas.jBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
@@ -88,34 +89,10 @@ public class JFBuscaminas extends javax.swing.JFrame {
                 botones[i][j].addActionListener(new ActionListener() {
                     @Override
                     public void actionPerformed(ActionEvent evento) {
-                        if (jBuscaminas.getOpcionJuego() == 1) {
-                            if (botones[fila][columna].isSelected()) {
-                                botones[fila][columna].setText("🚩");
-                                jBuscaminas.recibirDatosCasillas(fila, columna);
-                                jBuscaminas.setOpcionJuego(1);
-                                jBuscaminas.jugar();
-                            } else {
-                                botones[fila][columna].setText("");
-                                contadorDeMinasMarcadas = contadorDeMinasMarcadas - 1;
-                            }
-                            txtMinasMarcadas.setText(String.valueOf(contadorDeMinasMarcadas));
-                        } else {
-                            if (botones[fila][columna].getText().equals("🚩")) {
-                                botones[fila][columna].setSelected(true);
-                            }
-                            if (!botones[fila][columna].getText().equals("🚩")) {
-                                jBuscaminas.recibirDatosCasillas(fila, columna);
-                                if (partidaTerminadaBuscaminas == false) {
-                                    jBuscaminas.setOpcionJuego(2);
-                                    jBuscaminas.jugar();
-                                    if (partidaTerminadaBuscaminas == true) {
-                                        JOptionPane.showMessageDialog(null, "HAS ENCONTRADO UNA MINA, HAS PERDIDO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
-                                        eliminarFrame();
-                                        new JFMenuPrincipal().setVisible(true);
-                                    }
-                                }
-                                botones[fila][columna].setEnabled(false);
-                            }
+                        if (jBuscaminas.getOpcionJuego() == 1) {//Marcar casilla
+                            marcarBotones(fila, columna);
+                        } else {//Descubrir casillas
+                            descubrirBotones(fila, columna);
                         }
                     }
                 });
@@ -126,9 +103,54 @@ public class JFBuscaminas extends javax.swing.JFrame {
         pnlTablero.repaint();
     }
 
+    private void marcarBotones(int fila, int columna) {
+        if (botones[fila][columna].isSelected()) {//Marca una casilla
+            botones[fila][columna].setText("🚩");
+            jBuscaminas.recibirDatosCasillas(fila, columna);
+            contadorDeMinasMarcadas++;
+        } else {//Desmarcar una casilla
+            botones[fila][columna].setText("");
+            contadorDeMinasMarcadas = contadorDeMinasMarcadas - 1;
+        }
+        if (partidaGanadaBuscaminas) {//Partida Ganada
+            contadorDeMinasMarcadas++;
+            jugadorGanador();
+        } else {
+            jBuscaminas.jugar();
+        }
+        txtMinasMarcadas.setText(String.valueOf(contadorDeMinasMarcadas));
+    }
+
+    private void descubrirBotones(int fila, int columna) {
+        if (botones[fila][columna].getText().equals("🚩")) {//Verifica que no se pueda desmarcar una casilla mina
+            botones[fila][columna].setSelected(true);
+        }
+        if (!botones[fila][columna].getText().equals("🚩")) {//descrubre una casilla si es que no es una casilla mina
+            jBuscaminas.recibirDatosCasillas(fila, columna);
+            botones[fila][columna].setText(jBuscaminas.cantidadDeMinasAdyacentes());
+            if (partidaGanadaBuscaminas) {
+                jugadorGanador();
+            }
+            if (!partidaTerminadaBuscaminas) {
+                jBuscaminas.jugar();
+                if (partidaTerminadaBuscaminas) {
+                    JOptionPane.showMessageDialog(null, "HAS ENCONTRADO UNA MINA, HAS PERDIDO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
+                    eliminarFrame();
+                }
+            }
+            botones[fila][columna].setEnabled(false);
+        }
+    }
+
     private void eliminarFrame() {
         musicaBuscaminas.stop();
         this.dispose();
+        new JFMenuPrincipal().setVisible(true);
+    }
+
+    private void jugadorGanador() {
+        JOptionPane.showMessageDialog(null, "FELICIDADES HAS GANADO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
+        eliminarFrame();
     }
 
     @SuppressWarnings("unchecked")
@@ -433,7 +455,6 @@ public class JFBuscaminas extends javax.swing.JFrame {
             //Desseleccionar este y deshabilitarlo
             btnDescubrirCasillas.setEnabled(false);
             btnDescubrirCasillas.setSelected(false);
-
         }
     }//GEN-LAST:event_btnDescubrirCasillasActionPerformed
 

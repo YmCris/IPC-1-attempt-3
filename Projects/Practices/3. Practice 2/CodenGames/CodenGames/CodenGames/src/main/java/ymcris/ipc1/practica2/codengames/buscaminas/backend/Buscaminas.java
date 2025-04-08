@@ -25,8 +25,9 @@ public class Buscaminas {
     private int filaCasilla;
     private int columnaCasilla;
     private boolean seGuardaRegistro;
-    public static boolean partidaTerminadaBuscaminas;
     public static int contadorDeMinasMarcadas;
+    public static boolean partidaGanadaBuscaminas;
+    public static boolean partidaTerminadaBuscaminas;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Buscaminas(String avatar, int filasTablero, int columnasTablero, int cantidadDeMinas) {
@@ -68,16 +69,15 @@ public class Buscaminas {
         if (tablero.tieneMina(fila, columna)) {
             seGuardaRegistro = true;
             partidaTerminadaBuscaminas = true;
-            contadorDeMinasMarcadas=0;
+            contadorDeMinasMarcadas = 0;
         }
     }
 
     private void seleccionarOpciones() {
         switch (opcionJuego) {
             case 1:
-                System.out.println("Se MARCA la casilla fila = " + filaCasilla + " columna = " + columnaCasilla);
                 tablero.getTablero()[filaCasilla][columnaCasilla].setEstaMarcada(true);
-                contadorDeMinasMarcadas++;
+                System.out.println("Se MARCA la casilla fila = " + filaCasilla + " columna = " + columnaCasilla + " esta marcada : " + tablero.getTablero()[filaCasilla][columnaCasilla].EstaMarcada());
                 System.out.println("Minas marcadas " + contadorDeMinasMarcadas);
                 break;
             case 2:
@@ -90,7 +90,10 @@ public class Buscaminas {
     }
 
     public void descubrirCasillas() {
-        if (!verificarPartidaTerminada()) {
+        if (tablero.verificarJugadorGanador()) {
+            partidaGanadaBuscaminas = true;
+            System.out.println("Se ha ganado la partida, entonces se guarda el registro");
+        } else if (!verificarPartidaTerminada()) {
             opcionJuego = jBuscaminas.getOpcionJuego();
             System.out.println(opcionJuego);
             seleccionarOpciones();
@@ -98,9 +101,26 @@ public class Buscaminas {
     }
 
     public void marcarCasillas() {
-        opcionJuego = jBuscaminas.getOpcionJuego();
-        System.out.println(opcionJuego);
-        seleccionarOpciones();
+        if (tablero.verificarJugadorGanador()) {
+            partidaGanadaBuscaminas = true;
+            System.out.println("Se ha ganado la partida, entonces se guarda el registro");
+        } else {
+            opcionJuego = jBuscaminas.getOpcionJuego();
+            System.out.println(opcionJuego);
+            seleccionarOpciones();
+        }
     }
-    
+
+    public Tablero getTablero() {
+        return tablero;
+    }
+
+    public int getFilaCasilla() {
+        return filaCasilla;
+    }
+
+    public int getColumnaCasilla() {
+        return columnaCasilla;
+    }
+
 }
