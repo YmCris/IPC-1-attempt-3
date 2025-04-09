@@ -11,12 +11,12 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.SwingConstants;
+import ymcris.ipc1.practica2.codengames.a.backend.Threads.PatoThread;
 import ymcris.ipc1.practica2.codengames.a.backend.Threads.Tiempo;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
+import static ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter.hController;
 
 /**
  * JFHunter es el frame encargado de mostrar todos los componentes del juego
@@ -30,15 +30,18 @@ public class JFHunter extends javax.swing.JFrame {
     private Timer contador;
     private Clip musicaPatos;
     private Tiempo threadTiempo;
+    private JButton[][] botones;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private boolean acerto;
     private int botonDondeSeEncuentraElPato;
 
     // CONSTANTES --------------------------------------------------------------
+    public static final int FILAS_TABLERO_PATO = 5;
+    public static final int COLUMNAS_TABLERO_PATO = 5;
+    public static final String NOMBRE_IMAGEN_PATO = "/patoVolador.png";
     private static final String NOMBRE_MUSICA_PATOS = "/musicaPatos.wav";
     private static final String NOMBRE_IMAGEN_FONDO = "/escenarioPatos.png";
-    private static final String NOMBRE_IMAGEN_PATO = "/pato.png";
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFHunter() {
@@ -49,12 +52,14 @@ public class JFHunter extends javax.swing.JFrame {
         //2. Agregar fondo al panel de los patos
         JPanelPersonalizado panelPersonalizado = new JPanelPersonalizado(pnlJuego, NOMBRE_IMAGEN_FONDO);
         pnlJuego.add(panelPersonalizado).repaint();
-        //3. Hacer que los botones sean transparentes
-        transparentarBotones();
         //4. Iniciar el contador de tiempo del juego
         iniciarContador();
-        //4.5 Mostrar el icono de los patos
-        actualizarPatos();
+        //4.5 agregar botones al panel 
+        agregarBotones();
+        //4.5.5 Ocultar botones
+        ocultarBotones(botones);
+        pnlJuego.setComponentZOrder(panelPersonalizado, pnlJuego.getComponentCount() - 1);
+        mostrarPatos();
         try {//5. Poner música
             URL rutaMusica = getClass().getResource(NOMBRE_MUSICA_PATOS);
             if (rutaMusica != null) {
@@ -78,51 +83,69 @@ public class JFHunter extends javax.swing.JFrame {
         contador = new Timer(1000, new ActionListener() {//Para que se actualice con el frame
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println(threadTiempo.getTiempoTotal());
                 txtTiempoJugado.setText(String.valueOf(threadTiempo.getTiempoTotal()));
             }
         });
         contador.start();
     }
-    
-    private void actualizarPatos() {
-        ImageIcon iconPato = new ImageIcon(getClass().getResource(NOMBRE_IMAGEN_PATO));
-        btn1.setIcon(iconPato);
-        btn1.setHorizontalTextPosition(SwingConstants.CENTER);
-        btn1.setVerticalTextPosition(SwingConstants.BOTTOM);
-    }
 
     /**
-     * Método encargado de transparentar los botones del frame
+     * Método encargado de agregar los botones al pnlJuego
      */
-    private void transparentarBotones() {
-        btn1.setOpaque(false);
-        btn1.setContentAreaFilled(false);
-        btn1.setBorderPainted(false);
-        btn2.setOpaque(false);
-        btn2.setContentAreaFilled(false);
-        btn2.setBorderPainted(false);
-        btn3.setOpaque(false);
-        btn3.setContentAreaFilled(false);
-        btn3.setBorderPainted(false);
-        btn4.setOpaque(false);
-        btn4.setContentAreaFilled(false);
-        btn4.setBorderPainted(false);
-        btn5.setOpaque(false);
-        btn5.setContentAreaFilled(false);
-        btn5.setBorderPainted(false);
-        btn6.setOpaque(false);
-        btn6.setContentAreaFilled(false);
-        btn6.setBorderPainted(false);
-        btn7.setOpaque(false);
-        btn7.setContentAreaFilled(false);
-        btn7.setBorderPainted(false);
-        btn8.setOpaque(false);
-        btn8.setContentAreaFilled(false);
-        btn8.setBorderPainted(false);
-        btn9.setOpaque(false);
-        btn9.setContentAreaFilled(false);
-        btn9.setBorderPainted(false);
+    private void agregarBotones() {
+        botones = new JButton[FILAS_TABLERO_PATO][COLUMNAS_TABLERO_PATO];
+        pnlJuego.setLayout(null);//Para personalizar el panel con el fondo de patos con los botones
+        for (int i = 0; i < botones.length; i++) {
+            for (int j = 0; j < botones[0].length; j++) {
+                botones[i][j] = new JButton();
+                int x = 100 + j * 150;
+                int y = 100 + i * 100;
+                botones[i][j].setBounds(x, y, 120, 80);//Posiciona todos los botones para ponerlos en el panel
+                botones[i][j].setBorderPainted(false);
+                int fila = i;
+                int columna = j;
+                botones[i][j].addActionListener(new ActionListener() {
+                    @Override
+                    public void actionPerformed(ActionEvent evento) {
+                        //1. Mostrar el pato de forma aleatoria (Realizado en el thread)
+                        //2. Capturar el teclazo (Realizado en este action lister)
+                        //3. Verificar si el boton tiene pato (botonConPato())
+                        botonConPato(botones[fila][columna]);
+                        //4. Comunicarle al backende si es un acierto o no
+                    }
+                });
+                pnlJuego.add(botones[i][j]);
+            }
+        }
+        pnlJuego.revalidate();
+        pnlJuego.repaint();
+    }
+
+    private boolean botonConPato(JButton btn) {
+        if (btn.getIcon() != null && btn.getIcon().getIconHeight() == 167&& btn.getIcon().getIconWidth() == 190 ) {
+            System.out.println("Yo tengo al pato!");
+            return true;
+        } else {
+            System.out.println("Yo no tengo ningun pato");
+            return false;
+        }
+    }
+
+    private void mostrarPatos() {
+        int velocidadInicial = hController.getHunter().getPato().getVelocidad();
+        int cantidadDeAciertos = hController.getHunter().getAciertosParaAumentarVelocidad();
+        int reduccionDeTiempo = hController.getHunter().getReduccionDeTiempo();
+        Thread patoThread = new PatoThread(pnlJuego, botones, velocidadInicial, reduccionDeTiempo, cantidadDeAciertos);
+        patoThread.start();
+    }
+
+    private void ocultarBotones(JButton[][] btns) {
+        for (JButton[] btn : btns) {
+            for (int j = 0; j < btns[0].length; j++) {
+                btn[j].setOpaque(false);
+                btn[j].setContentAreaFilled(false);
+            }
+        }
     }
 
     // CÓDIGO "AUTOGENERADO" ---------------------------------------------------
@@ -135,16 +158,8 @@ public class JFHunter extends javax.swing.JFrame {
         btnInformacion = new javax.swing.JButton();
         btnSalirDelJuego = new javax.swing.JButton();
         btnRegresarAlMenu = new javax.swing.JButton();
+        lblNombreJugador = new javax.swing.JLabel();
         pnlJuego = new javax.swing.JPanel();
-        btn5 = new javax.swing.JButton();
-        btn2 = new javax.swing.JButton();
-        btn4 = new javax.swing.JButton();
-        btn6 = new javax.swing.JButton();
-        btn7 = new javax.swing.JButton();
-        btn8 = new javax.swing.JButton();
-        btn9 = new javax.swing.JButton();
-        btn1 = new javax.swing.JButton();
-        btn3 = new javax.swing.JButton();
         pnlInformacion = new javax.swing.JPanel();
         lblTiempoJugado = new javax.swing.JLabel();
         txtTiempoJugado = new javax.swing.JTextField();
@@ -200,6 +215,10 @@ public class JFHunter extends javax.swing.JFrame {
             }
         });
 
+        lblNombreJugador.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblNombreJugador.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombreJugador.setText("PARTIDA DE:");
+
         javax.swing.GroupLayout pnlOpcionesLayout = new javax.swing.GroupLayout(pnlOpciones);
         pnlOpciones.setLayout(pnlOpcionesLayout);
         pnlOpcionesLayout.setHorizontalGroup(
@@ -207,6 +226,8 @@ public class JFHunter extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnRegresarAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(38, 38, 38)
+                .addComponent(lblNombreJugador)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -229,134 +250,23 @@ public class JFHunter extends javax.swing.JFrame {
                     .addGroup(pnlOpcionesLayout.createSequentialGroup()
                         .addComponent(btnRegresarAlMenu, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())))
+            .addGroup(pnlOpcionesLayout.createSequentialGroup()
+                .addGap(17, 17, 17)
+                .addComponent(lblNombreJugador)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        btn5.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn5ActionPerformed(evt);
-            }
-        });
-
-        btn2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn2ActionPerformed(evt);
-            }
-        });
-
-        btn4.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn4ActionPerformed(evt);
-            }
-        });
-
-        btn6.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn6ActionPerformed(evt);
-            }
-        });
-
-        btn7.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn7ActionPerformed(evt);
-            }
-        });
-
-        btn8.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn8ActionPerformed(evt);
-            }
-        });
-
-        btn9.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn9ActionPerformed(evt);
-            }
-        });
-
-        btn1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn1ActionPerformed(evt);
-            }
-        });
-
-        btn3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn3ActionPerformed(evt);
-            }
-        });
+        pnlJuego.setMaximumSize(new java.awt.Dimension(0, 0));
 
         javax.swing.GroupLayout pnlJuegoLayout = new javax.swing.GroupLayout(pnlJuego);
         pnlJuego.setLayout(pnlJuegoLayout);
         pnlJuegoLayout.setHorizontalGroup(
             pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                .addGap(237, 237, 237)
-                .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(152, 152, 152)
-                .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuegoLayout.createSequentialGroup()
-                .addGap(56, 56, 56)
-                .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(158, 158, 158)
-                .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34))
-            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuegoLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(126, 126, 126)))
-                .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(107, 107, 107)
-                .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(42, 42, 42))
+            .addGap(0, 1100, Short.MAX_VALUE)
         );
         pnlJuegoLayout.setVerticalGroup(
             pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btn1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(34, 34, 34))
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addGap(43, 43, 43)
-                                .addComponent(btn3, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addComponent(btn4, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addGap(96, 96, 96)
-                                .addComponent(btn5, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlJuegoLayout.createSequentialGroup()
-                                .addGap(115, 115, 115)
-                                .addComponent(btn9, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(62, 62, 62)
-                        .addComponent(btn7, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)))
-                .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGap(41, 41, 41)
-                        .addGroup(pnlJuegoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuegoLayout.createSequentialGroup()
-                                .addComponent(btn2, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(109, 109, 109))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlJuegoLayout.createSequentialGroup()
-                                .addComponent(btn8, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(125, 125, 125))))
-                    .addGroup(pnlJuegoLayout.createSequentialGroup()
-                        .addGap(69, 69, 69)
-                        .addComponent(btn6, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))))
+            .addGap(0, 665, Short.MAX_VALUE)
         );
 
         pnlInformacion.setBackground(new java.awt.Color(51, 51, 0));
@@ -492,56 +402,12 @@ public class JFHunter extends javax.swing.JFrame {
     private void txtTiempoJugado2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugado2ActionPerformed
     }//GEN-LAST:event_txtTiempoJugado2ActionPerformed
 
-    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        System.out.println("9");
-    }//GEN-LAST:event_btn9ActionPerformed
-
-    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        System.out.println("8");
-    }//GEN-LAST:event_btn8ActionPerformed
-
-    private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        System.out.println("5");
-    }//GEN-LAST:event_btn5ActionPerformed
-
-    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        System.out.println("7");
-    }//GEN-LAST:event_btn7ActionPerformed
-
-    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        System.out.println("6");
-    }//GEN-LAST:event_btn6ActionPerformed
-
-    private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
-        System.out.println("2");
-    }//GEN-LAST:event_btn2ActionPerformed
-
-    private void btn4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn4ActionPerformed
-        System.out.println("4");
-    }//GEN-LAST:event_btn4ActionPerformed
-
-    private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
-        System.out.println("1");
-    }//GEN-LAST:event_btn1ActionPerformed
-
-    private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        System.out.println("3");
-    }//GEN-LAST:event_btn3ActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn1;
-    private javax.swing.JButton btn2;
-    private javax.swing.JButton btn3;
-    private javax.swing.JButton btn4;
-    private javax.swing.JButton btn5;
-    private javax.swing.JButton btn6;
-    private javax.swing.JButton btn7;
-    private javax.swing.JButton btn8;
-    private javax.swing.JButton btn9;
     private javax.swing.JButton btnInformacion;
     private javax.swing.JButton btnMusica;
     private javax.swing.JButton btnRegresarAlMenu;
     private javax.swing.JButton btnSalirDelJuego;
+    private javax.swing.JLabel lblNombreJugador;
     private javax.swing.JLabel lblTiempoJugado;
     private javax.swing.JLabel lblTiempoJugado1;
     private javax.swing.JLabel lblTiempoJugado2;
@@ -552,4 +418,5 @@ public class JFHunter extends javax.swing.JFrame {
     private javax.swing.JTextField txtTiempoJugado1;
     private javax.swing.JTextField txtTiempoJugado2;
     // End of variables declaration//GEN-END:variables
+
 }

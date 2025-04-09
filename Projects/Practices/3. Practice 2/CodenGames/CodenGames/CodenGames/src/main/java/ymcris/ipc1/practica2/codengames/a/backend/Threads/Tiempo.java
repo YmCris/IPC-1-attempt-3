@@ -24,7 +24,6 @@ public class Tiempo extends Thread {
             }
         }
         System.out.println("El hilo ha terminado");
-        this.stop();
     }
     
     // MÉTODOS CONCRECTOS ------------------------------------------------------

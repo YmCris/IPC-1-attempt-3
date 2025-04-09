@@ -69,5 +69,11 @@ public class HunterController extends Controllers {
         this.JFHunter = new JFHunter();
         this.JFHunter.setVisible(true);
     }
+    
+    // GETTERS -----------------------------------------------------------------
+    public Hunter getHunter() {
+        return hunter;
+    }
+    
 
 }

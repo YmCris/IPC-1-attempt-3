@@ -37,17 +37,17 @@ public class Hunter {
     public void crearPartida() {
         pato.oculto(false);
     }
-    
+
     public void jugar() {
         if (!verificarPartidaTerminada()) {
             System.out.println("Jugamos");
         }
     }
-    
+
     public void recibirDatosController() {
-        
+
     }
-    
+
     public boolean verificarPartidaTerminada() {
         return aciertosFallidos >= ACIERTOS_PARA_PERDER;
     }
@@ -56,26 +56,42 @@ public class Hunter {
     public int getAciertos() {
         return aciertos;
     }
-    
+
+    public Jugador getJugador() {
+        return jugador;
+    }
+
+    public int getAciertosFallidos() {
+        return aciertosFallidos;
+    }
+
+    public int getAciertosParaAumentarVelocidad() {
+        return aciertosParaAumentarVelocidad;
+    }
+
     public boolean isAcertó() {
         return acertó;
     }
-    
+
     public int getReduccionDeTiempo() {
         return reduccionDeTiempo;
+    }
+
+    public Pato getPato() {
+        return pato;
     }
 
     // SETTERS -----------------------------------------------------------------
     public void setAciertos(int aciertos) {
         this.aciertos = aciertos;
     }
-    
+
     public void setAcertó(boolean acertó) {
         this.acertó = acertó;
     }
-    
+
     public void setPartidaTerminada(boolean partidaTerminada) {
         this.partidaTerminada = partidaTerminada;
     }
-    
+
 }
