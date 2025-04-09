@@ -34,6 +34,18 @@ public abstract class Controllers {
      * @return - true si son válidas, false si no lo son.
      */
     public abstract boolean todoEnOrden(String avatar, int numero1, int numero2, int numero3);
+    
+    /**
+     * Método encargado de encontrar los errores y proporcionar un mensaje que
+     * posteriormente será mostrado por el jBuscaminasFrame
+     *
+     * @param avatar - avatar a verificar si esta en blanco
+     * @param filas - filas a verificar para el tamaño del tablero
+     * @param columnas - columnas a verificar para el tamaño del tablero
+     * @param minas - minas a verificar por el tamaño del tablero.
+     * @return un mensaje de error en dado caso lo haya.
+     */
+    public abstract String encontrarErrores(String avatar, int filas, int columnas, int minas);
 
     /**
      * Método encargado de iniciar el juego (Es decir la creación de los

@@ -15,6 +15,7 @@ import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.con
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas;
+import ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter;
 
 /**
  * Clase JFMenuPrincipal es el frame que muestra todo el menú principal
@@ -249,6 +250,9 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnHunterActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHunterActionPerformed
+        musicaMenu.stop();
+        new JFIniciarHunter().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnHunterActionPerformed
 
     /**

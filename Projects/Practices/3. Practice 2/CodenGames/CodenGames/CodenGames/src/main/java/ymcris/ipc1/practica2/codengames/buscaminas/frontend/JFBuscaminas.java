@@ -33,7 +33,6 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
     // CONSTANTES --------------------------------------------------------------
     private static final String NOMBRE_MUSICA_BUSCAMINAS = "/misterioMinas.wav";
-    private static final String NOMBRE_IMAGEN_BANDERITA = "/banderita.png";
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String avatar;
@@ -41,9 +40,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
     private JToggleButton[][] botones;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int filaCasilla;
     private int filasTablero;
-    private int columnaCasilla;
     private int columnasTablero;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
@@ -477,13 +474,5 @@ public class JFBuscaminas extends javax.swing.JFrame {
     private javax.swing.JTextField txtMinasRestantes;
     private javax.swing.JTextField txtTiempoJugado;
     // End of variables declaration//GEN-END:variables
-
-    public void setFilaCasilla(int filaCasilla) {
-        this.filaCasilla = filaCasilla;
-    }
-
-    public void setColumnaCasilla(int columnaCasilla) {
-        this.columnaCasilla = columnaCasilla;
-    }
 
 }
