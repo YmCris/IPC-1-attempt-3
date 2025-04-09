@@ -15,6 +15,8 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.Timer;
+import ymcris.ipc1.practica2.codengames.a.backend.Threads.Tiempo;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
@@ -38,6 +40,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
     private String avatar;
     private Clip musicaBuscaminas;
     private JToggleButton[][] botones;
+    private Tiempo threadTiempo;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filasTablero;
@@ -54,6 +57,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
         this.setLocationRelativeTo(null);
         this.setResizable(false);
         agregarBotonesAPanel();
+        iniciarContador();
         try {
             URL rutaMusicaBuscaminas = getClass().getResource(JFBuscaminas.NOMBRE_MUSICA_BUSCAMINAS);
             if (rutaMusicaBuscaminas == null) {
@@ -72,6 +76,18 @@ public class JFBuscaminas extends javax.swing.JFrame {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    private void iniciarContador() {
+        threadTiempo = new Tiempo();
+        threadTiempo.start();
+        Timer contador = new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent evento) {
+                txtTiempoJugado.setText(String.valueOf(threadTiempo.getTiempoTotal()));
+            }
+        });
+        contador.start();
+    }
+
     private void agregarBotonesAPanel() {
         botones = new JToggleButton[filasTablero][columnasTablero];
         pnlTablero.setLayout(new GridLayout(filasTablero, columnasTablero));
@@ -111,6 +127,8 @@ public class JFBuscaminas extends javax.swing.JFrame {
         }
         if (partidaGanadaBuscaminas) {//Partida Ganada
             contadorDeMinasMarcadas++;
+            threadTiempo.detenerTimer();
+            threadTiempo.interrupt();
             jugadorGanador();
         } else {
             jBuscaminas.jugar();
@@ -126,11 +144,15 @@ public class JFBuscaminas extends javax.swing.JFrame {
             jBuscaminas.recibirDatosCasillas(fila, columna);
             botones[fila][columna].setText(jBuscaminas.cantidadDeMinasAdyacentes());
             if (partidaGanadaBuscaminas) {
+                threadTiempo.detenerTimer();
+                threadTiempo.interrupt();
                 jugadorGanador();
             }
             if (!partidaTerminadaBuscaminas) {
                 jBuscaminas.jugar();
                 if (partidaTerminadaBuscaminas) {
+                    threadTiempo.detenerTimer();
+                    threadTiempo.interrupt();
                     JOptionPane.showMessageDialog(null, "HAS ENCONTRADO UNA MINA, HAS PERDIDO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
                     eliminarFrame();
                 }
@@ -405,6 +427,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
     private void btnRegresarAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarAlMenuActionPerformed
         musicaBuscaminas.stop();
+        threadTiempo.detenerTimer();
         this.dispose();
         new JFMenuPrincipal().setVisible(true);
     }//GEN-LAST:event_btnRegresarAlMenuActionPerformed

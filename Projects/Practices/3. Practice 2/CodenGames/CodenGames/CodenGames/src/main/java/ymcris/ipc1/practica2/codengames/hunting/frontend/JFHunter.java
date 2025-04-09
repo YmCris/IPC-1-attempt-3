@@ -1,15 +1,20 @@
 package ymcris.ipc1.practica2.codengames.hunting.frontend;
 
-import java.awt.Button;
-import java.io.IOException;
 import java.net.URL;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
+import javax.swing.Timer;
+import java.io.IOException;
+import javax.swing.JOptionPane;
 import javax.sound.sampled.Clip;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JOptionPane;
+import javax.swing.SwingConstants;
+import ymcris.ipc1.practica2.codengames.a.backend.Threads.Tiempo;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
 
@@ -21,19 +26,36 @@ import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
  */
 public class JFHunter extends javax.swing.JFrame {
 
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    private Timer contador;
     private Clip musicaPatos;
+    private Tiempo threadTiempo;
+
+    // VARIABLES PRIMITIVAS ----------------------------------------------------
+    private boolean acerto;
+    private int botonDondeSeEncuentraElPato;
+
+    // CONSTANTES --------------------------------------------------------------
     private static final String NOMBRE_MUSICA_PATOS = "/musicaPatos.wav";
     private static final String NOMBRE_IMAGEN_FONDO = "/escenarioPatos.png";
     private static final String NOMBRE_IMAGEN_PATO = "/pato.png";
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFHunter() {
+        //1. Inicializar atributos del frame
         initComponents();
         this.setResizable(false);
         this.setLocationRelativeTo(null);
+        //2. Agregar fondo al panel de los patos
         JPanelPersonalizado panelPersonalizado = new JPanelPersonalizado(pnlJuego, NOMBRE_IMAGEN_FONDO);
         pnlJuego.add(panelPersonalizado).repaint();
+        //3. Hacer que los botones sean transparentes
         transparentarBotones();
-        try {
+        //4. Iniciar el contador de tiempo del juego
+        iniciarContador();
+        //4.5 Mostrar el icono de los patos
+        actualizarPatos();
+        try {//5. Poner música
             URL rutaMusica = getClass().getResource(NOMBRE_MUSICA_PATOS);
             if (rutaMusica != null) {
                 AudioInputStream audio = AudioSystem.getAudioInputStream(rutaMusica);
@@ -42,46 +64,68 @@ public class JFHunter extends javax.swing.JFrame {
                 musicaPatos.stop();
                 musicaPatos.loop(Clip.LOOP_CONTINUOUSLY);
             }
-        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {
+        } catch (IOException | LineUnavailableException | UnsupportedAudioFileException e) {//No hay musica xddd
         }
     }
 
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de iniciar el hilo tiempo e aplicarlo al frame
+     */
+    private void iniciarContador() {
+        threadTiempo = new Tiempo();
+        threadTiempo.start();
+        contador = new Timer(1000, new ActionListener() {//Para que se actualice con el frame
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println(threadTiempo.getTiempoTotal());
+                txtTiempoJugado.setText(String.valueOf(threadTiempo.getTiempoTotal()));
+            }
+        });
+        contador.start();
+    }
+    
+    private void actualizarPatos() {
+        ImageIcon iconPato = new ImageIcon(getClass().getResource(NOMBRE_IMAGEN_PATO));
+        btn1.setIcon(iconPato);
+        btn1.setHorizontalTextPosition(SwingConstants.CENTER);
+        btn1.setVerticalTextPosition(SwingConstants.BOTTOM);
+    }
+
+    /**
+     * Método encargado de transparentar los botones del frame
+     */
     private void transparentarBotones() {
         btn1.setOpaque(false);
         btn1.setContentAreaFilled(false);
         btn1.setBorderPainted(false);
-        pnlJuego.add(btn1);
-
         btn2.setOpaque(false);
         btn2.setContentAreaFilled(false);
         btn2.setBorderPainted(false);
-        btn2.setIcon(null);
-        pnlJuego.add(btn2);
-
         btn3.setOpaque(false);
         btn3.setContentAreaFilled(false);
         btn3.setBorderPainted(false);
-        btn3.setIcon(null);
-        btn3.setText("skdfjdsklfjksl");
-        
         btn4.setOpaque(false);
         btn4.setContentAreaFilled(false);
         btn4.setBorderPainted(false);
-        btn4.setIcon(null);
-        btn4.setText("skdfjdsklfjksl");
-        pnlJuego.add(btn4);
-        /*        
-        JButton[] botones = {btn1, btn2, btn3, btn4, btn5, btn6, btn7, btn8, btn9};
-        for (JButton boton : botones) {
-            boton.setOpaque(false);
-            boton.setContentAreaFilled(false);
-            boton.setBorderPainted(false);
-            boton.setIcon(null);
-            pnlJuego.add(boton);
-        }
-         */
+        btn5.setOpaque(false);
+        btn5.setContentAreaFilled(false);
+        btn5.setBorderPainted(false);
+        btn6.setOpaque(false);
+        btn6.setContentAreaFilled(false);
+        btn6.setBorderPainted(false);
+        btn7.setOpaque(false);
+        btn7.setContentAreaFilled(false);
+        btn7.setBorderPainted(false);
+        btn8.setOpaque(false);
+        btn8.setContentAreaFilled(false);
+        btn8.setBorderPainted(false);
+        btn9.setOpaque(false);
+        btn9.setContentAreaFilled(false);
+        btn9.setBorderPainted(false);
     }
 
+    // CÓDIGO "AUTOGENERADO" ---------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -112,8 +156,6 @@ public class JFHunter extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Hunter");
         setBackground(new java.awt.Color(0, 0, 0));
-        setMaximumSize(new java.awt.Dimension(0, 0));
-        setPreferredSize(new java.awt.Dimension(1100, 800));
 
         pnlOpciones.setBackground(new java.awt.Color(102, 102, 0));
 
@@ -189,49 +231,42 @@ public class JFHunter extends javax.swing.JFrame {
                         .addContainerGap())))
         );
 
-        btn5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn5.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn5ActionPerformed(evt);
             }
         });
 
-        btn2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn2ActionPerformed(evt);
             }
         });
 
-        btn4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn4.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn4ActionPerformed(evt);
             }
         });
 
-        btn6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn6.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn6ActionPerformed(evt);
             }
         });
 
-        btn7.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn7.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn7ActionPerformed(evt);
             }
         });
 
-        btn8.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn8.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn8ActionPerformed(evt);
             }
         });
 
-        btn9.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn9.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn9ActionPerformed(evt);
@@ -244,7 +279,6 @@ public class JFHunter extends javax.swing.JFrame {
             }
         });
 
-        btn3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pato.png"))); // NOI18N
         btn3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn3ActionPerformed(evt);
@@ -392,15 +426,16 @@ public class JFHunter extends javax.swing.JFrame {
             pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInformacionLayout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblTiempoJugado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(txtTiempoJugado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTiempoJugado2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTiempoJugado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTiempoJugado1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTiempoJugado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(lblTiempoJugado2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtTiempoJugado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addComponent(txtTiempoJugado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lblTiempoJugado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(txtTiempoJugado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(20, 20, 20))
         );
 
@@ -443,25 +478,39 @@ public class JFHunter extends javax.swing.JFrame {
 
     private void btnRegresarAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarAlMenuActionPerformed
         musicaPatos.stop();
+        threadTiempo.detenerTimer();
         this.dispose();
         new JFMenuPrincipal().setVisible(true);
     }//GEN-LAST:event_btnRegresarAlMenuActionPerformed
 
     private void txtTiempoJugadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugadoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtTiempoJugadoActionPerformed
 
     private void txtTiempoJugado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugado1ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtTiempoJugado1ActionPerformed
 
     private void txtTiempoJugado2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugado2ActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtTiempoJugado2ActionPerformed
 
+    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
+        System.out.println("9");
+    }//GEN-LAST:event_btn9ActionPerformed
+
+    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
+        System.out.println("8");
+    }//GEN-LAST:event_btn8ActionPerformed
+
     private void btn5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn5ActionPerformed
-        // TODO add your handling code here:
+        System.out.println("5");
     }//GEN-LAST:event_btn5ActionPerformed
+
+    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
+        System.out.println("7");
+    }//GEN-LAST:event_btn7ActionPerformed
+
+    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
+        System.out.println("6");
+    }//GEN-LAST:event_btn6ActionPerformed
 
     private void btn2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn2ActionPerformed
         System.out.println("2");
@@ -471,28 +520,11 @@ public class JFHunter extends javax.swing.JFrame {
         System.out.println("4");
     }//GEN-LAST:event_btn4ActionPerformed
 
-    private void btn6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn6ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn6ActionPerformed
-
-    private void btn7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn7ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn7ActionPerformed
-
-    private void btn8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn8ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn8ActionPerformed
-
-    private void btn9ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn9ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btn9ActionPerformed
-
     private void btn1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn1ActionPerformed
         System.out.println("1");
     }//GEN-LAST:event_btn1ActionPerformed
 
     private void btn3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn3ActionPerformed
-        System.out.println("HOLAAAS");
         System.out.println("3");
     }//GEN-LAST:event_btn3ActionPerformed
 

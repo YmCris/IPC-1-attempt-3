@@ -152,7 +152,7 @@ public class Tablero {
     }
 
     public boolean verificarJugadorGanador() {
-        int contadorCasillasMina = 0;
+        int contadorCasillasMina = 1;
         int contadorCasillasNormales = 0;
         for (Casillas[] tablero1 : tablero) {
             for (int j = 0; j < tablero1.length; j++) {
