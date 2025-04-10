@@ -1,7 +1,9 @@
 package ymcris.ipc1.practica2.codengames.buscaminas.frontend;
 
+import java.io.File;
 import java.net.URL;
 import java.awt.Color;
+import javax.swing.Timer;
 import java.awt.GridLayout;
 import java.io.IOException;
 import javax.swing.JOptionPane;
@@ -15,13 +17,13 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.Timer;
-import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
+import ymcris.ipc1.practica2.codengames.reportes.backend.Archivos;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
-import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
-import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
+import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
 import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
 import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarBuscaminas.jBuscaminas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 
 /**
@@ -45,6 +47,8 @@ public class JFBuscaminas extends javax.swing.JFrame {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filasTablero;
     private int columnasTablero;
+    private int casillasSinMinaDescubiertas;
+    private int casillasConMinaDescubiertas;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFBuscaminas() {
@@ -104,7 +108,9 @@ public class JFBuscaminas extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent evento) {
                         if (jBuscaminas.getOpcionJuego() == 1) {//Marcar casilla
                             marcarBotones(fila, columna);
+                            casillasConMinaDescubiertas++;
                         } else {//Descubrir casillas
+                            casillasSinMinaDescubiertas++;
                             descubrirBotones(fila, columna);
                         }
                     }
@@ -154,6 +160,8 @@ public class JFBuscaminas extends javax.swing.JFrame {
                     threadTiempo.detenerTimer();
                     threadTiempo.interrupt();
                     JOptionPane.showMessageDialog(null, "HAS ENCONTRADO UNA MINA, HAS PERDIDO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
+                    File archivoPartida = new File(Archivos.nombreRutaCarpetaBuscaminasPerdidas + File.separator + avatar + ".txt");
+                    generarRegistro(archivoPartida);
                     eliminarFrame();
                 }
             }
@@ -167,8 +175,17 @@ public class JFBuscaminas extends javax.swing.JFrame {
         new JFMenuPrincipal().setVisible(true);
     }
 
+    private void generarRegistro(File archivoPartida) {
+        Archivos.escribirEnArchivo(archivoPartida, "\n- Nombre: " + avatar);
+        Archivos.escribirEnArchivo(archivoPartida, "- Casillas sin minas descubiertas: " + casillasSinMinaDescubiertas);
+        Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de minas descubiertas: " + casillasConMinaDescubiertas);
+        Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de segundos que duró la partida: " + threadTiempo.getTiempoTotal());
+    }
+
     private void jugadorGanador() {
         JOptionPane.showMessageDialog(null, "FELICIDADES HAS GANADO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
+        File archivoPartida = new File(Archivos.nombreRutaCarpetaBuscaminasGanadas + File.separator + avatar + ".txt");
+        generarRegistro(archivoPartida);
         eliminarFrame();
     }
 

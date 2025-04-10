@@ -1,5 +1,6 @@
 package ymcris.ipc1.practica2.codengames.hunting.frontend;
 
+import java.io.File;
 import java.net.URL;
 import javax.swing.Timer;
 import javax.swing.JButton;
@@ -8,7 +9,6 @@ import javax.swing.JOptionPane;
 import javax.sound.sampled.Clip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
@@ -17,9 +17,9 @@ import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.a.backend.Threads.PatoThread;
 import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
+import ymcris.ipc1.practica2.codengames.reportes.backend.Archivos;
 import static ymcris.ipc1.practica2.codengames.hunting.backend.Hunter.ACIERTOS_PARA_PERDER;
 import static ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter.hController;
-import ymcris.ipc1.practica2.codengames.reportes.backend.Archivos;
 import static ymcris.ipc1.practica2.codengames.reportes.backend.Archivos.nombreRutaCarpetaHunter;
 
 /**
@@ -133,7 +133,7 @@ public class JFHunter extends javax.swing.JFrame {
         pnlJuego.revalidate();
         pnlJuego.repaint();
     }
-    
+
     private void guardarRegistro() {
         File archivoPartida = new File(nombreRutaCarpetaHunter + File.separator + hController.getHunter().getJugador().getNombre() + ".txt");
         Archivos.escribirEnArchivo(archivoPartida, "\n- Nombre: " + hController.getHunter().getJugador().getNombre());

@@ -60,7 +60,7 @@ public class BuscaminasController extends Controllers {
             buscaminas.marcarCasillas();
         }
     }
-    
+
     @Override
     public String encontrarErrores(String avatar, int filas, int columnas, int minas) {
         if (avatar.isBlank()) {
