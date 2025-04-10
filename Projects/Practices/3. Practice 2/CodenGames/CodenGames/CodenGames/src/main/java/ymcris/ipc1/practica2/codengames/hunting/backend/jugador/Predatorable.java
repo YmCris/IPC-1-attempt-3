@@ -10,5 +10,8 @@ package ymcris.ipc1.practica2.codengames.hunting.backend.jugador;
 public interface Predatorable {
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
-    public void disparar();
+    /**
+     * Método encargado de disparar a un objetivo.
+     */
+    public abstract void disparar();
 }

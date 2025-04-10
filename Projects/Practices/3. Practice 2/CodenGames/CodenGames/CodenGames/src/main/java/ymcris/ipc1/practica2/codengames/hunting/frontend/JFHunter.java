@@ -2,6 +2,7 @@ package ymcris.ipc1.practica2.codengames.hunting.frontend;
 
 import java.net.URL;
 import javax.swing.Timer;
+import javax.swing.JButton;
 import java.io.IOException;
 import javax.swing.JOptionPane;
 import javax.sound.sampled.Clip;
@@ -11,12 +12,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
-import javax.swing.JButton;
+import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.a.backend.Threads.PatoThread;
 import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
-import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
-import ymcris.ipc1.practica2.codengames.hunting.backend.Hunter;
+import static ymcris.ipc1.practica2.codengames.hunting.backend.Hunter.ACIERTOS_PARA_PERDER;
 import static ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter.hController;
 
 /**
@@ -24,18 +24,19 @@ import static ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter.
  * hunter.
  *
  * @author YmCris
+ * @see PatoThread
+ * @see TiempoThread
+ * @see JFIniciarHunter
+ * @since Apr 8, 2025
  */
 public class JFHunter extends javax.swing.JFrame {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Timer contador;
     private Clip musicaPatos;
-    private TiempoThread threadTiempo;
     private Thread patoThread;
     private JButton[][] botones;
-
-    // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int contadorFallosConsecutivos;
+    private TiempoThread threadTiempo;
 
     // CONSTANTES --------------------------------------------------------------
     public static final int FILAS_TABLERO_PATO = 5;
@@ -55,14 +56,14 @@ public class JFHunter extends javax.swing.JFrame {
         pnlJuego.add(panelPersonalizado).repaint();
         //4. Iniciar el contador de tiempo del juego
         iniciarContador();
-        //4.5 agregar botones al panel 
+        //5. Agregar botones al panel 
         agregarBotones();
-        //4.5.5 Ocultar botones
+        //6. Ocultar botones
         ocultarBotones(botones);
         pnlJuego.setComponentZOrder(panelPersonalizado, pnlJuego.getComponentCount() - 1);
         mostrarPatos();
-        lblNombreJugador.setText("PARTIDA DE: " + hController.getHunter().getJugador().getNombre());
-        try {//5. Poner música
+        lblNombreJugador.setText("PARTIDA DE: " + hController.getHunter().getJugador().getNombre().toUpperCase());
+        try {//7. Poner música
             URL rutaMusica = getClass().getResource(NOMBRE_MUSICA_PATOS);
             if (rutaMusica != null) {
                 AudioInputStream audio = AudioSystem.getAudioInputStream(rutaMusica);
@@ -77,7 +78,7 @@ public class JFHunter extends javax.swing.JFrame {
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
-     * Método encargado de iniciar el hilo tiempo e aplicarlo al frame
+     * Método encargado de iniciar el hilo tiempo y aplicarlo al frame
      */
     private void iniciarContador() {
         threadTiempo = new TiempoThread();
@@ -113,7 +114,8 @@ public class JFHunter extends javax.swing.JFrame {
                         //2. Capturar el teclazo (Realizado en este action lister)
                         //3. Verificar si el boton tiene pato (botonConPato()) y aplica las consecuencias
                         botonConPato(botones[fila][columna]);
-                        if (contadorFallosConsecutivos >= Hunter.ACIERTOS_PARA_PERDER) {
+                        //4. Verificar si se ha terminado la partida
+                        if (hController.getHunter().getDisparosFallidos() >= ACIERTOS_PARA_PERDER) {
                             terminarPartida();
                             JOptionPane.showMessageDialog(null, "Has terminado la partida");
                             System.out.println("Se guarda el registro");
@@ -128,29 +130,40 @@ public class JFHunter extends javax.swing.JFrame {
         pnlJuego.repaint();
     }
 
-    private void botonConPato(JButton btn) {
-        if (btn.getIcon() != null && btn.getIcon().getIconHeight() == 167 && btn.getIcon().getIconWidth() == 190) {//Le ha disparado a un pato
+    /**
+     * Método encargado de verificar si se ha acertado al clickear.
+     *
+     * @param boton - boton a evaluar si tiene patoIcon
+     */
+    private void botonConPato(JButton boton) {
+        if (boton.getIcon() != null && boton.getIcon().getIconHeight() == 167 && boton.getIcon().getIconWidth() == 190) {//Le ha disparado a un pato
             System.out.println("Has acertado");
             hController.getHunter().setAcertó(true);
             txtPatosCazados.setText(String.valueOf(hController.getHunter().getJugador().getPuntaje()));
-            contadorFallosConsecutivos = 0;//Se reinicia el contador
-            hController.getHunter().setDisparosFallidos(contadorFallosConsecutivos);
-            txtFallos.setText(String.valueOf(contadorFallosConsecutivos));
+            hController.getHunter().setDisparosFallidos(0);//Se reinicia el contador de fallos
+            txtFallos.setText(String.valueOf(hController.getHunter().getDisparosFallidos()));
             hController.jugar();
         } else {//Ha fallado
             System.out.println("Tiro no acertado");
             hController.getHunter().setAcertó(false);
-            contadorFallosConsecutivos++;
-            hController.getHunter().setDisparosFallidos(contadorFallosConsecutivos);
-            txtFallos.setText(String.valueOf(contadorFallosConsecutivos));
+            hController.getHunter().setDisparosFallidos(hController.getHunter().getDisparosFallidos() + 1);
+            txtFallos.setText(String.valueOf(hController.getHunter().getDisparosFallidos()));
         }
     }
 
+    /**
+     * Método encargado de cerrar la ventana correctamente (Problemas al perder
+     * una partida this.dispose())
+     */
     private void cerrarVentana() {
         new JFMenuPrincipal().setVisible(true);
         this.dispose();
     }
 
+    /**
+     * Método encargado de terminar la partida terminando los hilos y parando la
+     * música
+     */
     private void terminarPartida() {
         try {
             musicaPatos.stop();
@@ -158,22 +171,27 @@ public class JFHunter extends javax.swing.JFrame {
             threadTiempo.interrupt();
             patoThread.interrupt();
         } catch (Exception e) {
-            e.printStackTrace();
             e.getMessage();
         }
     }
 
+    /**
+     * Método encargado de iniciar el hilo de los patos
+     */
     private void mostrarPatos() {
         int velocidadInicial = hController.getHunter().getPato().getVelocidad();
-        int cantidadDeAciertos = hController.getHunter().getAciertosParaAumentarVelocidad();
         int reduccionDeTiempo = hController.getHunter().getReduccionDeTiempo();
         patoThread = new PatoThread(botones, velocidadInicial, reduccionDeTiempo);
         patoThread.start();
     }
 
-    private void ocultarBotones(JButton[][] btns) {
-        for (JButton[] btn : btns) {
-            for (int j = 0; j < btns[0].length; j++) {
+    /**
+     * Método encargado de ocultar (Transparentar) los botones
+     * @param arregloBotones 
+     */
+    private void ocultarBotones(JButton[][] arregloBotones) {
+        for (JButton[] btn : arregloBotones) {
+            for (int j = 0; j < arregloBotones[0].length; j++) {
                 btn[j].setOpaque(false);
                 btn[j].setContentAreaFilled(false);
             }

@@ -37,7 +37,7 @@ public class JPanelPersonalizado extends JLabel {
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
-    public void paint(Graphics grafico) {
+    public void paint(Graphics grafico) {//"Pinta" la imagen al panel, no la agrega
         super.paint(grafico);
         ImageIcon imagen = new ImageIcon(getClass().getResource(path));
         grafico.drawImage(imagen.getImage(), 0, 0, ancho, alto, null);

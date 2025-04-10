@@ -12,7 +12,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter;
-import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas;
+import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
@@ -21,6 +21,8 @@ import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.par
  * Clase JFMenuPrincipal es el frame que muestra todo el menú principal
  *
  * @author YmCris
+ * @see JFIniciarHunter
+ * @see JFIniciarBuscaminas
  * @since Apr 4, 2025
  */
 public class JFMenuPrincipal extends javax.swing.JFrame {
@@ -63,7 +65,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         }
     }
 
-    // MÉTODOS CONCRETOS -------------------------------------------------------
+    // MÉTODOS AUTOGENERADOS ---------------------------------------------------
     /**
      * Método autogenerado por netbeans encargado de inicializar todo lo del
      * editor de frontend.
@@ -255,15 +257,9 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnHunterActionPerformed
 
-    /**
-     * Método encargado de iniciar el frame para pedir los datos necesarios del
-     * buscaminas
-     *
-     * @param evt evento
-     */
     private void btnBuscaminasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaminasActionPerformed
         musicaMenu.stop();
-        JFIniciarNuevaPartidaBuscaminas buscaminas = new JFIniciarNuevaPartidaBuscaminas();
+        JFIniciarBuscaminas buscaminas = new JFIniciarBuscaminas();
         buscaminas.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnBuscaminasActionPerformed

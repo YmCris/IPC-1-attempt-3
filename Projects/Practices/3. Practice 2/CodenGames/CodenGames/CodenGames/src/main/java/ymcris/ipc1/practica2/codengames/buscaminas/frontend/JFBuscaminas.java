@@ -21,7 +21,7 @@ import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.controllers.BuscaminasController;
-import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas.jBuscaminas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarBuscaminas.jBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 
 /**

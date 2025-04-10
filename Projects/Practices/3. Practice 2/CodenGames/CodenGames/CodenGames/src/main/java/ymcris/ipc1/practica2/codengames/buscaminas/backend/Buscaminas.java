@@ -3,7 +3,7 @@ package ymcris.ipc1.practica2.codengames.buscaminas.backend;
 import javax.swing.Timer;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.jugador.Jugador;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.tablero.Tablero;
-import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas.jBuscaminas;
+import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarBuscaminas.jBuscaminas;
 
 /**
  * Clase Buscaminas es el motor del juego del juego "Buscaminas", que se

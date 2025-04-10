@@ -10,22 +10,21 @@ import ymcris.ipc1.practica2.codengames.hunting.frontend.JFHunter;
  * con el backend y viseversa frontend con backend.
  *
  * @author YmCris
+ * @see Hunter
+ * @see JFHunter
+ * @see Controllers
  * @since Apr 8, 2025
  */
 public class HunterController extends Controllers {
 
     // CONSTANTES --------------------------------------------------------------
-    private static final int VELOCIDAD_MINIMA_PATOS = 1500;
+    private static final int VELOCIDAD_MINIMA_PATOS = 999;
     private static final int CANTIDAD_MINIMA_DE_ACIERTOS = 3;
-    private static final int CANTIDAD_MINIMA_DE_REDUCCION = 1000;
+    private static final int CANTIDAD_MINIMA_DE_REDUCCION = 499;
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Hunter hunter;
     private JFHunter JFHunter;
-
-    // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public HunterController() {
-    }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
@@ -66,7 +65,7 @@ public class HunterController extends Controllers {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public void iniciarlizarAtributos(String avatar, int velocidadInicialPatos, int cantidadDeAciertosParaAumentarVelocidad, int reduccionDeTiempoPatos) {
+    private void iniciarlizarAtributos(String avatar, int velocidadInicialPatos, int cantidadDeAciertosParaAumentarVelocidad, int reduccionDeTiempoPatos) {
         this.hunter = new Hunter(avatar, velocidadInicialPatos, cantidadDeAciertosParaAumentarVelocidad, reduccionDeTiempoPatos);
         this.JFHunter = new JFHunter();
         this.JFHunter.setVisible(true);

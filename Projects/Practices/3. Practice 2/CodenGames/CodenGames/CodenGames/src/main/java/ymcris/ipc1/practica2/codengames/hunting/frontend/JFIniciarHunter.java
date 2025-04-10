@@ -1,24 +1,30 @@
 package ymcris.ipc1.practica2.codengames.hunting.frontend;
 
-import java.util.InputMismatchException;
-import javax.sound.sampled.Clip;
 import javax.swing.JOptionPane;
+import javax.sound.sampled.Clip;
+import java.util.InputMismatchException;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
-import static ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal.musicaMenu;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
 import ymcris.ipc1.practica2.codengames.hunting.controllers.HunterController;
+import static ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal.musicaMenu;
 
 /**
  * JFIniciarHunter es el frame encargado de pedir los datos requeridos para
  * iniciar el juego de Hunter.
  *
  * @author YmCris
+ * @see JFHunter
+ * @see JFMenuPrincipal
  */
 public class JFIniciarHunter extends javax.swing.JFrame {
 
-    private static final String NOMBRE_IMAGEN_FONDO = "/fondoMenuPatos.png";
+    // VARIABLES DE REFERENCIA -------------------------------------------------
     public static HunterController hController = new HunterController();
 
+    // CONSTANTES --------------------------------------------------------------
+    private static final String NOMBRE_IMAGEN_FONDO = "/fondoMenuPatos.png";
+
+    // MÉTODO CONSTRUCTOR -----------------------------------------------------
     public JFIniciarHunter() {
         initComponents();
         this.setResizable(false);
@@ -27,6 +33,7 @@ public class JFIniciarHunter extends javax.swing.JFrame {
         pnlMenu.add(panelDiseñado).repaint();//Añade el panel diseñado al panel
     }
 
+    // CÓDIGO "AUTOGENERADO" ---------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -261,19 +268,19 @@ public class JFIniciarHunter extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtVelocidadInicialActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtVelocidadInicialActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtVelocidadInicialActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        //1. Verificar que los recuadros no esten vacios
         if (txtNombre.getText().isBlank() || txtVelocidadInicial.getText().isBlank() || txtAciertos.getText().isBlank() || txtReduccionDeTiempo.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "Debes llenar todos los recuadros", "Error", JOptionPane.WARNING_MESSAGE);
-        } else {
+        } else {//2. Verificar que ingrese los datos adecuados
             try {
-                if (hController.todoEnOrden(txtNombre.getText(), Integer.parseInt(txtVelocidadInicial.getText()), Integer.parseInt(txtAciertos.getText()), Integer.parseInt(txtReduccionDeTiempo.getText()))==true) {
-                    System.out.println("Todo en orden");
+                //3. Verificar si todo está en orden y empezar
+                if (hController.todoEnOrden(txtNombre.getText(), Integer.parseInt(txtVelocidadInicial.getText()), Integer.parseInt(txtAciertos.getText()), Integer.parseInt(txtReduccionDeTiempo.getText())) == true) {
                     musicaMenu.stop();
                     this.dispose();
-                } else {
+                } else {//4. Si no está en orden se muestra el mensaje por el cual está mal.
                     String mensaje = hController.encontrarErrores(txtNombre.getText(), Integer.parseInt(txtVelocidadInicial.getText()), Integer.parseInt(txtAciertos.getText()), Integer.parseInt(txtReduccionDeTiempo.getText()));
                     JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.WARNING_MESSAGE);
                 }
@@ -290,7 +297,7 @@ public class JFIniciarHunter extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnInformaciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformaciónActionPerformed
-        JOptionPane.showMessageDialog(null, "¡Dá el tiempo en milisegundos!", "Hunter", JOptionPane.WARNING_MESSAGE);
+        JOptionPane.showMessageDialog(null, "¡Dá el tiempo en milisegundos! Y NO FALLES", "Hunter", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnInformaciónActionPerformed
 
     private void btnMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMusicaActionPerformed

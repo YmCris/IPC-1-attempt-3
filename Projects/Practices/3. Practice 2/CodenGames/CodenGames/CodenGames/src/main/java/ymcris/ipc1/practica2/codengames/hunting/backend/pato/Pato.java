@@ -11,12 +11,10 @@ public class Pato {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int velocidad;
-    private boolean oculto;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Pato(int velocidad, boolean desaparecido) {
+    public Pato(int velocidad) {
         this.velocidad = velocidad;
-        this.oculto = desaparecido;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -24,17 +22,9 @@ public class Pato {
         return velocidad;
     }
 
-    public boolean estaOculto() {
-        return oculto;
-    }
-
     // SETTERS -----------------------------------------------------------------
     public void setVelocidad(int velocidad) {
         this.velocidad = velocidad;
-    }
-
-    public void oculto(boolean desaparecido) {
-        this.oculto = desaparecido;
     }
 
 }

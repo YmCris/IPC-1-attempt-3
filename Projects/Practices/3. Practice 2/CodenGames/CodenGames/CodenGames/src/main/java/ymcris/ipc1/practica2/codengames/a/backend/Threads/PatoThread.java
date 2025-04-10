@@ -45,7 +45,7 @@ public class PatoThread extends Thread {
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
     public void run() {
-        this.partidaTerminada = hController.getHunter().verificarPartidaTerminada();
+        this.partidaTerminada = hController.getHunter().partidaTerminada();
         while (!partidaTerminada && !this.isInterrupted()) {
             if (hController.getHunter().getAciertosParaAumentarVelocidad() >= hController.getHunter().getJugador().getPuntaje()) {//Con velocidad inicial
                 try {
@@ -72,6 +72,11 @@ public class PatoThread extends Thread {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de mostrar el pato de forma aleatoria en los botones,
+     * limpiando su icono y luego eligiendo una posición aleatoria entre los 
+     * límites del "tablero".
+     */
     private void mostrarPatoAleatoriamente() { //Rango [5,5]
         //0. Limpiar todo el tablero para que no hayan muchos patos
         for (JButton[] botone : botones) {

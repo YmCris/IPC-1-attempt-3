@@ -15,14 +15,14 @@ import static ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal.musica
  *
  * @author YmCris
  */
-public class JFIniciarNuevaPartidaBuscaminas extends javax.swing.JFrame {
+public class JFIniciarBuscaminas extends javax.swing.JFrame {
 
     private static String rutaImagenMenu = "/fondominas.png";
     public static BuscaminasController jBuscaminas = new BuscaminasController();
     /**
      * Creates new form IniciarNuevaPartidaBuscaminas
      */
-    public JFIniciarNuevaPartidaBuscaminas() {
+    public JFIniciarBuscaminas() {
         initComponents();
         JPanelPersonalizado panelDiseñado = new JPanelPersonalizado(pnlInformacionBuscaminas, rutaImagenMenu);
         pnlInformacionBuscaminas.add(panelDiseñado).repaint();//Añade el panel diseñado al pnlMenu

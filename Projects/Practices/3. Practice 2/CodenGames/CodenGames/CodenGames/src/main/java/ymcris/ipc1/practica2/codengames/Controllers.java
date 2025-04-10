@@ -1,11 +1,8 @@
-/**
- * Paquete encargado de crear la clase padre controlers
- */
 package ymcris.ipc1.practica2.codengames;
 
 /**
  * Clase Controllers Es la clase abstracta padre que servirá para poder crear
- * controlers para los juegos
+ * controlers para los juegos hunter y buscaminas.
  *
  * @author YmCris
  * @since Apr 3, 2025
@@ -14,11 +11,6 @@ public abstract class Controllers {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected boolean pasoPruebas;
-
-    // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Controllers() {
-
-    }
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
     /**

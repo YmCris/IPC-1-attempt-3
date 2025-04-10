@@ -1,13 +1,15 @@
 package ymcris.ipc1.practica2.codengames.hunting.backend;
 
-import ymcris.ipc1.practica2.codengames.hunting.backend.jugador.Jugador;
 import ymcris.ipc1.practica2.codengames.hunting.backend.pato.Pato;
+import ymcris.ipc1.practica2.codengames.hunting.backend.jugador.Jugador;
 
 /**
  * Clase Hunter es la clase "Motor del juego" encargada de realizar la parte
  * lógica "Modelo" del juego Hunter.
  *
  * @author YmCris
+ * @see Pato
+ * @see Jugador
  * @since Apr 8, 2025
  */
 public class Hunter {
@@ -26,35 +28,31 @@ public class Hunter {
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Hunter(String avatar, int velocidadInicial, int aciertosParaAumentarVelocidad, int reduccionDetiempo) {
         this.jugador = new Jugador(avatar, 1);
-        this.pato = new Pato(velocidadInicial, false);
+        this.pato = new Pato(velocidadInicial);
         this.reduccionDeTiempo = reduccionDetiempo;
         this.aciertosParaAumentarVelocidad = aciertosParaAumentarVelocidad;
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public void crearPartida() {
-        pato.oculto(false);
-    }
-
+    /**
+     * Método encargado de jugar (Se ve que no hace nada, pero literalmente lo
+     * único que le comunica el frontend es si acertó xd)
+     */
     public void jugar() {
-        if (!verificarPartidaTerminada()) {
-            if (acertó) {
+        if (!partidaTerminada()) {//No ha sobrepasado el límite de fallos.
+            if (acertó) {//Si le dió al pato
                 jugador.disparar();//Dispara y aumenta su puntaje
             }
         }
     }
 
-    public void recibirDatosController() {
-
-    }
-
-    public boolean verificarPartidaTerminada() {
-        if (disparosFallidos >= ACIERTOS_PARA_PERDER) {
-            System.out.println("Has fallado, has perdido");
-            return true;
-        }else {
-            return false;
-        }
+    /**
+     * Método encargado de verificar si la partida ha terminado por fallar.
+     *
+     * @return true si ha fallado ACIERTOS_PARA_PERDER veces.
+     */
+    public boolean partidaTerminada() {
+        return disparosFallidos >= ACIERTOS_PARA_PERDER;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -62,25 +60,22 @@ public class Hunter {
         return jugador;
     }
 
-    public int getAciertosFallidos() {
-        return disparosFallidos;
+    public Pato getPato() {
+        return pato;
     }
 
     public int getAciertosParaAumentarVelocidad() {
         return aciertosParaAumentarVelocidad;
     }
 
-    public boolean isAcertó() {
-        return acertó;
-    }
-
     public int getReduccionDeTiempo() {
         return reduccionDeTiempo;
     }
 
-    public Pato getPato() {
-        return pato;
+    public int getDisparosFallidos() {
+        return disparosFallidos;
     }
+    
 
     // SETTERS -----------------------------------------------------------------
     public void setAcertó(boolean acertó) {
@@ -90,5 +85,5 @@ public class Hunter {
     public void setDisparosFallidos(int disparosFallidos) {
         this.disparosFallidos = disparosFallidos;
     }
-    
+
 }

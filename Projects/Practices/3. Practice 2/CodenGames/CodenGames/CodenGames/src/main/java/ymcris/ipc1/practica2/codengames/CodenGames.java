@@ -7,7 +7,8 @@ package ymcris.ipc1.practica2.codengames;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 
 /**
- * Clase CodenGames es la clase encargada de dar inicio al programa
+ * Clase CodenGames es la clase encargada de dar inicio al programa llamando al
+ * frame JFMenuPrincipal.
  *
  * @author YmCris
  * @see JFMenuPrincipal
