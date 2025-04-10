@@ -26,6 +26,7 @@ public class Jugador implements Predatorable {
     @Override
     public void disparar() {
         System.out.println("Piu piu");
+        puntaje++;
     }
 
     // GETTERS -----------------------------------------------------------------

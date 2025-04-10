@@ -44,7 +44,7 @@ public class HunterController extends Controllers {
             return "No puedes tener un nombre vacio";
         } else if (velocidadInicialPatos <= VELOCIDAD_MINIMA_PATOS) {
             return "No puedes tener una velocidad inicial menor a " + VELOCIDAD_MINIMA_PATOS;
-        } else if (cantidadDeAciertos <=CANTIDAD_MINIMA_DE_ACIERTOS) {
+        } else if (cantidadDeAciertos <= CANTIDAD_MINIMA_DE_ACIERTOS) {
             return "Debes acertar más de " + CANTIDAD_MINIMA_DE_ACIERTOS + " veces para poder aumentar la velocidad ";
         } else if (reduccionDeTiempo >= velocidadInicialPatos) {
             return "No puedes reducir más tiempo del cual inicias";
@@ -57,10 +57,12 @@ public class HunterController extends Controllers {
 
     @Override
     public void iniciarJuego() {
+        //Crea el juego (Básicamente aquí no se necesita ya que se creo en el constructor ya que no era mucho)
     }
 
     @Override
     public void jugar() {
+        hunter.jugar();
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
@@ -69,11 +71,10 @@ public class HunterController extends Controllers {
         this.JFHunter = new JFHunter();
         this.JFHunter.setVisible(true);
     }
-    
+
     // GETTERS -----------------------------------------------------------------
     public Hunter getHunter() {
         return hunter;
     }
-    
 
 }

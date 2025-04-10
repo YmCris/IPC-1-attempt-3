@@ -16,7 +16,7 @@ import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.Timer;
-import ymcris.ipc1.practica2.codengames.a.backend.Threads.Tiempo;
+import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
@@ -40,7 +40,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
     private String avatar;
     private Clip musicaBuscaminas;
     private JToggleButton[][] botones;
-    private Tiempo threadTiempo;
+    private TiempoThread threadTiempo;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filasTablero;
@@ -77,7 +77,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     private void iniciarContador() {
-        threadTiempo = new Tiempo();
+        threadTiempo = new TiempoThread();
         threadTiempo.start();
         Timer contador = new Timer(1000, new ActionListener() {
             @Override

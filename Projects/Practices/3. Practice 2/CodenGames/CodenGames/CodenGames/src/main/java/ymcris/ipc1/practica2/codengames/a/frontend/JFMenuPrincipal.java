@@ -11,11 +11,11 @@ import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
+import ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter;
+import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.contadorDeMinasMarcadas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaGanadaBuscaminas;
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
-import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarNuevaPartidaBuscaminas;
-import ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter;
 
 /**
  * Clase JFMenuPrincipal es el frame que muestra todo el menú principal
@@ -269,7 +269,6 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBuscaminasActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMusicaActionPerformed

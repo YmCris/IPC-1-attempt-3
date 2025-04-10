@@ -13,9 +13,10 @@ import javax.sound.sampled.LineUnavailableException;
 import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.JButton;
 import ymcris.ipc1.practica2.codengames.a.backend.Threads.PatoThread;
-import ymcris.ipc1.practica2.codengames.a.backend.Threads.Tiempo;
+import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
+import ymcris.ipc1.practica2.codengames.hunting.backend.Hunter;
 import static ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter.hController;
 
 /**
@@ -29,12 +30,12 @@ public class JFHunter extends javax.swing.JFrame {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Timer contador;
     private Clip musicaPatos;
-    private Tiempo threadTiempo;
+    private TiempoThread threadTiempo;
+    private Thread patoThread;
     private JButton[][] botones;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private boolean acerto;
-    private int botonDondeSeEncuentraElPato;
+    private int contadorFallosConsecutivos;
 
     // CONSTANTES --------------------------------------------------------------
     public static final int FILAS_TABLERO_PATO = 5;
@@ -60,6 +61,7 @@ public class JFHunter extends javax.swing.JFrame {
         ocultarBotones(botones);
         pnlJuego.setComponentZOrder(panelPersonalizado, pnlJuego.getComponentCount() - 1);
         mostrarPatos();
+        lblNombreJugador.setText("PARTIDA DE: " + hController.getHunter().getJugador().getNombre());
         try {//5. Poner música
             URL rutaMusica = getClass().getResource(NOMBRE_MUSICA_PATOS);
             if (rutaMusica != null) {
@@ -78,7 +80,7 @@ public class JFHunter extends javax.swing.JFrame {
      * Método encargado de iniciar el hilo tiempo e aplicarlo al frame
      */
     private void iniciarContador() {
-        threadTiempo = new Tiempo();
+        threadTiempo = new TiempoThread();
         threadTiempo.start();
         contador = new Timer(1000, new ActionListener() {//Para que se actualice con el frame
             @Override
@@ -109,9 +111,14 @@ public class JFHunter extends javax.swing.JFrame {
                     public void actionPerformed(ActionEvent evento) {
                         //1. Mostrar el pato de forma aleatoria (Realizado en el thread)
                         //2. Capturar el teclazo (Realizado en este action lister)
-                        //3. Verificar si el boton tiene pato (botonConPato())
+                        //3. Verificar si el boton tiene pato (botonConPato()) y aplica las consecuencias
                         botonConPato(botones[fila][columna]);
-                        //4. Comunicarle al backende si es un acierto o no
+                        if (contadorFallosConsecutivos >= Hunter.ACIERTOS_PARA_PERDER) {
+                            terminarPartida();
+                            JOptionPane.showMessageDialog(null, "Has terminado la partida");
+                            System.out.println("Se guarda el registro");
+                            cerrarVentana();
+                        }
                     }
                 });
                 pnlJuego.add(botones[i][j]);
@@ -121,13 +128,38 @@ public class JFHunter extends javax.swing.JFrame {
         pnlJuego.repaint();
     }
 
-    private boolean botonConPato(JButton btn) {
-        if (btn.getIcon() != null && btn.getIcon().getIconHeight() == 167&& btn.getIcon().getIconWidth() == 190 ) {
-            System.out.println("Yo tengo al pato!");
-            return true;
-        } else {
-            System.out.println("Yo no tengo ningun pato");
-            return false;
+    private void botonConPato(JButton btn) {
+        if (btn.getIcon() != null && btn.getIcon().getIconHeight() == 167 && btn.getIcon().getIconWidth() == 190) {//Le ha disparado a un pato
+            System.out.println("Has acertado");
+            hController.getHunter().setAcertó(true);
+            txtPatosCazados.setText(String.valueOf(hController.getHunter().getJugador().getPuntaje()));
+            contadorFallosConsecutivos = 0;//Se reinicia el contador
+            hController.getHunter().setDisparosFallidos(contadorFallosConsecutivos);
+            txtFallos.setText(String.valueOf(contadorFallosConsecutivos));
+            hController.jugar();
+        } else {//Ha fallado
+            System.out.println("Tiro no acertado");
+            hController.getHunter().setAcertó(false);
+            contadorFallosConsecutivos++;
+            hController.getHunter().setDisparosFallidos(contadorFallosConsecutivos);
+            txtFallos.setText(String.valueOf(contadorFallosConsecutivos));
+        }
+    }
+
+    private void cerrarVentana() {
+        new JFMenuPrincipal().setVisible(true);
+        this.dispose();
+    }
+
+    private void terminarPartida() {
+        try {
+            musicaPatos.stop();
+            threadTiempo.detenerTimer();
+            threadTiempo.interrupt();
+            patoThread.interrupt();
+        } catch (Exception e) {
+            e.printStackTrace();
+            e.getMessage();
         }
     }
 
@@ -135,7 +167,7 @@ public class JFHunter extends javax.swing.JFrame {
         int velocidadInicial = hController.getHunter().getPato().getVelocidad();
         int cantidadDeAciertos = hController.getHunter().getAciertosParaAumentarVelocidad();
         int reduccionDeTiempo = hController.getHunter().getReduccionDeTiempo();
-        Thread patoThread = new PatoThread(pnlJuego, botones, velocidadInicial, reduccionDeTiempo, cantidadDeAciertos);
+        patoThread = new PatoThread(botones, velocidadInicial, reduccionDeTiempo);
         patoThread.start();
     }
 
@@ -164,8 +196,8 @@ public class JFHunter extends javax.swing.JFrame {
         lblTiempoJugado = new javax.swing.JLabel();
         txtTiempoJugado = new javax.swing.JTextField();
         lblTiempoJugado1 = new javax.swing.JLabel();
-        txtTiempoJugado1 = new javax.swing.JTextField();
-        txtTiempoJugado2 = new javax.swing.JTextField();
+        txtPatosCazados = new javax.swing.JTextField();
+        txtFallos = new javax.swing.JTextField();
         lblTiempoJugado2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -289,23 +321,23 @@ public class JFHunter extends javax.swing.JFrame {
         lblTiempoJugado1.setForeground(new java.awt.Color(255, 255, 255));
         lblTiempoJugado1.setText("PATOS CAZADOS:");
 
-        txtTiempoJugado1.setEditable(false);
-        txtTiempoJugado1.setBackground(new java.awt.Color(51, 51, 51));
-        txtTiempoJugado1.setForeground(new java.awt.Color(255, 255, 255));
-        txtTiempoJugado1.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txtTiempoJugado1.addActionListener(new java.awt.event.ActionListener() {
+        txtPatosCazados.setEditable(false);
+        txtPatosCazados.setBackground(new java.awt.Color(51, 51, 51));
+        txtPatosCazados.setForeground(new java.awt.Color(255, 255, 255));
+        txtPatosCazados.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtPatosCazados.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTiempoJugado1ActionPerformed(evt);
+                txtPatosCazadosActionPerformed(evt);
             }
         });
 
-        txtTiempoJugado2.setEditable(false);
-        txtTiempoJugado2.setBackground(new java.awt.Color(51, 51, 51));
-        txtTiempoJugado2.setForeground(new java.awt.Color(255, 255, 255));
-        txtTiempoJugado2.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txtTiempoJugado2.addActionListener(new java.awt.event.ActionListener() {
+        txtFallos.setEditable(false);
+        txtFallos.setBackground(new java.awt.Color(51, 51, 51));
+        txtFallos.setForeground(new java.awt.Color(255, 255, 255));
+        txtFallos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtFallos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtTiempoJugado2ActionPerformed(evt);
+                txtFallosActionPerformed(evt);
             }
         });
 
@@ -325,11 +357,11 @@ public class JFHunter extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(lblTiempoJugado1)
                 .addGap(18, 18, 18)
-                .addComponent(txtTiempoJugado1, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtPatosCazados, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTiempoJugado2)
                 .addGap(18, 18, 18)
-                .addComponent(txtTiempoJugado2, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtFallos, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(93, Short.MAX_VALUE))
         );
         pnlInformacionLayout.setVerticalGroup(
@@ -339,10 +371,10 @@ public class JFHunter extends javax.swing.JFrame {
                 .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTiempoJugado2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTiempoJugado2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtFallos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTiempoJugado1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(txtTiempoJugado1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtPatosCazados, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(lblTiempoJugado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtTiempoJugado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -387,20 +419,19 @@ public class JFHunter extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirDelJuegoActionPerformed
 
     private void btnRegresarAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarAlMenuActionPerformed
-        musicaPatos.stop();
-        threadTiempo.detenerTimer();
-        this.dispose();
-        new JFMenuPrincipal().setVisible(true);
+        System.out.println("No se guardan los registros");
+        terminarPartida();
+        cerrarVentana();
     }//GEN-LAST:event_btnRegresarAlMenuActionPerformed
 
     private void txtTiempoJugadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugadoActionPerformed
     }//GEN-LAST:event_txtTiempoJugadoActionPerformed
 
-    private void txtTiempoJugado1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugado1ActionPerformed
-    }//GEN-LAST:event_txtTiempoJugado1ActionPerformed
+    private void txtPatosCazadosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPatosCazadosActionPerformed
+    }//GEN-LAST:event_txtPatosCazadosActionPerformed
 
-    private void txtTiempoJugado2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugado2ActionPerformed
-    }//GEN-LAST:event_txtTiempoJugado2ActionPerformed
+    private void txtFallosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtFallosActionPerformed
+    }//GEN-LAST:event_txtFallosActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnInformacion;
@@ -414,9 +445,9 @@ public class JFHunter extends javax.swing.JFrame {
     private javax.swing.JPanel pnlInformacion;
     private javax.swing.JPanel pnlJuego;
     private javax.swing.JPanel pnlOpciones;
+    private javax.swing.JTextField txtFallos;
+    private javax.swing.JTextField txtPatosCazados;
     private javax.swing.JTextField txtTiempoJugado;
-    private javax.swing.JTextField txtTiempoJugado1;
-    private javax.swing.JTextField txtTiempoJugado2;
     // End of variables declaration//GEN-END:variables
 
 }

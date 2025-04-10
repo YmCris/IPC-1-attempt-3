@@ -1,6 +1,6 @@
 package ymcris.ipc1.practica2.codengames.hunting.backend;
 
-import ymcris.ipc1.practica2.codengames.buscaminas.backend.jugador.Jugador;
+import ymcris.ipc1.practica2.codengames.hunting.backend.jugador.Jugador;
 import ymcris.ipc1.practica2.codengames.hunting.backend.pato.Pato;
 
 /**
@@ -17,17 +17,15 @@ public class Hunter {
     private Jugador jugador;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int aciertos;
     private boolean acertó;
-    private int aciertosFallidos;
-    private boolean partidaTerminada;
-    private int aciertosParaAumentarVelocidad;
+    private int disparosFallidos;
     private int reduccionDeTiempo;
-    private static final int ACIERTOS_PARA_PERDER = 5;
+    private int aciertosParaAumentarVelocidad;
+    public static final int ACIERTOS_PARA_PERDER = 5;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Hunter(String avatar, int velocidadInicial, int aciertosParaAumentarVelocidad, int reduccionDetiempo) {
-        this.jugador = new Jugador(avatar, 0);
+        this.jugador = new Jugador(avatar, 1);
         this.pato = new Pato(velocidadInicial, false);
         this.reduccionDeTiempo = reduccionDetiempo;
         this.aciertosParaAumentarVelocidad = aciertosParaAumentarVelocidad;
@@ -40,7 +38,9 @@ public class Hunter {
 
     public void jugar() {
         if (!verificarPartidaTerminada()) {
-            System.out.println("Jugamos");
+            if (acertó) {
+                jugador.disparar();//Dispara y aumenta su puntaje
+            }
         }
     }
 
@@ -49,20 +49,21 @@ public class Hunter {
     }
 
     public boolean verificarPartidaTerminada() {
-        return aciertosFallidos >= ACIERTOS_PARA_PERDER;
+        if (disparosFallidos >= ACIERTOS_PARA_PERDER) {
+            System.out.println("Has fallado, has perdido");
+            return true;
+        }else {
+            return false;
+        }
     }
 
     // GETTERS -----------------------------------------------------------------
-    public int getAciertos() {
-        return aciertos;
-    }
-
     public Jugador getJugador() {
         return jugador;
     }
 
     public int getAciertosFallidos() {
-        return aciertosFallidos;
+        return disparosFallidos;
     }
 
     public int getAciertosParaAumentarVelocidad() {
@@ -82,16 +83,12 @@ public class Hunter {
     }
 
     // SETTERS -----------------------------------------------------------------
-    public void setAciertos(int aciertos) {
-        this.aciertos = aciertos;
-    }
-
     public void setAcertó(boolean acertó) {
         this.acertó = acertó;
     }
 
-    public void setPartidaTerminada(boolean partidaTerminada) {
-        this.partidaTerminada = partidaTerminada;
+    public void setDisparosFallidos(int disparosFallidos) {
+        this.disparosFallidos = disparosFallidos;
     }
-
+    
 }

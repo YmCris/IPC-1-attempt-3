@@ -228,11 +228,11 @@
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Component id="lblTiempoJugado1" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txtTiempoJugado1" min="-2" pref="95" max="-2" attributes="0"/>
+                  <Component id="txtPatosCazados" min="-2" pref="95" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="lblTiempoJugado2" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="txtTiempoJugado2" min="-2" pref="95" max="-2" attributes="0"/>
+                  <Component id="txtFallos" min="-2" pref="95" max="-2" attributes="0"/>
                   <EmptySpace pref="93" max="32767" attributes="0"/>
               </Group>
           </Group>
@@ -244,11 +244,11 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="103" alignment="0" groupAlignment="3" attributes="0">
                           <Component id="lblTiempoJugado2" alignment="3" max="32767" attributes="0"/>
-                          <Component id="txtTiempoJugado2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtFallos" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTiempoJugado1" alignment="3" max="32767" attributes="0"/>
-                          <Component id="txtTiempoJugado1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="txtPatosCazados" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="lblTiempoJugado" alignment="3" max="32767" attributes="0"/>
@@ -302,7 +302,7 @@
             <Property name="text" type="java.lang.String" value="PATOS CAZADOS:"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTiempoJugado1">
+        <Component class="javax.swing.JTextField" name="txtPatosCazados">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -318,10 +318,10 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTiempoJugado1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPatosCazadosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JTextField" name="txtTiempoJugado2">
+        <Component class="javax.swing.JTextField" name="txtFallos">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -337,7 +337,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtTiempoJugado2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtFallosActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblTiempoJugado2">
