@@ -8,6 +8,7 @@ import javax.swing.JOptionPane;
 import javax.sound.sampled.Clip;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.LineUnavailableException;
@@ -18,6 +19,8 @@ import ymcris.ipc1.practica2.codengames.a.backend.Threads.TiempoThread;
 import ymcris.ipc1.practica2.codengames.a.frontend.JPanelPersonalizado;
 import static ymcris.ipc1.practica2.codengames.hunting.backend.Hunter.ACIERTOS_PARA_PERDER;
 import static ymcris.ipc1.practica2.codengames.hunting.frontend.JFIniciarHunter.hController;
+import ymcris.ipc1.practica2.codengames.reportes.backend.Archivos;
+import static ymcris.ipc1.practica2.codengames.reportes.backend.Archivos.nombreRutaCarpetaHunter;
 
 /**
  * JFHunter es el frame encargado de mostrar todos los componentes del juego
@@ -119,6 +122,7 @@ public class JFHunter extends javax.swing.JFrame {
                             terminarPartida();
                             JOptionPane.showMessageDialog(null, "Has terminado la partida");
                             System.out.println("Se guarda el registro");
+                            guardarRegistro();
                             cerrarVentana();
                         }
                     }
@@ -128,6 +132,16 @@ public class JFHunter extends javax.swing.JFrame {
         }
         pnlJuego.revalidate();
         pnlJuego.repaint();
+    }
+    
+    private void guardarRegistro() {
+        File archivoPartida = new File(nombreRutaCarpetaHunter + File.separator + hController.getHunter().getJugador().getNombre() + ".txt");
+        Archivos.escribirEnArchivo(archivoPartida, "\n- Nombre: " + hController.getHunter().getJugador().getNombre());
+        Archivos.escribirEnArchivo(archivoPartida, "- Velocidad Inicial De Patos: " + hController.getHunter().getPato().getVelocidad());
+        Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de Aciertos Para Aumentar La Velocidad: " + hController.getHunter().getAciertosParaAumentarVelocidad());
+        Archivos.escribirEnArchivo(archivoPartida, "- Reducción de Tiempo: " + hController.getHunter().getReduccionDeTiempo());
+        Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de Aciertos: " + hController.getHunter().getJugador().getPuntaje());
+        Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de Fallos: " + hController.getHunter().getCantidadDeFallos());
     }
 
     /**
@@ -147,6 +161,7 @@ public class JFHunter extends javax.swing.JFrame {
             System.out.println("Tiro no acertado");
             hController.getHunter().setAcertó(false);
             hController.getHunter().setDisparosFallidos(hController.getHunter().getDisparosFallidos() + 1);
+            hController.getHunter().setCantidadDeFallos(hController.getHunter().getCantidadDeFallos() + 1);
             txtFallos.setText(String.valueOf(hController.getHunter().getDisparosFallidos()));
         }
     }
@@ -187,7 +202,8 @@ public class JFHunter extends javax.swing.JFrame {
 
     /**
      * Método encargado de ocultar (Transparentar) los botones
-     * @param arregloBotones 
+     *
+     * @param arregloBotones
      */
     private void ocultarBotones(JButton[][] arregloBotones) {
         for (JButton[] btn : arregloBotones) {

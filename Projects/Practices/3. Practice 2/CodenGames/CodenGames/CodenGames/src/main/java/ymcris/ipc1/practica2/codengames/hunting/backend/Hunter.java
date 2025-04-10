@@ -20,6 +20,7 @@ public class Hunter {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private boolean acertó;
+    private int cantidadDeFallos;
     private int disparosFallidos;
     private int reduccionDeTiempo;
     private int aciertosParaAumentarVelocidad;
@@ -31,6 +32,7 @@ public class Hunter {
         this.pato = new Pato(velocidadInicial);
         this.reduccionDeTiempo = reduccionDetiempo;
         this.aciertosParaAumentarVelocidad = aciertosParaAumentarVelocidad;
+        this.cantidadDeFallos = 0;
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
@@ -42,6 +44,8 @@ public class Hunter {
         if (!partidaTerminada()) {//No ha sobrepasado el límite de fallos.
             if (acertó) {//Si le dió al pato
                 jugador.disparar();//Dispara y aumenta su puntaje
+            } else {
+                cantidadDeFallos++;
             }
         }
     }
@@ -75,7 +79,10 @@ public class Hunter {
     public int getDisparosFallidos() {
         return disparosFallidos;
     }
-    
+
+    public int getCantidadDeFallos() {
+        return cantidadDeFallos;
+    }
 
     // SETTERS -----------------------------------------------------------------
     public void setAcertó(boolean acertó) {
@@ -84,6 +91,10 @@ public class Hunter {
 
     public void setDisparosFallidos(int disparosFallidos) {
         this.disparosFallidos = disparosFallidos;
+    }
+
+    public void setCantidadDeFallos(int cantidadDeFallos) {
+        this.cantidadDeFallos = cantidadDeFallos;
     }
 
 }

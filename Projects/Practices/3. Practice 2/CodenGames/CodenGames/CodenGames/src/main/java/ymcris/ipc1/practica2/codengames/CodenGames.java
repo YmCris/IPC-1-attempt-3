@@ -4,6 +4,7 @@
  */
 package ymcris.ipc1.practica2.codengames;
 
+import ymcris.ipc1.practica2.codengames.reportes.backend.Archivos;
 import ymcris.ipc1.practica2.codengames.a.frontend.JFMenuPrincipal;
 
 /**
@@ -22,6 +23,7 @@ public class CodenGames {
      * @param args shortcuts del programa (no hay)
      */
     public static void main(String[] args) {
+        Archivos.crearCarpetas();
         JFMenuPrincipal menu = new JFMenuPrincipal();
         menu.setVisible(true);
     }
