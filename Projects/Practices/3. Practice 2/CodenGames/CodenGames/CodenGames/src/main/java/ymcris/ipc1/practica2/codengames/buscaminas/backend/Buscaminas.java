@@ -1,6 +1,5 @@
 package ymcris.ipc1.practica2.codengames.buscaminas.backend;
 
-import javax.swing.Timer;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.jugador.Jugador;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.tablero.Tablero;
 import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarBuscaminas.jBuscaminas;
@@ -11,6 +10,8 @@ import static ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFIniciarBusc
  * jFrame CBuscaminas.
  *
  * @author YmCris
+ * @see Jugador
+ * @see Tablero
  * @since Apr 3, 2025
  */
 public class Buscaminas {
@@ -18,7 +19,6 @@ public class Buscaminas {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Tablero tablero;
     private Jugador jugador;
-    private Timer tiempoJugado;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int opcionJuego;
@@ -53,6 +53,12 @@ public class Buscaminas {
         }
     }
 
+    /**
+     * Método encargado de recibir información de una casilla presionada.
+     *
+     * @param filaCasilla - fila la cual se presióno
+     * @param columnaCasilla - Columna la cual se presionó
+     */
     public void recibirInformacionCasilla(int filaCasilla, int columnaCasilla) {
         this.filaCasilla = filaCasilla;
         this.columnaCasilla = columnaCasilla;
@@ -69,26 +75,30 @@ public class Buscaminas {
         if (tablero.tieneMina(fila, columna)) {
             seGuardaRegistro = true;
             partidaTerminadaBuscaminas = true;
-            contadorDeMinasMarcadas = 0;
         }
     }
 
+    /**
+     * Mñetodo encargado de seleccionar la opciones (Marcar casilla o descubrir
+     * casilla)
+     */
     private void seleccionarOpciones() {
         switch (opcionJuego) {
-            case 1:
+            case 1 -> {
                 tablero.getTablero()[filaCasilla][columnaCasilla].setEstaMarcada(true);
                 System.out.println("Se MARCA la casilla fila = " + filaCasilla + " columna = " + columnaCasilla + " esta marcada : " + tablero.getTablero()[filaCasilla][columnaCasilla].EstaMarcada());
                 System.out.println("Minas marcadas " + contadorDeMinasMarcadas);
-                break;
-            case 2:
+            }
+            case 2 ->
                 tablero.descubrirCasillas(filaCasilla, columnaCasilla);
-                break;
-            default:
+            default ->
                 System.out.println("Ha habido un error en la opción que ha tomado el jugador (No debería de pasar)");
-                break;
         }
     }
 
+    /**
+     * Método encargado de descubrir casilla
+     */
     public void descubrirCasillas() {
         if (tablero.verificarJugadorGanador()) {
             partidaGanadaBuscaminas = true;
@@ -100,6 +110,9 @@ public class Buscaminas {
         }
     }
 
+    /**
+     * Método encargado de marcar una casilla.
+     */
     public void marcarCasillas() {
         if (tablero.verificarJugadorGanador()) {
             partidaGanadaBuscaminas = true;
@@ -111,8 +124,13 @@ public class Buscaminas {
         }
     }
 
+    // GETTERS -----------------------------------------------------------------
     public Tablero getTablero() {
         return tablero;
+    }
+
+    public Jugador getJugador() {
+        return jugador;
     }
 
     public int getFilaCasilla() {

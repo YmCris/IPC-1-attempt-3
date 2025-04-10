@@ -62,6 +62,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
         this.setResizable(false);
         agregarBotonesAPanel();
         iniciarContador();
+        txtMinasRestantes.setText(String.valueOf(jBuscaminas.getCantidadDeMinas()));
         try {
             URL rutaMusicaBuscaminas = getClass().getResource(JFBuscaminas.NOMBRE_MUSICA_BUSCAMINAS);
             if (rutaMusicaBuscaminas == null) {
@@ -80,6 +81,10 @@ public class JFBuscaminas extends javax.swing.JFrame {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de iniciar el contador del tiempo para mostrarlo en el
+     * txt.
+     */
     private void iniciarContador() {
         threadTiempo = new TiempoThread();
         threadTiempo.start();
@@ -92,6 +97,9 @@ public class JFBuscaminas extends javax.swing.JFrame {
         contador.start();
     }
 
+    /**
+     * Método encargado de agregar el tablero de botones al panel tablero
+     */
     private void agregarBotonesAPanel() {
         botones = new JToggleButton[filasTablero][columnasTablero];
         pnlTablero.setLayout(new GridLayout(filasTablero, columnasTablero));
@@ -122,6 +130,12 @@ public class JFBuscaminas extends javax.swing.JFrame {
         pnlTablero.repaint();
     }
 
+    /**
+     * Método encargadod e marcar botones es decir "minas"
+     *
+     * @param fila - fila donde se marcará una casilla
+     * @param columna - Columna donde se marcará una casilla
+     */
     private void marcarBotones(int fila, int columna) {
         if (botones[fila][columna].isSelected()) {//Marca una casilla
             botones[fila][columna].setText("🚩");
@@ -142,6 +156,12 @@ public class JFBuscaminas extends javax.swing.JFrame {
         txtMinasMarcadas.setText(String.valueOf(contadorDeMinasMarcadas));
     }
 
+    /**
+     * Método encargado de descubrir los botones dentro del tablero
+     *
+     * @param fila - Fila donde se descubrirá el boton
+     * @param columna - Columna donde se descubrirá el boton
+     */
     private void descubrirBotones(int fila, int columna) {
         if (botones[fila][columna].getText().equals("🚩")) {//Verifica que no se pueda desmarcar una casilla mina
             botones[fila][columna].setSelected(true);
@@ -169,26 +189,39 @@ public class JFBuscaminas extends javax.swing.JFrame {
         }
     }
 
+    /**
+     * Método encargado de eliminar el frame correctamente
+     */
     private void eliminarFrame() {
         musicaBuscaminas.stop();
         this.dispose();
         new JFMenuPrincipal().setVisible(true);
     }
 
+    /**
+     * Método encargado de generar el registro para los reportes
+     *
+     * @param archivoPartida - Archivo donde se guardará los reportes de la
+     * partida.
+     */
     private void generarRegistro(File archivoPartida) {
         Archivos.escribirEnArchivo(archivoPartida, "\n- Nombre: " + avatar);
-        Archivos.escribirEnArchivo(archivoPartida, "- Casillas sin minas descubiertas: " + casillasSinMinaDescubiertas);
-        Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de minas descubiertas: " + casillasConMinaDescubiertas);
+        Archivos.escribirEnArchivo(archivoPartida, "- Casillas marcadas: " + contadorDeMinasMarcadas);
+        Archivos.escribirEnArchivo(archivoPartida, "- Casillas sin minas descubiertas: " + jBuscaminas.getBuscaminas().getTablero().getContadorCasillasNormalesFinal());
         Archivos.escribirEnArchivo(archivoPartida, "- Cantidad de segundos que duró la partida: " + threadTiempo.getTiempoTotal());
     }
 
+    /**
+     * Método encargado de mostrarle al jugador que es un ganador
+     */
     private void jugadorGanador() {
-        JOptionPane.showMessageDialog(null, "FELICIDADES HAS GANADO", "Buscaminas terminado", JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog(null, "FELICIDADES HAS GANADO", "Buscaminas terminado", JOptionPane.INFORMATION_MESSAGE);
         File archivoPartida = new File(Archivos.nombreRutaCarpetaBuscaminasGanadas + File.separator + avatar + ".txt");
         generarRegistro(archivoPartida);
         eliminarFrame();
     }
 
+    // CODIGO AUTOGENERADO -----------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -375,10 +408,15 @@ public class JFBuscaminas extends javax.swing.JFrame {
         txtMinasRestantes.setBackground(new java.awt.Color(51, 51, 51));
         txtMinasRestantes.setForeground(new java.awt.Color(255, 255, 255));
         txtMinasRestantes.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        txtMinasRestantes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtMinasRestantesActionPerformed(evt);
+            }
+        });
 
         lblMinasRestantes.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblMinasRestantes.setForeground(new java.awt.Color(255, 255, 255));
-        lblMinasRestantes.setText("MINAS RESTANTES");
+        lblMinasRestantes.setText("MINAS TOTALES:");
 
         javax.swing.GroupLayout pnlInformacionLayout = new javax.swing.GroupLayout(pnlInformacion);
         pnlInformacion.setLayout(pnlInformacionLayout);
@@ -397,7 +435,7 @@ public class JFBuscaminas extends javax.swing.JFrame {
                 .addComponent(lblMinasRestantes)
                 .addGap(18, 18, 18)
                 .addComponent(txtMinasRestantes, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(228, Short.MAX_VALUE))
+                .addContainerGap(246, Short.MAX_VALUE))
         );
         pnlInformacionLayout.setVerticalGroup(
             pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -458,11 +496,9 @@ public class JFBuscaminas extends javax.swing.JFrame {
     }//GEN-LAST:event_btnInformacionActionPerformed
 
     private void txtMinasMarcadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMinasMarcadasActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtMinasMarcadasActionPerformed
 
     private void txtTiempoJugadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTiempoJugadoActionPerformed
-        // TODO add your handling code here:
     }//GEN-LAST:event_txtTiempoJugadoActionPerformed
 
     private void btnMarcarMinasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMarcarMinasActionPerformed
@@ -494,6 +530,10 @@ public class JFBuscaminas extends javax.swing.JFrame {
             btnDescubrirCasillas.setSelected(false);
         }
     }//GEN-LAST:event_btnDescubrirCasillasActionPerformed
+
+    private void txtMinasRestantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMinasRestantesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtMinasRestantesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

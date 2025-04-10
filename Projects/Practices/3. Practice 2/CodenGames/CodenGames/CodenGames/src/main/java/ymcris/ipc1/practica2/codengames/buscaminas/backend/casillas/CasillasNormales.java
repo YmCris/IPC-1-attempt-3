@@ -1,7 +1,8 @@
 package ymcris.ipc1.practica2.codengames.buscaminas.backend.casillas;
 
 /**
- * Clase CasillasNormales
+ * Clase CasillasNormales es una clase hija encargada de referneciar una casilla
+ * normal dentro del tablero.
  *
  * @author YmCris
  * @see Casillas

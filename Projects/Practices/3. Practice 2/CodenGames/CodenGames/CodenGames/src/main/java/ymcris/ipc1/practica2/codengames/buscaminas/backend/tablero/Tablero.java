@@ -11,6 +11,8 @@ import ymcris.ipc1.practica2.codengames.buscaminas.backend.casillas.CasillasNorm
  *
  * @author YmCris
  * @see Casillas
+ * @see CasillasMina
+ * @see CasillasNormales
  * @since Apr 3, 2025
  */
 public class Tablero {
@@ -22,7 +24,9 @@ public class Tablero {
     private int filasTablero;
     private int columnasTablero;
     private int cantidadDeCasillasMina;
+    private int contadorCasillasMinaFinal;
     private int cantidadDeCasillasNormales;
+    private int contadorCasillasNormalesFinal;
 
     // INSTANCIAS --------------------------------------------------------------
     private Random random = new Random();
@@ -76,6 +80,13 @@ public class Tablero {
         }
     }
 
+    /**
+     * Método encargado de marcar (enumerarlas básicamente) las casillas
+     * adyacentes a una mina
+     *
+     * @param fila - fila de la casilla mina
+     * @param columna - columna de la casilla mina.
+     */
     private void marcarCasillasAdyacentes(int fila, int columna) {
         for (int i = -1; i <= 1; i++) {//Filas 
             for (int j = -1; j <= 1; j++) {// Columnas 
@@ -94,7 +105,12 @@ public class Tablero {
         }
     }
 
-    // MÉTODOS DURANTE EL JUEGO ------------------------------------------------
+    /**
+     * Método encargado de descubrir las casillas y depurar
+     *
+     * @param filaCasilla - Fila de la casilla a descubrir
+     * @param columnaCasilla - Columna de la casilla a descubrir
+     */
     public void descubrirCasillas(int filaCasilla, int columnaCasilla) {
         Casillas casilla = tablero[filaCasilla][columnaCasilla];
         casilla.setEstaCubierta(false);
@@ -134,12 +150,18 @@ public class Tablero {
         }
     }
 
+    // FUNCIONES ---------------------------------------------------------------
+    /**
+     * Método encargado de descubrir las casillas adyacentes para el frontend
+     *
+     * @param casilla Casilla la cual se quiere ver sus minas adyacentes
+     * @return Cantidad de minas adyacentes
+     */
     public String descubrirCasillasAdyacentes(CasillasNormales casilla) {
         int cantidadDeMinasAdyacentes = casilla.getCantidadDeMinasAdyacentes();
         return String.valueOf(cantidadDeMinasAdyacentes);
     }
 
-    // FUNCIONES ---------------------------------------------------------------
     /**
      * Método encargado de verificar si la casilla es del tipo mina.
      *
@@ -151,19 +173,30 @@ public class Tablero {
         return tablero[fila][columna].ContineMina();
     }
 
+    /**
+     * Método encargado de verificar si el jugador ha ganado
+     *
+     * @return true si ha ganado
+     */
     public boolean verificarJugadorGanador() {
         int contadorCasillasMina = 1;
         int contadorCasillasNormales = 0;
+        contadorCasillasMinaFinal = 1;
+        contadorCasillasNormalesFinal = 0;
         for (Casillas[] tablero1 : tablero) {
-            for (int j = 0; j < tablero1.length; j++) {
-                if (tablero1[j] instanceof CasillasNormales) {
-                    if (!tablero1[j].EstaCubierta()) {//La casilla normal está descubierta
+            for (Casillas tablero11 : tablero1) {
+                if (tablero11 instanceof CasillasNormales) {
+                    if (!tablero11.EstaCubierta()) {
+                        //La casilla normal está descubierta
                         contadorCasillasNormales++;
+                        contadorCasillasNormalesFinal++;
                     }
                 }
-                if (tablero1[j] instanceof CasillasMina) {
-                    if (tablero1[j].EstaMarcada()) {//La casilla mina está marcada
+                if (tablero11 instanceof CasillasMina) {
+                    if (tablero11.EstaMarcada()) {
+                        //La casilla mina está marcada
                         contadorCasillasMina++;
+                        contadorCasillasMinaFinal++;
                     }
                 }
             }
@@ -172,6 +205,10 @@ public class Tablero {
     }
 
     // GETTERS -----------------------------------------------------------------
+    public Casillas[][] getTablero() {
+        return tablero;
+    }
+
     public int getFilasTablero() {
         return filasTablero;
     }
@@ -184,8 +221,12 @@ public class Tablero {
         return cantidadDeCasillasMina;
     }
 
-    public Casillas[][] getTablero() {
-        return tablero;
+    public int getContadorCasillasMinaFinal() {
+        return contadorCasillasMinaFinal;
+    }
+
+    public int getContadorCasillasNormalesFinal() {
+        return contadorCasillasNormalesFinal;
     }
 
 }

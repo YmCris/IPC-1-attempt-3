@@ -3,14 +3,16 @@ package ymcris.ipc1.practica2.codengames.buscaminas.controllers;
 import ymcris.ipc1.practica2.codengames.Controllers;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.frontend.JFBuscaminas;
-import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 import ymcris.ipc1.practica2.codengames.buscaminas.backend.casillas.CasillasNormales;
+import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 
 /**
  * Clase BuscaminasController Es la clase Controller que se encarga de
  *
  * @author YmCris
+ * @see Buscaminas
  * @see Controllers
+ * @see JFBuscaminas
  * @since Apr 3, 2025
  */
 public class BuscaminasController extends Controllers {
@@ -90,6 +92,12 @@ public class BuscaminasController extends Controllers {
         buscaminas.recibirInformacionCasilla(filaCasilla, columnaCasilla);
     }
 
+    /**
+     * Método encargado de obtener la cantidad de minas adyacentes del bakcend
+     * para mandarselo al frontend.
+     *
+     * @return Cantidad de minas adyacentes
+     */
     public String cantidadDeMinasAdyacentes() {
         try {
             CasillasNormales casilla = (CasillasNormales) buscaminas.getTablero().getTablero()[buscaminas.getFilaCasilla()][buscaminas.getColumnaCasilla()];
@@ -102,6 +110,10 @@ public class BuscaminasController extends Controllers {
     // GETTERS -----------------------------------------------------------------
     public String getAvatar() {
         return avatar;
+    }
+
+    public Buscaminas getBuscaminas() {
+        return buscaminas;
     }
 
     public int getFilasTablero() {
