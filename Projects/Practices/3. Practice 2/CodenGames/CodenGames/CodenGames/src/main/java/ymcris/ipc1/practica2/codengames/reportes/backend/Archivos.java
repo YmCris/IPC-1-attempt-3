@@ -79,7 +79,7 @@ public class Archivos {
      * @param texto - Texto que se añadirá
      */
     public static void escribirEnArchivo(File file, String texto) {
-        try (FileWriter writer = new FileWriter(file,true)) {
+        try (FileWriter writer = new FileWriter(file, true)) {
             BufferedWriter escribir = new BufferedWriter(writer);
             escribir.write(texto);
             escribir.newLine();

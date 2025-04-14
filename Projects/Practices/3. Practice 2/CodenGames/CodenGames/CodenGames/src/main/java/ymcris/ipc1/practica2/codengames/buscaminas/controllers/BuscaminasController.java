@@ -7,7 +7,8 @@ import ymcris.ipc1.practica2.codengames.buscaminas.backend.casillas.CasillasNorm
 import static ymcris.ipc1.practica2.codengames.buscaminas.backend.Buscaminas.partidaTerminadaBuscaminas;
 
 /**
- * Clase BuscaminasController Es la clase Controller que se encarga de
+ * Clase BuscaminasController Es la clase Controller que se encarga de gestionar
+ * la comunicación entre el frontend y el backend de Buscaminas.
  *
  * @author YmCris
  * @see Buscaminas
