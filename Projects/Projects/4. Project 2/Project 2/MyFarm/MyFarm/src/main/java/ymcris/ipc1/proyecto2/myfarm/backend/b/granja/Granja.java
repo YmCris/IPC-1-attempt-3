@@ -1,0 +1,80 @@
+package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
+
+import java.io.Serializable;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.terreno.Terreno;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+
+/**
+ * Clase Granja es la clase "Partida" encargada de reunir todos los elementos
+ * del bakcend y hacerlos funcionar y mostrarselos al frontend.
+ *
+ * @see Bodega
+ * @see Terreno
+ * @see Mercado
+ * @see Granjero
+ * @author YmCris
+ * @since May 3, 2025
+ */
+public class Granja implements Serializable, Runnable {
+
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    private Bodega bodega;
+    private Terreno terreno;
+    private Mercado mercado;
+    private Granjero granjero;
+
+    // VARIABLES PRIMITIVAS ----------------------------------------------------
+    private int tiempoJugado;
+
+    // CONSTANTES --------------------------------------------------------------
+    public static final long serialVersionUID = 12345678;
+
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    public Granja(Granjero granjero) {
+        this.granjero = granjero;
+        this.bodega = new Bodega();
+        this.terreno = new Terreno();
+        this.mercado = new Mercado();
+    }
+
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    private boolean partidaTerminada() {
+        return granjero.getVida() == 0;
+    }
+
+    // MÉTODOS SOBREESCRITOS ---------------------------------------------------
+    @Override
+    public void run() {
+        while (!partidaTerminada()) {
+            try {
+                Thread.sleep(1000);
+                tiempoJugado++;
+            } catch (InterruptedException ex) {
+                System.out.println("Hilo partida interrumpido por: " + ex.getMessage());
+            }
+        }
+        System.out.println("La partida ha terminado");
+    }
+
+    // GETTERS -----------------------------------------------------------------
+    public Bodega getBodega() {
+        return bodega;
+    }
+
+    public Terreno getTerreno() {
+        return terreno;
+    }
+
+    public Mercado getMercado() {
+        return mercado;
+    }
+
+    public Granjero getGranjero() {
+        return granjero;
+    }
+
+    public int getTiempoJugado() {
+        return tiempoJugado;
+    }
+
+}

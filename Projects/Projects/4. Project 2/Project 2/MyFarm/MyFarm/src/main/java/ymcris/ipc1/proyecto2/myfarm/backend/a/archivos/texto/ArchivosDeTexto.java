@@ -1,0 +1,106 @@
+package ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto;
+
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+
+/**
+ * Clase ArchivosDeTexto clase encargada de crear archivos de texto y las
+ * carpetas correspondientes, esto es para utilizar en los creadores de plantas,
+ * animales y productos, no en el guardado de partida
+ *
+ * @author YmCris
+ * @since May 3, 2025
+ */
+public class ArchivosDeTexto {
+
+    // CONSTANTES --------------------------------------------------------------
+    private final String rutaProyecto = System.getProperty("user.dir");
+    private final String rutaCarpetaPlantas = rutaProyecto + File.separator + "Plantas";
+    private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
+    private final String rutaCarpetaProductos = rutaProyecto + File.separator + "Productos";
+
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    public void crearCarpetas() {
+        File carpetaPlantas = new File(rutaCarpetaPlantas);
+        File carpetaAnimales = new File(rutaCarpetaAnimales);
+        File carpetaProductos = new File(rutaCarpetaProductos);
+        carpetaPlantas.mkdirs();
+        carpetaAnimales.mkdirs();
+        carpetaProductos.mkdirs();
+    }
+
+    public void crearArchivo(String rutaCarpeta, String nombreArchivo) throws ArchivoException {
+        File file = new File(rutaCarpeta + File.separator + nombreArchivo);
+        if (!existeArchivo(rutaCarpeta, nombreArchivo)) {
+            try {
+                file.createNewFile();
+            } catch (IOException e) {
+                System.out.println("No se pudo crear el archivo, motivo: " + e.getMessage());
+            }
+        } else {
+            throw new ArchivoException("Ya existe un archivo con ese nombre en la carpeta: " + rutaCarpeta);
+        }
+    }
+
+    public void escribirEnArchivo(File archivo, String contenido) {
+        try (BufferedWriter escribir = new BufferedWriter(new FileWriter(archivo, true))) {
+            escribir.write(contenido);
+            escribir.newLine();
+        } catch (IOException e) {
+            System.out.println("No se ha podido escribir en el archivo " + archivo.getName() + ", porque " + e.getMessage());
+        }
+    }
+
+    // FUNCIONES ---------------------------------------------------------------
+    public boolean existeArchivo(String rutaCarpeta, String nombreArchivo) {
+        File carpeta = new File(rutaCarpeta);
+        File[] archivosTxt = carpeta.listFiles();
+        if (archivosTxt != null) {
+            for (File archivo : archivosTxt) {
+                if (archivo.getName().toLowerCase().equals(nombreArchivo.toLowerCase())) {//Todo lo guardaré en minusculas, pero por si acaso
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public String leerArchivo(File archivo, int linea) throws ArchivoException {
+        try (BufferedReader leer = new BufferedReader(new FileReader(archivo))) {
+            int contador = 0;
+            String temp;
+            while ((temp = leer.readLine()) != null) {
+                if (contador == linea) {
+                    return temp;
+                }
+                contador++;
+            }
+        } catch (IOException e) {
+            System.out.println("No se pudo leer en el archivo " + archivo.getName() + ", porque " + e.getMessage());
+        }
+        throw new ArchivoException("No existe la línea " + linea + " en el archivo " + archivo.getName());
+    }
+
+    // GETTERS -----------------------------------------------------------------
+    public String getRutaProyecto() {
+        return rutaProyecto;
+    }
+
+    public String getRutaCarpetaPlantas() {
+        return rutaCarpetaPlantas;
+    }
+
+    public String getRutaCarpetaAnimales() {
+        return rutaCarpetaAnimales;
+    }
+
+    public String getRutaCarpetaProductos() {
+        return rutaCarpetaProductos;
+    }
+
+}

@@ -1,0 +1,362 @@
+package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
+
+import java.awt.FlowLayout;
+import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Bodega;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
+
+/**
+ *
+ * @see Granja
+ * @author YmCris
+ */
+public class JFGranja extends javax.swing.JFrame {
+
+    private Granja granja;
+    private Bodega bodega;
+    private Mercado mercado;
+    private Granjero granjero;
+
+    public JFGranja(Granja granja) {
+        initComponents();
+        this.granja = granja;
+        this.granjero = granja.getGranjero();
+        this.bodega = granja.getBodega();
+        this.mercado = granja.getMercado();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        actualizarContenido();
+    }
+
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    private void actualizarContenido() {
+        lblNombre.setText(granjero.getNombre());
+        lblOro.setText(String.valueOf(granjero.getOro()));
+    }
+
+    // CÓDIGO AUTOGENERADO------------------------------------------------------
+    @SuppressWarnings("unchecked")
+    // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
+    private void initComponents() {
+
+        pnlPantalla = new javax.swing.JPanel();
+        pnlOpciones = new javax.swing.JPanel();
+        btnBodega = new javax.swing.JButton();
+        btnGuardarPartida = new javax.swing.JButton();
+        btnMercado = new javax.swing.JButton();
+        btnLimpiarTerreno = new javax.swing.JButton();
+        btnProcesar = new javax.swing.JButton();
+        btnPreseleccionarAlimentos = new javax.swing.JButton();
+        btnMusica = new javax.swing.JButton();
+        btnInformación = new javax.swing.JButton();
+        btnSalir = new javax.swing.JButton();
+        pnlTablero = new javax.swing.JPanel();
+        pnlInformacion = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        lblNombre = new javax.swing.JLabel();
+        lblOro = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        lblCultivosListos = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        lblAnimalesMuertos = new javax.swing.JLabel();
+
+        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("My Farm");
+
+        pnlPantalla.setBackground(new java.awt.Color(0, 0, 0));
+
+        pnlOpciones.setBackground(new java.awt.Color(0, 102, 204));
+        pnlOpciones.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        btnBodega.setBackground(new java.awt.Color(51, 51, 51));
+        btnBodega.setForeground(new java.awt.Color(255, 255, 255));
+        btnBodega.setText("BODEGA");
+        btnBodega.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBodegaActionPerformed(evt);
+            }
+        });
+
+        btnGuardarPartida.setBackground(new java.awt.Color(51, 51, 51));
+        btnGuardarPartida.setForeground(new java.awt.Color(255, 255, 255));
+        btnGuardarPartida.setText("GUARDAR PARTIDA");
+
+        btnMercado.setBackground(new java.awt.Color(51, 51, 51));
+        btnMercado.setForeground(new java.awt.Color(255, 255, 255));
+        btnMercado.setText("MERCADO");
+
+        btnLimpiarTerreno.setBackground(new java.awt.Color(51, 51, 51));
+        btnLimpiarTerreno.setForeground(new java.awt.Color(255, 255, 255));
+        btnLimpiarTerreno.setText("LIMPIAR TERRENO");
+        btnLimpiarTerreno.setToolTipText("");
+
+        btnProcesar.setBackground(new java.awt.Color(51, 51, 51));
+        btnProcesar.setForeground(new java.awt.Color(255, 255, 255));
+        btnProcesar.setText("PROCESAR ALIMENTOS");
+
+        btnPreseleccionarAlimentos.setBackground(new java.awt.Color(51, 51, 51));
+        btnPreseleccionarAlimentos.setForeground(new java.awt.Color(255, 255, 255));
+        btnPreseleccionarAlimentos.setText("PRESELECCIONAR ALIMENTOS");
+
+        btnMusica.setBackground(new java.awt.Color(51, 51, 51));
+        btnMusica.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnMusica.setForeground(new java.awt.Color(255, 255, 255));
+        btnMusica.setText("<-");
+        btnMusica.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnMusica.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMusicaActionPerformed(evt);
+            }
+        });
+
+        btnInformación.setBackground(new java.awt.Color(51, 51, 51));
+        btnInformación.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnInformación.setForeground(new java.awt.Color(255, 255, 255));
+        btnInformación.setText("!");
+        btnInformación.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnInformación.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInformaciónActionPerformed(evt);
+            }
+        });
+
+        btnSalir.setBackground(new java.awt.Color(51, 51, 51));
+        btnSalir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnSalir.setForeground(new java.awt.Color(255, 255, 255));
+        btnSalir.setText("X");
+        btnSalir.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout pnlOpcionesLayout = new javax.swing.GroupLayout(pnlOpciones);
+        pnlOpciones.setLayout(pnlOpcionesLayout);
+        pnlOpcionesLayout.setHorizontalGroup(
+            pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOpcionesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBodega)
+                .addGap(18, 18, 18)
+                .addComponent(btnGuardarPartida)
+                .addGap(18, 18, 18)
+                .addComponent(btnMercado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnLimpiarTerreno)
+                .addGap(18, 18, 18)
+                .addComponent(btnProcesar)
+                .addGap(18, 18, 18)
+                .addComponent(btnPreseleccionarAlimentos)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(6, 6, 6)
+                .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+        );
+        pnlOpcionesLayout.setVerticalGroup(
+            pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlOpcionesLayout.createSequentialGroup()
+                .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlOpcionesLayout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBodega)
+                            .addComponent(btnGuardarPartida)
+                            .addComponent(btnMercado)
+                            .addComponent(btnLimpiarTerreno)
+                            .addComponent(btnProcesar)
+                            .addComponent(btnPreseleccionarAlimentos)))
+                    .addGroup(pnlOpcionesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addContainerGap(42, Short.MAX_VALUE))
+        );
+
+        pnlTablero.setBackground(new java.awt.Color(102, 102, 102));
+
+        javax.swing.GroupLayout pnlTableroLayout = new javax.swing.GroupLayout(pnlTablero);
+        pnlTablero.setLayout(pnlTableroLayout);
+        pnlTableroLayout.setHorizontalGroup(
+            pnlTableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 0, Short.MAX_VALUE)
+        );
+        pnlTableroLayout.setVerticalGroup(
+            pnlTableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 700, Short.MAX_VALUE)
+        );
+
+        pnlInformacion.setBackground(new java.awt.Color(51, 51, 0));
+        pnlInformacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("ORO:");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("JUGADOR: ");
+
+        lblNombre.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblNombre.setForeground(new java.awt.Color(255, 255, 255));
+        lblNombre.setText("NOMBRE");
+
+        lblOro.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblOro.setForeground(new java.awt.Color(255, 255, 255));
+        lblOro.setText("ORO");
+
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("CULTIVOS LISTOS:");
+
+        lblCultivosListos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblCultivosListos.setForeground(new java.awt.Color(255, 255, 255));
+        lblCultivosListos.setText("0");
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("ANIMALES MUERTOS:");
+
+        lblAnimalesMuertos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblAnimalesMuertos.setForeground(new java.awt.Color(255, 255, 255));
+        lblAnimalesMuertos.setText("0");
+
+        javax.swing.GroupLayout pnlInformacionLayout = new javax.swing.GroupLayout(pnlInformacion);
+        pnlInformacion.setLayout(pnlInformacionLayout);
+        pnlInformacionLayout.setHorizontalGroup(
+            pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformacionLayout.createSequentialGroup()
+                .addGap(13, 13, 13)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblNombre)
+                .addGap(61, 61, 61)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblOro)
+                .addGap(62, 62, 62)
+                .addComponent(jLabel5)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCultivosListos)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel7)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblAnimalesMuertos)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        pnlInformacionLayout.setVerticalGroup(
+            pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlInformacionLayout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel1)
+                    .addComponent(lblNombre)
+                    .addComponent(lblOro)
+                    .addComponent(jLabel5)
+                    .addComponent(lblCultivosListos)
+                    .addComponent(jLabel7)
+                    .addComponent(lblAnimalesMuertos))
+                .addContainerGap(30, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout pnlPantallaLayout = new javax.swing.GroupLayout(pnlPantalla);
+        pnlPantalla.setLayout(pnlPantallaLayout);
+        pnlPantallaLayout.setHorizontalGroup(
+            pnlPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlTablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        pnlPantallaLayout.setVerticalGroup(
+            pnlPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlPantallaLayout.createSequentialGroup()
+                .addComponent(pnlOpciones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
+        getContentPane().setLayout(layout);
+        layout.setHorizontalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlPantalla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+        layout.setVerticalGroup(
+            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(pnlPantalla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        pack();
+    }// </editor-fold>//GEN-END:initComponents
+    private void btnMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMusicaActionPerformed
+        JDialog dialog = new JDialog(this);
+        dialog.setModal(true);
+        dialog.setLocationRelativeTo(null);
+        dialog.setTitle("Ir al menú principal");
+        dialog.setSize(500, 700);
+        dialog.setLayout(new FlowLayout());
+        dialog.add(new JLabel("Si regresar al menú principal sin haber guardado la partida"));
+        dialog.add(new JLabel("  perderás el progreso"));
+        dialog.add(new JLabel("  ¿Estas seguro de ir al menú principal?"));
+        JButton boton = new JButton(" Ir al menú principal");
+        boton.addActionListener((e) -> {
+            this.dispose();
+            dialog.dispose();
+            new JFMenuPrincipal().setVisible(true);
+        });
+        dialog.add(boton);
+        dialog.pack();
+        dialog.setVisible(true);
+    }//GEN-LAST:event_btnMusicaActionPerformed
+
+    private void btnInformaciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformaciónActionPerformed
+        JOptionPane.showMessageDialog(null, "¡" + granja.getGranjero().getNombre().toUpperCase() + " RECUERDA COMER!", "Granja de " + granja.getGranjero().getNombre(), JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnInformaciónActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBodegaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBodegaActionPerformed
+
+    // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBodega;
+    private javax.swing.JButton btnGuardarPartida;
+    private javax.swing.JButton btnInformación;
+    private javax.swing.JButton btnLimpiarTerreno;
+    private javax.swing.JButton btnMercado;
+    private javax.swing.JButton btnMusica;
+    private javax.swing.JButton btnPreseleccionarAlimentos;
+    private javax.swing.JButton btnProcesar;
+    private javax.swing.JButton btnSalir;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel lblAnimalesMuertos;
+    private javax.swing.JLabel lblCultivosListos;
+    private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblOro;
+    private javax.swing.JPanel pnlInformacion;
+    private javax.swing.JPanel pnlOpciones;
+    private javax.swing.JPanel pnlPantalla;
+    private javax.swing.JPanel pnlTablero;
+    // End of variables declaration//GEN-END:variables
+}
