@@ -34,17 +34,42 @@ public class ArchivosDeTexto {
         carpetaProductos.mkdirs();
     }
 
-    public void crearArchivo(String rutaCarpeta, String nombreArchivo) throws ArchivoException {
-        File file = new File(rutaCarpeta + File.separator + nombreArchivo);
+    public File crearArchivo(String rutaCarpeta, String nombreArchivo) throws ArchivoException {
+        File file = new File(rutaCarpeta + File.separator + nombreArchivo + ".txt");
         if (!existeArchivo(rutaCarpeta, nombreArchivo)) {
             try {
                 file.createNewFile();
+                return file;
             } catch (IOException e) {
                 System.out.println("No se pudo crear el archivo, motivo: " + e.getMessage());
             }
         } else {
             throw new ArchivoException("Ya existe un archivo con ese nombre en la carpeta: " + rutaCarpeta);
         }
+        return null;
+    }
+
+    public File[] obtenerArchivosDeCarpeta(String rutaCarpeta) throws ArchivoException {
+        File file = new File(rutaCarpeta);
+        if (file.listFiles() != null) {
+            return file.listFiles();
+        }
+        throw new ArchivoException("No existen archivos en la carpeta");
+    }
+
+    public File obtenerArchivoDeCarpeta(String rutaCarpeta, String nombre) {
+        File[] files;
+        try {
+            files = obtenerArchivosDeCarpeta(rutaCarpeta);
+            for (File file : files) {
+                if (file.getName().toLowerCase().equals(nombre.toLowerCase())) {
+                    return file;
+                }
+            }
+        } catch (ArchivoException ex) {
+            System.out.println("No se pudo obtener el archivo: " + nombre + " de la carpeta " + rutaCarpeta + "porque " + ex.getMessage());
+        }
+        return null;
     }
 
     public void escribirEnArchivo(File archivo, String contenido) {

@@ -1,7 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granjero;
 
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ListaDoble;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.alimentos.Alimento;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimento;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
@@ -63,11 +63,13 @@ public class Granjero extends Thread {
     public void comer(Alimento alimento) {
         if (!alimentos.estaVacia()) {
             try {
-                alimentos.usar(alimento);
-                if (vida < VIDA_MAXIMA) {
-                    vida++;
+                if (!estaLleno) {
+                    alimentos.usar(alimento);
+                    if (vida < VIDA_MAXIMA) {
+                        vida++;
+                    }
+                    haComido = true;
                 }
-                haComido = true;
             } catch (ListaDobleException ex) {
                 System.out.println(ex.getMessage());
             }

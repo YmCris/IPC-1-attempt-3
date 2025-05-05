@@ -7,6 +7,10 @@ import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAlimentos;
+import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAnimales;
+import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDePlantas;
+import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeMateriaPrima;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.JFGranja;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 
@@ -291,6 +295,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         dialog.setSize(500, 300);
         dialog.setLayout(null);
         dialog.setLocationRelativeTo(null);
+        dialog.setModal(true);
         dialog.setTitle("Nueva Partida");
         JLabel lblNombre = new JLabel("Ingrese el nombre del jugador:");
         lblNombre.setBounds(50, 25, 300, 50);
@@ -298,7 +303,6 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         TextField txtNombre = new TextField();
         txtNombre.setBounds(50, 75, 300, 30);
         dialog.add(txtNombre);
-        dialog.setVisible(true);
         JLabel lblNick = new JLabel("Ingrese el nick del jugador:");
         lblNick.setBounds(50, 100, 300, 50);
         dialog.add(lblNick);
@@ -316,7 +320,39 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         dialog.add(btnGuardar);
         dialog.setVisible(true);
     }
-    
+
+    private void crearProductos() {
+        dialog = new JDialog();
+        dialog.setSize(600, 150);
+        dialog.setLayout(null);
+        dialog.setLocationRelativeTo(null);
+        dialog.setModal(true);
+        dialog.setTitle("Nuevo Producto");
+        JButton btnProducto = new JButton();
+        btnProducto.setText("Crear una Nueva Materia Prima");
+        btnProducto.setOpaque(false);
+        btnProducto.setBounds(20, 30, 250, 30);
+        btnProducto.setBorderPainted(false);
+        btnProducto.addActionListener((e) -> {
+            dialog.dispose();
+            this.dispose();
+            new JFCreadorDeMateriaPrima().setVisible(true);
+        });
+        dialog.add(btnProducto);
+        JButton btnAlimento = new JButton();
+        btnAlimento.setText("Crear un Nuevo Alimento");
+        btnAlimento.setOpaque(false);
+        btnAlimento.setBounds(350, 30, 200, 30);
+        btnAlimento.setBorderPainted(false);
+        btnAlimento.addActionListener((e) -> {
+            dialog.dispose();
+            this.dispose();
+            new JFCreadorDeAlimentos().setVisible(true);
+        });
+        dialog.add(btnAlimento);
+        dialog.setVisible(true);
+    }
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt, String nombre, String nick) {
         if (nombre.isBlank() || nick.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes tener un nombre o nick vacios", "ERROR", JOptionPane.WARNING_MESSAGE);
@@ -329,14 +365,15 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }
 
     private void btnCrearProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearProductosActionPerformed
-
+        crearProductos();
     }//GEN-LAST:event_btnCrearProductosActionPerformed
 
     private void btnReportesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnReportesActionPerformed
     }//GEN-LAST:event_btnReportesActionPerformed
 
     private void btnCrearAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAnimalesActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new JFCreadorDeAnimales().setVisible(true);
     }//GEN-LAST:event_btnCrearAnimalesActionPerformed
 
     private void btnNuevaPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevaPartidaActionPerformed
@@ -348,7 +385,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPartidaExistenteActionPerformed
 
     private void btnCrearPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPlantasActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new JFCreadorDePlantas().setVisible(true);
     }//GEN-LAST:event_btnCrearPlantasActionPerformed
 
     private void btnEditarAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAnimalesActionPerformed

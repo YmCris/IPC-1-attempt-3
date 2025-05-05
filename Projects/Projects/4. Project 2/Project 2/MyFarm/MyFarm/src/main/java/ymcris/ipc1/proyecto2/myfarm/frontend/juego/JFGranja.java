@@ -36,7 +36,7 @@ public class JFGranja extends javax.swing.JFrame {
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     private void actualizarContenido() {
-        lblNombre.setText(granjero.getNombre());
+        lblNombre.setText(granjero.getNick().toUpperCase());
         lblOro.setText(String.valueOf(granjero.getOro()));
     }
 
@@ -308,11 +308,11 @@ public class JFGranja extends javax.swing.JFrame {
         dialog.setModal(true);
         dialog.setLocationRelativeTo(null);
         dialog.setTitle("Ir al menú principal");
-        dialog.setSize(500, 700);
+        dialog.setSize(700, 400);
         dialog.setLayout(new FlowLayout());
         dialog.add(new JLabel("Si regresar al menú principal sin haber guardado la partida"));
-        dialog.add(new JLabel("  perderás el progreso"));
-        dialog.add(new JLabel("  ¿Estas seguro de ir al menú principal?"));
+        dialog.add(new JLabel(" perderás el progreso"));
+        dialog.add(new JLabel(" ¿Estas seguro de ir al menú principal?"));
         JButton boton = new JButton(" Ir al menú principal");
         boton.addActionListener((e) -> {
             this.dispose();
