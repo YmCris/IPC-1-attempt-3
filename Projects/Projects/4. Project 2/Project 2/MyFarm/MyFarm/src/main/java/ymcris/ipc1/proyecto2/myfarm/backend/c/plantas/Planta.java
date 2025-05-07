@@ -7,28 +7,28 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
  * @author YmCris
  * @since May 4, 2025
  */
-public abstract class Planta extends Thread{
+public abstract class Planta extends Thread {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
     private Semillas semilla;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int tiempoVivido;
-    private boolean estaPodrida;
+    private int tiempoVivido;//varia
+    private boolean estaPodrida;//cuando muere para el hilo
     private boolean produceFruta;
     private int semillasRequeridas;
-    private int tiempoParaCosechar;
-    private int tiempoParaPodrirse;
+    private int tiempoParaCosechar;//depende de cada planta
+    private int tiempoParaPodrirse;//depende de cada planta
     private boolean muerteInmediata;
     private boolean desapareceAlMorir;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Planta(String nombre, boolean produceFruta, int semillasRequeridas, int precioSemillas) {
-        this.nombre = nombre;
-        this.produceFruta = produceFruta;
-        this.semillasRequeridas = semillasRequeridas;
-        this.semilla = new Semillas(nombre, precioSemillas, 0);
+    public Planta(Semillas semilla) {
+        this.semilla = semilla;
+        this.nombre = semilla.getNombre();
+        this.produceFruta = semilla.isProduceFruta();
+        this.semillasRequeridas = semilla.getSemillasRequeridas();
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------

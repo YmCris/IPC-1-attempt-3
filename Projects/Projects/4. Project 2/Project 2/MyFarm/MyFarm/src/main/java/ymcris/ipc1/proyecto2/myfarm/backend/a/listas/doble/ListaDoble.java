@@ -1,4 +1,4 @@
-package ymcris.ipc1.proyecto2.myfarm.backend.a.listas;
+package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
 
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
@@ -13,8 +13,8 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 public class ListaDoble<T> {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    private NodoDoble<T> inicio;
     private NodoDoble<T> fin;
+    private NodoDoble<T> inicio;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tamaño;
@@ -41,12 +41,18 @@ public class ListaDoble<T> {
         tamaño++;
     }
 
+    /**
+     * @param contenido
+     * @return
+     * @throws ListaDobleException
+     */
     public T usar(T contenido) throws ListaDobleException {
         NodoDoble<T> nodoAUtilizar;
         for (int i = 0; i < tamaño; i++) {
             nodoAUtilizar = obtenerNodo(i);
             if (nodoAUtilizar.getContenido().equals(contenido)) {
                 eliminarNodo(i);
+                System.out.println("Se ha utilizado el elmento " + contenido.toString());
                 return nodoAUtilizar.getContenido();
             }
         }
@@ -86,6 +92,14 @@ public class ListaDoble<T> {
             }
         }
         return temporal;
+    }
+
+    public Object[] obtenerArregloDeObjetos() {
+        Object[] objects = new Object[tamaño];
+        for (int i = 0; i < objects.length; i++) {
+            objects[i] = obtenerNodo(i).getContenido();
+        }
+        return objects;
     }
 
     public boolean estaVacia() {

@@ -51,6 +51,8 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
         cbProduciraProductosConDestace = new javax.swing.JCheckBox();
         spnPrecio = new javax.swing.JSpinner();
         spnEspacio = new javax.swing.JSpinner();
+        jLabel7 = new javax.swing.JLabel();
+        spnEdad = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -82,7 +84,7 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Precio");
+        jLabel2.setText("Precio en el mercado");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -122,6 +124,12 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
             }
         });
 
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
         cbEsHerbivoro.setPreferredSize(new java.awt.Dimension(25, 25));
         cbEsHerbivoro.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -146,6 +154,12 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
         spnPrecio.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         spnEspacio.setModel(new javax.swing.SpinnerNumberModel(0.5d, 0.5d, null, 0.5d));
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("Tiempo de vida");
+
+        spnEdad.setModel(new javax.swing.SpinnerNumberModel(60, 60, null, 10));
 
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
@@ -193,7 +207,11 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addComponent(cbEsHerbivoro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(66, 66, 66)))))
+                                .addGap(66, 66, 66))
+                            .addGroup(pnlFondoLayout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(spnEdad, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addGap(14, 14, 14))
         );
         pnlFondoLayout.setVerticalGroup(
@@ -217,7 +235,11 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel3)
                     .addComponent(spnEspacio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(spnEdad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(28, 28, 28)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -231,7 +253,7 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(jLabel6))
                     .addComponent(cbProduciraProductosConDestace, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addGap(70, 70, 70)
                 .addComponent(btnCrearAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnIrAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -253,12 +275,16 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearAnimalActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAnimalActionPerformed
-        String nombre = txtNombre.getText().toLowerCase();
+        String nombre = txtNombre.getText().toLowerCase().trim();
         int precio = (int) spnPrecio.getValue();
         double espacio = (double) spnEspacio.getValue();
+        int edad = (int) spnEdad.getValue();
         boolean esHerbivoro = cbEsHerbivoro.isSelected();
         boolean esDestazable = cbEsDestazable.isSelected();
         boolean produciraProductosConDestace = cbProduciraProductosConDestace.isSelected();
+        if (nombre.equals("vaca") || nombre.equals("gallina")) {
+            JOptionPane.showMessageDialog(null, "No puedes crear un animal con ese nombre", "Error", JOptionPane.WARNING_MESSAGE);
+        }
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear un animal con un nombre vacío", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
@@ -268,6 +294,7 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
                     archivo.escribirEnArchivo(animal, nombre);
                     archivo.escribirEnArchivo(animal, String.valueOf(precio));
                     archivo.escribirEnArchivo(animal, String.valueOf(espacio));
+                    archivo.escribirEnArchivo(animal, String.valueOf(edad));
                     archivo.escribirEnArchivo(animal, String.valueOf(esHerbivoro));
                     archivo.escribirEnArchivo(animal, String.valueOf(esDestazable));
                     archivo.escribirEnArchivo(animal, String.valueOf(produciraProductosConDestace));
@@ -303,6 +330,10 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbProduciraProductosConDestaceActionPerformed
 
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearAnimal;
     private javax.swing.JButton btnIrAlMenu;
@@ -315,9 +346,11 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JPanel pnlFondo;
+    private javax.swing.JSpinner spnEdad;
     private javax.swing.JSpinner spnEspacio;
     private javax.swing.JSpinner spnPrecio;
     private javax.swing.JTextField txtNombre;

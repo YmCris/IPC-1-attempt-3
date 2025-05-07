@@ -3,7 +3,8 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Siembrable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Finquerable;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
  * Clase Grama es la clase hija de Suelo encargada de representar la grama
@@ -21,6 +22,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int fertilidad;
     private boolean esParcela;
+    private boolean estaOpupado;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Grama(Granjero granjero, int precio, int distribucion, boolean estaSucio) {
@@ -35,12 +37,16 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     @Override
     public void crearParcela() {
-        
+
     }
 
     @Override
     public void criarAnimales() {
-        
+
+    }
+
+    public void añadirFertilidad(Fertilizantes fertilizante) {
+        this.fertilidad = fertilidad + fertilizante.getFertilidad();
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -60,6 +66,11 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         return esParcela;
     }
 
+    public boolean estaOpupado() {
+        return estaOpupado;
+    }
+
+
     // SETTERS -----------------------------------------------------------------
     public void setFertilidad(int fertilidad) {
         this.fertilidad = fertilidad;
@@ -71,6 +82,10 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     public void setAnimalesPermitidos(String animalesPermitidos) {
         this.animalesPermitidos = animalesPermitidos;
+    }
+
+    public void setEstaOpupado(boolean estaOpupado) {
+        this.estaOpupado = estaOpupado;
     }
 
 }

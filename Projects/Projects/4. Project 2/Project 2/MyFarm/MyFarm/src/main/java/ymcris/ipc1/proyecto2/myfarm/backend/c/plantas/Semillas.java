@@ -14,12 +14,15 @@ public class Semillas {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int precio;
     private int cantidad;
+    private boolean produceFruta;
+    private int semillasRequeridas;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Semillas(String nombre, int precio, int cantidad) {
+    public Semillas(String nombre, int precio, int semillasRequeridas, boolean produceFruta) {
         this.nombre = nombre;
         this.precio = precio;
-        this.cantidad = cantidad;
+        this.produceFruta=produceFruta;
+        this.semillasRequeridas=semillasRequeridas;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -31,11 +34,20 @@ public class Semillas {
         return precio;
     }
 
-    // SETTERS -----------------------------------------------------------------
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public String getNombre() {
+        return nombre;
     }
 
+    public boolean isProduceFruta() {
+        return produceFruta;
+    }
+
+    public int getSemillasRequeridas() {
+        return semillasRequeridas;
+    }
+    
+    // SETTERS -----------------------------------------------------------------
+    
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }

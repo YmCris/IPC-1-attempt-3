@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
  * Clase ArchivosDeTexto clase encargada de crear archivos de texto y las
@@ -22,16 +23,27 @@ public class ArchivosDeTexto {
     private final String rutaProyecto = System.getProperty("user.dir");
     private final String rutaCarpetaPlantas = rutaProyecto + File.separator + "Plantas";
     private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
-    private final String rutaCarpetaProductos = rutaProyecto + File.separator + "Productos";
+    private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
+    private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia";
+    private final String rutaCarpetaFertilizantes = rutaProyecto + File.separator + "Fertilizantes";
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public void crearCarpetas() {
         File carpetaPlantas = new File(rutaCarpetaPlantas);
         File carpetaAnimales = new File(rutaCarpetaAnimales);
-        File carpetaProductos = new File(rutaCarpetaProductos);
+        File carpetaProductos = new File(rutaCarpetaAlimentos);
+        File carpetaMateria = new File(rutaCarpetaMateriaPrima);
+        File carpetaFertilizantes = new File(rutaCarpetaFertilizantes);
         carpetaPlantas.mkdirs();
         carpetaAnimales.mkdirs();
         carpetaProductos.mkdirs();
+        carpetaMateria.mkdirs();
+        carpetaFertilizantes.mkdirs();
+    }
+
+    public int numeroDeArchivosEnCarpeta(String rutaCarpeta) {
+        File file = new File(rutaCarpeta);
+        return file.listFiles().length;
     }
 
     public File crearArchivo(String rutaCarpeta, String nombreArchivo) throws ArchivoException {
@@ -124,8 +136,16 @@ public class ArchivosDeTexto {
         return rutaCarpetaAnimales;
     }
 
-    public String getRutaCarpetaProductos() {
-        return rutaCarpetaProductos;
+    public String getRutaCarpetaAlimentos() {
+        return rutaCarpetaAlimentos;
+    }
+
+    public String getRutaCarpetaMateriaPrima() {
+        return rutaCarpetaMateriaPrima;
+    }
+
+    public String getRutaCarpetaFertilizantes() {
+        return rutaCarpetaFertilizantes;
     }
 
 }

@@ -1,7 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granjero;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ListaDoble;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimento;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
@@ -17,7 +17,7 @@ public class Granjero extends Thread {
     private String nick;
     private String nombre;
     private ListaDoble<String> animales;
-    private ListaDoble<Alimento> alimentos;
+    private ListaDoble<Alimentos> alimentos;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int oro;
@@ -58,9 +58,9 @@ public class Granjero extends Thread {
      * Método encargado de comer, sumar vida, y eliminar el alimento del
      * inventario.
      *
-     * @param alimento - Alimento a consumir
+     * @param alimento - Alimentos a consumir
      */
-    public void comer(Alimento alimento) {
+    public void comer(Alimentos alimento) {
         if (!alimentos.estaVacia()) {
             try {
                 if (!estaLleno) {
@@ -88,6 +88,7 @@ public class Granjero extends Thread {
                 } else {//Si no ha comido durante 100 segundos se resta vida
                     contador++;
                     if (contador == TIEMPO_PARA_DISMINUIR_VIDA) {
+                        System.out.println("Granjero ha perdido 1 punto de vida, tiene " + vida + " puntos de vida");
                         vida--;
                         contador = 0;
                     }
@@ -106,7 +107,7 @@ public class Granjero extends Thread {
         return animales;
     }
 
-    public ListaDoble<Alimento> getAlimentos() {
+    public ListaDoble<Alimentos> getAlimentos() {
         return alimentos;
     }
 

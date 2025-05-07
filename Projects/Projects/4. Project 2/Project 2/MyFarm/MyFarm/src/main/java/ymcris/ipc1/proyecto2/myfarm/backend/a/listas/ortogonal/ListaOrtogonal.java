@@ -1,4 +1,6 @@
-package ymcris.ipc1.proyecto2.myfarm.backend.a.listas;
+package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal;
+
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.NodoOrtogonal;
 
 /**
  * Clase ListaOrtogonal es la clase encargada de ser el "arreglo de arreglos"

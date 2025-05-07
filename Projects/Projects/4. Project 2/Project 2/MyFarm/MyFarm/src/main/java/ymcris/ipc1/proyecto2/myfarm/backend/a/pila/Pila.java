@@ -1,13 +1,13 @@
-package ymcris.ipc1.proyecto2.myfarm.backend.a.hilos;
+package ymcris.ipc1.proyecto2.myfarm.backend.a.pila;
 
 /**
- * Clase AnimalesThread es la clase hilo que se encargará de restarle vida a los
- * animales y envejecerlos
+ * Clase Pila es la clase encargada de representar unicamente la cosecha dentro
+ * del juego.
  *
  * @author YmCris
- * @since Apr 29, 2025
+ * @since May 5, 2025
  */
-public class AnimalesThread {
+public class Pila<T> {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     // VARIABLES PRIMITIVAS ----------------------------------------------------

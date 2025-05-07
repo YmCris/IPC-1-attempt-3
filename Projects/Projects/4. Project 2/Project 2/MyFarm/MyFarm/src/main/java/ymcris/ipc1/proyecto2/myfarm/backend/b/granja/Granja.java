@@ -1,8 +1,12 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
 import java.io.Serializable;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.pila.Pila;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.terreno.Terreno;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 
 /**
  * Clase Granja es la clase "Partida" encargada de reunir todos los elementos
@@ -22,6 +26,7 @@ public class Granja implements Serializable, Runnable {
     private Terreno terreno;
     private Mercado mercado;
     private Granjero granjero;
+    private Pila<Alimentos> pila;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tiempoJugado;
@@ -31,10 +36,17 @@ public class Granja implements Serializable, Runnable {
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Granja(Granjero granjero) {
+        ListaDoble<Alimentos> alimentos = new ListaDoble<>();
+        ListaDoble<MateriasPrimas> materiaPrima = new ListaDoble<>();
+        alimentos.agregar(new Alimentos("Alimento1", 15, 12, true));
+        alimentos.agregar(new Alimentos("Alimento2", 30, 24, true));
+        alimentos.agregar(new Alimentos("Alimento3", 45, 36, true));
+        materiaPrima.agregar(new MateriasPrimas("Materia 1", 1, 2));
+        materiaPrima.agregar(new MateriasPrimas("Materia 2", 3, 4));
         this.granjero = granjero;
-        this.bodega = new Bodega();
+        this.bodega = new Bodega(alimentos, materiaPrima);
         this.terreno = new Terreno();
-        this.mercado = new Mercado();
+        this.mercado = new Mercado(alimentos, materiaPrima);
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------

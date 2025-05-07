@@ -1,4 +1,4 @@
-package ymcris.ipc1.proyecto2.myfarm.backend.a.listas;
+package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal;
 
 /**
  * Clase NodoOrtogonal es la clase encargada de ser la Celda de cada eslabon

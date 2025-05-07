@@ -1,7 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.terreno;
 
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ListaOrtogonal;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.ListaOrtogonal;
 
 /**
  * Clase Terreno

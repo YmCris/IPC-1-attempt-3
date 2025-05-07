@@ -1,33 +1,56 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
+import java.io.File;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
+
 /**
- * Clase Mercado 
+ * Clase Mercado es la clase del backend encargada de proporcionar la lógica
+ * detrás del mercado.
  *
  * @author YmCris
  * @since May 3, 2025
  */
 public class Mercado {
-    
-    // VARIABLES DE REFERENCIA -------------------------------------------------
-    
 
-    // VARIABLES PRIMITIVAS ----------------------------------------------------
-    
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    // COMPRAR:
+    private Semillas[] semillas;
+    private Animales[] animales;
+    private Fertilizantes[] fertilizantes;
+    private Alimentos[] alimentosParaAnimales;
+    // VENDER: 
+    private ListaDoble<Alimentos> alimentos;
+    private ListaDoble<MateriasPrimas> materias;
 
     // INSTANCIAS --------------------------------------------------------------
-    
+    private Recreador recreador = new Recreador();
+    private ArchivosDeTexto archivo = new ArchivosDeTexto();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    
-
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    
+    public Mercado(ListaDoble<Alimentos> alimentos, ListaDoble<MateriasPrimas> materias) {
+        this.alimentos = alimentos;
+        this.materias = materias;
+        this.fertilizantes = recreador.recrearFertilizantes();
+        this.alimentosParaAnimales = recreador.recrearAlimentos();
+    }
 
     // GETTERS -----------------------------------------------------------------
+    public Fertilizantes[] getFertilizantes() {
+        return fertilizantes;
+    }
     
+    public Alimentos[] getAlimentosParaAnimales() {
+        return alimentosParaAnimales;
+    }
 
     // SETTERS -----------------------------------------------------------------
-    
-
 
 }

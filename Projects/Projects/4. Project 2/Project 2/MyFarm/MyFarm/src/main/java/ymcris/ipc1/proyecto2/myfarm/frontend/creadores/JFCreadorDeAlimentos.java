@@ -41,9 +41,11 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txtNombre = new javax.swing.JTextField();
         cbEsParaHerbivoros = new javax.swing.JCheckBox();
-        spnPorcentajeDeProduccion = new javax.swing.JSpinner();
+        spnPrecioVenta = new javax.swing.JSpinner();
         btnCrearAlimento = new javax.swing.JButton();
         btnIrAlMenu = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        spnPrecioDeCompra = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -79,7 +81,7 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Porcentaje De Producción");
+        jLabel2.setText("Precio de venta");
 
         txtNombre.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -94,7 +96,7 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
             }
         });
 
-        spnPorcentajeDeProduccion.setModel(new javax.swing.SpinnerNumberModel(10, 10, 100, 5));
+        spnPrecioVenta.setModel(new javax.swing.SpinnerNumberModel(10, 10, 100, 5));
 
         btnCrearAlimento.setBackground(new java.awt.Color(51, 51, 51));
         btnCrearAlimento.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -118,6 +120,12 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Precio de compra");
+
+        spnPrecioDeCompra.setModel(new javax.swing.SpinnerNumberModel(10, 10, 100, 5));
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
@@ -130,63 +138,72 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addGap(99, 99, 99)
                         .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addGap(0, 161, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnIrAlMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                        .addComponent(btnCrearAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(64, 64, 64)))
+                .addGap(276, 276, 276))
             .addGroup(pnlFondoLayout.createSequentialGroup()
                 .addGap(30, 30, 30)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(124, 124, 124))
-                    .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(296, 296, 296)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 63, Short.MAX_VALUE)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addComponent(cbEsParaHerbivoros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(152, 152, 152))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(spnPorcentajeDeProduccion, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(52, 52, 52))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addComponent(btnIrAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(267, 267, 267))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addComponent(btnCrearAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(331, 331, 331))))
+                        .addComponent(jLabel4)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel2))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                                .addComponent(cbEsParaHerbivoros, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(152, 152, 152))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(spnPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(spnPrecioDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(52, 52, 52))))))
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(115, 115, 115)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(44, 44, 44)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addGap(22, 22, 22)
+                        .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(115, 115, 115)
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel1)
+                            .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(44, 44, 44)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(cbEsParaHerbivoros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(50, 50, 50)
-                        .addComponent(jLabel2))
-                    .addComponent(spnPorcentajeDeProduccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(86, 86, 86)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(cbEsParaHerbivoros, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(98, 98, 98))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(spnPrecioVenta, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jLabel2)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 41, Short.MAX_VALUE)
+                        .addComponent(jLabel4))
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(spnPrecioDeCompra, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(47, 47, 47)
                 .addComponent(btnCrearAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(42, 42, 42)
                 .addComponent(btnIrAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
+                .addGap(60, 60, 60))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -211,16 +228,18 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
 
     private void btnCrearAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearAlimentoActionPerformed
         String nombre = txtNombre.getText().toLowerCase();
+        int precioDeVenta = (int) spnPrecioVenta.getValue();
+        int precioDeCompra = (int) spnPrecioDeCompra.getValue();
         boolean esParaHerbivoros = cbEsParaHerbivoros.isSelected();
-        int porcentajeDeProduccion = (int) spnPorcentajeDeProduccion.getValue();
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear una limento con un nombre vacío", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
             try {
-                if (!archivo.existeArchivo(archivo.getRutaCarpetaProductos(), nombre + ".txt")) {
-                    File alimento = archivo.crearArchivo(archivo.getRutaCarpetaProductos(), nombre);
+                if (!archivo.existeArchivo(archivo.getRutaCarpetaAlimentos(), nombre + ".txt")) {
+                    File alimento = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), nombre);
                     archivo.escribirEnArchivo(alimento, nombre);
-                    archivo.escribirEnArchivo(alimento, String.valueOf(porcentajeDeProduccion));
+                    archivo.escribirEnArchivo(alimento, String.valueOf(precioDeVenta));
+                    archivo.escribirEnArchivo(alimento, String.valueOf(precioDeCompra));
                     archivo.escribirEnArchivo(alimento, String.valueOf(esParaHerbivoros));
                     JOptionPane.showMessageDialog(null, "Se ha creado el alimento " + nombre + " exitosamente", "Nuevo Alimento", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -244,10 +263,12 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JPanel pnlFondo;
-    private javax.swing.JSpinner spnPorcentajeDeProduccion;
+    private javax.swing.JSpinner spnPrecioDeCompra;
+    private javax.swing.JSpinner spnPrecioVenta;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }

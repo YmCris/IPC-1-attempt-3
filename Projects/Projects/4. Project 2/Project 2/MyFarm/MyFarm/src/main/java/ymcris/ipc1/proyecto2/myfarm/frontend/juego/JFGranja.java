@@ -17,12 +17,12 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
  * @author YmCris
  */
 public class JFGranja extends javax.swing.JFrame {
-
+    
     private Granja granja;
     private Bodega bodega;
     private Mercado mercado;
     private Granjero granjero;
-
+    
     public JFGranja(Granja granja) {
         initComponents();
         this.granja = granja;
@@ -91,6 +91,11 @@ public class JFGranja extends javax.swing.JFrame {
         btnMercado.setBackground(new java.awt.Color(51, 51, 51));
         btnMercado.setForeground(new java.awt.Color(255, 255, 255));
         btnMercado.setText("MERCADO");
+        btnMercado.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMercadoActionPerformed(evt);
+            }
+        });
 
         btnLimpiarTerreno.setBackground(new java.awt.Color(51, 51, 51));
         btnLimpiarTerreno.setForeground(new java.awt.Color(255, 255, 255));
@@ -333,8 +338,12 @@ public class JFGranja extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBodegaActionPerformed
-        // TODO add your handling code here:
+        new JFBodega(bodega).setVisible(true);
     }//GEN-LAST:event_btnBodegaActionPerformed
+
+    private void btnMercadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMercadoActionPerformed
+        new JDMercado(mercado).setVisible(true);
+    }//GEN-LAST:event_btnMercadoActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBodega;

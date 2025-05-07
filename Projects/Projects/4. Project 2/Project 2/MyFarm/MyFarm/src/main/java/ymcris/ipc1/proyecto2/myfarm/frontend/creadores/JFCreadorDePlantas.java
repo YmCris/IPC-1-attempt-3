@@ -1,8 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
 import java.io.File;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
@@ -33,6 +31,9 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     private String verificarEntradas(String nombre, int precioSemillas, int semillasRequeridas) {
+        if (nombre.equals("maiz") || nombre.equals("manzano")) {
+            return "No puedes crear una planta con ese nombre";
+        }
         if (nombre.isBlank()) {
             return "Debes darle un nombre a la planta";
         } else if (precioSemillas <= 0 || semillasRequeridas <= 0) {
@@ -42,7 +43,7 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
     }
 
     private boolean hayErrores(String nombre, int precioSemillas, int semillasRequeridas) {
-        return nombre.isBlank() || precioSemillas <= 0 || semillasRequeridas <= 0;
+        return nombre.isBlank() || precioSemillas <= 0 || semillasRequeridas <= 0 || nombre.equals("maiz") || nombre.equals("manzano");
     }
 
     // CÓDIGO AUTOGENERADO -----------------------------------------------------
@@ -114,6 +115,12 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
         jLabel4.setText("Semillas Requeridas");
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
 
         chbProduceFruta.setPreferredSize(new java.awt.Dimension(25, 25));
         chbProduceFruta.addActionListener(new java.awt.event.ActionListener() {
@@ -220,7 +227,7 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearPlantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPlantaActionPerformed
-        String nombre = txtNombre.getText().toLowerCase();
+        String nombre = txtNombre.getText().toLowerCase().trim();
         boolean produceFruta = chbProduceFruta.isSelected();
         int precioSemillas = (int) spnPrecio.getValue();
         int semillasRequeridas = (int) spnSemillas.getValue();
@@ -233,9 +240,7 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
                     File archivo = archivoTxt.crearArchivo(archivoTxt.getRutaCarpetaPlantas(), nombre);
                     archivoTxt.escribirEnArchivo(archivo, nombre);
                     archivoTxt.escribirEnArchivo(archivo, String.valueOf(produceFruta));
-                    System.out.println("Precio semilla: " + precioSemillas);
                     archivoTxt.escribirEnArchivo(archivo, String.valueOf(precioSemillas));
-                    System.out.println("Semillas requeridas: " + semillasRequeridas);
                     archivoTxt.escribirEnArchivo(archivo, String.valueOf(semillasRequeridas));
                     JOptionPane.showMessageDialog(null, "Se ha creado la planta " + nombre + " correctamente", "Nueva Planta", JOptionPane.INFORMATION_MESSAGE);
                 } else {
@@ -256,6 +261,10 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
         this.dispose();
         new JFMenuPrincipal().setVisible(true);
     }//GEN-LAST:event_btnIrAlMenuActionPerformed
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearPlanta;

@@ -1,4 +1,4 @@
-package ymcris.ipc1.proyecto2.myfarm.backend.a.listas;
+package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
 
 /**
  * Clase NodoDoble es la clase encargada de crear Nodos para almacenar

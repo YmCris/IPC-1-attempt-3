@@ -13,6 +13,9 @@ public class MyFarm {
         JFMenuPrincipal menu = new JFMenuPrincipal();
         ArchivosDeTexto archivosTxt = new ArchivosDeTexto();
         archivosTxt.crearCarpetas();
+        CreadorDeItemsPredeterminados creador = new CreadorDeItemsPredeterminados();
+        creador.crearFertilizantesPredeterminados();
+        creador.creadorDeAlimentosPredeterminados();
         menu.setVisible(true);
     }
 }

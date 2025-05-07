@@ -9,18 +9,19 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.productos;
 public class Productos {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    private String nombre;
+    protected String nombre;
+    
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private boolean esMateriaPrima;
-    private int porcentajeDeproduccion;
-    private boolean seObtieneAlDestazar;
+    protected int precioDeVenta;
+    protected int precioDeCompra;
+    protected boolean esMateriaPrima;
+    protected boolean seObtieneAlDestazar;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Productos(String nombre, int porcentajeDeproduccion, boolean seObtieneAlDestazar, boolean esMateriaPrima) {
+    public Productos(String nombre, int precioDeVenta, int precioDeCompra) {
         this.nombre = nombre;
-        this.porcentajeDeproduccion = porcentajeDeproduccion;
-        this.seObtieneAlDestazar = seObtieneAlDestazar;
-        this.esMateriaPrima = esMateriaPrima;
+        this.precioDeVenta = precioDeVenta;
+        this.precioDeCompra = precioDeCompra;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -28,16 +29,20 @@ public class Productos {
         return nombre;
     }
 
-    public int getPorcentajeDeproduccion() {
-        return porcentajeDeproduccion;
-    }
-
-    public boolean isSeObtieneAlDestazar() {
+    public boolean seObtieneAlDestazar() {
         return seObtieneAlDestazar;
     }
 
-    public boolean isEsMateriaPrima() {
+    public boolean esMateriaPrima() {
         return esMateriaPrima;
+    }
+
+    public int getPrecioDeVenta() {
+        return precioDeVenta;
+    }
+
+    public int getPrecioDeCompra() {
+        return precioDeCompra;
     }
 
 }

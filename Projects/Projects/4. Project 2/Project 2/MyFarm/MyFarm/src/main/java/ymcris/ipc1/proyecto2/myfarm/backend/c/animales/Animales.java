@@ -1,7 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.animales;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 
 /**
  * Clase Animales es la super clase encargada de tener todos los atributos
@@ -23,29 +23,38 @@ public abstract class Animales implements Runnable {
     protected int precio;
     protected int edadMaxima;
     protected double espacio;
+    protected int precioLimpieza;
     protected boolean esHerbivoro;
     protected boolean esDestazable;
-    protected int porcentajeDeProduccion;
+    protected int porcentajeDeProduccionConDestaze;
+    protected int porcentajeDeProduccionSinDestaze;
     protected boolean produciraProductosConDestace;
 
     // CONSTANTES --------------------------------------------------------------
-    public static final int TIEMPO_PARA_DISMINUIR_VIDA = 50;
+    public static final int TIEMPO_PARA_DISMINUIR_VIDA = 60;
     public static final int PORCENTAJE_MAXIMO_DE_PRODUCCION = 100;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Animales(String nombre, int precio, double espacio, boolean esHerbivoro, boolean esDestazable, boolean produciraProductosConDestace) {
+    public Animales(String nombre, int precio, double espacio, int edadMaxima, boolean esHerbivoro, boolean esDestazable, boolean produciraProductosConDestace) {
         this.nombre = nombre;
         this.precio = precio;
         this.espacio = espacio;
+        this.edadMaxima = edadMaxima;
         this.esHerbivoro = esHerbivoro;
         this.esDestazable = esDestazable;
         this.produciraProductosConDestace = produciraProductosConDestace;
     }
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
+    public abstract Productos generarProductos();
+
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public boolean estaVivo() {
         return vida > 0;
+    }
+
+    public boolean esAdulto() {
+        return ((int) (edadMaxima / 2)) <= edad || edad <= ((int) (edadMaxima / 1.3));
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -77,8 +86,8 @@ public abstract class Animales implements Runnable {
         return edadMaxima;
     }
 
-    public int getPorcentajeDeProduccion() {
-        return porcentajeDeProduccion;
+    public int getPorcentajeDeProduccionConDestaze() {
+        return porcentajeDeProduccionConDestaze;
     }
 
     public double getEspacio() {
@@ -97,6 +106,10 @@ public abstract class Animales implements Runnable {
         return PORCENTAJE_MAXIMO_DE_PRODUCCION;
     }
 
+    public int getPorcentajeDeProduccionSinDestaze() {
+        return porcentajeDeProduccionSinDestaze;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setVida(int vida) {
         this.vida = vida;
@@ -106,8 +119,12 @@ public abstract class Animales implements Runnable {
         this.edad = edad;
     }
 
-    public void setPorcentajeDeProduccion(int porcentajeDeProduccion) {
-        this.porcentajeDeProduccion = porcentajeDeProduccion;
+    public void setPorcentajeDeProduccionConDestaze(int porcentajeDeProduccionConDestaze) {
+        this.porcentajeDeProduccionConDestaze = porcentajeDeProduccionConDestaze;
+    }
+
+    public void setPorcentajeDeProduccionSinDestaze(int porcentajeDeProduccionSinDestaze) {
+        this.porcentajeDeProduccionSinDestaze = porcentajeDeProduccionSinDestaze;
     }
 
 }
