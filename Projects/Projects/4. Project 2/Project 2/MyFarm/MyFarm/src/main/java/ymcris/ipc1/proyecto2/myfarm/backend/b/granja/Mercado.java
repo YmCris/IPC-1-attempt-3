@@ -1,6 +1,5 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
-import java.io.File;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
@@ -39,22 +38,26 @@ public class Mercado {
         this.materias = materias;
         this.fertilizantes = recreador.recrearFertilizantes();
         this.alimentosParaAnimales = recreador.recrearAlimentos();
-        this.semillas=recreador.recreadorSemillas();
+        this.semillas = recreador.recreadorSemillas();
+        this.animales = recreador.recreadorAnimales();
     }
 
     // GETTERS -----------------------------------------------------------------
     public Fertilizantes[] getFertilizantes() {
         return fertilizantes;
     }
-    
+
     public Alimentos[] getAlimentosParaAnimales() {
         return alimentosParaAnimales;
     }
-    
+
     public Semillas[] getSemillas() {
         return semillas;
     }
 
+    public Animales[] getAnimales() {
+        return animales;
+    }
     // SETTERS -----------------------------------------------------------------
 
 }

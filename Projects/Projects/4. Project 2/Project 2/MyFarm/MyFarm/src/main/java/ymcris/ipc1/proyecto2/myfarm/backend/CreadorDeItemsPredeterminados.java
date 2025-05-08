@@ -3,8 +3,8 @@ package ymcris.ipc1.proyecto2.myfarm.backend;
 import java.io.File;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Frutas;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Grano;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Herbivoros;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
@@ -88,40 +88,48 @@ public class CreadorDeItemsPredeterminados {
     }
 
     public void creadorDeAnimalesPredeterminados() {
-
+        Herbivoros vaca = new Herbivoros("vaca", 500, 2, 600, true, true, true);
+        Omnivoros gallina = new Omnivoros("gallina", 50, 0.5, 180, false, true, true);
+        try {
+            File archivoVaca = archivo.crearArchivo(archivo.getRutaCarpetaAnimales(), vaca.getNombre());
+            archivo.escribirEnArchivo(archivoVaca, vaca.getNombre());
+            archivo.escribirEnArchivo(archivoVaca, String.valueOf(vaca.getPrecio()));
+            archivo.escribirEnArchivo(archivoVaca, String.valueOf(vaca.getEspacio()));
+            archivo.escribirEnArchivo(archivoVaca, String.valueOf(vaca.getEdadMaxima()));
+            archivo.escribirEnArchivo(archivoVaca, String.valueOf(vaca.isEsHerbivoro()));
+            archivo.escribirEnArchivo(archivoVaca, String.valueOf(vaca.isEsDestazable()));
+            archivo.escribirEnArchivo(archivoVaca, String.valueOf(vaca.isProduciraProductosConDestace()));
+            File archivoGalllina = archivo.crearArchivo(archivo.getRutaCarpetaAnimales(), gallina.getNombre());
+            archivo.escribirEnArchivo(archivoGalllina, gallina.getNombre());
+            archivo.escribirEnArchivo(archivoGalllina, String.valueOf(gallina.getPrecio()));
+            archivo.escribirEnArchivo(archivoGalllina, String.valueOf(gallina.getEspacio()));
+            archivo.escribirEnArchivo(archivoGalllina, String.valueOf(gallina.getEdadMaxima()));
+            archivo.escribirEnArchivo(archivoGalllina, String.valueOf(gallina.isEsHerbivoro()));
+            archivo.escribirEnArchivo(archivoGalllina, String.valueOf(gallina.isEsDestazable()));
+            archivo.escribirEnArchivo(archivoGalllina, String.valueOf(gallina.isProduciraProductosConDestace()));
+        } catch (ArchivoException e) {
+            System.out.println("No se pudieron guardar los animales predeterminados porque " + e.getMessage());
+        }
     }
 
     public void creadorDeSemillasPredeterminadas() {
-        Semillas semillaMaiz = new Semillas("maiz", 50, false, "grano");
-        Semillas semillaFruta = new Semillas("manzano", 100, true, "manzana");
+        Semillas semillaMaiz = new Semillas("maiz", 50, false, 15, "grano");
+        Semillas semillaFruta = new Semillas("manzano", 100, true, 25, "manzana");
         try {
             File maiz = archivo.crearArchivo(archivo.getRutaCarpetaSemillas(), semillaMaiz.getNombre());
             archivo.escribirEnArchivo(maiz, semillaMaiz.getNombre());
             archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.getPrecio()));
             archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.isProduceFruta()));
+            archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.getCantidadDeSemillasRequerida()));
             archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.getAlimento().getNombre()));
             File manzano = archivo.crearArchivo(archivo.getRutaCarpetaSemillas(), semillaFruta.getNombre());
             archivo.escribirEnArchivo(manzano, semillaFruta.getNombre());
             archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.getPrecio()));
             archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.isProduceFruta()));
+            archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.getCantidadDeSemillasRequerida()));
             archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.getAlimento().getNombre()));
         } catch (ArchivoException e) {
             System.out.println("Hubo un error al crear las semillas predeterminadas porque " + e.getMessage());
-        }
-    }
-
-    public void creadorDePlantasPredeterminadas() {
-        try {
-            File maiz = archivo.crearArchivo(archivo.getRutaCarpetaPlantas(), "maiz");
-            archivo.escribirEnArchivo(maiz, "maiz");
-            archivo.escribirEnArchivo(maiz, "grano");
-            archivo.escribirEnArchivo(maiz, "15");
-            File manzano = archivo.crearArchivo(archivo.getRutaCarpetaPlantas(), "manzano");
-            archivo.escribirEnArchivo(manzano, "manzano");
-            archivo.escribirEnArchivo(manzano, "manzana");
-            archivo.escribirEnArchivo(manzano, "30");
-        } catch (ArchivoException e) {
-            System.out.println("Hubo un error al crear las plantas predeterminadas porque " + e.getMessage());
         }
     }
 

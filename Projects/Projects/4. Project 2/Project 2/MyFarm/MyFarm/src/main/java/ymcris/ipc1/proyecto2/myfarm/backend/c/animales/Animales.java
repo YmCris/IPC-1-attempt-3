@@ -10,7 +10,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
  * @author YmCris
  * @since Apr 29, 2025
  */
-public abstract class Animales implements Runnable {
+public class Animales implements Runnable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
@@ -45,10 +45,12 @@ public abstract class Animales implements Runnable {
         this.produciraProductosConDestace = produciraProductosConDestace;
     }
 
-    // MÉTODOS ABSTRACTOS ------------------------------------------------------
-    public abstract Productos generarProductos();
-
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    @Override
+    public void run() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
     public boolean estaVivo() {
         return vida > 0;
     }
@@ -108,6 +110,14 @@ public abstract class Animales implements Runnable {
 
     public int getPorcentajeDeProduccionSinDestaze() {
         return porcentajeDeProduccionSinDestaze;
+    }
+
+    public boolean isEsDestazable() {
+        return esDestazable;
+    }
+
+    public boolean isProduciraProductosConDestace() {
+        return produciraProductosConDestace;
     }
 
     // SETTERS -----------------------------------------------------------------

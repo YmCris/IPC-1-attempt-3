@@ -2,6 +2,7 @@ package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 
 import javax.swing.table.DefaultTableModel;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
@@ -18,6 +19,7 @@ public class JDMercado extends javax.swing.JDialog {
     private DefaultTableModel tblFertilizantes;
     private DefaultTableModel tblComprarAlimentos;
     private DefaultTableModel tblComprarSemillas;
+    private DefaultTableModel tblComprarAnimales;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
@@ -33,6 +35,7 @@ public class JDMercado extends javax.swing.JDialog {
         agregarFertilizantes();
         agregarAlimentos();
         agregarSemillas();
+        agregarAnimales();
     }
 
     private void agregarFertilizantes() {
@@ -54,11 +57,16 @@ public class JDMercado extends javax.swing.JDialog {
     private void agregarSemillas() {
         tblComprarSemillas = (DefaultTableModel) tblCSemillas.getModel();
         Semillas[] semillas = mercado.getSemillas();
-        if (semillas.length == 0) {
-            System.out.println("Arreglo vacío");
-        }
         for (Semillas semilla : semillas) {
-            tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.isProduceFruta(), semilla.getAlimento().getNombre()});
+            tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.isProduceFruta(), semilla.getCantidadDeSemillasRequerida(), semilla.getAlimento().getNombre()});
+        }
+    }
+
+    private void agregarAnimales() {
+        tblComprarAnimales = (DefaultTableModel) tblCAnimales.getModel();
+        Animales[] animales = mercado.getAnimales();
+        for (Animales animal : animales) {
+            tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.isProduciraProductosConDestace()});
         }
     }
 
@@ -175,14 +183,14 @@ public class JDMercado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nombre", "Precio", "Produce Fruta", "Alimento"
+                "Nombre", "Precio", "Produce Fruta", "Semillas Requeridas", "Alimento"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class, java.lang.Object.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -212,12 +220,19 @@ public class JDMercado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nombre", "Precio"
+                "Nombre", "Precio", "Espacio", "Edad Máxima", "Es Herbivoro", "Es Destazable", "Produce productos con destace"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
@@ -406,14 +421,14 @@ public class JDMercado extends javax.swing.JDialog {
                             .addComponent(jLabel10)
                             .addComponent(btnVender3))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(54, 54, 54)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
                             .addComponent(btnVender4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(74, 74, 74)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
                             .addComponent(btnVender5))

@@ -17,7 +17,7 @@ public class MyFarm {
         creador.crearFertilizantesPredeterminados();
         creador.creadorDeAlimentosPredeterminados();
         creador.creadorDeSemillasPredeterminadas();
-        creador.creadorDePlantasPredeterminadas();
+        creador.creadorDeAnimalesPredeterminados();
         menu.setVisible(true);
     }
 }

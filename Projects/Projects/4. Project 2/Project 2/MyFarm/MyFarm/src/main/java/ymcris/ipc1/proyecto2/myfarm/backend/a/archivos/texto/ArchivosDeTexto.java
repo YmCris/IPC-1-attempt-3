@@ -20,7 +20,6 @@ public class ArchivosDeTexto {
 
     // CONSTANTES --------------------------------------------------------------
     private final String rutaProyecto = System.getProperty("user.dir");
-    private final String rutaCarpetaPlantas = rutaProyecto + File.separator + "Plantas";
     private final String rutaCarpetaSemillas = rutaProyecto + File.separator + "Semillas";
     private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
     private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
@@ -29,13 +28,11 @@ public class ArchivosDeTexto {
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public void crearCarpetas() {
-        File carpetaPlantas = new File(rutaCarpetaPlantas);
         File carpetaSemillas = new File(rutaCarpetaSemillas);
         File carpetaAnimales = new File(rutaCarpetaAnimales);
         File carpetaProductos = new File(rutaCarpetaAlimentos);
         File carpetaMateria = new File(rutaCarpetaMateriaPrima);
         File carpetaFertilizantes = new File(rutaCarpetaFertilizantes);
-        carpetaPlantas.mkdirs();
         carpetaSemillas.mkdirs();
         carpetaAnimales.mkdirs();
         carpetaProductos.mkdirs();
@@ -151,8 +148,4 @@ public class ArchivosDeTexto {
         return rutaCarpetaFertilizantes;
     }
 
-    public String getRutaCarpetaPlantas() {
-        return rutaCarpetaPlantas;
-    }
-    
 }

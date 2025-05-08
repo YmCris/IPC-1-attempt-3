@@ -16,22 +16,22 @@ public class Semillas {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
     private Alimentos alimento;
-    private String nombreAlimento;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int precio;
     private int cantidad;
+    private int cantidadDeSemillasRequerida;
     private boolean produceFruta;
 
     // INSTANCIAS --------------------------------------------------------------
     ArchivosDeTexto archivo = new ArchivosDeTexto();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Semillas(String nombre, int precio, boolean produceFruta, String nombreAlimento) {
+    public Semillas(String nombre, int precio, boolean produceFruta, int cantidadDeSemillasRequerida, String nombreAlimento) {
         this.nombre = nombre;
         this.precio = precio;
         this.produceFruta = produceFruta;
-        this.nombreAlimento = nombreAlimento;
+        this.cantidadDeSemillasRequerida = cantidadDeSemillasRequerida;
         this.alimento = agregarAlimento(nombreAlimento);
     }
 
@@ -72,9 +72,11 @@ public class Semillas {
         return alimento;
     }
 
-    public String getNombreAlimento() {
-        return nombreAlimento;
+    public int getCantidadDeSemillasRequerida() {
+        return cantidadDeSemillasRequerida;
     }
+    
+    
 
     // SETTERS -----------------------------------------------------------------
     public void setCantidad(int cantidad) {

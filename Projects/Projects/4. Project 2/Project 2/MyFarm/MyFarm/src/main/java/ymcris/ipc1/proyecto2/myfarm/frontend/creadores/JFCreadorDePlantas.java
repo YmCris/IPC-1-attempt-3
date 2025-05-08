@@ -9,55 +9,78 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 
 /**
  *
- * @author crist
+ * @author YmCris
  */
 public class JFCreadorDePlantas extends javax.swing.JFrame {
 
+    // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
 
-    private ArchivosDeTexto archivo = new ArchivosDeTexto();
+    // INSTANCIAS --------------------------------------------------------------
+    private ArchivosDeTexto archivoTxt = new ArchivosDeTexto();
 
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFCreadorDePlantas() {
         initComponents();
+        this.setTitle("Creador de Semillas");
         this.setResizable(false);
         this.setLocationRelativeTo(null);
-        this.setTitle("Creador de plantas");
-        pnlFondo.add(new PanelPersonalizado(pnlFondo, RUTA_IMAGEN)).repaint();
-        agregarSemillas();
+        PanelPersonalizado panel = new PanelPersonalizado(pnlFondo, RUTA_IMAGEN);
+        pnlFondo.add(panel).repaint();
+        agregarAlimentos();
     }
 
-    private void agregarSemillas() {
+    // MÉTODOS CONCRETOS -------------------------------------------------------
+    private String verificarEntradas(String nombre, int precioSemillas) {
+        if (nombre.equals("maiz") || nombre.equals("manzano")) {
+            return "No puedes crear una semilla con ese nombre";
+        }
+        if (nombre.isBlank()) {
+            return "Debes darle un nombre a la semilla";
+        } else if (precioSemillas <= 0) {
+            return "No puedes tener una cantidad menor o igual a cero";
+        }
+        return "";
+    }
+
+    private void agregarAlimentos() {
         try {
-            File[] semillas = archivo.obtenerArchivosDeCarpeta(archivo.getRutaCarpetaSemillas());
-            for (File semilla : semillas) {
-                cbSemilla.addItem(archivo.leerArchivo(semilla, 0));
+            File[] archivos = archivoTxt.obtenerArchivosDeCarpeta(archivoTxt.getRutaCarpetaAlimentos());
+            for (File archivo : archivos) {
+                boolean produceFruta = Boolean.parseBoolean(archivoTxt.leerArchivo(archivo, 3));
+                if (produceFruta) {
+                    cbAlimento.addItem(archivo.getName().substring(0, archivo.getName().length() - 4));
+                }
             }
-        } catch (ArchivoException e) {
-            System.out.println("no se pudieron agregar las semillas porque " + e.getMessage());
+        } catch (ArchivoException ex) {
+            System.out.println("Hubo un error al agregar los elemntos al combo box porque " + ex.getMessage());
         }
     }
 
+    private boolean hayErrores(String nombre, int precioSemillas) {
+        return nombre.isBlank() || precioSemillas <= 0 || nombre.equals("grano") || nombre.equals("manzana");
+    }
+
+    // CÓDIGO AUTOGENERADO -----------------------------------------------------
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        txtNombre = new javax.swing.JTextField();
         pnlFondo = new javax.swing.JPanel();
         lblTitulo2 = new javax.swing.JLabel();
         lblTitulo1 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        cbSemilla = new javax.swing.JComboBox<>();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        spnCantidad = new javax.swing.JSpinner();
         btnCrearPlanta = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        chbProduceFruta = new javax.swing.JCheckBox();
+        spnPrecio = new javax.swing.JSpinner();
         btnIrAlMenu = new javax.swing.JButton();
+        cbAlimento = new javax.swing.JComboBox<>();
         jLabel5 = new javax.swing.JLabel();
-
-        txtNombre.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNombreActionPerformed(evt);
-            }
-        });
+        spnSemillasRequeridas = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -83,15 +106,17 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
         lblTitulo1.setName(""); // NOI18N
         lblTitulo1.setPreferredSize(new java.awt.Dimension(300, 300));
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel4.setText("Semilla requerida");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Nombre");
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Produce Fruta");
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel3.setText("Cantidad de semillas");
-
-        spnCantidad.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+        jLabel3.setText("Precio de la Semilla");
 
         btnCrearPlanta.setBackground(new java.awt.Color(51, 51, 51));
         btnCrearPlanta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -104,6 +129,25 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
             }
         });
 
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Alimento Producido");
+
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
+
+        chbProduceFruta.setPreferredSize(new java.awt.Dimension(25, 25));
+        chbProduceFruta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chbProduceFrutaActionPerformed(evt);
+            }
+        });
+
+        spnPrecio.setModel(new javax.swing.SpinnerNumberModel(10, 10, null, 5));
+
         btnIrAlMenu.setBackground(new java.awt.Color(51, 51, 51));
         btnIrAlMenu.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btnIrAlMenu.setForeground(new java.awt.Color(255, 255, 255));
@@ -115,66 +159,93 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 36)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("La planta obtiene el nombre de la semilla");
+        jLabel5.setText("Semillas requeridas");
+
+        spnSemillasRequeridas.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
 
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(lblTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                .addContainerGap(76, Short.MAX_VALUE)
-                .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(74, 74, 74))
-            .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGap(19, 19, 19)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(23, 23, 23)
-                        .addComponent(jLabel4)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(spnCantidad)
-                    .addComponent(cbSemilla, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(36, 36, 36))
-            .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGap(233, 233, 233)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
                         .addComponent(btnCrearPlanta, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(63, 63, 63))
-                    .addComponent(btnIrAlMenu, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(274, 274, 274))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                        .addComponent(btnIrAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(211, 211, 211))))
+            .addGroup(pnlFondoLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(85, 85, 85))
+            .addGroup(pnlFondoLayout.createSequentialGroup()
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblTitulo1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlFondoLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(chbProduceFruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(119, 119, 119))
+                            .addGroup(pnlFondoLayout.createSequentialGroup()
+                                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel3)
+                                            .addComponent(jLabel4))
+                                        .addGap(69, 69, 69)
+                                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(spnPrecio)
+                                            .addComponent(cbAlimento, 0, 225, Short.MAX_VALUE)))
+                                    .addGroup(pnlFondoLayout.createSequentialGroup()
+                                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel1)
+                                            .addComponent(jLabel5))
+                                        .addGap(83, 83, 83)
+                                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(spnSemillasRequeridas, javax.swing.GroupLayout.DEFAULT_SIZE, 225, Short.MAX_VALUE)
+                                            .addComponent(txtNombre))))
+                                .addGap(0, 0, Short.MAX_VALUE)))))
+                .addContainerGap())
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
+                .addGap(36, 36, 36)
                 .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTitulo1, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(143, 143, 143)
+                .addGap(87, 87, 87)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(cbSemilla, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel5)
+                    .addComponent(spnSemillasRequeridas, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(spnPrecio, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
+                .addGap(18, 18, 18)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(chbProduceFruta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(cbAlimento, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4))
-                .addGap(30, 30, 30)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(spnCantidad, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 173, Short.MAX_VALUE)
+                .addGap(44, 44, 44)
                 .addComponent(btnCrearPlanta, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnIrAlMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(jLabel5)
-                .addContainerGap())
+                .addGap(56, 56, 56))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -192,21 +263,37 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearPlantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPlantaActionPerformed
-        String nombreSemilla = (String) cbSemilla.getSelectedItem();
-        int cantidadSemillas = (int) spnCantidad.getValue();
-        try {
-            if (!archivo.existeArchivo(archivo.getRutaCarpetaPlantas(), nombreSemilla + ".txt")) {
-                File planta = archivo.crearArchivo(archivo.getRutaCarpetaPlantas(), nombreSemilla);
-                archivo.escribirEnArchivo(planta, nombreSemilla);
-                archivo.escribirEnArchivo(planta, String.valueOf(cantidadSemillas));
-                JOptionPane.showMessageDialog(null, "Se ha creado la planta " + nombreSemilla + " correctamente", "Nueva Planta", JOptionPane.INFORMATION_MESSAGE);
-            } else {
-                JOptionPane.showMessageDialog(null, "No puedes crear una planta con el nombre " + nombreSemilla + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+        String nombre = txtNombre.getText().toLowerCase();
+        boolean produceFruta = chbProduceFruta.isSelected();
+        int precioSemillas = (int) spnPrecio.getValue();
+        String alimento = (String) cbAlimento.getSelectedItem();
+        int semillasRequeridas = (int) spnSemillasRequeridas.getValue();
+        if (hayErrores(nombre, precioSemillas)) {
+            String mensaje = verificarEntradas(nombre, precioSemillas);
+            JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        } else {
+            try {
+                if (!archivoTxt.existeArchivo(archivoTxt.getRutaCarpetaSemillas(), nombre + ".txt")) {
+                    File archivo = archivoTxt.crearArchivo(archivoTxt.getRutaCarpetaSemillas(), nombre);
+                    archivoTxt.escribirEnArchivo(archivo, nombre);
+                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(precioSemillas));
+                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(produceFruta));
+                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(semillasRequeridas));
+                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(alimento));
+                    JOptionPane.showMessageDialog(null, "Se ha creado la semilla " + nombre + " correctamente", "Nueva Semilla", JOptionPane.INFORMATION_MESSAGE);
+                } else {
+                    JOptionPane.showMessageDialog(null, "No puedes crear una semilla con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
+                }
+            } catch (ArchivoException ex) {
+                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
             }
-        } catch (ArchivoException ex) {
-            JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
         }
+
     }//GEN-LAST:event_btnCrearPlantaActionPerformed
+
+    private void chbProduceFrutaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chbProduceFrutaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_chbProduceFrutaActionPerformed
 
     private void btnIrAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrAlMenuActionPerformed
         this.dispose();
@@ -217,18 +304,21 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNombreActionPerformed
 
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearPlanta;
     private javax.swing.JButton btnIrAlMenu;
-    private javax.swing.JComboBox<String> cbSemilla;
+    private javax.swing.JComboBox<String> cbAlimento;
+    private javax.swing.JCheckBox chbProduceFruta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel lblTitulo1;
     private javax.swing.JLabel lblTitulo2;
     private javax.swing.JPanel pnlFondo;
-    private javax.swing.JSpinner spnCantidad;
+    private javax.swing.JSpinner spnPrecio;
+    private javax.swing.JSpinner spnSemillasRequeridas;
     private javax.swing.JTextField txtNombre;
     // End of variables declaration//GEN-END:variables
 }
