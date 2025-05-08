@@ -2,6 +2,7 @@ package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 
 import javax.swing.table.DefaultTableModel;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
@@ -16,6 +17,7 @@ public class JDMercado extends javax.swing.JDialog {
     private Mercado mercado;
     private DefaultTableModel tblFertilizantes;
     private DefaultTableModel tblComprarAlimentos;
+    private DefaultTableModel tblComprarSemillas;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
@@ -30,6 +32,7 @@ public class JDMercado extends javax.swing.JDialog {
         pnlFondo.add(new PanelPersonalizado(pnlFondo, RUTA_IMAGEN)).repaint();
         agregarFertilizantes();
         agregarAlimentos();
+        agregarSemillas();
     }
 
     private void agregarFertilizantes() {
@@ -44,7 +47,18 @@ public class JDMercado extends javax.swing.JDialog {
         tblComprarAlimentos = (DefaultTableModel) tblCAlimento.getModel();
         Alimentos[] alimentos = mercado.getAlimentosParaAnimales();
         for (Alimentos alimento : alimentos) {
-            tblComprarAlimentos.addRow(new Object[]{alimento.getNombre(),alimento.getPrecioDeVenta(),alimento.esParaHerbivoros()});
+            tblComprarAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta(), alimento.esParaHerbivoros()});
+        }
+    }
+
+    private void agregarSemillas() {
+        tblComprarSemillas = (DefaultTableModel) tblCSemillas.getModel();
+        Semillas[] semillas = mercado.getSemillas();
+        if (semillas.length == 0) {
+            System.out.println("Arreglo vacío");
+        }
+        for (Semillas semilla : semillas) {
+            tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.isProduceFruta(), semilla.getAlimento().getNombre()});
         }
     }
 
@@ -161,12 +175,19 @@ public class JDMercado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nombre", "Precio"
+                "Nombre", "Precio", "Produce Fruta", "Alimento"
             }
         ) {
-            boolean[] canEdit = new boolean [] {
-                false, false
+            Class[] types = new Class [] {
+                java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Object.class
             };
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public Class getColumnClass(int columnIndex) {
+                return types [columnIndex];
+            }
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];

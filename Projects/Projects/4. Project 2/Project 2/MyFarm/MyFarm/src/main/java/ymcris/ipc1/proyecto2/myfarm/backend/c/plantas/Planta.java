@@ -1,5 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+
 /**
  * Clase Planta es la clase abstracta padre encargada de ser quien de forma a
  * las plantas así como sus funciones dentro del juego
@@ -7,28 +9,27 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
  * @author YmCris
  * @since May 4, 2025
  */
-public abstract class Planta extends Thread {
+public abstract class Planta implements Runnable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    private String nombre;
-    private Semillas semilla;
+    protected String nombre;
+    protected Semillas semilla;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private int tiempoVivido;//varia
-    private boolean estaPodrida;//cuando muere para el hilo
-    private boolean produceFruta;
-    private int semillasRequeridas;
-    private int tiempoParaCosechar;//depende de cada planta
-    private int tiempoParaPodrirse;//depende de cada planta
-    private boolean muerteInmediata;
-    private boolean desapareceAlMorir;
+    protected int tiempoVivido;//varia
+    protected boolean estaPodrida;//cuando muere para el hilo
+    protected boolean produceFruta;
+    protected int semillasRequeridas;
+    protected int tiempoParaCosechar;//depende de cada planta
+    protected int tiempoParaPodrirse;//depende de cada planta
+    protected boolean desapareceAlMorir;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Planta(Semillas semilla) {
+    public Planta(String nombre, Semillas semilla, int semillasRequeridas) {
+        this.nombre = nombre;
         this.semilla = semilla;
-        this.nombre = semilla.getNombre();
         this.produceFruta = semilla.isProduceFruta();
-        this.semillasRequeridas = semilla.getSemillasRequeridas();
+        this.semillasRequeridas = semillasRequeridas;
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
@@ -40,9 +41,11 @@ public abstract class Planta extends Thread {
         System.out.println("Semillas Requeridas: " + semillasRequeridas);
         System.out.println("Tiempo para Cosechar: " + tiempoParaCosechar);
         System.out.println("Tiempo para Podrirse: " + tiempoParaPodrirse);
-        System.out.println("Muerte Inmediata: " + muerteInmediata);
         System.out.println("Desaparece al morir: " + desapareceAlMorir);
     }
+
+    // MÉTODOS ABSTRACTOS ------------------------------------------------------
+    public abstract Alimentos darCosecha();
 
     // GETTERS -----------------------------------------------------------------
     public String getNombre() {
@@ -67,10 +70,6 @@ public abstract class Planta extends Thread {
 
     public boolean isEstaPodrida() {
         return estaPodrida;
-    }
-
-    public boolean isMuerteInmediata() {
-        return muerteInmediata;
     }
 
     public boolean isDesapareceAlMorir() {
@@ -114,12 +113,12 @@ public abstract class Planta extends Thread {
         this.tiempoParaPodrirse = tiempoParaPodrirse;
     }
 
-    public void setMuerteInmediata(boolean muerteInmediata) {
-        this.muerteInmediata = muerteInmediata;
-    }
-
     public void setDesapareceAlMorir(boolean desapareceAlMorir) {
         this.desapareceAlMorir = desapareceAlMorir;
+    }
+
+    public void setSemilla(Semillas semilla) {
+        this.semilla = semilla;
     }
 
 }

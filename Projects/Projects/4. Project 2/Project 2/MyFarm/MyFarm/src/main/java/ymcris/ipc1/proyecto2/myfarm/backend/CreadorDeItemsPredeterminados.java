@@ -3,7 +3,9 @@ package ymcris.ipc1.proyecto2.myfarm.backend;
 import java.io.File;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.hola;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Frutas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Grano;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
@@ -42,12 +44,12 @@ public class CreadorDeItemsPredeterminados {
     }
 
     public void creadorDeAlimentosPredeterminados() {
-        Alimentos alimentoH1 = new Alimentos("Pasto", 20, 20, true);
-        Alimentos alimentoH2 = new Alimentos("Zanahoria", 10, 35, true);
-        Alimentos alimentoH3 = new Alimentos("Nueces", 25, 15, true);
-        Alimentos alimentoO1 = new Alimentos("Granos", 25, 40, false);
-        Alimentos alimentoO2 = new Alimentos("Huevos", 25, 60, false);
-        Alimentos alimentoO3 = new Alimentos("Pollo", 25, 100, false);
+        Alimentos alimentoH1 = new Alimentos("manzana", 20, 20, true);
+        Alimentos alimentoH2 = new Alimentos("zanahoria", 10, 35, true);
+        Alimentos alimentoH3 = new Alimentos("nuez", 25, 15, true);
+        Alimentos alimentoO1 = new Alimentos("grano", 25, 40, false);
+        Alimentos alimentoO2 = new Alimentos("huevo", 25, 60, false);
+        Alimentos alimentoO3 = new Alimentos("pollo", 25, 100, false);
         try {
             File pasto = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoH1.getNombre());
             archivo.escribirEnArchivo(pasto, alimentoH1.getNombre());
@@ -84,10 +86,43 @@ public class CreadorDeItemsPredeterminados {
         }
 
     }
-    
+
     public void creadorDeAnimalesPredeterminados() {
-        
-        hola hola = new hola("vaca", 25, 2, 600, true, true, true);
+
+    }
+
+    public void creadorDeSemillasPredeterminadas() {
+        Semillas semillaMaiz = new Semillas("maiz", 50, false, "grano");
+        Semillas semillaFruta = new Semillas("manzano", 100, true, "manzana");
+        try {
+            File maiz = archivo.crearArchivo(archivo.getRutaCarpetaSemillas(), semillaMaiz.getNombre());
+            archivo.escribirEnArchivo(maiz, semillaMaiz.getNombre());
+            archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.getPrecio()));
+            archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.isProduceFruta()));
+            archivo.escribirEnArchivo(maiz, String.valueOf(semillaMaiz.getAlimento().getNombre()));
+            File manzano = archivo.crearArchivo(archivo.getRutaCarpetaSemillas(), semillaFruta.getNombre());
+            archivo.escribirEnArchivo(manzano, semillaFruta.getNombre());
+            archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.getPrecio()));
+            archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.isProduceFruta()));
+            archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.getAlimento().getNombre()));
+        } catch (ArchivoException e) {
+            System.out.println("Hubo un error al crear las semillas predeterminadas porque " + e.getMessage());
+        }
+    }
+
+    public void creadorDePlantasPredeterminadas() {
+        try {
+            File maiz = archivo.crearArchivo(archivo.getRutaCarpetaPlantas(), "maiz");
+            archivo.escribirEnArchivo(maiz, "maiz");
+            archivo.escribirEnArchivo(maiz, "grano");
+            archivo.escribirEnArchivo(maiz, "15");
+            File manzano = archivo.crearArchivo(archivo.getRutaCarpetaPlantas(), "manzano");
+            archivo.escribirEnArchivo(manzano, "manzano");
+            archivo.escribirEnArchivo(manzano, "manzana");
+            archivo.escribirEnArchivo(manzano, "30");
+        } catch (ArchivoException e) {
+            System.out.println("Hubo un error al crear las plantas predeterminadas porque " + e.getMessage());
+        }
     }
 
 }

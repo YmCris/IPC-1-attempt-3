@@ -16,6 +16,8 @@ public class MyFarm {
         CreadorDeItemsPredeterminados creador = new CreadorDeItemsPredeterminados();
         creador.crearFertilizantesPredeterminados();
         creador.creadorDeAlimentosPredeterminados();
+        creador.creadorDeSemillasPredeterminadas();
+        creador.creadorDePlantasPredeterminadas();
         menu.setVisible(true);
     }
 }

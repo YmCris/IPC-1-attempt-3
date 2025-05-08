@@ -1,6 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
 import java.io.Serializable;
+import ymcris.ipc1.proyecto2.myfarm.backend.CreadorDeItemsPredeterminados;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.pila.Pila;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.terreno.Terreno;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
@@ -33,6 +34,7 @@ public class Granja implements Serializable, Runnable {
 
     // CONSTANTES --------------------------------------------------------------
     public static final long serialVersionUID = 12345678;
+    
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Granja(Granjero granjero) {

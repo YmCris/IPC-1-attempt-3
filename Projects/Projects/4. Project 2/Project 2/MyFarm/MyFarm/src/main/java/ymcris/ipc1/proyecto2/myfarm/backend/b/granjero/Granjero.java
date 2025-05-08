@@ -71,8 +71,10 @@ public class Granjero extends Thread {
                     haComido = true;
                 }
             } catch (ListaDobleException ex) {
-                System.out.println(ex.getMessage());
+                System.out.println("Ha ocurrido un error al comer porque " + ex.getMessage());
             }
+        } else {
+            System.out.println("No hay alimentos para comer");
         }
     }
 

@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
  * Clase ArchivosDeTexto clase encargada de crear archivos de texto y las
@@ -22,6 +21,7 @@ public class ArchivosDeTexto {
     // CONSTANTES --------------------------------------------------------------
     private final String rutaProyecto = System.getProperty("user.dir");
     private final String rutaCarpetaPlantas = rutaProyecto + File.separator + "Plantas";
+    private final String rutaCarpetaSemillas = rutaProyecto + File.separator + "Semillas";
     private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
     private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
     private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia";
@@ -30,11 +30,13 @@ public class ArchivosDeTexto {
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public void crearCarpetas() {
         File carpetaPlantas = new File(rutaCarpetaPlantas);
+        File carpetaSemillas = new File(rutaCarpetaSemillas);
         File carpetaAnimales = new File(rutaCarpetaAnimales);
         File carpetaProductos = new File(rutaCarpetaAlimentos);
         File carpetaMateria = new File(rutaCarpetaMateriaPrima);
         File carpetaFertilizantes = new File(rutaCarpetaFertilizantes);
         carpetaPlantas.mkdirs();
+        carpetaSemillas.mkdirs();
         carpetaAnimales.mkdirs();
         carpetaProductos.mkdirs();
         carpetaMateria.mkdirs();
@@ -74,13 +76,14 @@ public class ArchivosDeTexto {
         try {
             files = obtenerArchivosDeCarpeta(rutaCarpeta);
             for (File file : files) {
-                if (file.getName().toLowerCase().equals(nombre.toLowerCase())) {
+                if (file.getName().toLowerCase().equals(nombre.toLowerCase()+".txt")) {
                     return file;
                 }
             }
         } catch (ArchivoException ex) {
             System.out.println("No se pudo obtener el archivo: " + nombre + " de la carpeta " + rutaCarpeta + "porque " + ex.getMessage());
         }
+        System.out.println("No se ha podido obtener el archivo de la carpeta");
         return null;
     }
 
@@ -128,8 +131,8 @@ public class ArchivosDeTexto {
         return rutaProyecto;
     }
 
-    public String getRutaCarpetaPlantas() {
-        return rutaCarpetaPlantas;
+    public String getRutaCarpetaSemillas() {
+        return rutaCarpetaSemillas;
     }
 
     public String getRutaCarpetaAnimales() {
@@ -148,4 +151,8 @@ public class ArchivosDeTexto {
         return rutaCarpetaFertilizantes;
     }
 
+    public String getRutaCarpetaPlantas() {
+        return rutaCarpetaPlantas;
+    }
+    
 }
