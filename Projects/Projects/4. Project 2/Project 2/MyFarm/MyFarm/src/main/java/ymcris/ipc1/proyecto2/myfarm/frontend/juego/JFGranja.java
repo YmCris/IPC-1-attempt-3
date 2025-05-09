@@ -6,12 +6,19 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Bodega;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Desierto;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
+import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDAgua;
+import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDDesierto;
+import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDGrama;
 
 /**
  *
@@ -58,11 +65,18 @@ public class JFGranja extends javax.swing.JFrame {
             for (int j = 0; j < columnas; j++) {
                 int fila = i;
                 int columna = j;
-                granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo().addActionListener((e) -> {
-                    System.out.println("Waza");
+                Suelo sueloActual = granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo();
+                sueloActual.addActionListener((e) -> {
                     System.out.println("Soy el boton en la posición: " + fila + columna);
+                    if (sueloActual instanceof Agua) {
+                        new JDAgua((Agua) sueloActual).setVisible(true);
+                    } else if (sueloActual instanceof Desierto) {
+                        new JDDesierto((Desierto) sueloActual).setVisible(true);
+                    } else if (sueloActual instanceof Grama) {
+                        new JDGrama((Grama) sueloActual).setVisible(true);
+                    }
                 });
-                pnlTablero.add(granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo());
+                pnlTablero.add(sueloActual);
             }
         }
         pnlTablero.revalidate();
@@ -388,7 +402,7 @@ public class JFGranja extends javax.swing.JFrame {
     }//GEN-LAST:event_btnMercadoActionPerformed
 
     private void btnPreseleccionarAlimentos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreseleccionarAlimentos1ActionPerformed
-        
+
     }//GEN-LAST:event_btnPreseleccionarAlimentos1ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
