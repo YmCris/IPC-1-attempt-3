@@ -1,0 +1,7 @@
+gallina
+50
+0.5
+180
+false
+true
+true

@@ -9,9 +9,9 @@ import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAlimentos;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAnimales;
-import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDePlantas;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeMateriaPrima;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDePlantas;
+import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFEditoDeAnimales;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.JFGranja;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 
@@ -317,7 +317,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         dialog.add(btnGuardar);
         dialog.setVisible(true);
     }
-
+    
     private void crearProductos() {
         dialog = new JDialog();
         dialog.setSize(600, 150);
@@ -349,7 +349,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         dialog.add(btnAlimento);
         dialog.setVisible(true);
     }
-
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt, String nombre, String nick) {
         if (nombre.isBlank() || nick.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes tener un nombre o nick vacios", "ERROR", JOptionPane.WARNING_MESSAGE);
@@ -387,7 +387,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCrearPlantasActionPerformed
 
     private void btnEditarAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarAnimalesActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new JFEditoDeAnimales().setVisible(true);
     }//GEN-LAST:event_btnEditarAnimalesActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

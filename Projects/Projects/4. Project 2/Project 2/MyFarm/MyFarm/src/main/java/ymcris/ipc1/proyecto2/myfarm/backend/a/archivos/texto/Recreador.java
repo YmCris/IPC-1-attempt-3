@@ -6,8 +6,6 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
 
 /**
  * Clase Recreador
@@ -41,8 +39,8 @@ public class Recreador {
 
     public Alimentos[] recrearAlimentos() {
         try {
-            int cantidadDeAlimentos = archivo.numeroDeArchivosEnCarpeta(archivo.getRutaCarpetaAlimentos());
-            File[] archivos = archivo.obtenerArchivosDeCarpeta(archivo.getRutaCarpetaAlimentos());
+            int cantidadDeAlimentos = archivo.numeroDeArchivosEnCarpeta(archivo.getRutaCarpetaAlimentosParaAnimales());
+            File[] archivos = archivo.obtenerArchivosDeCarpeta(archivo.getRutaCarpetaAlimentosParaAnimales());
             Alimentos[] alimentos = new Alimentos[cantidadDeAlimentos];
             for (int i = 0; i < alimentos.length; i++) {
                 String nombre = archivo.leerArchivo(archivos[i], 0);

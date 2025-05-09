@@ -1,0 +1,5 @@
+manzano
+100
+true
+25
+manzana

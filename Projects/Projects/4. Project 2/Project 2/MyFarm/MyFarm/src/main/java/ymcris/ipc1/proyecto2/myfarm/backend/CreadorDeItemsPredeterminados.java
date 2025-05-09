@@ -8,6 +8,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
  * Clase CreadorDeItemsPredeterminados
@@ -51,32 +52,42 @@ public class CreadorDeItemsPredeterminados {
         Alimentos alimentoO2 = new Alimentos("huevo", 25, 60, false);
         Alimentos alimentoO3 = new Alimentos("pollo", 25, 100, false);
         try {
-            File pasto = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoH1.getNombre());
+            File pasto = archivo.crearArchivo(archivo.getRutaCarpetaAlimentosParaAnimales(), alimentoH1.getNombre());
             archivo.escribirEnArchivo(pasto, alimentoH1.getNombre());
             archivo.escribirEnArchivo(pasto, String.valueOf(alimentoH1.getPrecioDeVenta()));
             archivo.escribirEnArchivo(pasto, String.valueOf(alimentoH1.getPrecioDeCompra()));
             archivo.escribirEnArchivo(pasto, String.valueOf(alimentoH1.esParaHerbivoros()));
-            File zanahoria = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoH2.getNombre());
+            File manzana = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoH1.getNombre());
+            archivo.escribirEnArchivo(manzana, alimentoH1.getNombre());
+            archivo.escribirEnArchivo(manzana, String.valueOf(alimentoH1.getPrecioDeVenta()));
+            archivo.escribirEnArchivo(manzana, String.valueOf(alimentoH1.getPrecioDeCompra()));
+            archivo.escribirEnArchivo(manzana, String.valueOf(alimentoH1.esParaHerbivoros()));
+            File zanahoria = archivo.crearArchivo(archivo.getRutaCarpetaAlimentosParaAnimales(), alimentoH2.getNombre());
             archivo.escribirEnArchivo(zanahoria, alimentoH2.getNombre());
             archivo.escribirEnArchivo(zanahoria, String.valueOf(alimentoH2.getPrecioDeVenta()));
             archivo.escribirEnArchivo(zanahoria, String.valueOf(alimentoH2.getPrecioDeCompra()));
             archivo.escribirEnArchivo(zanahoria, String.valueOf(alimentoH2.esParaHerbivoros()));
-            File nueces = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoH3.getNombre());
+            File nueces = archivo.crearArchivo(archivo.getRutaCarpetaAlimentosParaAnimales(), alimentoH3.getNombre());
             archivo.escribirEnArchivo(nueces, alimentoH3.getNombre());
             archivo.escribirEnArchivo(nueces, String.valueOf(alimentoH3.getPrecioDeVenta()));
             archivo.escribirEnArchivo(nueces, String.valueOf(alimentoH3.getPrecioDeCompra()));
             archivo.escribirEnArchivo(nueces, String.valueOf(alimentoH3.esParaHerbivoros()));
-            File granos = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoO1.getNombre());
+            File granos = archivo.crearArchivo(archivo.getRutaCarpetaAlimentosParaAnimales(), alimentoO1.getNombre());
             archivo.escribirEnArchivo(granos, alimentoO1.getNombre());
             archivo.escribirEnArchivo(granos, String.valueOf(alimentoO1.getPrecioDeVenta()));
             archivo.escribirEnArchivo(granos, String.valueOf(alimentoO1.getPrecioDeCompra()));
             archivo.escribirEnArchivo(granos, String.valueOf(alimentoO1.esParaHerbivoros()));
-            File huevos = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoO2.getNombre());
+            File granos1 = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoO1.getNombre());
+            archivo.escribirEnArchivo(granos1, alimentoO1.getNombre());
+            archivo.escribirEnArchivo(granos1, String.valueOf(alimentoO1.getPrecioDeVenta()));
+            archivo.escribirEnArchivo(granos1, String.valueOf(alimentoO1.getPrecioDeCompra()));
+            archivo.escribirEnArchivo(granos1, String.valueOf(alimentoO1.esParaHerbivoros()));
+            File huevos = archivo.crearArchivo(archivo.getRutaCarpetaAlimentosParaAnimales(), alimentoO2.getNombre());
             archivo.escribirEnArchivo(huevos, alimentoO2.getNombre());
             archivo.escribirEnArchivo(huevos, String.valueOf(alimentoO2.getPrecioDeVenta()));
             archivo.escribirEnArchivo(huevos, String.valueOf(alimentoO2.getPrecioDeCompra()));
             archivo.escribirEnArchivo(huevos, String.valueOf(alimentoO2.esParaHerbivoros()));
-            File pollo = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), alimentoO3.getNombre());
+            File pollo = archivo.crearArchivo(archivo.getRutaCarpetaAlimentosParaAnimales(), alimentoO3.getNombre());
             archivo.escribirEnArchivo(pollo, alimentoO3.getNombre());
             archivo.escribirEnArchivo(pollo, String.valueOf(alimentoO3.getPrecioDeVenta()));
             archivo.escribirEnArchivo(pollo, String.valueOf(alimentoO3.getPrecioDeCompra()));
@@ -130,6 +141,36 @@ public class CreadorDeItemsPredeterminados {
             archivo.escribirEnArchivo(manzano, String.valueOf(semillaFruta.getAlimento().getNombre()));
         } catch (ArchivoException e) {
             System.out.println("Hubo un error al crear las semillas predeterminadas porque " + e.getMessage());
+        }
+    }
+
+    public void creadorDeProductosPredeterminados() {
+        MateriasPrimas cuero = new MateriasPrimas("cuero", 50, 50);
+        Alimentos carne = new Alimentos("carne", 60, 80, false);
+        Alimentos leche = new Alimentos("leche", 15, 12, false);
+        Alimentos huevo = new Alimentos("huevo", 5, 10, false);
+        try {
+            File archivo1 = archivo.crearArchivo(archivo.getRutaCarpetaMateriaPrima(), cuero.getNombre());
+            archivo.escribirEnArchivo(archivo1, String.valueOf(cuero.getNombre()));
+            archivo.escribirEnArchivo(archivo1, String.valueOf(cuero.getPrecioDeVenta()));
+            archivo.escribirEnArchivo(archivo1, String.valueOf(cuero.getPrecioDeCompra()));
+            File archivo2 = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), carne.getNombre());
+            archivo.escribirEnArchivo(archivo2, String.valueOf(carne.getNombre()));
+            archivo.escribirEnArchivo(archivo2, String.valueOf(carne.getPrecioDeVenta()));
+            archivo.escribirEnArchivo(archivo2, String.valueOf(carne.getPrecioDeCompra()));
+            archivo.escribirEnArchivo(archivo2, String.valueOf(carne.esParaHerbivoros()));
+            File archivo3 = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), leche.getNombre());
+            archivo.escribirEnArchivo(archivo3, String.valueOf(leche.getNombre()));
+            archivo.escribirEnArchivo(archivo3, String.valueOf(leche.getPrecioDeVenta()));
+            archivo.escribirEnArchivo(archivo3, String.valueOf(leche.getPrecioDeCompra()));
+            archivo.escribirEnArchivo(archivo3, String.valueOf(leche.esParaHerbivoros()));
+            File archivo4 = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), huevo.getNombre());
+            archivo.escribirEnArchivo(archivo4, String.valueOf(huevo.getNombre()));
+            archivo.escribirEnArchivo(archivo4, String.valueOf(huevo.getPrecioDeVenta()));
+            archivo.escribirEnArchivo(archivo4, String.valueOf(huevo.getPrecioDeCompra()));
+            archivo.escribirEnArchivo(archivo4, String.valueOf(huevo.esParaHerbivoros()));
+        } catch (ArchivoException e) {
+            System.out.println("Hubo un error al crear los productos predeterminados porque " + e.getMessage());
         }
     }
 

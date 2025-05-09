@@ -1,7 +1,5 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
-
 /**
  * Clase Desierto es la clase encargada de representar las celdas de decierto,
  * no hacen nadota
@@ -11,9 +9,15 @@ import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
  */
 public class Desierto extends Suelo {
 
+    // CONSTANTES --------------------------------------------------------------
+    private static final String NOMBRE_SUELO = "Desierto";
+    private static final String RUTA_IMAGEN = "/arena.png";
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Desierto(Granjero granjero, int precio, int distribucion, boolean estaSucio) {
-        super(granjero, precio, distribucion, estaSucio);
+    public Desierto() {
+        this.nombre = NOMBRE_SUELO;
+        this.rutaImagen = RUTA_IMAGEN;
+        colocarImagen();
     }
 
 }

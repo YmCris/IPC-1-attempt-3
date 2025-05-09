@@ -1,0 +1,4 @@
+zanahoria
+10
+35
+true

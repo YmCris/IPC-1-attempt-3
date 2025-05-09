@@ -1,0 +1,5 @@
+maiz
+50
+false
+15
+grano

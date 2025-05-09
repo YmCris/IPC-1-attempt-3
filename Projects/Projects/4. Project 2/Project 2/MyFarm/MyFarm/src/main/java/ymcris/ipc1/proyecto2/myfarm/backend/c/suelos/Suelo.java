@@ -1,6 +1,8 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
 
 /**
  * Clase Suelo es la clase encargada de ser la superclase de los tipos de suelos
@@ -9,64 +11,64 @@ import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
  * @author YmCris
  * @since Apr 26, 2025
  */
-public abstract class Suelo {
+public abstract class Suelo extends JButton {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    protected Granjero granjero;
+    protected String nombre;
     protected String rutaImagen;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    protected int precio;
-    protected int distribucion;
     protected boolean estaSucio;
 
+    // CONSTANTES --------------------------------------------------------------
+    public static final int PRECIO_DE_COMPRA = 40;
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Suelo(Granjero granjero, int precio, int distribucion, boolean estaSucio) {
-        this.granjero = granjero;
-        this.precio = precio;
-        this.distribucion = distribucion;
-        this.estaSucio = estaSucio;
+    public Suelo() {
+        this.estaSucio = false;
+        this.setSize(90, 90);
+    }
+
+    // MÉTODOS ABSTRACTOS ------------------------------------------------------
+    public void colocarImagen() {
+        ImageIcon icon = new ImageIcon(getClass().getResource(rutaImagen));
+        int ancho = this.getWidth();
+        int alto = this.getHeight();
+        ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
+        this.setIcon(icono);
     }
 
     // GETTERS -----------------------------------------------------------------
-    public Granjero getGranjero() {
-        return granjero;
-    }
-
     public String getRutaImagen() {
         return rutaImagen;
-    }
-
-    public int getPrecio() {
-        return precio;
     }
 
     public boolean estaSucio() {
         return estaSucio;
     }
 
-    public int getDistribucion() {
-        return distribucion;
+    public String getNombre() {
+        return nombre;
+    }
+
+    public boolean isEstaSucio() {
+        return estaSucio;
+    }
+
+    public static int getPRECIO_DE_COMPRA() {
+        return PRECIO_DE_COMPRA;
     }
 
     // SETTERS -----------------------------------------------------------------
-    public void setGranjero(Granjero granjero) {
-        this.granjero = granjero;
-    }
-
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
     }
 
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void estaSucio(boolean estaSucio) {
+        this.estaSucio = estaSucio;
     }
 
-    public void setDistribucion(int distribucion) {
-        this.distribucion = distribucion;
-    }
-
-    public void sucio(boolean estaSucio) {
+    public void setEstaSucio(boolean estaSucio) {
         this.estaSucio = estaSucio;
     }
 

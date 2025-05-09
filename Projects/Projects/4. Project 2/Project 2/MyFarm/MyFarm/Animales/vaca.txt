@@ -1,0 +1,7 @@
+vaca
+500
+2.0
+600
+true
+true
+true

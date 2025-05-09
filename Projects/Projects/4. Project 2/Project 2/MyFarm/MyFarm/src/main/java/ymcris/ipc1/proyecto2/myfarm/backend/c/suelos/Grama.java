@@ -2,8 +2,8 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Siembrable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Finquerable;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
@@ -17,16 +17,26 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String animalesPermitidos;
-    private ListaDoble<String> animales;
+    private ListaDoble<Animales> animales;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int fertilidad;
     private boolean esParcela;
     private boolean estaOpupado;
 
+    // CONSTANTES --------------------------------------------------------------
+    private static final String NOMBRE_SUELO = "Grama";
+    private static final String RUTA_IMAGEN = "/grama.png";
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Grama(Granjero granjero, int precio, int distribucion, boolean estaSucio) {
-        super(granjero, precio, distribucion, estaSucio);
+    public Grama() {
+        this.fertilidad = 0;
+        this.animales = new ListaDoble<>();
+        this.esParcela = false;
+        this.estaOpupado = false;
+        this.nombre = NOMBRE_SUELO;
+        this.rutaImagen = RUTA_IMAGEN;
+        colocarImagen();
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
@@ -50,7 +60,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     }
 
     // GETTERS -----------------------------------------------------------------
-    public ListaDoble<String> getAnimales() {
+    public ListaDoble<Animales> getAnimales() {
         return animales;
     }
 
@@ -69,7 +79,6 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     public boolean estaOpupado() {
         return estaOpupado;
     }
-
 
     // SETTERS -----------------------------------------------------------------
     public void setFertilidad(int fertilidad) {

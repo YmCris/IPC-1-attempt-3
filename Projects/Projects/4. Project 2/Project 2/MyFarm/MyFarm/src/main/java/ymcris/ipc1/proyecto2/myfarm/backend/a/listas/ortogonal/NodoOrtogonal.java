@@ -1,66 +1,67 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal;
 
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
+
 /**
  * Clase NodoOrtogonal es la clase encargada de ser la Celda de cada eslabon
  * dentro de la Cadena de cadenas "Lista ortogonal"
  *
  * @author YmCris
- * @param <T>
  * @since Apr 27, 2025
  */
-public class NodoOrtogonal<T> {
+public class NodoOrtogonal {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    private T contenido;
-    private NodoOrtogonal<T> nodoDerecho;
-    private NodoOrtogonal<T> nodoDeAbajo;
-    private NodoOrtogonal<T> nodoDeArriba;
-    private NodoOrtogonal<T> nodoIzquierdo;
+    private Suelo suelo;
+    private NodoOrtogonal nodoDerecho;
+    private NodoOrtogonal nodoDeAbajo;
+    private NodoOrtogonal nodoDeArriba;
+    private NodoOrtogonal nodoIzquierdo;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public NodoOrtogonal(T contenido) {
-        this.contenido = contenido;
+    public NodoOrtogonal(Suelo suelo) {
+        this.suelo = suelo;
     }
 
     // GETTERS -----------------------------------------------------------------
-    public T getContenido() {
-        return contenido;
+    public Suelo getSuelo() {
+        return suelo;
     }
 
-    public NodoOrtogonal<T> getNodoDerecho() {
+    public NodoOrtogonal getNodoDerecho() {
         return nodoDerecho;
     }
 
-    public NodoOrtogonal<T> getNodoDeAbajo() {
+    public NodoOrtogonal getNodoDeAbajo() {
         return nodoDeAbajo;
     }
 
-    public NodoOrtogonal<T> getNodoDeArriba() {
+    public NodoOrtogonal getNodoDeArriba() {
         return nodoDeArriba;
     }
 
-    public NodoOrtogonal<T> getNodoIzquierdo() {
+    public NodoOrtogonal getNodoIzquierdo() {
         return nodoIzquierdo;
     }
 
     // SETTERS -----------------------------------------------------------------
-    public void setContenido(T contenido) {
-        this.contenido = contenido;
+    public void setSuelo(Suelo suelo) {
+        this.suelo = suelo;
     }
 
-    public void setNodoDerecho(NodoOrtogonal<T> nodoDerecho) {
+    public void setNodoDerecho(NodoOrtogonal nodoDerecho) {
         this.nodoDerecho = nodoDerecho;
     }
 
-    public void setNodoDeAbajo(NodoOrtogonal<T> nodoDeAbajo) {
+    public void setNodoDeAbajo(NodoOrtogonal nodoDeAbajo) {
         this.nodoDeAbajo = nodoDeAbajo;
     }
 
-    public void setNodoDeArriba(NodoOrtogonal<T> nodoDeArriba) {
+    public void setNodoDeArriba(NodoOrtogonal nodoDeArriba) {
         this.nodoDeArriba = nodoDeArriba;
     }
 
-    public void setNodoIzquierdo(NodoOrtogonal<T> nodoIzquierdo) {
+    public void setNodoIzquierdo(NodoOrtogonal nodoIzquierdo) {
         this.nodoIzquierdo = nodoIzquierdo;
     }
 

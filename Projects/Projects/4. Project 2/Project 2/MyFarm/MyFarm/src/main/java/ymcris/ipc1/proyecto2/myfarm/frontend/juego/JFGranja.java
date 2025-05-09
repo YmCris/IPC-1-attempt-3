@@ -1,10 +1,12 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Bodega;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
@@ -17,12 +19,12 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
  * @author YmCris
  */
 public class JFGranja extends javax.swing.JFrame {
-    
+
     private Granja granja;
     private Bodega bodega;
     private Mercado mercado;
     private Granjero granjero;
-    
+
     public JFGranja(Granja granja) {
         initComponents();
         this.granja = granja;
@@ -32,12 +34,39 @@ public class JFGranja extends javax.swing.JFrame {
         this.setResizable(false);
         this.setLocationRelativeTo(null);
         actualizarContenido();
+        try {
+            colocarBotones();
+        } catch (ListaOrtogonalException e) {
+            System.out.println("Hubo un error al colocar la lista ortogonal en el panel porque " + e.getMessage());
+        }
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     private void actualizarContenido() {
         lblNombre.setText(granjero.getNick().toUpperCase());
         lblOro.setText(String.valueOf(granjero.getOro()));
+    }
+
+    private void colocarBotones() throws ListaOrtogonalException {
+        int filas = granja.getTerreno().getTablero().getFilas();
+        int columnas = granja.getTerreno().getTablero().getColumnas();
+        pnlTablero.setSize(1200, 700);
+        pnlTablero.setLayout(new GridLayout(filas, columnas));
+        pnlTablero.setSize(1200, 700);
+        System.out.println("Filas: " + filas + " Columnas: " + columnas);
+        for (int i = 0; i < filas; i++) {
+            for (int j = 0; j < columnas; j++) {
+                int fila = i;
+                int columna = j;
+                granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo().addActionListener((e) -> {
+                    System.out.println("Waza");
+                    System.out.println("Soy el boton en la posición: " + fila + columna);
+                });
+                pnlTablero.add(granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo());
+            }
+        }
+        pnlTablero.revalidate();
+        pnlTablero.repaint();
     }
 
     // CÓDIGO AUTOGENERADO------------------------------------------------------
@@ -56,6 +85,7 @@ public class JFGranja extends javax.swing.JFrame {
         btnMusica = new javax.swing.JButton();
         btnInformación = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
+        btnPreseleccionarAlimentos1 = new javax.swing.JButton();
         pnlTablero = new javax.swing.JPanel();
         pnlInformacion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -143,6 +173,15 @@ public class JFGranja extends javax.swing.JFrame {
             }
         });
 
+        btnPreseleccionarAlimentos1.setBackground(new java.awt.Color(51, 51, 51));
+        btnPreseleccionarAlimentos1.setForeground(new java.awt.Color(255, 255, 255));
+        btnPreseleccionarAlimentos1.setText("COMPRAR TIERRA");
+        btnPreseleccionarAlimentos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreseleccionarAlimentos1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlOpcionesLayout = new javax.swing.GroupLayout(pnlOpciones);
         pnlOpciones.setLayout(pnlOpcionesLayout);
         pnlOpcionesLayout.setHorizontalGroup(
@@ -158,9 +197,11 @@ public class JFGranja extends javax.swing.JFrame {
                 .addComponent(btnLimpiarTerreno)
                 .addGap(18, 18, 18)
                 .addComponent(btnProcesar)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnPreseleccionarAlimentos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnPreseleccionarAlimentos1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +221,8 @@ public class JFGranja extends javax.swing.JFrame {
                             .addComponent(btnMercado)
                             .addComponent(btnLimpiarTerreno)
                             .addComponent(btnProcesar)
-                            .addComponent(btnPreseleccionarAlimentos)))
+                            .addComponent(btnPreseleccionarAlimentos)
+                            .addComponent(btnPreseleccionarAlimentos1)))
                     .addGroup(pnlOpcionesLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -282,8 +324,8 @@ public class JFGranja extends javax.swing.JFrame {
         pnlPantallaLayout.setHorizontalGroup(
             pnlPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlTablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlTablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlPantallaLayout.setVerticalGroup(
             pnlPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -345,6 +387,10 @@ public class JFGranja extends javax.swing.JFrame {
         new JDMercado(mercado).setVisible(true);
     }//GEN-LAST:event_btnMercadoActionPerformed
 
+    private void btnPreseleccionarAlimentos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreseleccionarAlimentos1ActionPerformed
+        
+    }//GEN-LAST:event_btnPreseleccionarAlimentos1ActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBodega;
     private javax.swing.JButton btnGuardarPartida;
@@ -353,6 +399,7 @@ public class JFGranja extends javax.swing.JFrame {
     private javax.swing.JButton btnMercado;
     private javax.swing.JButton btnMusica;
     private javax.swing.JButton btnPreseleccionarAlimentos;
+    private javax.swing.JButton btnPreseleccionarAlimentos1;
     private javax.swing.JButton btnProcesar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;

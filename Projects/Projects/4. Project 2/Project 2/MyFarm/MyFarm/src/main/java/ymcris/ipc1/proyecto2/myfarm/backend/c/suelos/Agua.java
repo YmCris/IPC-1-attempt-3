@@ -1,7 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Pescable;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 
 /**
  * Clase Agua es una clase hija de suelo encargada de representar una celda del
@@ -14,14 +13,23 @@ public class Agua extends Suelo implements Pescable {
 
     // CONSTANTES --------------------------------------------------------------
     private static final int PECES_TOTALES = 15;
-    private static final int TIEMPO_DE_RECUPERACION = 3000;
+    private static final String NOMBRE_SUELO = "Agua";
+    private static final String RUTA_IMAGEN = "/agua.png";
+    private static final int TIEMPO_DE_RECUPERACION = 300;//Segundos
+
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    private boolean hayPeces;
     private boolean hayBarcoPesquero;
     private int cantidadDePecesExistentes;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Agua(Granjero granjero, int precio, int distribucion, boolean estaSucio) {
-        super(granjero, precio, distribucion, estaSucio);
+    public Agua() {
+        this.hayPeces = true;
+        this.hayBarcoPesquero = false;
+        this.cantidadDePecesExistentes = PECES_TOTALES;
+        this.nombre = NOMBRE_SUELO;
+        this.rutaImagen = RUTA_IMAGEN;
+        colocarImagen();
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
@@ -50,6 +58,14 @@ public class Agua extends Suelo implements Pescable {
         return TIEMPO_DE_RECUPERACION;
     }
 
+    public boolean isHayPeces() {
+        return hayPeces;
+    }
+
+    public int getCantidadDePecesExistentes() {
+        return cantidadDePecesExistentes;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setHayBarcoPesquero(boolean hayBarcoPesquero) {
         this.hayBarcoPesquero = hayBarcoPesquero;
@@ -57,6 +73,14 @@ public class Agua extends Suelo implements Pescable {
 
     public void setCantidadDePeces(int cantidadDePeces) {
         this.cantidadDePecesExistentes = cantidadDePeces;
+    }
+
+    public void setHayPeces(boolean hayPeces) {
+        this.hayPeces = hayPeces;
+    }
+
+    public void setCantidadDePecesExistentes(int cantidadDePecesExistentes) {
+        this.cantidadDePecesExistentes = cantidadDePecesExistentes;
     }
 
 }

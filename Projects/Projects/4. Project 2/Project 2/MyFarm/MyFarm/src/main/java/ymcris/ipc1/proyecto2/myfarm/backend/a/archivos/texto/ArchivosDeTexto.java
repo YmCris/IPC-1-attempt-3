@@ -22,6 +22,7 @@ public class ArchivosDeTexto {
     private final String rutaProyecto = System.getProperty("user.dir");
     private final String rutaCarpetaSemillas = rutaProyecto + File.separator + "Semillas";
     private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
+    private final String rutaCarpetaAlimentosAnimales = rutaProyecto + File.separator + "Alimentos para animales";
     private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
     private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia";
     private final String rutaCarpetaFertilizantes = rutaProyecto + File.separator + "Fertilizantes";
@@ -30,12 +31,14 @@ public class ArchivosDeTexto {
     public void crearCarpetas() {
         File carpetaSemillas = new File(rutaCarpetaSemillas);
         File carpetaAnimales = new File(rutaCarpetaAnimales);
-        File carpetaProductos = new File(rutaCarpetaAlimentos);
+        File carpetaAlimentosAnimales = new File(rutaCarpetaAlimentosAnimales);
         File carpetaMateria = new File(rutaCarpetaMateriaPrima);
         File carpetaFertilizantes = new File(rutaCarpetaFertilizantes);
+        File carpetaProductos = new File(rutaCarpetaAlimentos);
+        carpetaProductos.mkdirs();
         carpetaSemillas.mkdirs();
         carpetaAnimales.mkdirs();
-        carpetaProductos.mkdirs();
+        carpetaAlimentosAnimales.mkdirs();
         carpetaMateria.mkdirs();
         carpetaFertilizantes.mkdirs();
     }
@@ -73,7 +76,7 @@ public class ArchivosDeTexto {
         try {
             files = obtenerArchivosDeCarpeta(rutaCarpeta);
             for (File file : files) {
-                if (file.getName().toLowerCase().equals(nombre.toLowerCase()+".txt")) {
+                if (file.getName().toLowerCase().equals(nombre.toLowerCase() + ".txt")) {
                     return file;
                 }
             }
@@ -136,8 +139,8 @@ public class ArchivosDeTexto {
         return rutaCarpetaAnimales;
     }
 
-    public String getRutaCarpetaAlimentos() {
-        return rutaCarpetaAlimentos;
+    public String getRutaCarpetaAlimentosParaAnimales() {
+        return rutaCarpetaAlimentosAnimales;
     }
 
     public String getRutaCarpetaMateriaPrima() {
@@ -148,4 +151,8 @@ public class ArchivosDeTexto {
         return rutaCarpetaFertilizantes;
     }
 
+    public String getRutaCarpetaAlimentos() {
+        return rutaCarpetaAlimentos;
+    }
+    
 }
