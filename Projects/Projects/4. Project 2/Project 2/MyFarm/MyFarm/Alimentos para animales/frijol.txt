@@ -1,0 +1,8 @@
+frijol
+25
+40
+false
+frijol
+25
+40
+false

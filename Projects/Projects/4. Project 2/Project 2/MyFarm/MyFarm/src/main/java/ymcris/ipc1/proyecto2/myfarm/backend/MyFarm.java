@@ -1,30 +1,32 @@
 package ymcris.ipc1.proyecto2.myfarm.backend;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 
 /**
+ * Clase MyFarm es la clase Main encargada de iniciar el programa creando las
+ * carpetas y agregando los fertilizantes y almentos para animales
+ * inmodificables al inicio del juego.
  *
  * @author YmCris
  */
 public class MyFarm {
 
+    /**
+     * Método encargado de iniciar el programa
+     *
+     * @param args argumentos para iniciar algun proceso en especifico.
+     */
     public static void main(String[] args) {
-        JFMenuPrincipal menu = new JFMenuPrincipal();
         Archivos archivosTxt = new Archivos();
         ArchivosBinarios binario = new ArchivosBinarios();
         binario.crearCarpetas();
         archivosTxt.crearCarpetas();
-        CreadorDeItemsPredeterminados creador = new CreadorDeItemsPredeterminados();
+        Creador creador = new Creador();
         creador.crearFertilizantesPredeterminados();
-        creador.creadorDeAlimentosPredeterminados();
-        creador.creadorDeProductosPredeterminados();
-        System.out.println("Se crean los productos");
-        creador.creadorDeAnimalesPredeterminados();
-        System.out.println("Se crean los animales");
-        creador.creadorDeSemillasPredeterminadas();
-        System.out.println("Se crean las semillas");
+        creador.crearAlimentosParaAnimalesPredeterminados();
+        JFMenuPrincipal menu = new JFMenuPrincipal(creador);
         menu.setVisible(true);
     }
 

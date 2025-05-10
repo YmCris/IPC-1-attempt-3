@@ -1,5 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
 
+import java.io.Serializable;
+
 /**
  * Clase NodoDoble es la clase encargada de crear Nodos para almacenar
  * información en la lista doble
@@ -8,7 +10,7 @@ package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
  * @param <T> Tipo de dato a almacenar
  * @since Apr 26, 2025
  */
-public class NodoDoble<T> {
+public class NodoDoble<T> implements Serializable{
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private T contenido;
@@ -19,6 +21,9 @@ public class NodoDoble<T> {
     public NodoDoble(T contenido) {
         this.contenido = contenido;
     }
+    
+    // CONSTANTES --------------------------------------------------------------
+    private static final long serialVersionUID = 1404478801;
 
     // GETTERS -----------------------------------------------------------------
     public NodoDoble getSiguiente() {

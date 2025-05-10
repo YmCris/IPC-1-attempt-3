@@ -10,6 +10,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
 
 /**
  * Clase ArchivosBinarios es la clase encargada de guardar y obtener los datos
@@ -74,6 +75,11 @@ public class ArchivosBinarios {
     }
 
     // ANIMALES ----------------------------------------------------------------
+    public void eliminarArchivo(String rutaCarpeta, String nombreArchivo) {
+        File archivo = new File(rutaCarpeta + File.separator + nombreArchivo + ".bin");
+        archivo.delete();
+    }
+
     public Animales[] obtenerAnimales() {
         System.out.println("Se obtiene el arreglo de todos los animales");
         Object[] objetos = obtenerObjetos(rutaCarpetaAnimales);
@@ -135,6 +141,37 @@ public class ArchivosBinarios {
     public void guardarMaterias(MateriasPrimas materia) {
         guardarObjeto(materia, rutaCarpetaMateriaPrima, materia.getNombre());
         System.out.println("Se ha guardado la materia " + materia.getNombre());
+    }
+
+    // MODIFICAR ARCHIVO -------------------------------------------------------
+    public String editarAnimal(Animales animal, Productos producto, int porcentaje, boolean esConDestace) {
+        Animales nuevoAnimal = animal;
+        if (esConDestace) {
+            if ((nuevoAnimal.getPorcentajeDeProduccionConDestaze() + porcentaje) <= 100) {
+                if (!nuevoAnimal.getProductosDestazables().existeNodoConContenido(producto)) {
+                    nuevoAnimal.getProductosDestazables().agregar(producto);
+                    nuevoAnimal.setPorcentajeDeProduccionConDestaze(nuevoAnimal.getPorcentajeDeProduccionConDestaze() + porcentaje);
+                    eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
+                    guardarAnimales(nuevoAnimal);
+                    return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción con destace del " + nuevoAnimal.getPorcentajeDeProduccionConDestaze();
+                }
+            } else {
+                return "No puedes agregarle ese alimento que se obtiene al destazar el animal, porque sobrepasa el límite";
+            }
+        } else {
+            if ((nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + porcentaje) <= 100) {
+                if (!nuevoAnimal.getProductosNoDestazables().existeNodoConContenido(producto)) {
+                    nuevoAnimal.getProductosNoDestazables().agregar(producto);
+                    nuevoAnimal.setPorcentajeDeProduccionSinDestaze(nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + porcentaje);
+                    eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
+                    guardarAnimales(nuevoAnimal);
+                    return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción sin destace del " + nuevoAnimal.getPorcentajeDeProduccionSinDestaze();
+                }
+            } else {
+                return "No puedes agregarle ese alimento que se obtiene sin destazar el animal, porque sobrepasa el límite";
+            }
+        }
+        return "Ya existe el producto en el animal, ya no lo puedes modificar";
     }
 
     // GETTERS -----------------------------------------------------------------

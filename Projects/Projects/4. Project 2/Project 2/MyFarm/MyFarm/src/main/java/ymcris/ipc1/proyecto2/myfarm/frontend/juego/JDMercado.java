@@ -66,7 +66,7 @@ public class JDMercado extends javax.swing.JDialog {
         tblComprarAnimales = (DefaultTableModel) tblCAnimales.getModel();
         Animales[] animales = mercado.getAnimales();
         for (Animales animal : animales) {
-            tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.isProduciraProductosConDestace()});
+            tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.getProductosDestazables().getTamaño(), animal.getProductosNoDestazables().getTamaño()});
         }
     }
 
@@ -220,14 +220,14 @@ public class JDMercado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nombre", "Precio", "Espacio", "Edad Máxima", "Es Herbivoro", "Es Destazable", "Produce productos con destace"
+                "Nombre", "Precio", "Espacio", "Edad Máxima", "Es Herbivoro", "Es Destazable", "PCD", "PSD"
             }
         ) {
             Class[] types = new Class [] {
-                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Boolean.class
+                java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Integer.class, java.lang.Integer.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -433,8 +433,8 @@ public class JDMercado extends javax.swing.JDialog {
                             .addComponent(jLabel12)
                             .addComponent(btnVender5))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 163, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 18, Short.MAX_VALUE))))
+                        .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 63, Short.MAX_VALUE))))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
                 .addComponent(jSeparator1)
                 .addContainerGap())

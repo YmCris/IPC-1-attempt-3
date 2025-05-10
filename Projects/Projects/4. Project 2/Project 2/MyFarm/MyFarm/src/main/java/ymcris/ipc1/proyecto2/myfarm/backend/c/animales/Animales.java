@@ -15,9 +15,9 @@ public class Animales implements Runnable, Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
-    protected ListaDoble<Productos> productosDestazables;
-    protected ListaDoble<Productos> productosNoDestazables;
-    
+    protected ListaDoble<Productos> productosDestazables = new ListaDoble<>();
+    protected ListaDoble<Productos> productosNoDestazables = new ListaDoble<>();
+
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 7894124;
 

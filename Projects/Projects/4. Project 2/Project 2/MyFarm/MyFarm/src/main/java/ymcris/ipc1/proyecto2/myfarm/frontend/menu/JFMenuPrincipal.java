@@ -5,6 +5,7 @@ import java.awt.TextField;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.Creador;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAlimentos;
@@ -23,6 +24,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private JDialog dialog;
+    private Creador creador;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/imagenMenu.png";
@@ -35,6 +37,18 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         this.setTitle("Menú Principal");
         PanelPersonalizado panel = new PanelPersonalizado(pnlMenu, RUTA_IMAGEN);
         pnlMenu.add(panel).repaint();
+    }
+
+    public JFMenuPrincipal(Creador creador) {
+        initComponents();
+        this.setResizable(false);
+        this.setLocationRelativeTo(null);
+        this.setTitle("Menú Principal");
+        PanelPersonalizado panel = new PanelPersonalizado(pnlMenu, RUTA_IMAGEN);
+        pnlMenu.add(panel).repaint();
+        creador.creadorDeProductosPredeterminados();
+        creador.creadorDeAnimalesPredeterminados();
+        creador.creadorDeSemillasPredeterminadas();
     }
 
     // CÓDIGO "AUTOGENERADO" ---------------------------------------------------
@@ -317,7 +331,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         dialog.add(btnGuardar);
         dialog.setVisible(true);
     }
-    
+
     private void crearProductos() {
         dialog = new JDialog();
         dialog.setSize(600, 150);
@@ -349,7 +363,7 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         dialog.add(btnAlimento);
         dialog.setVisible(true);
     }
-    
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt, String nombre, String nick) {
         if (nombre.isBlank() || nick.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes tener un nombre o nick vacios", "ERROR", JOptionPane.WARNING_MESSAGE);

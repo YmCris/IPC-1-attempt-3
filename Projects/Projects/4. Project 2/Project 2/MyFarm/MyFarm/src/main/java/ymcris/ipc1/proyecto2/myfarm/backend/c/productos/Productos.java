@@ -14,19 +14,21 @@ public class Productos implements Serializable {
     protected String nombre;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    protected int produccion;
     protected int precioDeVenta;
     protected int precioDeCompra;
     protected boolean esMateriaPrima;
     protected boolean seObtieneAlDestazar;
 
     // CONSTANTES --------------------------------------------------------------
-    private  static final long serialVersionUID = 66666666;
+    private static final long serialVersionUID = 66666666;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Productos(String nombre, int precioDeVenta, int precioDeCompra) {
         this.nombre = nombre;
         this.precioDeVenta = precioDeVenta;
         this.precioDeCompra = precioDeCompra;
+        this.produccion = 0;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -50,4 +52,12 @@ public class Productos implements Serializable {
         return precioDeCompra;
     }
 
+    public int getProduccion() {
+        return produccion;
+    }
+
+    public void setProduccion(int produccion) {
+        this.produccion = produccion;
+    }
+    
 }

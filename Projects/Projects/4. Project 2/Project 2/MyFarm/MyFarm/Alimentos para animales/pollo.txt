@@ -1,0 +1,4 @@
+pollo
+25
+100
+false

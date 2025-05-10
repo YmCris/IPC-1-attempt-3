@@ -185,8 +185,8 @@
                               <Component id="btnVender5" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane6" min="-2" pref="163" max="-2" attributes="0"/>
-                          <EmptySpace min="0" pref="18" max="32767" attributes="0"/>
+                          <Component id="jScrollPane6" min="-2" pref="118" max="-2" attributes="0"/>
+                          <EmptySpace min="0" pref="63" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -455,18 +455,24 @@
             <Component class="javax.swing.JTable" name="tblCAnimales">
               <Properties>
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-                  <Table columnCount="7" rowCount="0">
+                  <Table columnCount="8" rowCount="0">
                     <Column editable="false" title="Nombre" type="java.lang.Object"/>
                     <Column editable="false" title="Precio" type="java.lang.Object"/>
                     <Column editable="false" title="Espacio" type="java.lang.Object"/>
                     <Column editable="false" title="Edad M&#xe1;xima" type="java.lang.Object"/>
                     <Column editable="false" title="Es Herbivoro" type="java.lang.Boolean"/>
                     <Column editable="false" title="Es Destazable" type="java.lang.Boolean"/>
-                    <Column editable="false" title="Produce productos con destace" type="java.lang.Boolean"/>
+                    <Column editable="false" title="PCD" type="java.lang.Integer"/>
+                    <Column editable="false" title="PSD" type="java.lang.Integer"/>
                   </Table>
                 </Property>
                 <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
                   <TableColumnModel selectionModel="0">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                      <Title/>
+                      <Editor/>
+                      <Renderer/>
+                    </Column>
                     <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
                       <Title/>
                       <Editor/>

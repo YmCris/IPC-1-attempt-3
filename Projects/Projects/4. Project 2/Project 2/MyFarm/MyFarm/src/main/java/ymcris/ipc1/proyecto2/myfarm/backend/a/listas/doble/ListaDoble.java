@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
@@ -10,7 +11,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
  * @param <T> Tipo de dato a guardar
  * @since Apr 26, 2025
  */
-public class ListaDoble<T> {
+public class ListaDoble<T> implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private NodoDoble<T> fin;
@@ -19,7 +20,13 @@ public class ListaDoble<T> {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tamaño;
 
+    private static final long serialVersionUID = 89441124;
+
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    public void inseretar(T contenido) {
+        
+    }
+    
     public void agregar(T contenido) {
         NodoDoble<T> nuevo = new NodoDoble<>(contenido);
         switch (tamaño) {
@@ -92,6 +99,22 @@ public class ListaDoble<T> {
             }
         }
         return temporal;
+    }
+
+    /**
+     * @deprecated ssssss
+     * @param contenido
+     * @return 
+     */
+    public boolean existeNodoConContenido(T contenido) {
+        for (int i = 0; i < tamaño; i++) {
+            if (obtenerNodo(i).getContenido().equals(contenido)) {
+                System.out.println("Existe el nodo con el contenido "+contenido.toString());
+                return true;
+            }
+        }
+        System.out.println("NO Existe el nodo con el contenido "+contenido.toString());
+        return false;
     }
 
     public Object[] obtenerArregloDeObjetos() {
