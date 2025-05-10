@@ -14,9 +14,19 @@ public interface Pescable {
     public static final int PRECIO_QUITAR_BARCOS = 50;
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
-    public abstract void colocarBarco(int oroGranjero);
+    /**
+     * Método encargado de colocar un barco pesquero en la celda (instancia) de
+     * agua.
+     */
+    public abstract void colocarBarco();
 
-    public abstract void quitarBarco(int oroGranjero);
+    /**
+     * Método encargado de quitar el barco de la celda.
+     */
+    public abstract void quitarBarco();
 
+    /**
+     * Método encargado de pescar y obtener peces.
+     */
     public abstract void pescar();
 }

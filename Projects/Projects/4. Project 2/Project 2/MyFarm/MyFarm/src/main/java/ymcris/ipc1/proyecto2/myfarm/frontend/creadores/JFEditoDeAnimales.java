@@ -34,14 +34,14 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
         pnlFondo.add(new PanelPersonalizado(pnlFondo, RUTA_IMAGEN)).repaint();
         agregarAnimales();
     }
-
+    
     private void agregarAnimales() {
         Animales[] animales = binario.obtenerAnimales();
         for (Animales animal : animales) {
             cbAnimal.addItem(animal.getNombre());
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -262,18 +262,19 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
                 Productos producto;
                 if (archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombreProducto + ".bin")) {
                     producto = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), nombreProducto);
-                    String mensaje = binario.editarAnimal(animal, producto, porcentajeDeProduccion, esConDestace);
+                    producto.setProduccion(porcentajeDeProduccion);
+                    String mensaje = binario.editarAnimal(animal, producto, esConDestace);
                     JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
                 } else if (archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombreProducto + ".bin")) {
                     producto = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), nombreProducto);
-                    String mensaje = binario.editarAnimal(animal, producto, porcentajeDeProduccion, esConDestace);
+                    String mensaje = binario.editarAnimal(animal, producto, esConDestace);
                     JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
                 }
                 System.out.println("Terminado");
             } else {
                 JOptionPane.showMessageDialog(null, "No puedes agregar ese producto al animal porque sobrepasa el límite de producción, el animal tiene una producción con destace del " + animal.getPorcentajeDeProduccionConDestaze() + " % y una producción sin destace del " + animal.getPorcentajeDeProduccionSinDestaze() + " %", "Animal sobreexplotado", JOptionPane.WARNING_MESSAGE);
             }
-
+            
         }
     }//GEN-LAST:event_btnCrearPlantaActionPerformed
 

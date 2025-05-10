@@ -4,6 +4,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Siembrable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Finquerable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
@@ -41,12 +42,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
-    public void sembrar(int fila, int columna, String semilla) {
-
-    }
-
-    @Override
-    public void crearParcela() {
+    public void sembrar(Semillas semilla) {
 
     }
 

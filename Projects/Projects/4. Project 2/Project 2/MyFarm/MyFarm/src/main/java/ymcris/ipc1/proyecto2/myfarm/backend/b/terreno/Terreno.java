@@ -1,17 +1,13 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.terreno;
 
 import java.util.Random;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.TableroException;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.ListaOrtogonal;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.NodoOrtogonal;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Desierto;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Desierto;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.NodoOrtogonal;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.ListaOrtogonal;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
 
 /**
  * Clase Terreno

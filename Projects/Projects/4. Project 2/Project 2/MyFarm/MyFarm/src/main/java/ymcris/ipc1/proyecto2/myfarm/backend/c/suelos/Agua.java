@@ -34,11 +34,11 @@ public class Agua extends Suelo implements Pescable {
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
     @Override
-    public void colocarBarco(int oroGranjero) {
+    public void colocarBarco() {
     }
 
     @Override
-    public void quitarBarco(int oroGranjero) {
+    public void quitarBarco() {
     }
 
     @Override

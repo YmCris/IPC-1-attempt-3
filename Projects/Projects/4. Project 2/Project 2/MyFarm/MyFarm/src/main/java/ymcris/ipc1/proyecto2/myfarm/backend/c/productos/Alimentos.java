@@ -23,15 +23,6 @@ public class Alimentos extends Productos {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public Object obtenerInformacion() {
-        Object[] arreglo;
-        arreglo = new Object[4];
-        arreglo[0] = nombre;
-        arreglo[1] = precioDeVenta;
-        arreglo[2] = precioDeCompra;
-        arreglo[3] = esParaHerbivoros;
-        return arreglo;
-    }
 
     // GETTERS -----------------------------------------------------------------
     public boolean esParaHerbivoros() {

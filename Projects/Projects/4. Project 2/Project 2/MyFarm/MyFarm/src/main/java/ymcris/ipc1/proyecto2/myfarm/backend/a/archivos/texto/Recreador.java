@@ -1,17 +1,18 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto;
 
 import java.io.File;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 
 /**
  * Clase Recreador
  *
  * @author YmCris
+ * @see ArchivosBinarios
  * @since May 7, 2025
  */
 public class Recreador {
@@ -21,7 +22,13 @@ public class Recreador {
     private ArchivosBinarios binario = new ArchivosBinarios();
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public Fertilizantes[] recrearFertilizantes() {
+    /**
+     * Método encarado de leer los fertilizantes guardados y retornarlos para el
+     * mercado
+     *
+     * @return arreglo de fertilizantes.
+     */
+    public Fertilizantes[] obtenerFertilizantesExistentes() {
         try {
             int cantidadDeFertilizantes = archivo.numeroDeArchivosEnCarpeta(archivo.getRutaCarpetaFertilizantes());
             File[] archivos = archivo.obtenerArchivosDeCarpeta(archivo.getRutaCarpetaFertilizantes());
@@ -39,7 +46,12 @@ public class Recreador {
         return null;
     }
 
-    public Alimentos[] recrearAlimentos() {
+    /**
+     * Mëtodo encargado de recrear los alimentos predefinidos para los animales.
+     *
+     * @return alimentos para animales.
+     */
+    public Alimentos[] obtenerAlimentosParaAnimalesExistentes() {
         try {
             int cantidadDeAlimentos = archivo.numeroDeArchivosEnCarpeta(archivo.getRutaCarpetaAlimentosAnimales());
             File[] archivos = archivo.obtenerArchivosDeCarpeta(archivo.getRutaCarpetaAlimentosAnimales());
@@ -58,11 +70,21 @@ public class Recreador {
         return null;
     }
 
-    public Semillas[] recreadorSemillas() {
+    /**
+     * Método encargado de recrear las semillas que se han creado.
+     *
+     * @return arreglo de todas las semillas creadas.
+     */
+    public Semillas[] obtenerSemillasExistentes() {
         return binario.obtenerSemillas();
     }
 
-    public Animales[] recreadorAnimales() {
+    /**
+     * Método encargado de recrear los animales que se han agregado al programa.
+     *
+     * @return arreglo de todos los animales creados.
+     */
+    public Animales[] obtenerAnimalesExistentes() {
         return binario.obtenerAnimales();
     }
 

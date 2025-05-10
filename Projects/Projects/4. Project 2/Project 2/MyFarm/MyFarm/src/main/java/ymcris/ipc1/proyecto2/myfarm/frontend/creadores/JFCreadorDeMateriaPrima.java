@@ -196,7 +196,7 @@ public class JFCreadorDeMateriaPrima extends javax.swing.JFrame {
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear una materia prima con un nombre vacio", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (!archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombre + ".bin")||!archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombre + ".bin")) {
+            if (!archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombre + ".bin") && !archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombre + ".bin")) {
                 MateriasPrimas materia = new MateriasPrimas(nombre, precioDeVenta, precioDeCompra);
                 binario.guardarMaterias(materia);
                 JOptionPane.showMessageDialog(null, "Se ha creado la materia prima " + nombre + " exitosamente", "Nueva Materia Prima", JOptionPane.INFORMATION_MESSAGE);

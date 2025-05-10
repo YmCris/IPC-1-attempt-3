@@ -5,7 +5,7 @@ import java.awt.TextField;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.Creador;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Creador;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAlimentos;
@@ -46,9 +46,9 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         this.setTitle("Menú Principal");
         PanelPersonalizado panel = new PanelPersonalizado(pnlMenu, RUTA_IMAGEN);
         pnlMenu.add(panel).repaint();
-        creador.creadorDeProductosPredeterminados();
-        creador.creadorDeAnimalesPredeterminados();
-        creador.creadorDeSemillasPredeterminadas();
+        creador.crearProductosPredeterminados();
+        creador.crearAnimalesPredeterminados();
+        creador.crearSemillasPredeterminadas();
     }
 
     // CÓDIGO "AUTOGENERADO" ---------------------------------------------------

@@ -10,20 +10,29 @@ import java.io.Serializable;
  * @param <T> Tipo de dato a almacenar
  * @since Apr 26, 2025
  */
-public class NodoDoble<T> implements Serializable{
+public class NodoDoble<T> implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private T contenido;
+    private String nombre;
     private NodoDoble anterior;
     private NodoDoble siguiente;
 
-    // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public NodoDoble(T contenido) {
-        this.contenido = contenido;
-    }
-    
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 1404478801;
+
+    // MÉTODO CONSTRUCTOR ------------------------------------------------------
+    /**
+     * Método encargado de crear un nuevo nodo doble
+     *
+     * @param contenido contenido que almacenará el nodo.
+     * @param nombre DEBE SER EL NOMBRE DE LO QUE VAYA A GUARDAR, "CUERO",
+     * "AGUACATE", no su tipo.
+     */
+    public NodoDoble(T contenido, String nombre) {
+        this.contenido = contenido;
+        this.nombre = nombre;
+    }
 
     // GETTERS -----------------------------------------------------------------
     public NodoDoble getSiguiente() {
@@ -38,6 +47,10 @@ public class NodoDoble<T> implements Serializable{
         return contenido;
     }
 
+    public String getNombre() {
+        return nombre;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setSiguiente(NodoDoble siguiente) {
         this.siguiente = siguiente;
@@ -49,6 +62,10 @@ public class NodoDoble<T> implements Serializable{
 
     public void setContenido(T contenido) {
         this.contenido = contenido;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
 }

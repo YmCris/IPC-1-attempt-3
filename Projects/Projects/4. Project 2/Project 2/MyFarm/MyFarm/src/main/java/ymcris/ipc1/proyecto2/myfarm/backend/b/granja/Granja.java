@@ -1,12 +1,11 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
 import java.io.Serializable;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.pila.Pila;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.pila.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.terreno.Terreno;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 
 /**
  * Clase Granja es la clase "Partida" encargada de reunir todos los elementos
@@ -26,7 +25,9 @@ public class Granja implements Serializable, Runnable {
     private Terreno terreno;
     private Mercado mercado;
     private Granjero granjero;
-    private Pila<Alimentos> pila;
+    private Cola<Alimentos> cola;
+    private Alimentos[] alimentos;
+    private MateriasPrimas[] materias;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tiempoJugado;
@@ -36,15 +37,20 @@ public class Granja implements Serializable, Runnable {
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Granja(Granjero granjero) {
-        ListaDoble<Alimentos> alimentos = new ListaDoble<>();
-        ListaDoble<MateriasPrimas> materiaPrima = new ListaDoble<>();
         this.granjero = granjero;
-        this.bodega = new Bodega(alimentos, materiaPrima);
+        this.materias = granjero.obtenerMateriaDelGranjero();
+        this.alimentos = granjero.obtenerAlimentosDelGranjero();
+        this.bodega = new Bodega(alimentos, materias);
         this.terreno = new Terreno();
-        this.mercado = new Mercado(alimentos, materiaPrima);
+        this.mercado = new Mercado(alimentos, materias);
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de verificar si una partida ha terminado
+     *
+     * @return true si la vida del granjero es cero.
+     */
     private boolean partidaTerminada() {
         return granjero.getVida() == 0;
     }

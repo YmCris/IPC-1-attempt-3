@@ -1,4 +1,4 @@
-package ymcris.ipc1.proyecto2.myfarm.backend;
+package ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto;
 
 import java.io.File;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
@@ -6,7 +6,6 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Herbivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
@@ -76,26 +75,21 @@ public class Creador {
             archivo.escribirEnArchivoDeTexto(zanahoria, String.valueOf(alimentoH2.getPrecioDeVenta()));
             archivo.escribirEnArchivoDeTexto(zanahoria, String.valueOf(alimentoH2.getPrecioDeCompra()));
             archivo.escribirEnArchivoDeTexto(zanahoria, String.valueOf(alimentoH2.esParaHerbivoros()));
-            File nueces = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoH3.getNombre());
-            archivo.escribirEnArchivoDeTexto(nueces, alimentoH3.getNombre());
-            archivo.escribirEnArchivoDeTexto(nueces, String.valueOf(alimentoH3.getPrecioDeVenta()));
-            archivo.escribirEnArchivoDeTexto(nueces, String.valueOf(alimentoH3.getPrecioDeCompra()));
-            archivo.escribirEnArchivoDeTexto(nueces, String.valueOf(alimentoH3.esParaHerbivoros()));
-            File granos = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoO1.getNombre());
-            archivo.escribirEnArchivoDeTexto(granos, alimentoO1.getNombre());
-            archivo.escribirEnArchivoDeTexto(granos, String.valueOf(alimentoO1.getPrecioDeVenta()));
-            archivo.escribirEnArchivoDeTexto(granos, String.valueOf(alimentoO1.getPrecioDeCompra()));
-            archivo.escribirEnArchivoDeTexto(granos, String.valueOf(alimentoO1.esParaHerbivoros()));
-            File granos1 = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoO1.getNombre());
-            archivo.escribirEnArchivoDeTexto(granos1, alimentoO1.getNombre());
-            archivo.escribirEnArchivoDeTexto(granos1, String.valueOf(alimentoO1.getPrecioDeVenta()));
-            archivo.escribirEnArchivoDeTexto(granos1, String.valueOf(alimentoO1.getPrecioDeCompra()));
-            archivo.escribirEnArchivoDeTexto(granos1, String.valueOf(alimentoO1.esParaHerbivoros()));
-            File huevos = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoO2.getNombre());
-            archivo.escribirEnArchivoDeTexto(huevos, alimentoO2.getNombre());
-            archivo.escribirEnArchivoDeTexto(huevos, String.valueOf(alimentoO2.getPrecioDeVenta()));
-            archivo.escribirEnArchivoDeTexto(huevos, String.valueOf(alimentoO2.getPrecioDeCompra()));
-            archivo.escribirEnArchivoDeTexto(huevos, String.valueOf(alimentoO2.esParaHerbivoros()));
+            File nuez = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoH3.getNombre());
+            archivo.escribirEnArchivoDeTexto(nuez, alimentoH3.getNombre());
+            archivo.escribirEnArchivoDeTexto(nuez, String.valueOf(alimentoH3.getPrecioDeVenta()));
+            archivo.escribirEnArchivoDeTexto(nuez, String.valueOf(alimentoH3.getPrecioDeCompra()));
+            archivo.escribirEnArchivoDeTexto(nuez, String.valueOf(alimentoH3.esParaHerbivoros()));
+            File insectos = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoO1.getNombre());
+            archivo.escribirEnArchivoDeTexto(insectos, alimentoO1.getNombre());
+            archivo.escribirEnArchivoDeTexto(insectos, String.valueOf(alimentoO1.getPrecioDeVenta()));
+            archivo.escribirEnArchivoDeTexto(insectos, String.valueOf(alimentoO1.getPrecioDeCompra()));
+            archivo.escribirEnArchivoDeTexto(insectos, String.valueOf(alimentoO1.esParaHerbivoros()));
+            File roedor = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoO2.getNombre());
+            archivo.escribirEnArchivoDeTexto(roedor, alimentoO2.getNombre());
+            archivo.escribirEnArchivoDeTexto(roedor, String.valueOf(alimentoO2.getPrecioDeVenta()));
+            archivo.escribirEnArchivoDeTexto(roedor, String.valueOf(alimentoO2.getPrecioDeCompra()));
+            archivo.escribirEnArchivoDeTexto(roedor, String.valueOf(alimentoO2.esParaHerbivoros()));
             File pollo = archivo.crearArchivoDeTexto(archivo.getRutaCarpetaAlimentosAnimales(), alimentoO3.getNombre());
             archivo.escribirEnArchivoDeTexto(pollo, alimentoO3.getNombre());
             archivo.escribirEnArchivoDeTexto(pollo, String.valueOf(alimentoO3.getPrecioDeVenta()));
@@ -107,33 +101,42 @@ public class Creador {
 
     }
 
-    public void creadorDeAnimalesPredeterminados() {
+    /**
+     * Método encargado de crear los animales predeterminados del programa así
+     * como estimar las cantidades de producción de cada producto que tienen
+     * además de modificar sus respectivas listas.
+     */
+    public void crearAnimalesPredeterminados() {
         Productos cuero = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), "cuero");
         Productos carne = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), "carne");
         Productos leche = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "leche");
         Productos huevos = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "huevo");
         Herbivoros vaca = new Herbivoros("vaca", 500, 2, 600, true, true, true);
         cuero.setProduccion(25);
-        vaca.getProductosDestazables().agregar(cuero);
+        vaca.getProductosDestazables().agregar(cuero, cuero.getNombre());
         vaca.setPorcentajeDeProduccionConDestaze(vaca.getPorcentajeDeProduccionConDestaze() + 25);
         carne.setProduccion(75);
-        vaca.getProductosDestazables().agregar(carne);
+        vaca.getProductosDestazables().agregar(carne, carne.getNombre());
         vaca.setPorcentajeDeProduccionConDestaze(vaca.getPorcentajeDeProduccionConDestaze() + 75);
         leche.setProduccion(100);
-        vaca.getProductosNoDestazables().agregar(leche);
+        vaca.getProductosNoDestazables().agregar(leche, leche.getNombre());
         vaca.setPorcentajeDeProduccionSinDestaze(vaca.getPorcentajeDeProduccionSinDestaze() + 100);
         binario.guardarAnimales(vaca);
         Omnivoros gallina = new Omnivoros("gallina", 50, 0.5, 180, false, true, true);
         carne.setProduccion(100);
-        gallina.getProductosDestazables().agregar(carne);
+        gallina.getProductosDestazables().agregar(carne, carne.getNombre());
         gallina.setPorcentajeDeProduccionConDestaze(gallina.getPorcentajeDeProduccionConDestaze() + carne.getProduccion());
         huevos.setProduccion(100);
-        gallina.getProductosNoDestazables().agregar(huevos);
+        gallina.getProductosNoDestazables().agregar(huevos, huevos.getNombre());
         gallina.setPorcentajeDeProduccionSinDestaze(gallina.getPorcentajeDeProduccionSinDestaze() + huevos.getProduccion());
         binario.guardarAnimales(gallina);
     }
 
-    public void creadorDeSemillasPredeterminadas() {
+    /**
+     * Método encargado de crear las semillas predeterminadas por el enunciado i
+     * guardarlas en archivos binarios.
+     */
+    public void crearSemillasPredeterminadas() {
         Alimentos grano = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "grano");
         Alimentos manzana = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "manzana");
         Semillas semillaMaiz = new Semillas("maiz", 50, false, 15, grano);
@@ -142,7 +145,11 @@ public class Creador {
         binario.guardarSemillas(semillaFruta);
     }
 
-    public void creadorDeProductosPredeterminados() {
+    /**
+     * Método encargado de crear los productos (Materia prima y alimentos)
+     * predeterminados y guardarlos en archivos binarios.
+     */
+    public void crearProductosPredeterminados() {
         MateriasPrimas cuero = new MateriasPrimas("cuero", 50, 50);
         MateriasPrimas carne = new MateriasPrimas("carne", 50, 50);
         Alimentos grano = new Alimentos("grano", 10, 20, true);

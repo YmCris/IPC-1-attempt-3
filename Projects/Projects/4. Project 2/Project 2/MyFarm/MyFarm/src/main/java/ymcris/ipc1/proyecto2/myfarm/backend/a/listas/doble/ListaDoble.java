@@ -8,7 +8,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
  * guardar referencias del tipo T
  *
  * @author YmCris
- * @param <T> Tipo de dato a guardar
+ * @param <T> Tipo de dato que guardará la lista doble
  * @since Apr 26, 2025
  */
 public class ListaDoble<T> implements Serializable {
@@ -20,15 +20,23 @@ public class ListaDoble<T> implements Serializable {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tamaño;
 
+    // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 89441124;
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public void inseretar(T contenido) {
-        
+
     }
-    
-    public void agregar(T contenido) {
-        NodoDoble<T> nuevo = new NodoDoble<>(contenido);
+
+    /**
+     * Método encargado de agregar un nuevo nodo con una instancia nueva a la
+     * lista.
+     *
+     * @param contenido contenido T a agregar.
+     * @param nombre nombre del nodo.
+     */
+    public void agregar(T contenido, String nombre) {
+        NodoDoble<T> nuevo = new NodoDoble<>(contenido, nombre);
         switch (tamaño) {
             case 0 -> {
                 inicio = nuevo;
@@ -49,23 +57,30 @@ public class ListaDoble<T> implements Serializable {
     }
 
     /**
-     * @param contenido
-     * @return
+     * Método encargado de usar el elemento en la lista y eliminarlo.
+     *
+     * @param nombre nombre del contenido que se va a usar.
+     * @return Contenido del nodo utilizado.
      * @throws ListaDobleException
      */
-    public T usar(T contenido) throws ListaDobleException {
+    public T usar(String nombre) throws ListaDobleException {
         NodoDoble<T> nodoAUtilizar;
         for (int i = 0; i < tamaño; i++) {
             nodoAUtilizar = obtenerNodo(i);
-            if (nodoAUtilizar.getContenido().equals(contenido)) {
+            if (nodoAUtilizar.getNombre().equals(nombre)) {
                 eliminarNodo(i);
-                System.out.println("Se ha utilizado el elmento " + contenido.toString());
+                System.out.println("Se ha utilizado el elemento " + nombre);
                 return nodoAUtilizar.getContenido();
             }
         }
         throw new ListaDobleException("No existe el elemento con ese contenido");
     }
 
+    /**
+     * Método encaragdo de eliminar un nodo en base a un índice.
+     *
+     * @param indice posición de la lista para eliminar el nodo.
+     */
     private void eliminarNodo(int indice) {
         NodoDoble<T> nodoAEliminar = obtenerNodo(indice);
         if (indice == 0) {
@@ -85,6 +100,12 @@ public class ListaDoble<T> implements Serializable {
         tamaño--;
     }
 
+    /**
+     * Método encargado de obtener el nodo en base a un índice
+     *
+     * @param indice posición de la cadena a devolver.
+     * @return nodo en el indice especificado.
+     */
     private NodoDoble<T> obtenerNodo(int indice) {
         NodoDoble<T> temporal;
         if (indice <= tamaño / 2) {
@@ -102,21 +123,30 @@ public class ListaDoble<T> implements Serializable {
     }
 
     /**
-     * @deprecated ssssss
-     * @param contenido
-     * @return 
+     * Método encargado de verificar si existe un nodo con el mismo contenido
+     * (Realmente lo que hace es verificar si el nodo ya tiene un nombre con el
+     * nombre que se quiere saber si existe.)
+     *
+     * @param nombre nombre del elemento a buscar
+     * @return true si existe.
      */
-    public boolean existeNodoConContenido(T contenido) {
+    public boolean existeNodoConContenido(String nombre) {
         for (int i = 0; i < tamaño; i++) {
-            if (obtenerNodo(i).getContenido().equals(contenido)) {
-                System.out.println("Existe el nodo con el contenido "+contenido.toString());
-                return true;
+            if (obtenerNodo(i) != null) {
+                if (obtenerNodo(i).getNombre().equals(nombre)) {
+                    return true;
+                }
             }
         }
-        System.out.println("NO Existe el nodo con el contenido "+contenido.toString());
         return false;
     }
 
+    /**
+     * Método encargado de obtener un arreglo de objetos, ¿para qué? quizas
+     * sirva.
+     *
+     * @return arreglo de objetos
+     */
     public Object[] obtenerArregloDeObjetos() {
         Object[] objects = new Object[tamaño];
         for (int i = 0; i < objects.length; i++) {
@@ -125,12 +155,22 @@ public class ListaDoble<T> implements Serializable {
         return objects;
     }
 
+    /**
+     * Método encargado de verificar si la lista esta vacia.
+     *
+     * @return true si lo está.
+     */
     public boolean estaVacia() {
         return tamaño == 0;
     }
 
     // GETTERS -----------------------------------------------------------------
-    public int getTamaño() {
+    /**
+     * Devuelve el tamaño de la lísta doblemente enlazada.
+     *
+     * @return tamaño de la lista.
+     */
+    public int length() {
         return tamaño;
     }
 

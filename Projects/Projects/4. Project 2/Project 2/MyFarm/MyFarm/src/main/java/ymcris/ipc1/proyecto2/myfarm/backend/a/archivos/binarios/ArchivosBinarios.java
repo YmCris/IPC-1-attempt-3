@@ -1,16 +1,16 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios;
 
 import java.io.File;
+import java.io.IOException;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
  * Clase ArchivosBinarios es la clase encargada de guardar y obtener los datos
@@ -26,9 +26,12 @@ public class ArchivosBinarios {
     private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
     private final String rutaCarpetaSemillas = rutaProyecto + File.separator + "Semillas";
     private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
-    private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia";
+    private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia Prima";
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * Método encargado de crear las carpetas del programa.
+     */
     public void crearCarpetas() {
         File carpetaAnimales = new File(rutaCarpetaAnimales);
         File carpetaSemillas = new File(rutaCarpetaSemillas);
@@ -40,6 +43,30 @@ public class ArchivosBinarios {
         carpetaAnimales.mkdirs();
     }
 
+    /**
+     * Método encargado de guardar un objeto en un archivo binario
+     *
+     * @param objeto Objeto a guardar en el archivo binario
+     * @param rutaCarpeta carpeta donde se guardará el archivo
+     * @param nombre nombre que tendrá el archivo binario (DEBERÍA SER EL NOMBRE
+     * DEL OBJETO)
+     */
+    public void guardarObjeto(Object objeto, String rutaCarpeta, String nombre) {
+        File file = new File(rutaCarpeta + File.separator + nombre + ".bin");
+        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
+            out.writeObject(objeto);
+        } catch (IOException e) {
+            System.out.println("No se pudo guardar el objeto porque " + e.getMessage());
+        }
+    }
+
+    /**
+     * Método encargado de obtener un objeto
+     *
+     * @param rutaCarpeta ruta donde se encuentra el archivo.
+     * @param nombreArchivo nombre del objeto.
+     * @return objeto para castear explicitamente
+     */
     public Object obtenerObjeto(String rutaCarpeta, String nombreArchivo) {
         File file = new File(rutaCarpeta + File.separator + nombreArchivo + ".bin");
         try (ObjectInputStream in = new ObjectInputStream(new FileInputStream(file))) {
@@ -50,6 +77,12 @@ public class ArchivosBinarios {
         }
     }
 
+    /**
+     * Método encargado de obtener todos los objetos de una carpeta
+     *
+     * @param rutaCarpeta ruta donde se encuentran los objetos a recuperar.
+     * @return arreglo de objetos para castearlos manualmente.
+     */
     public Object[] obtenerObjetos(String rutaCarpeta) {
         try {
             File carpeta = new File(rutaCarpeta);
@@ -65,23 +98,25 @@ public class ArchivosBinarios {
         }
     }
 
-    public void guardarObjeto(Object objeto, String rutaCarpeta, String nombre) {
-        File file = new File(rutaCarpeta + File.separator + nombre + ".bin");
-        try (ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(file))) {
-            out.writeObject(objeto);
-        } catch (IOException e) {
-            System.out.println("No se pudo guardar el objeto porque " + e.getMessage());
-        }
-    }
-
-    // ANIMALES ----------------------------------------------------------------
+    /**
+     * Método encargado de eliminar un archivo binario
+     *
+     * @param rutaCarpeta carpeta donde se encuentra el archivo
+     * @param nombreArchivo nombre del archivo a eliminar
+     */
     public void eliminarArchivo(String rutaCarpeta, String nombreArchivo) {
         File archivo = new File(rutaCarpeta + File.separator + nombreArchivo + ".bin");
         archivo.delete();
     }
 
+    // ANIMALES ----------------------------------------------------------------
+    /**
+     * Método encargado de obtener el arreglo de todos los animales que se han
+     * creado y guardado con el método guardarObjeto()
+     *
+     * @return arreglo de animales existentes
+     */
     public Animales[] obtenerAnimales() {
-        System.out.println("Se obtiene el arreglo de todos los animales");
         Object[] objetos = obtenerObjetos(rutaCarpetaAnimales);
         Animales[] animales = new Animales[objetos.length];
         for (int i = 0; i < animales.length; i++) {
@@ -90,12 +125,23 @@ public class ArchivosBinarios {
         return animales;
     }
 
+    /**
+     * Método encargado de guardar objetos del tipo animal con el método
+     * guardarObjeto()
+     *
+     * @param animal objeto animal a guardar en un archivo binario.
+     */
     public void guardarAnimales(Animales animal) {
         guardarObjeto(animal, rutaCarpetaAnimales, animal.getNombre());
-        System.out.println("Se ha guardado el animal " + animal.getNombre());
     }
 
     // SEMILLAS ----------------------------------------------------------------
+    /**
+     * Método encargado de obtener el arreglo de todas las semillas que se han
+     * creado y guardado con el método guardarObjeto()
+     *
+     * @return arreglo de semillas existentes
+     */
     public Semillas[] obtenerSemillas() {
         System.out.println("Se obtiene el arreglo de todas las semillas");
         Object[] objetos = obtenerObjetos(rutaCarpetaSemillas);
@@ -106,12 +152,24 @@ public class ArchivosBinarios {
         return semillas;
     }
 
+    /**
+     * Método encargado de guardar objetos del tipo semilla con el método
+     * guardarObjeto()
+     *
+     * @param semilla objeto semilla a guardar en un archivo binario.
+     */
     public void guardarSemillas(Semillas semilla) {
         guardarObjeto(semilla, rutaCarpetaSemillas, semilla.getNombre());
         System.out.println("Se ha guardado la semilla " + semilla.getNombre());
     }
 
     // ALIMENTOS ---------------------------------------------------------------
+    /**
+     * Método encargado de obtener el arreglo de todos los alimentos que se han
+     * creado y guardado con el método guardarObjeto()
+     *
+     * @return arreglo de alimentos existentes
+     */
     public Alimentos[] obtenerAlimentos() {
         System.out.println("Se obtiene el arreglo de todos los alimentos");
         Object[] objetos = obtenerObjetos(rutaCarpetaAlimentos);
@@ -122,12 +180,24 @@ public class ArchivosBinarios {
         return alimentos;
     }
 
+    /**
+     * Método encargado de guardar objetos del tipo alimento con el método
+     * guardarObjeto()
+     *
+     * @param alimento objeto alimento a guardar en un archivo binario.
+     */
     public void guardarAlimento(Alimentos alimento) {
         guardarObjeto(alimento, rutaCarpetaAlimentos, alimento.getNombre());
         System.out.println("Se ha guardado el alimento " + alimento.getNombre());
     }
 
     // MATERIA PRIMA -----------------------------------------------------------
+    /**
+     * Método encargado de obtener el arreglo de todas las materias primas que
+     * se han creado y guardado con el método guardarObjeto()
+     *
+     * @return arreglo de materias primas existentes
+     */
     public MateriasPrimas[] obtenerMaterias() {
         System.out.println("Se obtiene el arreglo de todas las materias");
         Object[] objetos = obtenerObjetos(rutaCarpetaMateriaPrima);
@@ -138,49 +208,57 @@ public class ArchivosBinarios {
         return materias;
     }
 
+    /**
+     * Método encargado de guardar objetos del tipo materia prima con el método
+     * guardarObjeto()
+     *
+     * @param materia objeto materia prima a guardar en un archivo binario.
+     */
     public void guardarMaterias(MateriasPrimas materia) {
         guardarObjeto(materia, rutaCarpetaMateriaPrima, materia.getNombre());
         System.out.println("Se ha guardado la materia " + materia.getNombre());
     }
 
-    // MODIFICAR ARCHIVO -------------------------------------------------------
-    public String editarAnimal(Animales animal, Productos producto, int porcentaje, boolean esConDestace) {
+    /**
+     * Método encargado de editar un animal obteniendo el animal, modificando la
+     * instancia, eliminando el archivo existente y luego recreando el archivo
+     * pero ahora con la nueva instancia de animal.
+     *
+     * @param animal animal a modificar.
+     * @param producto producto a agregar.
+     * @param esConDestace si el producto a agregar es con destace
+     * @return un chingo de mensajes porque es necesario comunicarle al frontend
+     * que chingados pasó.
+     */
+    public String editarAnimal(Animales animal, Productos producto, boolean esConDestace) {
         Animales nuevoAnimal = animal;
         if (esConDestace) {
-            if ((nuevoAnimal.getPorcentajeDeProduccionConDestaze() + porcentaje) <= 100) {
-                if (!nuevoAnimal.getProductosDestazables().existeNodoConContenido(producto)) {
-                    nuevoAnimal.getProductosDestazables().agregar(producto);
-                    nuevoAnimal.setPorcentajeDeProduccionConDestaze(nuevoAnimal.getPorcentajeDeProduccionConDestaze() + porcentaje);
-                    eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
-                    guardarAnimales(nuevoAnimal);
-                    return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción con destace del " + nuevoAnimal.getPorcentajeDeProduccionConDestaze();
-                }
-            } else {
-                return "No puedes agregarle ese alimento que se obtiene al destazar el animal, porque sobrepasa el límite";
+            if ((nuevoAnimal.getPorcentajeDeProduccionConDestaze() + producto.getProduccion()) <= 100) {
+                nuevoAnimal.getProductosDestazables().agregar(producto, producto.getNombre());
+                nuevoAnimal.setPorcentajeDeProduccionConDestaze(nuevoAnimal.getPorcentajeDeProduccionConDestaze() + producto.getProduccion());
+                eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
+                guardarAnimales(nuevoAnimal);
+                return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción con destace del " + nuevoAnimal.getPorcentajeDeProduccionConDestaze();
             }
         } else {
-            if ((nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + porcentaje) <= 100) {
-                if (!nuevoAnimal.getProductosNoDestazables().existeNodoConContenido(producto)) {
-                    nuevoAnimal.getProductosNoDestazables().agregar(producto);
-                    nuevoAnimal.setPorcentajeDeProduccionSinDestaze(nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + porcentaje);
-                    eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
-                    guardarAnimales(nuevoAnimal);
-                    return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción sin destace del " + nuevoAnimal.getPorcentajeDeProduccionSinDestaze();
-                }
-            } else {
-                return "No puedes agregarle ese alimento que se obtiene sin destazar el animal, porque sobrepasa el límite";
+            if ((nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + producto.getProduccion()) <= 100) {
+                nuevoAnimal.getProductosNoDestazables().agregar(producto, producto.getNombre());
+                nuevoAnimal.setPorcentajeDeProduccionSinDestaze(nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + producto.getProduccion());
+                eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
+                guardarAnimales(nuevoAnimal);
+                return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción sin destace del " + nuevoAnimal.getPorcentajeDeProduccionSinDestaze();
             }
         }
-        return "Ya existe el producto en el animal, ya no lo puedes modificar";
+        return "No puedes agregarle ese alimento que se obtiene al destazar el animal, porque sobrepasa el límite";
     }
 
     // GETTERS -----------------------------------------------------------------
-    public String getRutaCarpetaAnimales() {
-        return rutaCarpetaAnimales;
-    }
-
     public String getRutaProyecto() {
         return rutaProyecto;
+    }
+
+    public String getRutaCarpetaAnimales() {
+        return rutaCarpetaAnimales;
     }
 
     public String getRutaCarpetaSemillas() {

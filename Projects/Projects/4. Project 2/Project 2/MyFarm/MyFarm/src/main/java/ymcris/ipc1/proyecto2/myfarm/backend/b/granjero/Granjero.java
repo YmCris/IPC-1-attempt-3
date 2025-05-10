@@ -1,7 +1,9 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granjero;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
@@ -16,8 +18,9 @@ public class Granjero extends Thread {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nick;
     private String nombre;
-    private ListaDoble<String> animales;
+    private ListaDoble<Animales> animales;
     private ListaDoble<Alimentos> alimentos;
+    private ListaDoble<MateriasPrimas> materias;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int oro;
@@ -32,6 +35,9 @@ public class Granjero extends Thread {
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Granjero(String nick, String nombre) {
+        this.materias = new ListaDoble<>();
+        this.alimentos = new ListaDoble<>();
+        this.animales = new ListaDoble<>();
         this.nick = nick;
         this.nombre = nombre;
         this.oro = 1000;
@@ -64,7 +70,7 @@ public class Granjero extends Thread {
         if (!alimentos.estaVacia()) {
             try {
                 if (!estaLleno) {
-                    alimentos.usar(alimento);
+                    alimentos.usar(alimento.getNombre());
                     if (vida < VIDA_MAXIMA) {
                         vida++;
                     }
@@ -76,6 +82,34 @@ public class Granjero extends Thread {
         } else {
             System.out.println("No hay alimentos para comer");
         }
+    }
+
+    /**
+     * Método encargado de obtener los alimentos del granjero.
+     *
+     * @return arreglo con todos los alimentos del granjero.
+     */
+    public Alimentos[] obtenerAlimentosDelGranjero() {
+        Object[] objetos = alimentos.obtenerArregloDeObjetos();
+        Alimentos[] arreglo = new Alimentos[objetos.length];
+        for (int i = 0; i < arreglo.length; i++) {
+            arreglo[i] = (Alimentos) objetos[i];
+        }
+        return arreglo;
+    }
+
+    /**
+     * Método encaragdo de obtener todas las materias primas del granjero.
+     *
+     * @return arreglo con todas las materias primas del granjero.
+     */
+    public MateriasPrimas[] obtenerMateriaDelGranjero() {
+        Object[] objetos = materias.obtenerArregloDeObjetos();
+        MateriasPrimas[] arreglo = new MateriasPrimas[objetos.length];
+        for (int i = 0; i < arreglo.length; i++) {
+            arreglo[i] = (MateriasPrimas) objetos[i];
+        }
+        return arreglo;
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
@@ -105,7 +139,7 @@ public class Granjero extends Thread {
     }
 
     // GETTERS -----------------------------------------------------------------
-    public ListaDoble<String> getAnimales() {
+    public ListaDoble<Animales> getAnimales() {
         return animales;
     }
 

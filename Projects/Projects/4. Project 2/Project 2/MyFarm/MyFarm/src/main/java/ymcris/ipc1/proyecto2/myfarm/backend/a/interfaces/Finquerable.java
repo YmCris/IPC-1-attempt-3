@@ -9,8 +9,9 @@ package ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces;
  */
 public interface Finquerable {
 
-    // MÉTODOS ABSTRACTOS ------------------------------------------------------
-    public abstract void crearParcela();
-
+    // MÉTODOS ABSTRACTOS ------------------------------------------------------ç
+    /**
+     * Método encargado de agregar un animal al tablero.
+     */
     public abstract void criarAnimales();
 }

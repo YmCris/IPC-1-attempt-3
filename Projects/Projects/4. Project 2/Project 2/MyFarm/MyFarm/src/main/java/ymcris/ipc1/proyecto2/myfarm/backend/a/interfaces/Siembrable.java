@@ -1,5 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces;
 
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+
 /**
  * Interface Siembrable es la interfaz que otorga a un suelo la capacidad de
  * sembrar sobre él.
@@ -10,5 +12,10 @@ package ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces;
 public interface Siembrable {
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
-    public void sembrar(int fila, int columna, String semilla);
+    /**
+     * Método encargado de sembrar en la celda (instancia de grama)
+     *
+     * @param semilla semilla a sembrar.
+     */
+    public void sembrar(Semillas semilla);
 }

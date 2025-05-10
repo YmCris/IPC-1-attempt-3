@@ -48,16 +48,17 @@ public class ListaOrtogonal {
                 indice++;
             }
         }
-        // Paso 2: Enlazar horizontal y verticalmente
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
                 NodoOrtogonal actual = matriz[i][j];
+                // 1. Referencias de izquierda y derecha
                 if (j < 4) {
                     actual.setNodoDerecho(matriz[i][j + 1]);
                 }
                 if (j > 0) {
                     actual.setNodoIzquierdo(matriz[i][j - 1]);
                 }
+                // 2. Referencias de arriba y abajo
                 if (i < 4) {
                     actual.setNodoDeAbajo(matriz[i + 1][j]);
                 }
@@ -66,7 +67,7 @@ public class ListaOrtogonal {
                 }
             }
         }
-        // Paso 3: Establecer nodo inicio
+        //3. Establecer nodo inicio
         inicio = matriz[0][0];
         inicioFila = matriz[4][0];
         inicioColumna = matriz[0][4];
@@ -166,7 +167,7 @@ public class ListaOrtogonal {
             return actual;
         }
     }
-    
+
     public void mostrarTablero() {
         try {
             for (int i = 0; i < filas; i++) {

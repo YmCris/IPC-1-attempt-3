@@ -205,7 +205,8 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear una limento con un nombre vacío", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            if (!archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombre + ".bin") || !archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombre + ".bin")) {
+            if (!archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombre + ".bin")
+                    && !archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombre + ".bin")) {
                 Alimentos alimento = new Alimentos(nombre, precioDeVenta, precioDeCompra, true);
                 binario.guardarAlimento(alimento);
                 JOptionPane.showMessageDialog(null, "Se ha creado el alimento " + nombre + " exitosamente", "Nuevo Alimento", JOptionPane.INFORMATION_MESSAGE);

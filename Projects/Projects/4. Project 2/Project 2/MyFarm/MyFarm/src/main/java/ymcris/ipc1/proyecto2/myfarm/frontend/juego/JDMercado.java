@@ -66,7 +66,7 @@ public class JDMercado extends javax.swing.JDialog {
         tblComprarAnimales = (DefaultTableModel) tblCAnimales.getModel();
         Animales[] animales = mercado.getAnimales();
         for (Animales animal : animales) {
-            tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.getProductosDestazables().getTamaño(), animal.getProductosNoDestazables().getTamaño()});
+            tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.getProductosDestazables().length(), animal.getProductosNoDestazables().length()});
         }
     }
 
