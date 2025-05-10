@@ -1,11 +1,11 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
 import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
-import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
-import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
+import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 
 /**
  *

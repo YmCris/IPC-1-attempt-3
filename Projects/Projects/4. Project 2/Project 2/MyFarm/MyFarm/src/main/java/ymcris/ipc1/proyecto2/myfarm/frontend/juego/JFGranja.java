@@ -1,37 +1,37 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 
+import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
-import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Bodega;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
-import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Desierto;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDAgua;
-import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDDesierto;
+import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDGrama;
+import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDDesierto;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
 
 /**
  *
  * @see Granja
  * @author YmCris
  */
-public class JFGranja extends javax.swing.JFrame {
-
+public class JFGranja extends javax.swing.JFrame implements Runnable {
+    
     private Granja granja;
     private Bodega bodega;
     private Mercado mercado;
     private Granjero granjero;
-
+    
     public JFGranja(Granja granja) {
         initComponents();
         this.granja = granja;
@@ -46,14 +46,39 @@ public class JFGranja extends javax.swing.JFrame {
         } catch (ListaOrtogonalException e) {
             System.out.println("Hubo un error al colocar la lista ortogonal en el panel porque " + e.getMessage());
         }
+        try {
+            Thread hiloJuego = new Thread(granja);
+            hiloJuego.start();
+        } catch (Exception e) {
+        }
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    @Override
+    public void run() {
+        while (!granja.partidaTerminada()) {
+            try {
+                Thread.sleep(500);
+                if (granja.partidaTerminada()) {
+                    JOptionPane.showMessageDialog(null, "Juego Terminado, Puedes revisar los datos de tu partida en los reportes", "Noob", JOptionPane.INFORMATION_MESSAGE);
+                    this.dispose();
+                    new JFMenuPrincipal().setVisible(true);
+                }
+                actualizarContenido();
+            } catch (InterruptedException ex) {
+                System.out.println(ex.getMessage());
+            }
+            
+        }
+        System.out.println("Partida terminada frontend");
+    }
+    
     private void actualizarContenido() {
         lblNombre.setText(granjero.getNick().toUpperCase());
         lblOro.setText(String.valueOf(granjero.getOro()));
+        lblVida.setText(String.valueOf(granjero.getVida()));
     }
-
+    
     private void colocarBotones() throws ListaOrtogonalException {
         int filas = granja.getTerreno().getTablero().getFilas();
         int columnas = granja.getTerreno().getTablero().getColumnas();
@@ -68,12 +93,15 @@ public class JFGranja extends javax.swing.JFrame {
                 Suelo sueloActual = granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo();
                 sueloActual.addActionListener((e) -> {
                     System.out.println("Soy el boton en la posición: " + fila + columna);
-                    if (sueloActual instanceof Agua) {
-                        new JDAgua((Agua) sueloActual).setVisible(true);
-                    } else if (sueloActual instanceof Desierto) {
-                        new JDDesierto((Desierto) sueloActual).setVisible(true);
-                    } else if (sueloActual instanceof Grama) {
-                        new JDGrama((Grama) sueloActual).setVisible(true);
+                    switch (sueloActual) {
+                        case Agua agua ->
+                            new JDAgua(agua).setVisible(true);
+                        case Desierto desierto ->
+                            new JDDesierto(desierto).setVisible(true);
+                        case Grama grama ->
+                            new JDGrama(grama).setVisible(true);
+                        default -> {
+                        }
                     }
                 });
                 pnlTablero.add(sueloActual);
@@ -110,6 +138,8 @@ public class JFGranja extends javax.swing.JFrame {
         lblCultivosListos = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         lblAnimalesMuertos = new javax.swing.JLabel();
+        lblVida = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("My Farm");
@@ -118,6 +148,9 @@ public class JFGranja extends javax.swing.JFrame {
 
         pnlOpciones.setBackground(new java.awt.Color(0, 102, 204));
         pnlOpciones.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlOpciones.setMaximumSize(new java.awt.Dimension(1200, 92));
+        pnlOpciones.setMinimumSize(new java.awt.Dimension(1200, 92));
+        pnlOpciones.setPreferredSize(new java.awt.Dimension(1200, 92));
 
         btnBodega.setBackground(new java.awt.Color(51, 51, 51));
         btnBodega.setForeground(new java.awt.Color(255, 255, 255));
@@ -203,17 +236,17 @@ public class JFGranja extends javax.swing.JFrame {
             .addGroup(pnlOpcionesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnBodega)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGuardarPartida)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnMercado)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLimpiarTerreno)
-                .addGap(18, 18, 18)
-                .addComponent(btnProcesar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProcesar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPreseleccionarAlimentos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPreseleccionarAlimentos1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -221,7 +254,7 @@ public class JFGranja extends javax.swing.JFrame {
                 .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(48, Short.MAX_VALUE))
         );
         pnlOpcionesLayout.setVerticalGroup(
             pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -243,10 +276,14 @@ public class JFGranja extends javax.swing.JFrame {
                             .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(42, Short.MAX_VALUE))
+                .addContainerGap(30, Short.MAX_VALUE))
         );
 
         pnlTablero.setBackground(new java.awt.Color(102, 102, 102));
+        pnlTablero.setMaximumSize(new java.awt.Dimension(1200, 712));
+        pnlTablero.setMinimumSize(new java.awt.Dimension(1200, 712));
+        pnlTablero.setName(""); // NOI18N
+        pnlTablero.setPreferredSize(new java.awt.Dimension(1200, 712));
 
         javax.swing.GroupLayout pnlTableroLayout = new javax.swing.GroupLayout(pnlTablero);
         pnlTablero.setLayout(pnlTableroLayout);
@@ -256,11 +293,14 @@ public class JFGranja extends javax.swing.JFrame {
         );
         pnlTableroLayout.setVerticalGroup(
             pnlTableroLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 700, Short.MAX_VALUE)
+            .addGap(0, 712, Short.MAX_VALUE)
         );
 
         pnlInformacion.setBackground(new java.awt.Color(51, 51, 0));
         pnlInformacion.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlInformacion.setMaximumSize(new java.awt.Dimension(1200, 84));
+        pnlInformacion.setMinimumSize(new java.awt.Dimension(1200, 84));
+        pnlInformacion.setPreferredSize(new java.awt.Dimension(1200, 84));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -294,6 +334,14 @@ public class JFGranja extends javax.swing.JFrame {
         lblAnimalesMuertos.setForeground(new java.awt.Color(255, 255, 255));
         lblAnimalesMuertos.setText("0");
 
+        lblVida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        lblVida.setForeground(new java.awt.Color(255, 255, 255));
+        lblVida.setText("NOMBRE");
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("VIDA: ");
+
         javax.swing.GroupLayout pnlInformacionLayout = new javax.swing.GroupLayout(pnlInformacion);
         pnlInformacion.setLayout(pnlInformacionLayout);
         pnlInformacionLayout.setHorizontalGroup(
@@ -303,7 +351,11 @@ public class JFGranja extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblNombre)
-                .addGap(61, 61, 61)
+                .addGap(45, 45, 45)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(lblVida)
+                .addGap(55, 55, 55)
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblOro)
@@ -321,15 +373,20 @@ public class JFGranja extends javax.swing.JFrame {
             pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlInformacionLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel2)
-                    .addComponent(jLabel1)
-                    .addComponent(lblNombre)
-                    .addComponent(lblOro)
-                    .addComponent(jLabel5)
-                    .addComponent(lblCultivosListos)
-                    .addComponent(jLabel7)
-                    .addComponent(lblAnimalesMuertos))
+                .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel1)
+                        .addComponent(lblOro)
+                        .addComponent(jLabel5)
+                        .addComponent(lblCultivosListos)
+                        .addComponent(jLabel7)
+                        .addComponent(lblAnimalesMuertos))
+                    .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel3)
+                        .addComponent(lblVida))
+                    .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel2)
+                        .addComponent(lblNombre)))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
 
@@ -337,9 +394,9 @@ public class JFGranja extends javax.swing.JFrame {
         pnlPantalla.setLayout(pnlPantallaLayout);
         pnlPantallaLayout.setHorizontalGroup(
             pnlPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(pnlTablero, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(pnlOpciones, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
+            .addComponent(pnlInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
+            .addComponent(pnlTablero, javax.swing.GroupLayout.DEFAULT_SIZE, 1202, Short.MAX_VALUE)
         );
         pnlPantallaLayout.setVerticalGroup(
             pnlPantallaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -348,7 +405,8 @@ public class JFGranja extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlTablero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(pnlInformacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(pnlInformacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -418,15 +476,18 @@ public class JFGranja extends javax.swing.JFrame {
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel lblAnimalesMuertos;
     private javax.swing.JLabel lblCultivosListos;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblOro;
+    private javax.swing.JLabel lblVida;
     private javax.swing.JPanel pnlInformacion;
     private javax.swing.JPanel pnlOpciones;
     private javax.swing.JPanel pnlPantalla;
     private javax.swing.JPanel pnlTablero;
     // End of variables declaration//GEN-END:variables
+
 }

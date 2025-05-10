@@ -14,6 +14,7 @@ public class Fertilizantes {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int precio;
+    private int cantidad;
     private int fertilidad;
 
     public Fertilizantes(String nombre, int fertilidad, int precio) {
@@ -35,9 +36,13 @@ public class Fertilizantes {
         return precio;
     }
 
+    public int getCantidad() {
+        return cantidad;
+    }
+
     // SETTERS -----------------------------------------------------------------
-    public void setFertilidad(int fertilidad) {
-        this.fertilidad = fertilidad;
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
 }

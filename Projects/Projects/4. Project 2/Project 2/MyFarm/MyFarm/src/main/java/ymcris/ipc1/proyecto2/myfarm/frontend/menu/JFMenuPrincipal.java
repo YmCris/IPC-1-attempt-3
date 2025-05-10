@@ -370,8 +370,10 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
         } else {
             this.dispose();
             dialog.dispose();
-            JFGranja granja = new JFGranja(new Granja(new Granjero(nick, nombre)));
-            granja.setVisible(true);
+            JFGranja granjaF = new JFGranja(new Granja(new Granjero(nick, nombre)));
+            Thread hiloGranaF = new Thread(granjaF);
+            hiloGranaF.start();
+            granjaF.setVisible(true);
         }
     }
 

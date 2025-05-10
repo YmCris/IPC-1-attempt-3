@@ -13,7 +13,7 @@ public class JDDesierto extends javax.swing.JDialog {
     private Desierto desierto;
 
     // CONSTANTES --------------------------------------------------------------
-    private static final String RUTA_IMAGEN = "/fondoCreadores.png";
+    private static final String RUTA_IMAGEN = "/arena.png";
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JDDesierto(Desierto desierto) {

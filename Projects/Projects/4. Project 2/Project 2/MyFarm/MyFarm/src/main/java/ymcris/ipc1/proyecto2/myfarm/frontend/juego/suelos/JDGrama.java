@@ -13,7 +13,7 @@ public class JDGrama extends javax.swing.JDialog {
     private Grama grama;
 
     // COSNTANTES --------------------------------------------------------------
-    private static final String RUTA_IMAGEN = "/fondoCreadores.png";
+    private static final String RUTA_IMAGEN = "/grama.png";
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JDGrama(Grama grama) {

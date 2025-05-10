@@ -50,22 +50,22 @@
                               <Group type="102" attributes="0">
                                   <Component id="jLabel12" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btnVender5" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnComprarAlimentoParaAnimales" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Component id="jLabel9" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btnVender2" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnComprarSemillas" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btnVender3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnComprarAnimales" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" attributes="0">
                                   <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
                                   <EmptySpace max="32767" attributes="0"/>
-                                  <Component id="btnVender4" min="-2" max="-2" attributes="0"/>
+                                  <Component id="btnComprarFertilizantes" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -90,7 +90,7 @@
                       <Group type="102" attributes="0">
                           <Component id="jLabel7" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="233" max="-2" attributes="0"/>
-                          <Component id="btnVender" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnVenderAlimentos" min="-2" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                       </Group>
                       <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
@@ -110,7 +110,7 @@
                                       <Group type="102" alignment="0" attributes="0">
                                           <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
                                           <EmptySpace max="32767" attributes="0"/>
-                                          <Component id="btnVender1" min="-2" max="-2" attributes="0"/>
+                                          <Component id="btnVenderMateriaPrima" min="-2" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
@@ -144,14 +144,14 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel7" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVender" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnVenderAlimentos" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVender1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnVenderMateriaPrima" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane2" min="-2" pref="325" max="-2" attributes="0"/>
@@ -161,28 +161,28 @@
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVender2" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnComprarSemillas" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
                           <Component id="jScrollPane3" min="-2" pref="139" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVender3" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnComprarAnimales" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane4" min="-2" pref="96" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="54" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVender4" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnComprarFertilizantes" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane5" min="-2" pref="75" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="74" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="3" attributes="0">
                               <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnVender5" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnComprarAlimentoParaAnimales" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="-2" attributes="0"/>
                           <Component id="jScrollPane6" min="-2" pref="118" max="-2" attributes="0"/>
@@ -323,15 +323,15 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnVender">
+        <Component class="javax.swing.JButton" name="btnVenderAlimentos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Vender Alimentos"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVenderActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVenderAlimentosActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnVender1">
+        <Component class="javax.swing.JButton" name="btnVenderMateriaPrima">
           <Properties>
             <Property name="text" type="java.lang.String" value="Vender Materia Prima"/>
           </Properties>
@@ -612,36 +612,36 @@
             </Component>
           </SubComponents>
         </Container>
-        <Component class="javax.swing.JButton" name="btnVender2">
+        <Component class="javax.swing.JButton" name="btnComprarSemillas">
           <Properties>
             <Property name="text" type="java.lang.String" value="Comprar Semillas"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVender2ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarSemillasActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnVender3">
+        <Component class="javax.swing.JButton" name="btnComprarAnimales">
           <Properties>
             <Property name="text" type="java.lang.String" value="Comprar Animales"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVender3ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarAnimalesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnVender4">
+        <Component class="javax.swing.JButton" name="btnComprarFertilizantes">
           <Properties>
             <Property name="text" type="java.lang.String" value="Comprar Fertilizantes"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVender4ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarFertilizantesActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JButton" name="btnVender5">
+        <Component class="javax.swing.JButton" name="btnComprarAlimentoParaAnimales">
           <Properties>
             <Property name="text" type="java.lang.String" value="Comprar Alimento Para Animales"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnVender5ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnComprarAlimentoParaAnimalesActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>

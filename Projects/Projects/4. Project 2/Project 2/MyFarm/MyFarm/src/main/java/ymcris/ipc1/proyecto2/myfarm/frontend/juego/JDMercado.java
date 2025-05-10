@@ -1,11 +1,13 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Mercado;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 
 /**
@@ -20,6 +22,8 @@ public class JDMercado extends javax.swing.JDialog {
     private DefaultTableModel tblComprarAlimentos;
     private DefaultTableModel tblComprarSemillas;
     private DefaultTableModel tblComprarAnimales;
+    private DefaultTableModel tblVenderAlimentos;
+    private DefaultTableModel tblVenderMateria;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
@@ -36,6 +40,24 @@ public class JDMercado extends javax.swing.JDialog {
         agregarAlimentos();
         agregarSemillas();
         agregarAnimales();
+        agregarAlimentosAVender();
+        agregarMaretiaAVender();
+    }
+
+    private void agregarAlimentosAVender() {
+        tblVenderAlimentos = (DefaultTableModel) tblVAlimentos.getModel();
+        Alimentos[] alimentosAVender = mercado.getAlimentosGranjero();
+        for (Alimentos alimento : alimentosAVender) {
+            tblVenderAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta()});
+        }
+    }
+
+    private void agregarMaretiaAVender() {
+        tblVenderMateria = (DefaultTableModel) tblVMateria.getModel();
+        MateriasPrimas[] materiasAVender = mercado.getMateriasGranjero();
+        for (MateriasPrimas materias : materiasAVender) {
+            tblVenderMateria.addRow(new Object[]{materias.getNombre(), materias.getPrecioDeVenta()});
+        }
     }
 
     private void agregarFertilizantes() {
@@ -84,8 +106,8 @@ public class JDMercado extends javax.swing.JDialog {
         tblVAlimentos = new javax.swing.JTable();
         jScrollPane2 = new javax.swing.JScrollPane();
         tblVMateria = new javax.swing.JTable();
-        btnVender = new javax.swing.JButton();
-        btnVender1 = new javax.swing.JButton();
+        btnVenderAlimentos = new javax.swing.JButton();
+        btnVenderMateriaPrima = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -100,10 +122,10 @@ public class JDMercado extends javax.swing.JDialog {
         jLabel12 = new javax.swing.JLabel();
         jScrollPane6 = new javax.swing.JScrollPane();
         tblCAlimento = new javax.swing.JTable();
-        btnVender2 = new javax.swing.JButton();
-        btnVender3 = new javax.swing.JButton();
-        btnVender4 = new javax.swing.JButton();
-        btnVender5 = new javax.swing.JButton();
+        btnComprarSemillas = new javax.swing.JButton();
+        btnComprarAnimales = new javax.swing.JButton();
+        btnComprarFertilizantes = new javax.swing.JButton();
+        btnComprarAlimentoParaAnimales = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -161,14 +183,14 @@ public class JDMercado extends javax.swing.JDialog {
         });
         jScrollPane2.setViewportView(tblVMateria);
 
-        btnVender.setText("Vender Alimentos");
-        btnVender.addActionListener(new java.awt.event.ActionListener() {
+        btnVenderAlimentos.setText("Vender Alimentos");
+        btnVenderAlimentos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVenderActionPerformed(evt);
+                btnVenderAlimentosActionPerformed(evt);
             }
         });
 
-        btnVender1.setText("Vender Materia Prima");
+        btnVenderMateriaPrima.setText("Vender Materia Prima");
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -287,31 +309,31 @@ public class JDMercado extends javax.swing.JDialog {
         });
         jScrollPane6.setViewportView(tblCAlimento);
 
-        btnVender2.setText("Comprar Semillas");
-        btnVender2.addActionListener(new java.awt.event.ActionListener() {
+        btnComprarSemillas.setText("Comprar Semillas");
+        btnComprarSemillas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVender2ActionPerformed(evt);
+                btnComprarSemillasActionPerformed(evt);
             }
         });
 
-        btnVender3.setText("Comprar Animales");
-        btnVender3.addActionListener(new java.awt.event.ActionListener() {
+        btnComprarAnimales.setText("Comprar Animales");
+        btnComprarAnimales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVender3ActionPerformed(evt);
+                btnComprarAnimalesActionPerformed(evt);
             }
         });
 
-        btnVender4.setText("Comprar Fertilizantes");
-        btnVender4.addActionListener(new java.awt.event.ActionListener() {
+        btnComprarFertilizantes.setText("Comprar Fertilizantes");
+        btnComprarFertilizantes.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVender4ActionPerformed(evt);
+                btnComprarFertilizantesActionPerformed(evt);
             }
         });
 
-        btnVender5.setText("Comprar Alimento Para Animales");
-        btnVender5.addActionListener(new java.awt.event.ActionListener() {
+        btnComprarAlimentoParaAnimales.setText("Comprar Alimento Para Animales");
+        btnComprarAlimentoParaAnimales.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnVender5ActionPerformed(evt);
+                btnComprarAlimentoParaAnimalesActionPerformed(evt);
             }
         });
 
@@ -331,19 +353,19 @@ public class JDMercado extends javax.swing.JDialog {
                             .addGroup(pnlFondoLayout.createSequentialGroup()
                                 .addComponent(jLabel12)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVender5))
+                                .addComponent(btnComprarAlimentoParaAnimales))
                             .addGroup(pnlFondoLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVender2))
+                                .addComponent(btnComprarSemillas))
                             .addGroup(pnlFondoLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVender3))
+                                .addComponent(btnComprarAnimales))
                             .addGroup(pnlFondoLayout.createSequentialGroup()
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnVender4))))
+                                .addComponent(btnComprarFertilizantes))))
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(pnlFondoLayout.createSequentialGroup()
@@ -360,7 +382,7 @@ public class JDMercado extends javax.swing.JDialog {
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addGap(233, 233, 233)
-                        .addComponent(btnVender)
+                        .addComponent(btnVenderAlimentos)
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
@@ -377,7 +399,7 @@ public class JDMercado extends javax.swing.JDialog {
                                     .addGroup(pnlFondoLayout.createSequentialGroup()
                                         .addComponent(jLabel8)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addComponent(btnVender1))))
+                                        .addComponent(btnVenderMateriaPrima))))
                             .addContainerGap()))))
         );
         pnlFondoLayout.setVerticalGroup(
@@ -399,13 +421,13 @@ public class JDMercado extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
-                            .addComponent(btnVender))
+                            .addComponent(btnVenderAlimentos))
                         .addGap(18, 18, 18)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel8)
-                            .addComponent(btnVender1))
+                            .addComponent(btnVenderMateriaPrima))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19))
@@ -413,25 +435,25 @@ public class JDMercado extends javax.swing.JDialog {
                         .addGap(12, 12, 12)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(btnVender2))
+                            .addComponent(btnComprarSemillas))
                         .addGap(16, 16, 16)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel10)
-                            .addComponent(btnVender3))
+                            .addComponent(btnComprarAnimales))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(54, 54, 54)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel11)
-                            .addComponent(btnVender4))
+                            .addComponent(btnComprarFertilizantes))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(74, 74, 74)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel12)
-                            .addComponent(btnVender5))
+                            .addComponent(btnComprarAlimentoParaAnimales))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 63, Short.MAX_VALUE))))
@@ -454,34 +476,85 @@ public class JDMercado extends javax.swing.JDialog {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVenderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVenderActionPerformed
+    private void btnVenderAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderAlimentosActionPerformed
+    }//GEN-LAST:event_btnVenderAlimentosActionPerformed
 
-    private void btnVender2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVender2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVender2ActionPerformed
+    private void btnComprarSemillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarSemillasActionPerformed
+        if (tblCSemillas.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int fila = tblCSemillas.getSelectedRow();
+        int precioSemilla = (int) tblCSemillas.getValueAt(fila, 1);
+        String nombreSemilla = (String) tblCSemillas.getValueAt(fila, 0);
+        if (mercado.jugadorTieneDineroSufiente(precioSemilla)) {
+            mercado.agregarSemillaAlJugador(nombreSemilla);
+            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioSemilla);
+            JOptionPane.showMessageDialog(null, "Has adquirido una semilla de la planta " + nombreSemilla, "Nueva semilla", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnComprarSemillasActionPerformed
 
-    private void btnVender3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVender3ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVender3ActionPerformed
+    private void btnComprarAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarAnimalesActionPerformed
+        if (tblCAnimales.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int fila = tblCAnimales.getSelectedRow();
+        int precioAnimal = (int) tblCAnimales.getValueAt(fila, 1);
+        String nombreAnimal = (String) tblCAnimales.getValueAt(fila, 0);
+        if (mercado.jugadorTieneDineroSufiente(precioAnimal)) {
+            mercado.agregarAnimalAlJugador(nombreAnimal);
+            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioAnimal);
+            JOptionPane.showMessageDialog(null, "Has adquirido el animal " + nombreAnimal, "Nuevo animal", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnComprarAnimalesActionPerformed
 
-    private void btnVender4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVender4ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVender4ActionPerformed
+    private void btnComprarFertilizantesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarFertilizantesActionPerformed
+        if (tblCFertilizantes.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int fila = tblCFertilizantes.getSelectedRow();
+        int precioFertilizante = (int) tblCFertilizantes.getValueAt(fila, 2);
+        String nombreFertilizante = (String) tblCFertilizantes.getValueAt(fila, 0);
+        if (mercado.jugadorTieneDineroSufiente(precioFertilizante)) {
+            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioFertilizante);
+            mercado.agregarFertilizanteAlJugador(nombreFertilizante);
+            JOptionPane.showMessageDialog(null, "Has adquirido el fertilizante " + nombreFertilizante, "Nuevo fertilizante", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnComprarFertilizantesActionPerformed
 
-    private void btnVender5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVender5ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnVender5ActionPerformed
+    private void btnComprarAlimentoParaAnimalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarAlimentoParaAnimalesActionPerformed
+        if (tblCAlimento.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int fila = tblCAlimento.getSelectedRow();
+        int precioAlimento = (int) tblCAlimento.getValueAt(fila, 1);
+        String nombreAlimento = (String) tblCAlimento.getValueAt(fila, 0);
+        if (mercado.jugadorTieneDineroSufiente(precioAlimento)) {
+            mercado.agregarFertilizanteAlJugador(nombreAlimento);
+            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioAlimento);
+            JOptionPane.showMessageDialog(null, "Has adquirido el fertilizante " + nombreAlimento, "Nuevo fertilizante", JOptionPane.INFORMATION_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnComprarAlimentoParaAnimalesActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnVender;
-    private javax.swing.JButton btnVender1;
-    private javax.swing.JButton btnVender2;
-    private javax.swing.JButton btnVender3;
-    private javax.swing.JButton btnVender4;
-    private javax.swing.JButton btnVender5;
+    private javax.swing.JButton btnComprarAlimentoParaAnimales;
+    private javax.swing.JButton btnComprarAnimales;
+    private javax.swing.JButton btnComprarFertilizantes;
+    private javax.swing.JButton btnComprarSemillas;
+    private javax.swing.JButton btnVenderAlimentos;
+    private javax.swing.JButton btnVenderMateriaPrima;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;

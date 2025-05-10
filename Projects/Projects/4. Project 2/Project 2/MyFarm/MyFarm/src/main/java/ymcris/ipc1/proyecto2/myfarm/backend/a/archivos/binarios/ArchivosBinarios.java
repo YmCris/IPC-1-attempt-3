@@ -61,7 +61,7 @@ public class ArchivosBinarios {
     }
 
     /**
-     * Método encargado de obtener un objeto
+     * Método encargado de obtener un objeto, no se debe poner .bin al archivo
      *
      * @param rutaCarpeta ruta donde se encuentra el archivo.
      * @param nombreArchivo nombre del objeto.

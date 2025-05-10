@@ -13,7 +13,7 @@ public class JDAgua extends javax.swing.JDialog {
     private Agua agua;
 
     // CONSTANTES --------------------------------------------------------------
-    private static final String RUTA_IMAGEN = "/fondoCreadores.png";
+    private static final String RUTA_IMAGEN = "/agua.png";
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JDAgua(Agua agua) {

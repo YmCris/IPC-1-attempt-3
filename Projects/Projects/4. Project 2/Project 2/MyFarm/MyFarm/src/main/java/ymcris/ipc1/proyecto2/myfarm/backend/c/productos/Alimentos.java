@@ -11,7 +11,7 @@ public class Alimentos extends Productos {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private boolean esParaHerbivoros;
-
+    private int cantidad;
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 540124787;
     
@@ -27,6 +27,14 @@ public class Alimentos extends Productos {
     // GETTERS -----------------------------------------------------------------
     public boolean esParaHerbivoros() {
         return esParaHerbivoros;
+    }
+
+    public int getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(int cantidad) {
+        this.cantidad = cantidad;
     }
 
 }
