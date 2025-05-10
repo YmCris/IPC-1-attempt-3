@@ -219,6 +219,9 @@ public class JDBodega extends javax.swing.JDialog {
         if (tblAlimentos.getSelectedRow() == -1) {
             JOptionPane.showMessageDialog(null, "Debes seleccionar alguna fila en la tabla de alimentos", "Error", JOptionPane.WARNING_MESSAGE);
         } else {
+            int fila = tblAlimentos.getSelectedRow();
+            String nombreAlimento = (String) tblAlimentos.getValueAt(fila, 0);
+            bodega.getGranjero().comer(nombreAlimento);
             tablaAlimentos.removeRow(tblAlimentos.getSelectedRow());
         }
     }//GEN-LAST:event_btnComerActionPerformed

@@ -52,6 +52,11 @@ public final class Granjero {
         this.animales = new ListaDoble<>();
         this.semillas = new ListaDoble<>();
         alimentos.agregar(new Alimentos("alimento1", 50, 100, true), "alimento1");
+        alimentos.agregar(new Alimentos("alimento2", 50, 100, true), "alimento2");
+        alimentos.agregar(new Alimentos("alimento3", 50, 100, true), "alimento3");
+        alimentos.agregar(new Alimentos("alimento4", 50, 100, true), "alimento4");
+        alimentos.agregar(new Alimentos("alimento5", 50, 100, true), "alimento5");
+        alimentos.agregar(new Alimentos("alimento6", 50, 100, true), "alimento6");
         materias.agregar(new MateriasPrimas("materia1", 50, 15), "materia1");
         this.nick = nick;
         this.nombre = nombre;
@@ -79,23 +84,26 @@ public final class Granjero {
      * Método encargado de comer, sumar vida, y eliminar el alimento del
      * inventario.
      *
-     * @param alimento - Alimentos a consumir
+     * @param nombreAlimento- Alimentos a consumir
      */
-    public void comer(Alimentos alimento) {
+    public void comer(String nombreAlimento) {
         if (!alimentos.estaVacia()) {
             try {
-                if (!estaLleno) {
-                    alimentos.usar(alimento.getNombre());
-                    if (vida < VIDA_MAXIMA) {
-                        vida++;
-                    }
-                    haComido = true;
-                }
+                alimentos.usar(nombreAlimento);
+                alimento++;
+                haComido = true;
             } catch (ListaDobleException ex) {
                 System.out.println("Ha ocurrido un error al comer porque " + ex.getMessage());
             }
+        }
+    }
+
+    public boolean haComidoLoSuficiente() {
+        if (alimento >= 5) {
+            alimento = 0;
+            return true;
         } else {
-            System.out.println("No hay alimentos para comer");
+            return false;
         }
     }
 

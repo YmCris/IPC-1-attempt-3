@@ -26,8 +26,6 @@ public class Granja implements Serializable, Runnable {
     private Mercado mercado;
     private Granjero granjero;
     private Cola<Alimentos> cola;
-    private Alimentos[] alimentos;
-    private MateriasPrimas[] materias;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tiempoJugado;
@@ -64,7 +62,9 @@ public class Granja implements Serializable, Runnable {
         if (granjero.haComido()) {//Si ha comido se reinicia el contador
             System.out.println("ha comido");
             contador = 0;
-            granjero.setVida(granjero.getVida() + 1);
+            if (granjero.haComidoLoSuficiente()) {
+                granjero.setVida(granjero.getVida() + 1);
+            }
         } else {//Si no ha comido durante 100 segundos se resta vida
             contador++;
             if (contador == granjero.getTIEMPO_PARA_DISMINUIR_VIDA()) {
