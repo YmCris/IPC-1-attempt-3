@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 
 /**
@@ -9,7 +10,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
  * @author YmCris
  * @since May 4, 2025
  */
-public abstract class Planta implements Runnable {
+public abstract class Planta implements Runnable, Serializable{
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
@@ -24,6 +25,9 @@ public abstract class Planta implements Runnable {
     protected int tiempoParaPodrirse;//depende de cada planta
     protected boolean desapareceAlMorir;
 
+    // CONSTANTES --------------------------------------------------------------
+    private static final long serialVersionUID = 798877127;
+    
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Planta(String nombre, Semillas semilla, int semillasRequeridas) {
         this.nombre = nombre;

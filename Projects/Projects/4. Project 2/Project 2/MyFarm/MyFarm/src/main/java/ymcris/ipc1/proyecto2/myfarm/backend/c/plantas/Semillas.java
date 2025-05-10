@@ -1,8 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
-import java.io.File;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+import java.io.Serializable;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 
 /**
@@ -11,7 +10,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
  * @author YmCris
  * @since May 4, 2025
  */
-public class Semillas {
+public class Semillas implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nombre;
@@ -23,32 +22,16 @@ public class Semillas {
     private int cantidadDeSemillasRequerida;
     private boolean produceFruta;
 
-    // INSTANCIAS --------------------------------------------------------------
-    ArchivosDeTexto archivo = new ArchivosDeTexto();
+    // CONSTANTES --------------------------------------------------------------
+    private  static final long serialVersionUID = 22222222;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Semillas(String nombre, int precio, boolean produceFruta, int cantidadDeSemillasRequerida, String nombreAlimento) {
+    public Semillas(String nombre, int precio, boolean produceFruta, int cantidadDeSemillasRequerida, Alimentos alimento) {
         this.nombre = nombre;
         this.precio = precio;
         this.produceFruta = produceFruta;
         this.cantidadDeSemillasRequerida = cantidadDeSemillasRequerida;
-        this.alimento = agregarAlimento(nombreAlimento);
-    }
-
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    private Alimentos agregarAlimento(String nombreAlimento) {
-        File alimentoArchivo = archivo.obtenerArchivoDeCarpeta(archivo.getRutaCarpetaAlimentos(), nombreAlimento);
-        try {
-            String alimentoNombre = archivo.leerArchivo(alimentoArchivo, 0);
-            int precioVenta = Integer.parseInt(archivo.leerArchivo(alimentoArchivo, 1));
-            int precioCompra = Integer.parseInt(archivo.leerArchivo(alimentoArchivo, 2));
-            boolean esParaHerbivoros = Boolean.parseBoolean(archivo.leerArchivo(alimentoArchivo, 3));
-            Alimentos alimentoDeArchivo = new Alimentos(alimentoNombre, precioVenta, precioCompra, esParaHerbivoros);
-            return alimentoDeArchivo;
-        } catch (ArchivoException ex) {
-            System.out.println("Hubo un error al agregar el alimento a la semilla, porque " + ex.getMessage());
-        }
-        return null;
+        this.alimento = alimento;
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -75,8 +58,6 @@ public class Semillas {
     public int getCantidadDeSemillasRequerida() {
         return cantidadDeSemillasRequerida;
     }
-    
-    
 
     // SETTERS -----------------------------------------------------------------
     public void setCantidad(int cantidad) {

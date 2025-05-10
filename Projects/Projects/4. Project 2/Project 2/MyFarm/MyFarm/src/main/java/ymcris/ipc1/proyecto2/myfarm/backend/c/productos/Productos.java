@@ -1,21 +1,26 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.productos;
 
+import java.io.Serializable;
+
 /**
  * Clase Productos es la clase encargada de crear productos.
  *
  * @author YmCris
  * @since May 4, 2025
  */
-public class Productos {
+public class Productos implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
-    
+
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected int precioDeVenta;
     protected int precioDeCompra;
     protected boolean esMateriaPrima;
     protected boolean seObtieneAlDestazar;
+
+    // CONSTANTES --------------------------------------------------------------
+    private  static final long serialVersionUID = 66666666;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Productos(String nombre, int precioDeVenta, int precioDeCompra) {

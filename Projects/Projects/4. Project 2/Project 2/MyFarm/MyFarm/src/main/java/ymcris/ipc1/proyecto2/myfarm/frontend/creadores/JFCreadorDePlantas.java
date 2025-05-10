@@ -1,9 +1,10 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
-import java.io.File;
 import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 
@@ -17,7 +18,8 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // INSTANCIAS --------------------------------------------------------------
-    private ArchivosDeTexto archivoTxt = new ArchivosDeTexto();
+    Archivos archivoTxt = new Archivos();
+    ArchivosBinarios binario = new ArchivosBinarios();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFCreadorDePlantas() {
@@ -28,37 +30,19 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
         PanelPersonalizado panel = new PanelPersonalizado(pnlFondo, RUTA_IMAGEN);
         pnlFondo.add(panel).repaint();
         agregarAlimentos();
+
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    private String verificarEntradas(String nombre, int precioSemillas) {
-        if (nombre.equals("maiz") || nombre.equals("manzano")) {
-            return "No puedes crear una semilla con ese nombre";
-        }
-        if (nombre.isBlank()) {
-            return "Debes darle un nombre a la semilla";
-        } else if (precioSemillas <= 0) {
-            return "No puedes tener una cantidad menor o igual a cero";
-        }
-        return "";
-    }
-
     private void agregarAlimentos() {
-        try {
-            File[] archivos = archivoTxt.obtenerArchivosDeCarpeta(archivoTxt.getRutaCarpetaAlimentos());
-            for (File archivo : archivos) {
-                boolean produceFruta = Boolean.parseBoolean(archivoTxt.leerArchivo(archivo, 3));
-                if (produceFruta) {
-                    cbAlimento.addItem(archivo.getName().substring(0, archivo.getName().length() - 4));
-                }
+        Alimentos[] alimentos = binario.obtenerAlimentos();
+        System.out.println("Se obtiene el arreglo de alimentos");
+        for (Alimentos alimento : alimentos) {
+            if (alimento.esParaHerbivoros()) {
+                System.out.println("Se verifica si es para herbivoros");
+                cbAlimento.addItem(alimento.getNombre());
             }
-        } catch (ArchivoException ex) {
-            System.out.println("Hubo un error al agregar los elemntos al combo box porque " + ex.getMessage());
         }
-    }
-
-    private boolean hayErrores(String nombre, int precioSemillas) {
-        return nombre.isBlank() || precioSemillas <= 0 || nombre.equals("grano") || nombre.equals("manzana");
     }
 
     // CÓDIGO AUTOGENERADO -----------------------------------------------------
@@ -264,28 +248,20 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
 
     private void btnCrearPlantaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPlantaActionPerformed
         String nombre = txtNombre.getText().toLowerCase();
-        boolean produceFruta = chbProduceFruta.isSelected();
         int precioSemillas = (int) spnPrecio.getValue();
-        String alimento = (String) cbAlimento.getSelectedItem();
+        boolean produceFruta = chbProduceFruta.isSelected();
+        String nombreAlimento = (String) cbAlimento.getSelectedItem();
         int semillasRequeridas = (int) spnSemillasRequeridas.getValue();
-        if (hayErrores(nombre, precioSemillas)) {
-            String mensaje = verificarEntradas(nombre, precioSemillas);
-            JOptionPane.showMessageDialog(null, mensaje, "Error", JOptionPane.ERROR_MESSAGE);
+        if (nombre.isBlank()) {
+            JOptionPane.showMessageDialog(null, "No puedes crear una planta con ese nombre", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                if (!archivoTxt.existeArchivo(archivoTxt.getRutaCarpetaSemillas(), nombre + ".txt")) {
-                    File archivo = archivoTxt.crearArchivo(archivoTxt.getRutaCarpetaSemillas(), nombre);
-                    archivoTxt.escribirEnArchivo(archivo, nombre);
-                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(precioSemillas));
-                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(produceFruta));
-                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(semillasRequeridas));
-                    archivoTxt.escribirEnArchivo(archivo, String.valueOf(alimento));
-                    JOptionPane.showMessageDialog(null, "Se ha creado la semilla " + nombre + " correctamente", "Nueva Semilla", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puedes crear una semilla con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (ArchivoException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            if (!archivoTxt.existeArchivo(binario.getRutaCarpetaSemillas(), nombre + ".bin")) {
+                Alimentos alimento = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), nombreAlimento);
+                Semillas semilla = new Semillas(nombre, precioSemillas, produceFruta, semillasRequeridas, alimento);
+                binario.guardarSemillas(semilla);
+                JOptionPane.showMessageDialog(null, "Se ha creado la semilla " + nombre + " correctamente", "Nueva Semilla", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes crear una semilla con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
 

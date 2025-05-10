@@ -9,37 +9,25 @@ import java.io.BufferedWriter;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
 
 /**
- * Clase ArchivosDeTexto clase encargada de crear archivos de texto y las
- * carpetas correspondientes, esto es para utilizar en los creadores de plantas,
- * animales y productos, no en el guardado de partida
+ * Clase Archivos clase encargada de crear archivos de texto y las carpetas
+ * correspondientes, esto es para utilizar en los creadores de plantas, animales
+ * y productos, no en el guardado de partida
  *
  * @author YmCris
  * @since May 3, 2025
  */
-public class ArchivosDeTexto {
+public class Archivos {
 
     // CONSTANTES --------------------------------------------------------------
     private final String rutaProyecto = System.getProperty("user.dir");
-    private final String rutaCarpetaSemillas = rutaProyecto + File.separator + "Semillas";
-    private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
-    private final String rutaCarpetaAlimentosAnimales = rutaProyecto + File.separator + "Alimentos para animales";
-    private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
-    private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia";
     private final String rutaCarpetaFertilizantes = rutaProyecto + File.separator + "Fertilizantes";
+    private final String rutaCarpetaAlimentosAnimales = rutaProyecto + File.separator + "Alimentos para animales";
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public void crearCarpetas() {
-        File carpetaSemillas = new File(rutaCarpetaSemillas);
-        File carpetaAnimales = new File(rutaCarpetaAnimales);
-        File carpetaAlimentosAnimales = new File(rutaCarpetaAlimentosAnimales);
-        File carpetaMateria = new File(rutaCarpetaMateriaPrima);
         File carpetaFertilizantes = new File(rutaCarpetaFertilizantes);
-        File carpetaProductos = new File(rutaCarpetaAlimentos);
-        carpetaProductos.mkdirs();
-        carpetaSemillas.mkdirs();
-        carpetaAnimales.mkdirs();
+        File carpetaAlimentosAnimales = new File(rutaCarpetaAlimentosAnimales);
         carpetaAlimentosAnimales.mkdirs();
-        carpetaMateria.mkdirs();
         carpetaFertilizantes.mkdirs();
     }
 
@@ -48,7 +36,7 @@ public class ArchivosDeTexto {
         return file.listFiles().length;
     }
 
-    public File crearArchivo(String rutaCarpeta, String nombreArchivo) throws ArchivoException {
+    public File crearArchivoDeTexto(String rutaCarpeta, String nombreArchivo) throws ArchivoException {
         File file = new File(rutaCarpeta + File.separator + nombreArchivo + ".txt");
         if (!existeArchivo(rutaCarpeta, nombreArchivo)) {
             try {
@@ -87,7 +75,7 @@ public class ArchivosDeTexto {
         return null;
     }
 
-    public void escribirEnArchivo(File archivo, String contenido) {
+    public void escribirEnArchivoDeTexto(File archivo, String contenido) {
         try (BufferedWriter escribir = new BufferedWriter(new FileWriter(archivo, true))) {
             escribir.write(contenido);
             escribir.newLine();
@@ -110,7 +98,7 @@ public class ArchivosDeTexto {
         return false;
     }
 
-    public String leerArchivo(File archivo, int linea) throws ArchivoException {
+    public String leerArchivoDeTexto(File archivo, int linea) throws ArchivoException {
         try (BufferedReader leer = new BufferedReader(new FileReader(archivo))) {
             int contador = 0;
             String temp;
@@ -127,32 +115,12 @@ public class ArchivosDeTexto {
     }
 
     // GETTERS -----------------------------------------------------------------
-    public String getRutaProyecto() {
-        return rutaProyecto;
-    }
-
-    public String getRutaCarpetaSemillas() {
-        return rutaCarpetaSemillas;
-    }
-
-    public String getRutaCarpetaAnimales() {
-        return rutaCarpetaAnimales;
-    }
-
-    public String getRutaCarpetaAlimentosParaAnimales() {
-        return rutaCarpetaAlimentosAnimales;
-    }
-
-    public String getRutaCarpetaMateriaPrima() {
-        return rutaCarpetaMateriaPrima;
-    }
-
     public String getRutaCarpetaFertilizantes() {
         return rutaCarpetaFertilizantes;
     }
 
-    public String getRutaCarpetaAlimentos() {
-        return rutaCarpetaAlimentos;
+    public String getRutaCarpetaAlimentosAnimales() {
+        return rutaCarpetaAlimentosAnimales;
     }
     
 }

@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.animales;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 
@@ -10,12 +11,15 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
  * @author YmCris
  * @since Apr 29, 2025
  */
-public class Animales implements Runnable {
+public class Animales implements Runnable, Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
     protected ListaDoble<Productos> productosDestazables;
     protected ListaDoble<Productos> productosNoDestazables;
+    
+    // CONSTANTES --------------------------------------------------------------
+    private static final long serialVersionUID = 7894124;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected int vida;

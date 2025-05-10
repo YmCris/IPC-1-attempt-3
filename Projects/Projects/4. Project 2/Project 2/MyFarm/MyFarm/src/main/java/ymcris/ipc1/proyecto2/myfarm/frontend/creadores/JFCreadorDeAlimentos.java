@@ -2,8 +2,10 @@ package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
 import java.io.File;
 import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 
@@ -17,7 +19,8 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
     private final static String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // INSTANCIAS --------------------------------------------------------------
-    private ArchivosDeTexto archivo = new ArchivosDeTexto();
+    Archivos archivo = new Archivos();
+    ArchivosBinarios binario = new ArchivosBinarios();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFCreadorDeAlimentos() {
@@ -202,19 +205,12 @@ public class JFCreadorDeAlimentos extends javax.swing.JFrame {
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear una limento con un nombre vacío", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                if (!archivo.existeArchivo(archivo.getRutaCarpetaAlimentos(), nombre + ".txt")) {
-                    File alimento = archivo.crearArchivo(archivo.getRutaCarpetaAlimentos(), nombre);
-                    archivo.escribirEnArchivo(alimento, nombre);
-                    archivo.escribirEnArchivo(alimento, String.valueOf(precioDeVenta));
-                    archivo.escribirEnArchivo(alimento, String.valueOf(precioDeCompra));
-                    archivo.escribirEnArchivo(alimento, String.valueOf("true"));
-                    JOptionPane.showMessageDialog(null, "Se ha creado el alimento " + nombre + " exitosamente", "Nuevo Alimento", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puedes crear un alimento con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (ArchivoException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            if (!archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombre + ".bin")) {
+                Alimentos alimento = new Alimentos(nombre, precioDeVenta, precioDeCompra, true);
+                binario.guardarAlimento(alimento);
+                JOptionPane.showMessageDialog(null, "Se ha creado el alimento " + nombre + " exitosamente", "Nuevo Alimento", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes crear un alimento con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnCrearAlimentoActionPerformed

@@ -12,6 +12,9 @@ public class Alimentos extends Productos {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private boolean esParaHerbivoros;
 
+    // CONSTANTES --------------------------------------------------------------
+    private static final long serialVersionUID = 540124787;
+    
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Alimentos(String nombre, int precioDeVenta, int precioDeCompra, boolean esParaHerbivoros) {
         super(nombre, precioDeVenta, precioDeCompra);

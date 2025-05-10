@@ -1,11 +1,11 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
-import java.io.File;
 import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
-import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
+import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 
 /**
  *
@@ -17,7 +17,8 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
     private final static String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // INSTANCIAS --------------------------------------------------------------
-    private ArchivosDeTexto archivo = new ArchivosDeTexto();
+    ArchivosBinarios binario = new ArchivosBinarios();
+    Archivos archivo = new Archivos();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFCreadorDeAnimales() {
@@ -282,28 +283,15 @@ public class JFCreadorDeAnimales extends javax.swing.JFrame {
         boolean esHerbivoro = cbEsHerbivoro.isSelected();
         boolean esDestazable = cbEsDestazable.isSelected();
         boolean produciraProductosConDestace = cbProduciraProductosConDestace.isSelected();
-        if (nombre.equals("vaca") || nombre.equals("gallina")) {
-            JOptionPane.showMessageDialog(null, "No puedes crear un animal con ese nombre", "Error", JOptionPane.WARNING_MESSAGE);
-        }
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear un animal con un nombre vacío", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                if (!archivo.existeArchivo(archivo.getRutaCarpetaAnimales(), nombre + ".txt")) {
-                    File animal = archivo.crearArchivo(archivo.getRutaCarpetaAnimales(), nombre);
-                    archivo.escribirEnArchivo(animal, nombre);
-                    archivo.escribirEnArchivo(animal, String.valueOf(precio));
-                    archivo.escribirEnArchivo(animal, String.valueOf(espacio));
-                    archivo.escribirEnArchivo(animal, String.valueOf(edad));
-                    archivo.escribirEnArchivo(animal, String.valueOf(esHerbivoro));
-                    archivo.escribirEnArchivo(animal, String.valueOf(esDestazable));
-                    archivo.escribirEnArchivo(animal, String.valueOf(produciraProductosConDestace));
-                    JOptionPane.showMessageDialog(null, "Se ha creado el animal " + nombre + " correctamente", "Nuevo Animal", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puedes crear un animal con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (ArchivoException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            if (!archivo.existeArchivo(binario.getRutaCarpetaAnimales(), nombre + ".bin")) {
+                Animales animal = new Animales(nombre, precio, espacio, edad, esHerbivoro, esDestazable, produciraProductosConDestace);
+                binario.guardarAnimales(animal);
+                JOptionPane.showMessageDialog(null, "Se ha creado el animal " + nombre + " exitosamente", "Nuevo Animal", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes crear un animal con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnCrearAnimalActionPerformed

@@ -13,6 +13,8 @@ public class Omnivoros extends Animales {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    // CONSTANTES --------------------------------------------------------------
+    private static final long serialVersionUID = 471449985;
     // INSTANCIAS --------------------------------------------------------------
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Omnivoros(String nombre, int precio, double espacio, int edadMaxima, boolean esHerbivoro, boolean esDestazable, boolean produciraProductosConDestace) {

@@ -2,10 +2,12 @@ package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
 import java.io.File;
 import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
  *
@@ -17,7 +19,8 @@ public class JFCreadorDeMateriaPrima extends javax.swing.JFrame {
     private final static String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // INSTANCIAS --------------------------------------------------------------
-    private ArchivosDeTexto archivo = new ArchivosDeTexto();
+    Archivos archivo = new Archivos();
+    ArchivosBinarios binario = new ArchivosBinarios();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFCreadorDeMateriaPrima() {
@@ -195,18 +198,12 @@ public class JFCreadorDeMateriaPrima extends javax.swing.JFrame {
         if (nombre.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes crear una materia prima con un nombre vacio", "Error", JOptionPane.ERROR_MESSAGE);
         } else {
-            try {
-                if (!archivo.existeArchivo(archivo.getRutaCarpetaMateriaPrima(), nombre + ".txt")) {
-                    File producto = archivo.crearArchivo(archivo.getRutaCarpetaMateriaPrima(), nombre);
-                    archivo.escribirEnArchivo(producto, nombre);
-                    archivo.escribirEnArchivo(producto, String.valueOf(precioDeVenta));
-                    archivo.escribirEnArchivo(producto, String.valueOf(precioDeCompra));
-                    JOptionPane.showMessageDialog(null, "Se ha creado la materia prima " + nombre + " exitosamente", "Nueva Materia Prima", JOptionPane.INFORMATION_MESSAGE);
-                } else {
-                    JOptionPane.showMessageDialog(null, "No puedes crear una materia prima con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
-                }
-            } catch (ArchivoException ex) {
-                JOptionPane.showMessageDialog(null, ex.getMessage(), "ERROR", JOptionPane.ERROR_MESSAGE);
+            if (!archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombre + ".bin")) {
+                MateriasPrimas materia = new MateriasPrimas(nombre, precioDeVenta, precioDeCompra);
+                binario.guardarMaterias(materia);
+                JOptionPane.showMessageDialog(null, "Se ha creado la materia prima " + nombre + " exitosamente", "Nueva Materia Prima", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No puedes crear una materia prima con el nombre " + nombre + " porque ya existe", "ERROR", JOptionPane.ERROR_MESSAGE);
             }
         }
     }//GEN-LAST:event_btnCrearMateriaPrimaActionPerformed

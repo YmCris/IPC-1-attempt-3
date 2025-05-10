@@ -13,6 +13,8 @@ public class Herbivoros extends Animales {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    // CONSTANTES --------------------------------------------------------------
+    private static final long serialVersionUID = 98130415;
     // INSTANCIAS --------------------------------------------------------------
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Herbivoros(String nombre, int precio, double espacio, int edadMaxima, boolean esHerbivoro, boolean esDestazable, boolean produciraProductosConDestace) {

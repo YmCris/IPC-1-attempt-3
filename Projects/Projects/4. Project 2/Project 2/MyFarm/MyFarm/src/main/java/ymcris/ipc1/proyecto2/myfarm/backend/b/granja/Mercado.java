@@ -1,13 +1,14 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
 
 /**
  * Clase Mercado es la clase del backend encargada de proporcionar la lógica
@@ -24,13 +25,14 @@ public class Mercado {
     private Animales[] animales;
     private Fertilizantes[] fertilizantes;
     private Alimentos[] alimentosParaAnimales;
+
     // VENDER: 
     private ListaDoble<Alimentos> alimentos;
     private ListaDoble<MateriasPrimas> materias;
 
     // INSTANCIAS --------------------------------------------------------------
     private Recreador recreador = new Recreador();
-    private ArchivosDeTexto archivo = new ArchivosDeTexto();
+    ArchivosBinarios binario = new ArchivosBinarios();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Mercado(ListaDoble<Alimentos> alimentos, ListaDoble<MateriasPrimas> materias) {
@@ -39,7 +41,11 @@ public class Mercado {
         this.fertilizantes = recreador.recrearFertilizantes();
         this.alimentosParaAnimales = recreador.recrearAlimentos();
         this.semillas = recreador.recreadorSemillas();
-        this.animales = recreador.recreadorAnimales();
+        this.animales = binario.obtenerAnimales();
+    }
+
+    private void modificarAnimales() {
+
     }
 
     // GETTERS -----------------------------------------------------------------
@@ -58,6 +64,5 @@ public class Mercado {
     public Animales[] getAnimales() {
         return animales;
     }
-    // SETTERS -----------------------------------------------------------------
 
 }

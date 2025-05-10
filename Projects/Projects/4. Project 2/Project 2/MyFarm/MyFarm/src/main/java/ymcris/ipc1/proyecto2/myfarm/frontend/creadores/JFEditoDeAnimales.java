@@ -1,9 +1,10 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
-import java.io.File;
-import javax.swing.JOptionPane;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.ArchivosDeTexto;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 
@@ -13,11 +14,14 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
  */
 public class JFEditoDeAnimales extends javax.swing.JFrame {
 
+    // VARIABLES DE REFERENCIA -------------------------------------------------
+    //this.animales = recreador.recreadorAnimales();
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // INSTANCIAS --------------------------------------------------------------
-    private ArchivosDeTexto archivoTxt = new ArchivosDeTexto();
+    Archivos archivoTxt = new Archivos();
+    ArchivosBinarios binario = new ArchivosBinarios();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public JFEditoDeAnimales() {
@@ -27,32 +31,26 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
         this.setTitle("Editor de animales");
         pnlFondo.add(new PanelPersonalizado(pnlFondo, RUTA_IMAGEN)).repaint();
         agregarProductos();
+        System.out.println("Se obtienen los productos");
         agregarAnimales();
+        System.out.println("Se obtienen los animales");
     }
 
     private void agregarAnimales() {
-        try {
-            File[] archivo = archivoTxt.obtenerArchivosDeCarpeta(archivoTxt.getRutaCarpetaAnimales());
-            for (File file : archivo) {
-                cbAnimal.addItem(file.getName().substring(0, file.getName().length() - 4));
-            }
-        } catch (ArchivoException e) {
-            System.out.println("Hubo un error al agregar los animales al cbAnimales porque " + e.getMessage());
+        Animales[] animales = binario.obtenerAnimales();
+        for (Animales animal : animales) {
+            cbAnimal.addItem(animal.getNombre());
         }
     }
 
     private void agregarProductos() {
-        try {
-            File[] archivoMateria = archivoTxt.obtenerArchivosDeCarpeta(archivoTxt.getRutaCarpetaMateriaPrima());
-            File[] archivoAlimento = archivoTxt.obtenerArchivosDeCarpeta(archivoTxt.getRutaCarpetaAlimentos());
-            for (File archivo : archivoMateria) {
-                cbProductos.addItem(archivo.getName().substring(0, archivo.getName().length() - 4));
-            }
-            for (File file : archivoAlimento) {
-                cbProductos.addItem(file.getName().substring(0, file.getName().length() - 4));
-            }
-        } catch (ArchivoException ex) {
-            System.out.println("Hubo un error al agregar los productos al combo box porque " + ex.getMessage());
+        MateriasPrimas[] materias = binario.obtenerMaterias();
+        Alimentos[] alimentos = binario.obtenerAlimentos();
+        for (MateriasPrimas materia : materias) {
+            cbProductos.addItem(materia.getNombre());
+        }
+        for (Alimentos alimento : alimentos) {
+            cbProductos.addItem(alimento.getNombre());
         }
     }
 
@@ -268,4 +266,5 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
     private javax.swing.JPanel pnlFondo;
     private javax.swing.JSpinner spnPorcentajeProducción;
     // End of variables declaration//GEN-END:variables
+
 }

@@ -38,11 +38,6 @@ public class Granja implements Serializable, Runnable {
     public Granja(Granjero granjero) {
         ListaDoble<Alimentos> alimentos = new ListaDoble<>();
         ListaDoble<MateriasPrimas> materiaPrima = new ListaDoble<>();
-        alimentos.agregar(new Alimentos("Alimento1", 15, 12, true));
-        alimentos.agregar(new Alimentos("Alimento2", 30, 24, true));
-        alimentos.agregar(new Alimentos("Alimento3", 45, 36, true));
-        materiaPrima.agregar(new MateriasPrimas("Materia 1", 1, 2));
-        materiaPrima.agregar(new MateriasPrimas("Materia 2", 3, 4));
         this.granjero = granjero;
         this.bodega = new Bodega(alimentos, materiaPrima);
         this.terreno = new Terreno();
