@@ -1,7 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
 import java.io.Serializable;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 
 /**

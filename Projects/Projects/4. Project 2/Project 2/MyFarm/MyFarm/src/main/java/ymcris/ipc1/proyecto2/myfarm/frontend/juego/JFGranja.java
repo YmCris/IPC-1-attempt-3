@@ -3,6 +3,7 @@ package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 import javax.swing.JLabel;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.awt.Window;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
@@ -60,8 +61,8 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             try {
                 Thread.sleep(500);
                 if (granja.partidaTerminada()) {
+                    cerrarTodasLasVentanas();
                     JOptionPane.showMessageDialog(null, "Juego Terminado, Puedes revisar los datos de tu partida en los reportes", "Noob", JOptionPane.INFORMATION_MESSAGE);
-                    this.dispose();
                     new JFMenuPrincipal().setVisible(true);
                 }
                 actualizarContenido();
@@ -72,6 +73,14 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         }
         System.out.println("Partida terminada frontend");
     }
+    
+    public void cerrarTodasLasVentanas() {
+    for (Window window : Window.getWindows()) {
+        if (window.isDisplayable()) {
+            window.dispose();
+        }
+    }
+}
     
     private void actualizarContenido() {
         lblNombre.setText(granjero.getNick().toUpperCase());

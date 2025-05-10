@@ -8,6 +8,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.NodoDoble;
 
 /**
  * Clase Granjero es la clase encargada de representar al jugador dentro del
@@ -16,7 +17,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
  * @author YmCris
  * @since Apr 26, 2025
  */
-public class Granjero {
+public final class Granjero {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nick;
@@ -103,13 +104,13 @@ public class Granjero {
      *
      * @return arreglo con todos los alimentos del granjero.
      */
-    public Alimentos[] obtenerAlimentosDelGranjero() {
+    public Alimentos[] obtenerAlimentosDeAnimalesDelGranjero() {
         Object[] objetos = alimentos.obtenerArregloDeObjetos();
         Alimentos[] arreglo = new Alimentos[objetos.length];
         for (int i = 0; i < arreglo.length; i++) {
             arreglo[i] = (Alimentos) objetos[i];
         }
-        System.out.println("tamaño del arreglo de los alimentos es: "+arreglo.length);
+        System.out.println("tamaño del arreglo de los alimentos es: " + arreglo.length);
         return arreglo;
     }
 
@@ -124,22 +125,34 @@ public class Granjero {
         for (int i = 0; i < arreglo.length; i++) {
             arreglo[i] = (MateriasPrimas) objetos[i];
         }
-        System.out.println("tamaño del arreglo de las materias primas es: "+arreglo.length);
+        System.out.println("tamaño del arreglo de las materias primas es: " + arreglo.length);
         return arreglo;
     }
 
-    public void agregarFertilizante(String nombreFertilizante) {
-        for (Fertilizantes fertilizante : fertilizantes) {
-            if (fertilizante.getNombre().equals(nombreFertilizante)) {
-                fertilizante.setCantidad(fertilizante.getCantidad() + 1);
+    public void agregarCantidadASemilla(String nombreSemilla, int cantidad) {
+        for (int i = 0; i < semillas.length(); i++) {
+            NodoDoble<Semillas> nodo = semillas.obtenerNodo(i);
+            if (nodo.getNombre().equals(nombreSemilla)) {
+                nodo.getContenido().setCantidad(nodo.getContenido().getCantidad() + cantidad);
+                System.out.println("Se tienen " + nodo.getContenido().getCantidad() + " semillas de las semilla" + nodo.getContenido().getNombre());
             }
         }
     }
 
-    public void agregarAlimentoParaAnimales(String nombreAlimentos) {
+    public void agregarCantidadFertilizante(String nombreFertilizante) {
+        for (Fertilizantes fertilizante : fertilizantes) {
+            if (fertilizante.getNombre().equals(nombreFertilizante)) {
+                fertilizante.setCantidad(fertilizante.getCantidad() + 1);
+                System.out.println("Se tienen " + fertilizante.getCantidad() + " fertilizantes del fertilizante " + fertilizante.getNombre());
+            }
+        }
+    }
+
+    public void agregarCantidadAlimentoParaAnimales(String nombreAlimentos) {
         for (Alimentos alimentoParaAnimal : alimentosParaAnimales) {
             if (alimentoParaAnimal.getNombre().equals(nombreAlimentos)) {
                 alimentoParaAnimal.setCantidad(alimentoParaAnimal.getCantidad() + 1);
+                System.out.println("Se tienen " + alimentoParaAnimal.getCantidad() + " alimnentos para animal del tipo " + alimentoParaAnimal.getNombre());
             }
         }
     }

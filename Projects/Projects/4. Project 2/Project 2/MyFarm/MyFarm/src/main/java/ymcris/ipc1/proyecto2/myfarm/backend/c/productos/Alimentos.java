@@ -11,10 +11,14 @@ public class Alimentos extends Productos {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private boolean esParaHerbivoros;
+    /**
+     * Cantidad para utilizar en los alimentos predeterminados para los
+     * animales, no para los generados durante el proceso de la granja.
+     */
     private int cantidad;
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 540124787;
-    
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Alimentos(String nombre, int precioDeVenta, int precioDeCompra, boolean esParaHerbivoros) {
         super(nombre, precioDeVenta, precioDeCompra);
@@ -23,7 +27,6 @@ public class Alimentos extends Productos {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-
     // GETTERS -----------------------------------------------------------------
     public boolean esParaHerbivoros() {
         return esParaHerbivoros;

@@ -25,7 +25,7 @@ public class JDBodega extends javax.swing.JDialog {
     public JDBodega(Bodega bodega) {
         initComponents();
         this.bodega = bodega;
-        bodega.setAlimentos(bodega.getGranjero().obtenerAlimentosDelGranjero());
+        bodega.setAlimentos(bodega.getGranjero().obtenerAlimentosDeAnimalesDelGranjero());
         bodega.setMaterias(bodega.getGranjero().obtenerMateriaDelGranjero());
         this.setTitle("Bodega");
         this.setModal(true);

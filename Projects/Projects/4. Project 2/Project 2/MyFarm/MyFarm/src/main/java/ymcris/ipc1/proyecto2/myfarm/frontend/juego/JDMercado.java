@@ -27,11 +27,11 @@ public class JDMercado extends javax.swing.JDialog {
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
-    
+
     public JDMercado(Mercado mercado) {
         initComponents();
         this.mercado = mercado;
-        this.mercado.setAlimentosGranjero(mercado.getGranjero().obtenerAlimentosDelGranjero());
+        this.mercado.setAlimentosGranjero(mercado.getGranjero().obtenerAlimentosDeAnimalesDelGranjero());
         this.mercado.setMateriasGranjero(mercado.getGranjero().obtenerMateriaDelGranjero());
         this.setModal(true);
         this.setResizable(false);
@@ -45,7 +45,7 @@ public class JDMercado extends javax.swing.JDialog {
         agregarAlimentosAVender();
         agregarMaretiaAVender();
     }
-    
+
     private void agregarAlimentosAVender() {
         tblVenderAlimentos = (DefaultTableModel) tblVAlimentos.getModel();
         Alimentos[] alimentosAVender = mercado.getAlimentosGranjero();
@@ -53,7 +53,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblVenderAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta()});
         }
     }
-    
+
     private void agregarMaretiaAVender() {
         tblVenderMateria = (DefaultTableModel) tblVMateria.getModel();
         MateriasPrimas[] materiasAVender = mercado.getMateriasGranjero();
@@ -61,7 +61,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblVenderMateria.addRow(new Object[]{materias.getNombre(), materias.getPrecioDeVenta()});
         }
     }
-    
+
     private void agregarFertilizantes() {
         tblFertilizantes = (DefaultTableModel) tblCFertilizantes.getModel();
         Fertilizantes[] fertilizantes = mercado.getFertilizantes();
@@ -69,7 +69,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblFertilizantes.addRow(new Object[]{fertilizante.getNombre(), fertilizante.getFertilidad(), fertilizante.getPrecio()});
         }
     }
-    
+
     private void agregarAlimentos() {
         tblComprarAlimentos = (DefaultTableModel) tblCAlimento.getModel();
         Alimentos[] alimentos = mercado.getAlimentosParaAnimales();
@@ -77,7 +77,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblComprarAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta(), alimento.esParaHerbivoros()});
         }
     }
-    
+
     private void agregarSemillas() {
         tblComprarSemillas = (DefaultTableModel) tblCSemillas.getModel();
         Semillas[] semillas = mercado.getSemillas();
@@ -85,7 +85,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.isProduceFruta(), semilla.getCantidadDeSemillasRequerida(), semilla.getAlimento().getNombre()});
         }
     }
-    
+
     private void agregarAnimales() {
         tblComprarAnimales = (DefaultTableModel) tblCAnimales.getModel();
         Animales[] animales = mercado.getAnimales();
@@ -93,7 +93,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.getProductosDestazables().length(), animal.getProductosNoDestazables().length()});
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -128,6 +128,7 @@ public class JDMercado extends javax.swing.JDialog {
         btnComprarAnimales = new javax.swing.JButton();
         btnComprarFertilizantes = new javax.swing.JButton();
         btnComprarAlimentoParaAnimales = new javax.swing.JButton();
+        spnCantidadSemillas = new javax.swing.JSpinner();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -344,6 +345,8 @@ public class JDMercado extends javax.swing.JDialog {
             }
         });
 
+        spnCantidadSemillas.setModel(new javax.swing.SpinnerNumberModel(1, 1, null, 1));
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
@@ -364,6 +367,8 @@ public class JDMercado extends javax.swing.JDialog {
                             .addGroup(pnlFondoLayout.createSequentialGroup()
                                 .addComponent(jLabel9)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(spnCantidadSemillas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(btnComprarSemillas))
                             .addGroup(pnlFondoLayout.createSequentialGroup()
                                 .addComponent(jLabel10)
@@ -442,7 +447,8 @@ public class JDMercado extends javax.swing.JDialog {
                         .addGap(12, 12, 12)
                         .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jLabel9)
-                            .addComponent(btnComprarSemillas))
+                            .addComponent(btnComprarSemillas)
+                            .addComponent(spnCantidadSemillas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(16, 16, 16)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -506,10 +512,11 @@ public class JDMercado extends javax.swing.JDialog {
         }
         int fila = tblCSemillas.getSelectedRow();
         int precioSemilla = (int) tblCSemillas.getValueAt(fila, 1);
+        int cantidadSemillas = (int) spnCantidadSemillas.getValue();
         String nombreSemilla = (String) tblCSemillas.getValueAt(fila, 0);
         if (mercado.jugadorTieneDineroSufiente(precioSemilla)) {
-            mercado.agregarSemillaAlJugador(nombreSemilla);
-            mercado.perderOro(precioSemilla);
+            mercado.agregarSemillaAlJugador(nombreSemilla, cantidadSemillas);
+            mercado.perderOro(precioSemilla * cantidadSemillas);
             JOptionPane.showMessageDialog(null, "Has adquirido una semilla de la planta " + nombreSemilla, "Nueva semilla", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
@@ -609,6 +616,7 @@ public class JDMercado extends javax.swing.JDialog {
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
     private javax.swing.JPanel pnlFondo;
+    private javax.swing.JSpinner spnCantidadSemillas;
     private javax.swing.JTable tblCAlimento;
     private javax.swing.JTable tblCAnimales;
     private javax.swing.JTable tblCFertilizantes;

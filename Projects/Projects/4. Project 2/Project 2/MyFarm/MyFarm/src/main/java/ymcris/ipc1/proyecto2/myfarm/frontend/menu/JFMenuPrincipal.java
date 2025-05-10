@@ -24,7 +24,6 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private JDialog dialog;
-    private Creador creador;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/imagenMenu.png";

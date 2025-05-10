@@ -25,10 +25,6 @@ public class ListaDoble<T> implements Serializable {
     private static final long serialVersionUID = 89441124;
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public void inseretar(T contenido) {
-
-    }
-
     /**
      * Método encargado de agregar un nuevo nodo con una instancia nueva a la
      * lista.
@@ -117,7 +113,7 @@ public class ListaDoble<T> implements Serializable {
      * @param indice posición de la cadena a devolver.
      * @return nodo en el indice especificado.
      */
-    private NodoDoble<T> obtenerNodo(int indice) throws NullPointerException {
+    public NodoDoble<T> obtenerNodo(int indice) throws NullPointerException {
         NodoDoble<T> temporal;
         if (indice <= tamaño / 2) {
             temporal = inicio;

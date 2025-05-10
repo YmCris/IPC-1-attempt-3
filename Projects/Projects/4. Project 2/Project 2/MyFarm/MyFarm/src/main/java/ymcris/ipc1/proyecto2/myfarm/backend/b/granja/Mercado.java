@@ -1,14 +1,16 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 
 /**
  * Clase Mercado es la clase del backend encargada de proporcionar la lógica
@@ -40,7 +42,7 @@ public class Mercado {
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Mercado(Granjero granjero) {
         this.granjero = granjero;
-        this.alimentosGranjero = granjero.obtenerAlimentosDelGranjero();
+        this.alimentosGranjero = granjero.obtenerAlimentosDeAnimalesDelGranjero();
         this.materiasGranjero = granjero.obtenerMateriaDelGranjero();
         this.fertilizantes = recreador.obtenerFertilizantesExistentes();
         this.alimentosParaAnimales = recreador.obtenerAlimentosParaAnimalesExistentes();
@@ -95,11 +97,11 @@ public class Mercado {
     }
 
     public void agregarAlimentoParaAnimalAlJugador(String nombreAlimento) {
-        granjero.agregarAlimentoParaAnimales(nombreAlimento);
+        granjero.agregarCantidadAlimentoParaAnimales(nombreAlimento);
     }
 
     public void agregarFertilizanteAlJugador(String nombreFertilizante) {
-        granjero.agregarFertilizante(nombreFertilizante);
+        granjero.agregarCantidadFertilizante(nombreFertilizante);
     }
 
     public void agregarAnimalAlJugador(String nombreAnimal) {
@@ -107,9 +109,20 @@ public class Mercado {
         granjero.getAnimales().agregar(nuevoAnimal, nuevoAnimal.getNombre());
     }
 
-    public void agregarSemillaAlJugador(String nombreSemilla) {
+    public void agregarSemillaAlJugador(String nombreSemilla, int cantidadSemillas) {
         Semillas nuevaSemilla = (Semillas) binario.obtenerObjeto(binario.getRutaCarpetaSemillas(), nombreSemilla);
-        granjero.getSemillas().agregar(nuevaSemilla, nuevaSemilla.getNombre());
+        try {
+            if (!granjero.getSemillas().existeNodoConContenido(nuevaSemilla.getNombre())) {
+                granjero.getSemillas().agregar(nuevaSemilla, nuevaSemilla.getNombre());
+                System.out.println("El jugador no tenía semilla ese tipo de semilla, se agrega en la lista doble");
+            } else {
+                granjero.agregarCantidadASemilla(nombreSemilla, cantidadSemillas);
+                System.out.println("El jugador ya tenía ese tipo de semilla, se modifica. ");
+            }
+        } catch (ListaDobleException | NullPointerException ex) {
+            granjero.getSemillas().agregar(nuevaSemilla, nuevaSemilla.getNombre());
+            System.out.println("El jugador no tenía semilla ese tipo de semilla, se agrega en la lista doble");
+        }
     }
 
     // GETTERS -----------------------------------------------------------------
