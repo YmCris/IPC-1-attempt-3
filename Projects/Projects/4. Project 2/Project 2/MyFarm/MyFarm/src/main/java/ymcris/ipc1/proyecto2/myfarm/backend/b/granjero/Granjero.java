@@ -1,13 +1,13 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granjero;
 
-import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
  * Clase Granjero es la clase encargada de representar al jugador dentro del
@@ -51,6 +51,7 @@ public class Granjero {
         this.animales = new ListaDoble<>();
         this.semillas = new ListaDoble<>();
         alimentos.agregar(new Alimentos("alimento1", 50, 100, true), "alimento1");
+        materias.agregar(new MateriasPrimas("materia1", 50, 15), "materia1");
         this.nick = nick;
         this.nombre = nombre;
         this.oro = 1000;
@@ -108,6 +109,7 @@ public class Granjero {
         for (int i = 0; i < arreglo.length; i++) {
             arreglo[i] = (Alimentos) objetos[i];
         }
+        System.out.println("tamaño del arreglo de los alimentos es: "+arreglo.length);
         return arreglo;
     }
 
@@ -122,6 +124,7 @@ public class Granjero {
         for (int i = 0; i < arreglo.length; i++) {
             arreglo[i] = (MateriasPrimas) objetos[i];
         }
+        System.out.println("tamaño del arreglo de las materias primas es: "+arreglo.length);
         return arreglo;
     }
 

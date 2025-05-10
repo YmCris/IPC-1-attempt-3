@@ -452,7 +452,7 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnBodegaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBodegaActionPerformed
-        new JFBodega(bodega).setVisible(true);
+        new JDBodega(bodega).setVisible(true);
     }//GEN-LAST:event_btnBodegaActionPerformed
 
     private void btnMercadoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMercadoActionPerformed

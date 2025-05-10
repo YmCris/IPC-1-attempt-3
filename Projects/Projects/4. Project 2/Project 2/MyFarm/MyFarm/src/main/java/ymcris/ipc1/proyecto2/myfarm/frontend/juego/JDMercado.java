@@ -27,10 +27,12 @@ public class JDMercado extends javax.swing.JDialog {
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/fondoCreadores.png";
-
+    
     public JDMercado(Mercado mercado) {
         initComponents();
         this.mercado = mercado;
+        this.mercado.setAlimentosGranjero(mercado.getGranjero().obtenerAlimentosDelGranjero());
+        this.mercado.setMateriasGranjero(mercado.getGranjero().obtenerMateriaDelGranjero());
         this.setModal(true);
         this.setResizable(false);
         this.setTitle("Mercado");
@@ -43,7 +45,7 @@ public class JDMercado extends javax.swing.JDialog {
         agregarAlimentosAVender();
         agregarMaretiaAVender();
     }
-
+    
     private void agregarAlimentosAVender() {
         tblVenderAlimentos = (DefaultTableModel) tblVAlimentos.getModel();
         Alimentos[] alimentosAVender = mercado.getAlimentosGranjero();
@@ -51,7 +53,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblVenderAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta()});
         }
     }
-
+    
     private void agregarMaretiaAVender() {
         tblVenderMateria = (DefaultTableModel) tblVMateria.getModel();
         MateriasPrimas[] materiasAVender = mercado.getMateriasGranjero();
@@ -59,7 +61,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblVenderMateria.addRow(new Object[]{materias.getNombre(), materias.getPrecioDeVenta()});
         }
     }
-
+    
     private void agregarFertilizantes() {
         tblFertilizantes = (DefaultTableModel) tblCFertilizantes.getModel();
         Fertilizantes[] fertilizantes = mercado.getFertilizantes();
@@ -67,7 +69,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblFertilizantes.addRow(new Object[]{fertilizante.getNombre(), fertilizante.getFertilidad(), fertilizante.getPrecio()});
         }
     }
-
+    
     private void agregarAlimentos() {
         tblComprarAlimentos = (DefaultTableModel) tblCAlimento.getModel();
         Alimentos[] alimentos = mercado.getAlimentosParaAnimales();
@@ -75,7 +77,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblComprarAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta(), alimento.esParaHerbivoros()});
         }
     }
-
+    
     private void agregarSemillas() {
         tblComprarSemillas = (DefaultTableModel) tblCSemillas.getModel();
         Semillas[] semillas = mercado.getSemillas();
@@ -83,7 +85,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.isProduceFruta(), semilla.getCantidadDeSemillasRequerida(), semilla.getAlimento().getNombre()});
         }
     }
-
+    
     private void agregarAnimales() {
         tblComprarAnimales = (DefaultTableModel) tblCAnimales.getModel();
         Animales[] animales = mercado.getAnimales();
@@ -91,7 +93,7 @@ public class JDMercado extends javax.swing.JDialog {
             tblComprarAnimales.addRow(new Object[]{animal.getNombre(), animal.getPrecio(), animal.getEspacio(), animal.getEdadMaxima(), animal.isEsHerbivoro(), animal.isEsDestazable(), animal.getProductosDestazables().length(), animal.getProductosNoDestazables().length()});
         }
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -191,6 +193,11 @@ public class JDMercado extends javax.swing.JDialog {
         });
 
         btnVenderMateriaPrima.setText("Vender Materia Prima");
+        btnVenderMateriaPrima.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVenderMateriaPrimaActionPerformed(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -477,6 +484,19 @@ public class JDMercado extends javax.swing.JDialog {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnVenderAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderAlimentosActionPerformed
+        if (tblVAlimentos.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int fila = tblVAlimentos.getSelectedRow();
+        String nombreAlimento = (String) tblVAlimentos.getValueAt(fila, 0);
+        int precioAlimento = (int) tblVAlimentos.getValueAt(fila, 1);
+        if (mercado.existeAlimento(nombreAlimento)) {
+            mercado.venderAlimento(nombreAlimento);
+            mercado.ganarOro(precioAlimento);
+            tblVenderAlimentos.removeRow(fila);
+            JOptionPane.showMessageDialog(null, "Has vendido un alimento " + nombreAlimento, "Venta exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
     }//GEN-LAST:event_btnVenderAlimentosActionPerformed
 
     private void btnComprarSemillasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarSemillasActionPerformed
@@ -489,7 +509,7 @@ public class JDMercado extends javax.swing.JDialog {
         String nombreSemilla = (String) tblCSemillas.getValueAt(fila, 0);
         if (mercado.jugadorTieneDineroSufiente(precioSemilla)) {
             mercado.agregarSemillaAlJugador(nombreSemilla);
-            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioSemilla);
+            mercado.perderOro(precioSemilla);
             JOptionPane.showMessageDialog(null, "Has adquirido una semilla de la planta " + nombreSemilla, "Nueva semilla", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
@@ -506,7 +526,7 @@ public class JDMercado extends javax.swing.JDialog {
         String nombreAnimal = (String) tblCAnimales.getValueAt(fila, 0);
         if (mercado.jugadorTieneDineroSufiente(precioAnimal)) {
             mercado.agregarAnimalAlJugador(nombreAnimal);
-            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioAnimal);
+            mercado.perderOro(precioAnimal);
             JOptionPane.showMessageDialog(null, "Has adquirido el animal " + nombreAnimal, "Nuevo animal", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
@@ -522,7 +542,7 @@ public class JDMercado extends javax.swing.JDialog {
         int precioFertilizante = (int) tblCFertilizantes.getValueAt(fila, 2);
         String nombreFertilizante = (String) tblCFertilizantes.getValueAt(fila, 0);
         if (mercado.jugadorTieneDineroSufiente(precioFertilizante)) {
-            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioFertilizante);
+            mercado.perderOro(precioFertilizante);
             mercado.agregarFertilizanteAlJugador(nombreFertilizante);
             JOptionPane.showMessageDialog(null, "Has adquirido el fertilizante " + nombreFertilizante, "Nuevo fertilizante", JOptionPane.INFORMATION_MESSAGE);
         } else {
@@ -539,13 +559,29 @@ public class JDMercado extends javax.swing.JDialog {
         int precioAlimento = (int) tblCAlimento.getValueAt(fila, 1);
         String nombreAlimento = (String) tblCAlimento.getValueAt(fila, 0);
         if (mercado.jugadorTieneDineroSufiente(precioAlimento)) {
-            mercado.agregarFertilizanteAlJugador(nombreAlimento);
-            mercado.getGranjero().setOro(mercado.getGranjero().getOro() - precioAlimento);
+            mercado.agregarAlimentoParaAnimalAlJugador(nombreAlimento);
+            mercado.perderOro(precioAlimento);
             JOptionPane.showMessageDialog(null, "Has adquirido el fertilizante " + nombreAlimento, "Nuevo fertilizante", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
         }
     }//GEN-LAST:event_btnComprarAlimentoParaAnimalesActionPerformed
+
+    private void btnVenderMateriaPrimaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVenderMateriaPrimaActionPerformed
+        if (tblVMateria.getSelectedRow() == -1) {
+            JOptionPane.showMessageDialog(null, "Debes seleccionar una fila", "ADVERTENCIA", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        int fila = tblVMateria.getSelectedRow();
+        String nombreMateria = (String) tblVMateria.getValueAt(fila, 0);
+        int precioMateria = (int) tblVMateria.getValueAt(fila, 1);
+        if (mercado.existeMateria(nombreMateria)) {
+            mercado.venderMateria(nombreMateria);
+            mercado.ganarOro(precioMateria);
+            tblVenderMateria.removeRow(fila);
+            JOptionPane.showMessageDialog(null, "Has vendido la materia " + nombreMateria, "Venta exitosa", JOptionPane.INFORMATION_MESSAGE);
+        }
+    }//GEN-LAST:event_btnVenderMateriaPrimaActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

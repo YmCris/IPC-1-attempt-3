@@ -7,6 +7,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 
 /**
@@ -47,10 +48,52 @@ public class Mercado {
         this.animales = binario.obtenerAnimales();
     }
 
+    public boolean existeAlimento(String nombreAlimento) {
+        try {
+            return granjero.getAlimentos().existeNodoConContenido(nombreAlimento);
+        } catch (ListaDobleException ex) {
+            System.out.println("Hubo un error al capturar si existe el alimento porque " + ex.getMessage());
+            return false;
+        }
+    }
+
+    public boolean existeMateria(String nombreMateria) {
+        try {
+            return granjero.getMaterias().existeNodoConContenido(nombreMateria);
+        } catch (ListaDobleException e) {
+            System.out.println("Hubo un error al capturar si existe la materia porque " + e.getMessage());
+            return false;
+        }
+    }
+
+    public void ganarOro(int cantidadGanada) {
+        getGranjero().setOro(getGranjero().getOro() + cantidadGanada);
+    }
+
+    public void perderOro(int cantidadPerdida) {
+        getGranjero().setOro(getGranjero().getOro() - cantidadPerdida);
+    }
+
+    public void venderAlimento(String nombreAlimento) {
+        try {
+            granjero.getAlimentos().usar(nombreAlimento);
+        } catch (ListaDobleException ex) {
+            System.out.println("Ocurrió un error al intentar vender el alimento porque " + ex.getMessage());
+        }
+    }
+
+    public void venderMateria(String nombreMateria) {
+        try {
+            granjero.getMaterias().usar(nombreMateria);
+        } catch (ListaDobleException e) {
+            System.out.println("Ocurrió un error al intentar vender el alimento porque " + e.getMessage());
+        }
+    }
+
     public boolean jugadorTieneDineroSufiente(int precio) {
         return granjero.getOro() >= precio;
     }
-    
+
     public void agregarAlimentoParaAnimalAlJugador(String nombreAlimento) {
         granjero.agregarAlimentoParaAnimales(nombreAlimento);
     }
@@ -96,6 +139,31 @@ public class Mercado {
 
     public Granjero getGranjero() {
         return granjero;
+    }
+
+    // SETTERS -----------------------------------------------------------------
+    public void setSemillas(Semillas[] semillas) {
+        this.semillas = semillas;
+    }
+
+    public void setAnimales(Animales[] animales) {
+        this.animales = animales;
+    }
+
+    public void setFertilizantes(Fertilizantes[] fertilizantes) {
+        this.fertilizantes = fertilizantes;
+    }
+
+    public void setAlimentosParaAnimales(Alimentos[] alimentosParaAnimales) {
+        this.alimentosParaAnimales = alimentosParaAnimales;
+    }
+
+    public void setAlimentosGranjero(Alimentos[] alimentosGranjero) {
+        this.alimentosGranjero = alimentosGranjero;
+    }
+
+    public void setMateriasGranjero(MateriasPrimas[] materiasGranjero) {
+        this.materiasGranjero = materiasGranjero;
     }
 
 }

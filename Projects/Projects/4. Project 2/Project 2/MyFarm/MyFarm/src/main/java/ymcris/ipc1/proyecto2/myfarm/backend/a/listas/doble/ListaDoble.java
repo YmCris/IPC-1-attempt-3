@@ -9,6 +9,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
  *
  * @author YmCris
  * @param <T> Tipo de dato que guardará la lista doble
+ * @see ListaDobleException
  * @since Apr 26, 2025
  */
 public class ListaDoble<T> implements Serializable {
@@ -82,6 +83,11 @@ public class ListaDoble<T> implements Serializable {
      * @param indice posición de la lista para eliminar el nodo.
      */
     private void eliminarNodo(int indice) {
+        try {
+            System.out.println("Existe el nodo: con el nombre " + existeNodoConContenido(obtenerNodo(indice).getNombre()));
+        } catch (ListaDobleException ex) {
+            System.out.println("...");
+        }
         NodoDoble<T> nodoAEliminar = obtenerNodo(indice);
         if (indice == 0) {
             inicio = nodoAEliminar.getSiguiente();
@@ -97,6 +103,11 @@ public class ListaDoble<T> implements Serializable {
             nodoAnterior.setSiguiente(nodoSiguiente);
             nodoSiguiente.setAnterior(nodoAnterior);
         }
+        System.out.println("SE HA ELIMINADO EL NODO CON EL NOMBRE: " + nodoAEliminar.getNombre());
+        nodoAEliminar.setAnterior(null);
+        nodoAEliminar.setSiguiente(null);
+        nodoAEliminar.setContenido(null);
+        nodoAEliminar = null;
         tamaño--;
     }
 
@@ -106,7 +117,7 @@ public class ListaDoble<T> implements Serializable {
      * @param indice posición de la cadena a devolver.
      * @return nodo en el indice especificado.
      */
-    private NodoDoble<T> obtenerNodo(int indice) {
+    private NodoDoble<T> obtenerNodo(int indice) throws NullPointerException {
         NodoDoble<T> temporal;
         if (indice <= tamaño / 2) {
             temporal = inicio;
@@ -129,16 +140,18 @@ public class ListaDoble<T> implements Serializable {
      *
      * @param nombre nombre del elemento a buscar
      * @return true si existe.
+     * @throws ListaDobleException
      */
-    public boolean existeNodoConContenido(String nombre) {
+    public boolean existeNodoConContenido(String nombre) throws ListaDobleException {
         for (int i = 0; i < tamaño; i++) {
             if (obtenerNodo(i) != null) {
                 if (obtenerNodo(i).getNombre().equals(nombre)) {
+                    System.out.println("Existe el nodo con el nombre: " + nombre + " en la posición: " + i);
                     return true;
                 }
             }
         }
-        return false;
+        throw new ListaDobleException("No existe el nodo");
     }
 
     /**

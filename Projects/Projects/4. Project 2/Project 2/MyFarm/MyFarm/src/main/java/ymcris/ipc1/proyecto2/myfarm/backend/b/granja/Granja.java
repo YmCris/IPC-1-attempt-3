@@ -39,9 +39,7 @@ public class Granja implements Serializable, Runnable {
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Granja(Granjero granjero) {
         this.granjero = granjero;
-        this.materias = granjero.obtenerMateriaDelGranjero();
-        this.alimentos = granjero.obtenerAlimentosDelGranjero();
-        this.bodega = new Bodega(alimentos, materias);
+        this.bodega = new Bodega(granjero);
         this.terreno = new Terreno();
         this.mercado = new Mercado(granjero);
     }
@@ -61,7 +59,7 @@ public class Granja implements Serializable, Runnable {
         }
         System.out.println("Juego Terminado");
     }
-    
+
     public void jugar() {
         if (granjero.haComido()) {//Si ha comido se reinicia el contador
             System.out.println("ha comido");
@@ -91,21 +89,21 @@ public class Granja implements Serializable, Runnable {
     public Bodega getBodega() {
         return bodega;
     }
-    
+
     public Terreno getTerreno() {
         return terreno;
     }
-    
+
     public Mercado getMercado() {
         return mercado;
     }
-    
+
     public Granjero getGranjero() {
         return granjero;
     }
-    
+
     public int getTiempoJugado() {
         return tiempoJugado;
     }
-    
+
 }

@@ -11,7 +11,7 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
  *
  * @author YmCris
  */
-public class JFBodega extends javax.swing.JDialog {
+public class JDBodega extends javax.swing.JDialog {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Bodega bodega;
@@ -22,9 +22,11 @@ public class JFBodega extends javax.swing.JDialog {
     private final static String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public JFBodega(Bodega bodega) {
+    public JDBodega(Bodega bodega) {
         initComponents();
         this.bodega = bodega;
+        bodega.setAlimentos(bodega.getGranjero().obtenerAlimentosDelGranjero());
+        bodega.setMaterias(bodega.getGranjero().obtenerMateriaDelGranjero());
         this.setTitle("Bodega");
         this.setModal(true);
         this.setResizable(false);
