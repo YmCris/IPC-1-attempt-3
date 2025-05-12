@@ -14,7 +14,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios
 public class JFCreadorDeMateriaPrima extends javax.swing.JFrame {
 
     // CONSTANTES --------------------------------------------------------------
-    private final static String RUTA_IMAGEN = "/fondoCreadores.png";
+    public final static String RUTA_IMAGEN = "/fondoCreadores.png";
 
     // INSTANCIAS --------------------------------------------------------------
     Archivos archivo = new Archivos();

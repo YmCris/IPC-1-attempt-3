@@ -8,11 +8,13 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Grano;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Frutas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Siembrable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Finquerable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Herbivoros;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
@@ -29,6 +31,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     private Frutas fruta;
     private Granjero granjero;
     private String animalesPermitidos;
+    private Animales animalCriado;
     private ListaDoble<Animales> animales;
     private Cola<Integer> ordenDeProduccionCelda;
     private Cola<Alimentos> ordenDeProduccionAlimentos;
@@ -93,8 +96,20 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     }
 
     @Override
-    public void criarAnimales() {
-
+    public void criarAnimales(Animales animal) {
+        try {
+            if (animal.esHerbivoro()) {
+                Herbivoros herbivoro = (Herbivoros) animal;
+                Thread hiloHerbivoro = new Thread(herbivoro);
+                hiloHerbivoro.start();
+            } else {
+                Omnivoros omnivoros = (Omnivoros) animal;
+                Thread hiloOmnivoros = new Thread(omnivoros);
+                hiloOmnivoros.start();
+            }
+        } catch (ClassCastException e) {
+            System.out.println("No se pudo iniciar los hilos de animales porque " + e.getMessage());
+        }
     }
 
     public void detenerHilo() {
@@ -172,6 +187,14 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     public void setTieneAnimales(boolean tieneAnimales) {
         this.tieneAnimales = tieneAnimales;
+    }
+
+    public Animales getAnimalCriado() {
+        return animalCriado;
+    }
+
+    public void setAnimalCriado(Animales animalCriado) {
+        this.animalCriado = animalCriado;
     }
 
 }

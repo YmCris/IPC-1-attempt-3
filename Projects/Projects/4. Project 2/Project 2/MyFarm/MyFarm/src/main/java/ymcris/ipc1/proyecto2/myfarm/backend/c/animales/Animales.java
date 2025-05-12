@@ -27,7 +27,7 @@ public class Animales implements Runnable, Serializable {
     protected int precio;
     protected int edadMaxima;
     protected double espacio;
-    protected int precioLimpieza;
+    protected int cantidadDeAlimentoConsumido;
     protected boolean esHerbivoro;
     protected boolean esDestazable;
     protected int porcentajeDeProduccionConDestaze;
@@ -52,7 +52,7 @@ public class Animales implements Runnable, Serializable {
     // MÉTODOS CONCRETOS -------------------------------------------------------
     @Override
     public void run() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
     }
 
     public boolean estaVivo() {
@@ -133,6 +133,14 @@ public class Animales implements Runnable, Serializable {
         this.edad = edad;
     }
 
+    public int getCantidadDeAlimentoConsumido() {
+        return cantidadDeAlimentoConsumido;
+    }
+
+    public void setCantidadDeAlimentoConsumido(int cantidadDeAlimentoConsumido) {
+        this.cantidadDeAlimentoConsumido = cantidadDeAlimentoConsumido;
+    }
+    
     public void setPorcentajeDeProduccionConDestaze(int porcentajeDeProduccionConDestaze) {
         this.porcentajeDeProduccionConDestaze = porcentajeDeProduccionConDestaze;
     }

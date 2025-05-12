@@ -128,10 +128,6 @@ public final class Terreno {
         }
     }
 
-    public void eliminarParcela() {
-
-    }
-
     public void modificarCelda(int fila, int columna, Suelo suelo) {
         try {
             tablero.obtenerNodo(fila, columna).setSuelo(suelo);

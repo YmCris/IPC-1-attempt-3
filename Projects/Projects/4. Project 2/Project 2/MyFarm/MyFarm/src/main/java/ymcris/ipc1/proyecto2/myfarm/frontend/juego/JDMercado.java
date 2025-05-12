@@ -297,7 +297,7 @@ public class JDMercado extends javax.swing.JDialog {
 
             },
             new String [] {
-                "Nombre", "Precio", "Es Para Herbivoros"
+                "Nombre", "Precio", "Es Para Omnivoros"
             }
         ) {
             Class[] types = new Class [] {

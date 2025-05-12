@@ -191,6 +191,17 @@ public final class Granjero {
         return false;
     }
 
+    public boolean tieneAlimentoDeAnimalSuficiente(String nombreAlimentoAnimal, int cantidad) {
+        for (Alimentos alimentoAnimal : alimentosParaAnimales) {
+            if (alimentoAnimal.getNombre().equals(nombreAlimentoAnimal)) {
+                if (alimentoAnimal.getCantidad() >= cantidad) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     public boolean tieneElAlimentoSuficiente(String nombreAlimento) {
         for (int i = 0; i < alimentos.length(); i++) {
             NodoDoble<Alimentos> nodo = alimentos.obtenerNodo(i);
@@ -210,6 +221,19 @@ public final class Granjero {
                     return true;
                 }
             }
+        }
+        return false;
+    }
+
+    public boolean tieneAnimal(String nombreAnimal) {
+        try {
+            for (int i = 0; i < animales.length(); i++) {
+                if (animales.obtenerNodo(nombreAnimal).getNombre().equals(nombreAnimal)) {
+                    return true;
+                }
+            }
+        } catch (ListaDobleException e) {
+            System.out.println("No se pudo verificar si el granjero tenia el animal porque " + e.getMessage());
         }
         return false;
     }
@@ -235,6 +259,15 @@ public final class Granjero {
         for (Alimentos alimentoParaAnimal : alimentosParaAnimales) {
             if (alimentoParaAnimal.getNombre().equals(nombreAlimentos)) {
                 alimentoParaAnimal.setCantidad(alimentoParaAnimal.getCantidad() + 1);
+                System.out.println("Se tienen " + alimentoParaAnimal.getCantidad() + " alimnentos para animal del tipo " + alimentoParaAnimal.getNombre());
+            }
+        }
+    }
+
+    public void quitarCantidadAlimentoParaAnimales(String nombreAlimentos, int cantidad) {
+        for (Alimentos alimentoParaAnimal : alimentosParaAnimales) {
+            if (alimentoParaAnimal.getNombre().equals(nombreAlimentos)) {
+                alimentoParaAnimal.setCantidad(alimentoParaAnimal.getCantidad() - cantidad);
                 System.out.println("Se tienen " + alimentoParaAnimal.getCantidad() + " alimnentos para animal del tipo " + alimentoParaAnimal.getNombre());
             }
         }

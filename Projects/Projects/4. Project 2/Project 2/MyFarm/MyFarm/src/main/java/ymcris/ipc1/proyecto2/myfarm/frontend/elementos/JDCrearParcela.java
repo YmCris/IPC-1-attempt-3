@@ -85,7 +85,7 @@ public class JDCrearParcela extends javax.swing.JDialog {
                 java.lang.Object.class, java.lang.Boolean.class, java.lang.Boolean.class, java.lang.Double.class
             };
             boolean[] canEdit = new boolean [] {
-                false, false, true, false
+                false, false, false, false
             };
 
             public Class getColumnClass(int columnIndex) {
@@ -100,6 +100,7 @@ public class JDCrearParcela extends javax.swing.JDialog {
         if (tblAnimales.getColumnModel().getColumnCount() > 0) {
             tblAnimales.getColumnModel().getColumn(0).setResizable(false);
             tblAnimales.getColumnModel().getColumn(1).setResizable(false);
+            tblAnimales.getColumnModel().getColumn(2).setResizable(false);
             tblAnimales.getColumnModel().getColumn(3).setResizable(false);
         }
 

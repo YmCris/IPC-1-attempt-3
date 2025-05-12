@@ -81,6 +81,8 @@ public class Granja implements Serializable, Runnable {
     public boolean partidaTerminada() {
         return granjero.getVida() == 0;
     }
+    
+    
 
     // GETTERS -----------------------------------------------------------------
     public Bodega getBodega() {

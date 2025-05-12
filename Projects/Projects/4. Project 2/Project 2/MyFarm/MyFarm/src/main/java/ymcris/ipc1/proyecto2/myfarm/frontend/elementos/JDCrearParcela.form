@@ -176,7 +176,7 @@
                   <Table columnCount="4" rowCount="0">
                     <Column editable="false" title="Nombre" type="java.lang.Object"/>
                     <Column editable="false" title="Es Herbivoro" type="java.lang.Boolean"/>
-                    <Column editable="true" title="Es Destazable" type="java.lang.Boolean"/>
+                    <Column editable="false" title="Es Destazable" type="java.lang.Boolean"/>
                     <Column editable="false" title="Espacio" type="java.lang.Double"/>
                   </Table>
                 </Property>
@@ -192,7 +192,7 @@
                       <Editor/>
                       <Renderer/>
                     </Column>
-                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
+                    <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="false">
                       <Title/>
                       <Editor/>
                       <Renderer/>
