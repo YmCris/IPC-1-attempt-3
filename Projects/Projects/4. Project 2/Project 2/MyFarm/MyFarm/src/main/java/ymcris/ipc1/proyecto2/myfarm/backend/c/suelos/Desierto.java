@@ -13,6 +13,8 @@ public class Desierto extends Suelo {
     private static final String NOMBRE_SUELO = "Desierto";
     private static final String RUTA_IMAGEN = "/arena.png";
 
+    private static final long serialVersionUID = 789078945;
+    
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Desierto() {
         this.nombre = NOMBRE_SUELO;

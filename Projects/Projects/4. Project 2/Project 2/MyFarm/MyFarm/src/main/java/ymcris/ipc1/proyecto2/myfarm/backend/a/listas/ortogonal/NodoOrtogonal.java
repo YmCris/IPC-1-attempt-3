@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
 
 /**
@@ -9,7 +10,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
  * @author YmCris
  * @since Apr 27, 2025
  */
-public class NodoOrtogonal {
+public class NodoOrtogonal implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Suelo suelo;
@@ -17,6 +18,8 @@ public class NodoOrtogonal {
     private NodoOrtogonal nodoDeAbajo;
     private NodoOrtogonal nodoDeArriba;
     private NodoOrtogonal nodoIzquierdo;
+
+    private static final long serialVersionUID = 782104159;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public NodoOrtogonal(Suelo suelo) {

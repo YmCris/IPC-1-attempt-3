@@ -32,6 +32,7 @@ public class Animales implements Runnable, Serializable {
     protected int edadMaxima;
     protected double espacio;
     protected boolean haComido;
+    protected boolean hiloTerminado;
     protected boolean esHerbivoro;
     protected boolean esDestazable;
     protected int cantidadDeAlimentoConsumido;
@@ -63,7 +64,7 @@ public class Animales implements Runnable, Serializable {
         if (esAdulto()) {
             cantidad = 5;
         }
-        return cantidad + vida; //Math.max(1, precio / 6);
+        return cantidad + vida + Math.max(1, precio / 5);
     }
 
     public MateriasPrimas[] producirMateriaPrima() {
@@ -74,7 +75,6 @@ public class Animales implements Runnable, Serializable {
                 materia.setProduccion(producirBasadoEnAtributos());
                 materias[i] = materia;
             }
-            //vida = 0;
             return materias;
         } catch (ListaDobleException ex) {
             System.out.println("No se pudo sacar las materias primas porque " + ex.getMessage());
@@ -90,7 +90,6 @@ public class Animales implements Runnable, Serializable {
                 alimento.setProduccion(producirBasadoEnAtributos());
                 arregloAlimentos[i] = alimento;
             }
-            //              vida = 0;
             return arregloAlimentos;
         } catch (ListaDobleException ex) {
             System.out.println("No se pudo sacar las materias primas porque " + ex.getMessage());
@@ -101,8 +100,7 @@ public class Animales implements Runnable, Serializable {
     @Override
     public void run() {
         int contador = 0;
-        while (!haMuertoPorHambre() && !haMuertoPorVejez()) {
-            System.out.println("Vida: " + vida + " Edad " + edad + " EdadMaxima: " + edadMaxima);
+        while (!haMuertoPorHambre() && !haMuertoPorVejez() && hiloTerminado == false) {
             try {
                 Thread.sleep(1000);
                 contador++;
@@ -112,16 +110,18 @@ public class Animales implements Runnable, Serializable {
                 }
                 if (haComido == false) {
                     vida--;
-                    grama.setText("Vida " + vida + " Edad " + edad);
+                    grama.setText(this.getNombre() + " Vida " + vida + " Edad " + edad);
                 }
                 edad++;
                 if (vida <= 0) {
                     grama.setText("Muerto por no comer");
                     grama.setEstaSucio(true);
+                    hiloTerminado = true;
                     grama.setBloqueado(true);
                     grama.setTieneAnimales(false);
                 }
                 if (edad >= edadMaxima) {
+                    hiloTerminado = true;
                     grama.setText("Muerto por vejez");
                     grama.setBloqueado(true);
                     grama.setEstaSucio(true);
@@ -205,6 +205,14 @@ public class Animales implements Runnable, Serializable {
 
     public boolean produciraProductosConDestace() {
         return produciraProductosConDestace;
+    }
+
+    public boolean hiloTerminado() {
+        return hiloTerminado;
+    }
+
+    public void setHiloTerminado(boolean hiloTerminado) {
+        this.hiloTerminado = hiloTerminado;
     }
 
     // SETTERS -----------------------------------------------------------------

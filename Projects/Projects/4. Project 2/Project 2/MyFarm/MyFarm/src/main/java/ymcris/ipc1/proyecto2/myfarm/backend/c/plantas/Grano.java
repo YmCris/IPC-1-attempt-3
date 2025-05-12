@@ -20,6 +20,8 @@ public class Grano extends Planta {
     // INSTANCIAS --------------------------------------------------------------
     private Granjero granjero;
 
+    private static final long serialVersionUID = 89700014;
+    
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Grano(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama, Granjero granjero, JButton boton) {
         super(nombre, semilla, fertilidadSuelo, ordenDeProduccionAlimentos, grama, boton);

@@ -18,6 +18,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 public class Granja implements Serializable, Runnable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
+    private String nombre;
     private Bodega bodega;
     private Terreno terreno;
     private Mercado mercado;
@@ -33,6 +34,7 @@ public class Granja implements Serializable, Runnable {
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Granja(Granjero granjero) {
         this.granjero = granjero;
+        this.nombre = granjero.getNombre();
         this.bodega = new Bodega(granjero);
         this.terreno = new Terreno(granjero);
         this.mercado = new Mercado(granjero);
@@ -53,10 +55,9 @@ public class Granja implements Serializable, Runnable {
         }
         System.out.println("Juego Terminado");
     }
-    
+
     public void jugar() {
         if (granjero.haComido()) {//Si ha comido se reinicia el contador
-            System.out.println("ha comido");
             contador = 0;
             if (granjero.haComidoLoSuficiente()) {
                 granjero.setVida(granjero.getVida() + 1);
@@ -65,8 +66,8 @@ public class Granja implements Serializable, Runnable {
         } else {//Si no ha comido durante 100 segundos se resta vida
             contador++;
             if (contador == granjero.getTIEMPO_PARA_DISMINUIR_VIDA()) {
-                System.out.println("Granjero ha perdido 1 punto de vida, tiene " + granjero.getVida() + " puntos de vida");
                 granjero.setVida(granjero.getVida() - 1);
+                System.out.println("Granjero has perdido 1 punto de vida, tienes " + granjero.getVida() + " puntos de vida");
                 contador = 0;
             }
         }
@@ -81,28 +82,30 @@ public class Granja implements Serializable, Runnable {
     public boolean partidaTerminada() {
         return granjero.getVida() == 0;
     }
-    
-    
 
     // GETTERS -----------------------------------------------------------------
     public Bodega getBodega() {
         return bodega;
     }
-    
+
     public Terreno getTerreno() {
         return terreno;
     }
-    
+
     public Mercado getMercado() {
         return mercado;
     }
-    
+
     public Granjero getGranjero() {
         return granjero;
     }
-    
+
     public int getTiempoJugado() {
         return tiempoJugado;
     }
-    
+
+    public String getNombre() {
+        return nombre;
+    }
+
 }

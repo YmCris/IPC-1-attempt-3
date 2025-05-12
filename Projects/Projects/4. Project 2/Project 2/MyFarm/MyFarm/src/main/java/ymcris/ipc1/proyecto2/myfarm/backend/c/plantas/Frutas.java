@@ -22,6 +22,7 @@ public class Frutas extends Planta {
 
     // CONSTANTES --------------------------------------------------------------
     private static final int TIEMPO_PARA_DESAPARECER = 2;//20
+    private static final long serialVersionUID = 41512077;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Frutas(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama, Granjero granjero, JButton boton) {

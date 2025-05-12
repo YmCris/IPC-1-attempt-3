@@ -36,10 +36,8 @@ public class JFCreadorDePlantas extends javax.swing.JFrame {
     // MÉTODOS CONCRETOS -------------------------------------------------------
     private void agregarAlimentos() {
         Alimentos[] alimentos = binario.obtenerAlimentos();
-        System.out.println("Se obtiene el arreglo de alimentos");
         for (Alimentos alimento : alimentos) {
             if (alimento.esParaHerbivoros()) {
-                System.out.println("Se verifica si es para herbivoros");
                 cbAlimento.addItem(alimento.getNombre());
             }
         }

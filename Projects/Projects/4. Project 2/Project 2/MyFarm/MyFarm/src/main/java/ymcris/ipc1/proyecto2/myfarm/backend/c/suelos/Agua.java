@@ -21,6 +21,8 @@ public class Agua extends Suelo implements Pescable {
     private boolean hayPeces;
     private boolean hayBarcoPesquero;
     private int cantidadDePecesExistentes;
+    
+    private static final long serialVersionUID = 144700858;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Agua() {

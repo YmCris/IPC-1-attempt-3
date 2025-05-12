@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
@@ -13,13 +14,15 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
  * @see ListaDoble
  * @since May 3, 2025
  */
-public final class Bodega {
+public final class Bodega implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Granjero granjero;
     private Alimentos[] alimentos;
     private MateriasPrimas[] materias;
 
+    public static final long serialVersionUID = 77812314;
+    
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Bodega(Granjero granjero) {
         this.granjero = granjero;

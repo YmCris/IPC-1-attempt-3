@@ -1,11 +1,11 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto;
 
 import java.io.File;
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Herbivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
@@ -20,12 +20,14 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios
  * @see ArchivosBinarios
  * @since May 7, 2025
  */
-public class Creador {
+public class Creador implements Serializable{
 
     // INSTANCIAS --------------------------------------------------------------
     Archivos archivo = new Archivos();
     ArchivosBinarios binario = new ArchivosBinarios();
 
+    private static final long serialVersionUID = 1244000477;
+    
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
      * Método encargado de crear los fertilizantes predeterminados y guardarlos

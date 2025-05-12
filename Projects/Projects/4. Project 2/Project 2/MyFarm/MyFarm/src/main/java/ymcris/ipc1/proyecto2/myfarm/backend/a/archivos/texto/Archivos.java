@@ -6,6 +6,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
 
 /**
@@ -18,13 +19,16 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
  * @see ArchivoException
  * @since May 3, 2025
  */
-public class Archivos {
+public class Archivos implements Serializable{
 
     // VARIABLES DE REFERNCIA --------------------------------------------------
     private final String rutaProyecto = System.getProperty("user.dir");
     private final String rutaCarpetaFertilizantes = rutaProyecto + File.separator + "Fertilizantes";
     private final String rutaCarpetaAlimentosAnimales = rutaProyecto + File.separator + "Alimentos para animales";
+    private final String rutaCarpetaGranjeros = rutaProyecto + File.separator + "Granjeros";
 
+    private static final long serialVersionUID = 884422005;
+    
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
      * Método encargado de crear las carpetas de los elemntos incambiables.
@@ -176,4 +180,8 @@ public class Archivos {
         return rutaCarpetaAlimentosAnimales;
     }
 
+    public String getRutaCarpetaGranjeros() {
+        return rutaCarpetaGranjeros;
+    }
+    
 }

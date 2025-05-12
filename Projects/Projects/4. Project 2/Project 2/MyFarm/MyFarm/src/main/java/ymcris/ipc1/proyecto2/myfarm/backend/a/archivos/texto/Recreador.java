@@ -1,6 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto;
 
 import java.io.File;
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
@@ -15,11 +16,13 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios
  * @see ArchivosBinarios
  * @since May 7, 2025
  */
-public class Recreador {
+public class Recreador implements Serializable{
 
     // INSTANCIAS --------------------------------------------------------------
     private Archivos archivo = new Archivos();
     private ArchivosBinarios binario = new ArchivosBinarios();
+    
+    private static final long serialVersionUID = 4898745;
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**

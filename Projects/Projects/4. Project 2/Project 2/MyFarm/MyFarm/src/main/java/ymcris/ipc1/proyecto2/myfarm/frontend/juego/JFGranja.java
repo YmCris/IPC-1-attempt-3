@@ -1,7 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.juego;
 
 import java.awt.GridLayout;
-import java.awt.Window;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
@@ -15,10 +14,12 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDAgua;
 import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDGrama;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDDesierto;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDCrearParcela;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDLimpiarTerreno;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDPreguntarSuelo;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios;
 
 /**
  *
@@ -26,12 +27,15 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDPreguntarSuelo;
  * @author YmCris
  */
 public class JFGranja extends javax.swing.JFrame implements Runnable {
-    
+
     private Granja granja;
     private Bodega bodega;
     private Mercado mercado;
     private Granjero granjero;
-    
+
+    Archivos archivo = new Archivos();
+    ArchivosBinarios binario = new ArchivosBinarios();
+
     public JFGranja(Granja granja) {
         initComponents();
         this.granja = granja;
@@ -60,7 +64,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             try {
                 Thread.sleep(500);
                 if (granja.partidaTerminada()) {
-                    cerrarTodasLasVentanas();
                     JOptionPane.showMessageDialog(null, "Juego Terminado, Puedes revisar los datos de tu partida en los reportes", "Noob", JOptionPane.INFORMATION_MESSAGE);
                     new JFMenuPrincipal().setVisible(true);
                 }
@@ -68,25 +71,17 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }
-            
+
         }
         System.out.println("Partida terminada frontend");
     }
-    
-    public void cerrarTodasLasVentanas() {
-        for (Window window : Window.getWindows()) {
-            if (window.isDisplayable()) {
-                window.dispose();
-            }
-        }
-    }
-    
+
     private void actualizarContenido() {
         lblNombre.setText(granjero.getNick().toUpperCase());
         lblOro.setText(String.valueOf(granjero.getOro()));
         lblVida.setText(String.valueOf(granjero.getVida()));
     }
-    
+
     private void colocarBotones() throws ListaOrtogonalException {
         int filas = granja.getTerreno().getTablero().getFilas();
         int columnas = granja.getTerreno().getTablero().getColumnas();
@@ -140,10 +135,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         jLabel2 = new javax.swing.JLabel();
         lblNombre = new javax.swing.JLabel();
         lblOro = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        lblCultivosListos = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        lblAnimalesMuertos = new javax.swing.JLabel();
         lblVida = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
@@ -170,6 +161,11 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         btnGuardarPartida.setBackground(new java.awt.Color(51, 51, 51));
         btnGuardarPartida.setForeground(new java.awt.Color(255, 255, 255));
         btnGuardarPartida.setText("GUARDAR PARTIDA");
+        btnGuardarPartida.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarPartidaActionPerformed(evt);
+            }
+        });
 
         btnMercado.setBackground(new java.awt.Color(51, 51, 51));
         btnMercado.setForeground(new java.awt.Color(255, 255, 255));
@@ -337,22 +333,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         lblOro.setForeground(new java.awt.Color(255, 255, 255));
         lblOro.setText("ORO");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel5.setText("CULTIVOS LISTOS:");
-
-        lblCultivosListos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblCultivosListos.setForeground(new java.awt.Color(255, 255, 255));
-        lblCultivosListos.setText("0");
-
-        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel7.setText("ANIMALES MUERTOS:");
-
-        lblAnimalesMuertos.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblAnimalesMuertos.setForeground(new java.awt.Color(255, 255, 255));
-        lblAnimalesMuertos.setText("0");
-
         lblVida.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         lblVida.setForeground(new java.awt.Color(255, 255, 255));
         lblVida.setText("NOMBRE");
@@ -378,14 +358,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblOro)
-                .addGap(62, 62, 62)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(lblCultivosListos)
-                .addGap(45, 45, 45)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lblAnimalesMuertos)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlInformacionLayout.setVerticalGroup(
@@ -395,11 +367,7 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
                 .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel1)
-                        .addComponent(lblOro)
-                        .addComponent(jLabel5)
-                        .addComponent(lblCultivosListos)
-                        .addComponent(jLabel7)
-                        .addComponent(lblAnimalesMuertos))
+                        .addComponent(lblOro))
                     .addGroup(pnlInformacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
                         .addComponent(lblVida))
@@ -478,6 +446,19 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         new JDCrearParcela(granja.getTerreno()).setVisible(true);
     }//GEN-LAST:event_btnPreseleccionarAlimentos3ActionPerformed
 
+    private void btnGuardarPartidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarPartidaActionPerformed
+        if (archivo.existeArchivo(binario.getRutaCarpetaPartidas(), granjero.getNombre())) {
+            binario.eliminarArchivo(binario.getRutaCarpetaPartidas(), granjero.getNombre());
+            binario.eliminarArchivo(binario.getRutaCarpetaGranjeros(), granjero.getNombre());
+            binario.guardarPartida(granja);
+            binario.guardarGranjero(granjero);
+        } else {
+            binario.guardarPartida(granja);
+            binario.guardarGranjero(granjero);
+        }
+        JOptionPane.showMessageDialog(null, "Se ha guardado el progreso de la partida", "Partida Guardada", JOptionPane.INFORMATION_MESSAGE);
+    }//GEN-LAST:event_btnGuardarPartidaActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBodega;
     private javax.swing.JButton btnGuardarPartida;
@@ -492,10 +473,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel lblAnimalesMuertos;
-    private javax.swing.JLabel lblCultivosListos;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblOro;
     private javax.swing.JLabel lblVida;

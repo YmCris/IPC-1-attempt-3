@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.terreno;
 
+import java.io.Serializable;
 import java.util.Random;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
@@ -18,7 +19,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException
  * @author YmCris
  * @since Apr 27, 2025
  */
-public final class Terreno {
+public final class Terreno implements Serializable{
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Granjero granjero;
@@ -31,6 +32,7 @@ public final class Terreno {
     public static final int PRECIO_LIMPIEZA_CELDA = 50;
     private static final int DISTRIBUCION_GRAMA = 40;
     private static final int DISTRIBUCION_DESIERTO = 25;
+    public static final long serialVersionUID = 44551100;
 
     // INSTANCIAS --------------------------------------------------------------
     Random random = new Random();

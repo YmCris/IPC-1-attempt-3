@@ -1,7 +1,5 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ColaException;
@@ -70,7 +68,9 @@ public class JDGrama extends javax.swing.JDialog {
             btnAgregarFertilizante.setEnabled(false);
             btnCosechar.setEnabled(false);
             btnCriarAnimales.setEnabled(false);
+            btnDestazar.setEnabled(false);
             btnSembrar.setEnabled(false);
+            btnAlimentarAnimal.setEnabled(false);
         } else if (grama.tienePlanta() == false && grama.estaOpupado() == false) {
             activarBotones();
         } else if (grama.tienePlanta() == false) {
@@ -422,7 +422,7 @@ public class JDGrama extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlimentarAnimalActionPerformed
 
     private void btnDestazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDestazarActionPerformed
-        //new JDElegirProduccion(grama.getAnimalCriado(), granjero).setVisible(true);
+        new JDElegirProduccion(grama.getAnimalCriado(), granjero).setVisible(true);
     }//GEN-LAST:event_btnDestazarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

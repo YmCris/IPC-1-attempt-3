@@ -1,6 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 
 import java.awt.Image;
+import java.io.Serializable;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 
@@ -11,7 +12,7 @@ import javax.swing.JButton;
  * @author YmCris
  * @since Apr 26, 2025
  */
-public abstract class Suelo extends JButton {
+public abstract class Suelo extends JButton implements Serializable{
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
@@ -22,8 +23,10 @@ public abstract class Suelo extends JButton {
     private int columna;
     protected boolean bloqueado;
     protected boolean estaSucio;
+    
     // CONSTANTES --------------------------------------------------------------
     public static final int PRECIO_DE_COMPRA = 40;
+    private static final long serialVersionUID = 541274110;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Suelo() {

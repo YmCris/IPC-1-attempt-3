@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granjero;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
@@ -7,8 +8,8 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.NodoDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
  * Clase Granjero es la clase encargada de representar al jugador dentro del
@@ -17,7 +18,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
  * @author YmCris
  * @since Apr 26, 2025
  */
-public final class Granjero {
+public final class Granjero implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private String nick;
@@ -39,6 +40,7 @@ public final class Granjero {
     // CONSTANTES --------------------------------------------------------------
     private final int VIDA_MAXIMA = 10;
     private final int TIEMPO_PARA_DISMINUIR_VIDA = 100;
+    public static final long serialVersionUID = 784991410;
 
     // INSTANCIAS --------------------------------------------------------------
     Recreador recreador = new Recreador();
@@ -148,14 +150,17 @@ public final class Granjero {
         throw new ListaDobleException("No se obtuvo el elemento con el nombre");
     }
 
-    public void agregarCantidadAAlimento(String nombreAlimento, int cantidad) {
+    public void agregarCantidadAAlimento(Alimentos alimento, int cantidad) {
         for (int i = 0; i < alimentos.length(); i++) {
             NodoDoble<Alimentos> alimentoAUsar = alimentos.obtenerNodo(i);
-            if (alimentoAUsar.getNombre().equals(nombreAlimento)) {
+            if (alimentoAUsar.getNombre().equals(alimento.getNombre())) {
                 alimentoAUsar.getContenido().setCantidad(alimentoAUsar.getContenido().getCantidad() + cantidad);
                 System.out.println("Se tienen " + alimentoAUsar.getContenido().getCantidad() + " unidades del alimento " + alimentoAUsar.getContenido().getNombre());
+                return;
             }
         }
+        alimentos.agregar(alimento, alimento.getNombre());
+        agregarCantidadAAlimento(alimento, cantidad);
     }
 
     private void quitarCantidadAAlimento(String nombreAlimento, int cantidad) {

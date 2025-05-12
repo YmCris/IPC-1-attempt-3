@@ -13,8 +13,6 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Siembrable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces.Finquerable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Herbivoros;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Omnivoros;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 
 /**
@@ -48,6 +46,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     private static final String RUTA_IMAGEN = "/grama.png";
     private static final String NOMBRE_IMAGEN_SEMILLA_INICIO = "/siembraInicio.png";
     private static final String NOMBRE_IMAGEN_SEMILLA_FIN = "/siembraFin.png";
+    private static final long serialVersionUID = 654056447;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Grama(Cola<Integer> ordenDeProduccionCelda, Cola<Alimentos> ordenDeProduccionAlimentos, Granjero granjero) {
@@ -102,10 +101,8 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         animalHilo.setEdad(0);
         animalHilo.setHaComido(false);
         animalHilo.setGrama(this);
-        System.out.println("Hloas");
         Thread hiloAnimal = new Thread(animalHilo);
         hiloAnimal.start();
-        System.out.println("hsa");
     }
     
     public void detenerHilo() {

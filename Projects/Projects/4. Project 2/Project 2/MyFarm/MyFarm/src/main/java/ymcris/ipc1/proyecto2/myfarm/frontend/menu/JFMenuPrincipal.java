@@ -5,6 +5,7 @@ import java.awt.TextField;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Archivos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Creador;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
@@ -13,6 +14,7 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeAnimales;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDeMateriaPrima;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFCreadorDePlantas;
 import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JFEditoDeAnimales;
+import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDCargarPartida;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.JFGranja;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
 
@@ -24,6 +26,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private JDialog dialog;
+
+    Archivos archivo = new Archivos();
 
     // CONSTANTES --------------------------------------------------------------
     private static final String RUTA_IMAGEN = "/imagenMenu.png";
@@ -366,6 +370,10 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt, String nombre, String nick) {
         if (nombre.isBlank() || nick.isBlank()) {
             JOptionPane.showMessageDialog(null, "No puedes tener un nombre o nick vacios", "ERROR", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+        if (archivo.existeArchivo(archivo.getRutaCarpetaGranjeros(), nombre)) {
+            JOptionPane.showMessageDialog(null, "No puedes tener ese nombre porque ya existe una partida con ese nombre", "ERROR", JOptionPane.WARNING_MESSAGE);
         } else {
             this.dispose();
             dialog.dispose();
@@ -393,7 +401,8 @@ public class JFMenuPrincipal extends javax.swing.JFrame {
     }//GEN-LAST:event_btnNuevaPartidaActionPerformed
 
     private void btnPartidaExistenteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPartidaExistenteActionPerformed
-        // TODO add your handling code here:
+        this.dispose();
+        new JDCargarPartida().setVisible(true);
     }//GEN-LAST:event_btnPartidaExistenteActionPerformed
 
     private void btnCrearPlantasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearPlantasActionPerformed

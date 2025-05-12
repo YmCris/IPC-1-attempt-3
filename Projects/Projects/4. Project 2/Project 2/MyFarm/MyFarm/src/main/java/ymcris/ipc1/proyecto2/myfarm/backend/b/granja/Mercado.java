@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
@@ -19,7 +20,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.binarios.ArchivosBinarios
  * @see ArchivosBinarios
  * @since May 3, 2025
  */
-public class Mercado {
+public class Mercado implements Serializable{
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     // COMPRAR:
@@ -33,6 +34,8 @@ public class Mercado {
     private Alimentos[] alimentosGranjero;
     private MateriasPrimas[] materiasGranjero;
 
+    private static final long serialVersionUID = 71204631;
+    
     // INSTANCIAS --------------------------------------------------------------
     Recreador recreador = new Recreador();
     ArchivosBinarios binario = new ArchivosBinarios();

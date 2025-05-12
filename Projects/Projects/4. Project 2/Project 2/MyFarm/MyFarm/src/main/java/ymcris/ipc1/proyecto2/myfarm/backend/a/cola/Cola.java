@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.cola;
 
+import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ColaException;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
@@ -12,13 +13,15 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
  * @param <T> Tipo de dato que tendrá el contenedor.
  * @since May 5, 2025
  */
-public class Cola<T> {
+public class Cola<T> implements Serializable{
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private ListaDoble<T> contenedor;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int indice;
+    
+    private static final long serialVersionUID = 528210342;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Cola() {

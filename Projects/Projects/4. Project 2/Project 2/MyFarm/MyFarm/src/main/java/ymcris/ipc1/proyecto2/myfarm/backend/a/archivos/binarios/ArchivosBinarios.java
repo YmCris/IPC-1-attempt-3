@@ -6,10 +6,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granja.Granja;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
@@ -19,15 +21,19 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
  * @author YmCris
  * @since May 9, 2025
  */
-public class ArchivosBinarios {
+public class ArchivosBinarios implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private final String rutaProyecto = System.getProperty("user.dir");
     private final String rutaCarpetaAnimales = rutaProyecto + File.separator + "Animales";
     private final String rutaCarpetaSemillas = rutaProyecto + File.separator + "Semillas";
+    private final String rutaCarpetaPartidas = rutaProyecto + File.separator + "Partidas";
+    private final String rutaCarpetaGranjeros = rutaProyecto + File.separator + "Granjeros";
     private final String rutaCarpetaAlimentos = rutaProyecto + File.separator + "Alimentos";
     private final String rutaCarpetaMateriaPrima = rutaProyecto + File.separator + "Materia Prima";
 
+    private static final long serialVersionUID = 99663311;
+    
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
      * Método encargado de crear las carpetas del programa.
@@ -37,6 +43,10 @@ public class ArchivosBinarios {
         File carpetaSemillas = new File(rutaCarpetaSemillas);
         File carpetaMateria = new File(rutaCarpetaMateriaPrima);
         File carpetaProductos = new File(rutaCarpetaAlimentos);
+        File carpetaPartidas = new File(rutaCarpetaPartidas);
+        File carpetaGranjeros = new File(rutaCarpetaGranjeros);
+        carpetaGranjeros.mkdirs();
+        carpetaPartidas.mkdirs();
         carpetaProductos.mkdirs();
         carpetaSemillas.mkdirs();
         carpetaMateria.mkdirs();
@@ -57,6 +67,7 @@ public class ArchivosBinarios {
             out.writeObject(objeto);
         } catch (IOException e) {
             System.out.println("No se pudo guardar el objeto porque " + e.getMessage());
+            e.printStackTrace();
         }
     }
 
@@ -107,6 +118,34 @@ public class ArchivosBinarios {
     public void eliminarArchivo(String rutaCarpeta, String nombreArchivo) {
         File archivo = new File(rutaCarpeta + File.separator + nombreArchivo + ".bin");
         archivo.delete();
+    }
+
+    // PARTIDAS ----------------------------------------------------------------
+    public void guardarPartida(Granja granja) {
+        guardarObjeto(granja, rutaCarpetaPartidas, granja.getNombre());
+    }
+
+    public Granja[] obtenerPartidas() {
+        Object[] objetos = obtenerObjetos(rutaCarpetaPartidas);
+        Granja[] granjas = new Granja[objetos.length];
+        for (int i = 0; i < granjas.length; i++) {
+            granjas[i] = (Granja) objetos[i];
+        }
+        return granjas;
+    }
+
+    // GRANJEROS ---------------------------------------------------------------
+    public void guardarGranjero(Granjero granjero) {
+        guardarObjeto(granjero, rutaCarpetaGranjeros, granjero.getNombre());
+    }
+
+    public Granjero[] obtenerGranjeros() {
+        Object[] objetos = obtenerObjetos(rutaCarpetaGranjeros);
+        Granjero[] granjeros = new Granjero[objetos.length];
+        for (int i = 0; i < granjeros.length; i++) {
+            granjeros[i] = (Granjero) objetos[i];
+        }
+        return granjeros;
     }
 
     // ANIMALES ----------------------------------------------------------------
@@ -267,6 +306,14 @@ public class ArchivosBinarios {
 
     public String getRutaCarpetaMateriaPrima() {
         return rutaCarpetaMateriaPrima;
+    }
+
+    public String getRutaCarpetaPartidas() {
+        return rutaCarpetaPartidas;
+    }
+
+    public String getRutaCarpetaGranjeros() {
+        return rutaCarpetaGranjeros;
     }
 
 }
