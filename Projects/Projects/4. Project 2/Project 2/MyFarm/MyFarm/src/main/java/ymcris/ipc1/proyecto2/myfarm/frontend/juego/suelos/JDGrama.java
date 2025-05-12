@@ -54,13 +54,15 @@ public class JDGrama extends javax.swing.JDialog {
         this.animalCriado = grama.getAnimalCriado();
         desactivarBotones();
     }
-
+    
     private void desactivarBotones() {
         if (grama.estaBloqueado()) {
             btnAgregarFertilizante.setEnabled(false);
             btnCosechar.setEnabled(false);
             btnCriarAnimales.setEnabled(false);
             btnSembrar.setEnabled(false);
+            btnDestazar.setEnabled(false);
+            btnAlimentarAnimal.setEnabled(false);
             return;
         }
         if (grama.tienePlanta() == true && grama.estaOpupado()) {
@@ -78,24 +80,24 @@ public class JDGrama extends javax.swing.JDialog {
         } else {
             activarBotones();
         }
-
+        
     }
-
+    
     private void activarBotones() {
         btnAgregarFertilizante.setEnabled(true);
         btnCosechar.setEnabled(true);
         btnCriarAnimales.setEnabled(true);
         btnSembrar.setEnabled(true);
     }
-
+    
     public void setSemillaAPlantar(Semillas semillaAPlantar) {
         this.semillaAPlantar = semillaAPlantar;
     }
-
+    
     public void setFertilidad(int fertilidad) {
         this.fertilidad = fertilidad;
     }
-
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -117,6 +119,7 @@ public class JDGrama extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         lblAnimalesPermitidos = new javax.swing.JLabel();
         btnAlimentarAnimal = new javax.swing.JButton();
+        btnDestazar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -216,6 +219,19 @@ public class JDGrama extends javax.swing.JDialog {
             }
         });
 
+        btnDestazar.setBackground(new java.awt.Color(51, 51, 51));
+        btnDestazar.setFont(new java.awt.Font("Ravie", 1, 36)); // NOI18N
+        btnDestazar.setForeground(new java.awt.Color(51, 51, 51));
+        btnDestazar.setText("Destazar Animal");
+        btnDestazar.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnDestazar.setOpaque(false);
+        btnDestazar.setBorderPainted(false);
+        btnDestazar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDestazarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
@@ -246,33 +262,39 @@ public class JDGrama extends javax.swing.JDialog {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblAnimalesPermitidos)))
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnDestazar)
+                .addGap(46, 46, 46)
+                .addComponent(btnAgregarFertilizante)
+                .addGap(28, 28, 28))
             .addGroup(pnlFondoLayout.createSequentialGroup()
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(198, 198, 198)
-                        .addComponent(btnSembrar, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(173, 173, 173)
-                        .addComponent(btnCosechar, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlFondoLayout.createSequentialGroup()
+                                .addGap(198, 198, 198)
+                                .addComponent(btnSembrar, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlFondoLayout.createSequentialGroup()
+                                .addGap(153, 153, 153)
+                                .addComponent(btnCriarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(130, 130, 130)
+                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(btnAlimentarAnimal)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                                .addComponent(btnCosechar, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(84, 84, 84))))
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(153, 153, 153)
-                        .addComponent(btnCriarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 384, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(49, 49, 49)
-                        .addComponent(btnAlimentarAnimal))
-                    .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(293, 293, 293)
-                        .addComponent(btnAgregarFertilizante)))
-                .addContainerGap(61, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(239, 239, 239))
+                        .addGap(319, 319, 319)
+                        .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 550, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(95, Short.MAX_VALUE))
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
-                .addGap(17, 17, 17)
+                .addGap(14, 14, 14)
                 .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(lblFertilidad)
@@ -290,21 +312,19 @@ public class JDGrama extends javax.swing.JDialog {
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
                     .addComponent(lblAnimalesPermitidos))
+                .addGap(40, 40, 40)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnSembrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnCosechar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(38, 38, 38)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCosechar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(btnSembrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(36, 36, 36)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnAlimentarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(2, 2, 2)
-                        .addComponent(btnCriarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(31, 31, 31)
-                .addComponent(btnAgregarFertilizante, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(53, 53, 53))
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCriarAnimales, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAlimentarAnimal, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnAgregarFertilizante, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnDestazar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(54, 54, 54))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -344,6 +364,7 @@ public class JDGrama extends javax.swing.JDialog {
                 try {
                     JOptionPane.showMessageDialog(null, "Empieza la crianza del animal", "Crianza", JOptionPane.INFORMATION_MESSAGE);
                     grama.setAnimalCriado(granjero.getAnimales().usar(grama.getAnimalesPermitidos()));
+                    grama.setText("Animal " + grama.getAnimalCriado().getNombre() + " en parcela");
                     grama.criarAnimales(grama.getAnimalCriado());
                     grama.setTieneAnimales(true);
                     grama.setEstaOpupado(true);
@@ -399,11 +420,16 @@ public class JDGrama extends javax.swing.JDialog {
         }
     }//GEN-LAST:event_btnAlimentarAnimalActionPerformed
 
+    private void btnDestazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDestazarActionPerformed
+        
+    }//GEN-LAST:event_btnDestazarActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarFertilizante;
     private javax.swing.JButton btnAlimentarAnimal;
     private javax.swing.JButton btnCosechar;
     private javax.swing.JButton btnCriarAnimales;
+    private javax.swing.JButton btnDestazar;
     private javax.swing.JButton btnSembrar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

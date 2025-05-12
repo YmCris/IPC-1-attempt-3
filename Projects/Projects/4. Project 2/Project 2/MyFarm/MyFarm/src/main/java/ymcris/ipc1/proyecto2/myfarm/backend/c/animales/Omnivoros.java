@@ -11,11 +11,9 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
  */
 public class Omnivoros extends Animales {
 
-    // VARIABLES DE REFERENCIA -------------------------------------------------
-    // VARIABLES PRIMITIVAS ----------------------------------------------------
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 471449985;
-    // INSTANCIAS --------------------------------------------------------------
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Omnivoros(String nombre, int precio, double espacio, int edadMaxima, boolean esHerbivoro, boolean esDestazable, boolean produciraProductosConDestace) {
         super(nombre, precio, espacio, edadMaxima, esHerbivoro, esDestazable, produciraProductosConDestace);
@@ -31,7 +29,4 @@ public class Omnivoros extends Animales {
 
     }
 
-    // MÉTODOS CONCRETOS -------------------------------------------------------
-    // GETTERS -----------------------------------------------------------------
-    // SETTERS -----------------------------------------------------------------
 }

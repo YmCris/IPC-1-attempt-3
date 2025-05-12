@@ -163,6 +163,7 @@ public class JDElegirAlimentoParaAnimal extends javax.swing.JDialog {
         if (granjero.tieneAlimentoDeAnimalSuficiente(nombreAlimento, cantidad)) {
             granjero.quitarCantidadAlimentoParaAnimales(nombreAlimento, cantidad);
             animalAAlimentar.setCantidadDeAlimentoConsumido(animalAAlimentar.getCantidadDeAlimentoConsumido() + cantidad);
+            animalAAlimentar.setHaComido(true);
             JOptionPane.showMessageDialog(null, "Se ha alimentado al animal correctamente", "Animal alimentado", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "No tienes el alimento suficiente", "Error", JOptionPane.WARNING_MESSAGE);

@@ -268,7 +268,6 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
                     String mensaje = binario.editarAnimal(animal, producto, esConDestace);
                     JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
                 }
-                System.out.println("Terminado");
             } else {
                 JOptionPane.showMessageDialog(null, "No puedes agregar ese producto al animal porque sobrepasa el límite de producción, el animal tiene una producción con destace del " + animal.getPorcentajeDeProduccionConDestaze() + " % y una producción sin destace del " + animal.getPorcentajeDeProduccionSinDestaze() + " %", "Animal sobreexplotado", JOptionPane.WARNING_MESSAGE);
             }

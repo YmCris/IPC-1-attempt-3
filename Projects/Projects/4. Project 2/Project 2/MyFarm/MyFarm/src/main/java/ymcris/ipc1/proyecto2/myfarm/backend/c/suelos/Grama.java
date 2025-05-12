@@ -72,7 +72,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
         this.setIcon(icono);
     }
-
+    
     public void agregarImagenSemillaFin() {
         ImageIcon icon = new ImageIcon(getClass().getResource(NOMBRE_IMAGEN_SEMILLA_FIN));
         int ancho = this.getWidth();
@@ -80,7 +80,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
         this.setIcon(icono);
     }
-
+    
     @Override
     public void sembrar(Semillas semilla, JButton boton) {
         agregarImagenSemillaInicio();
@@ -94,24 +94,18 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
             hiloGrano.start();
         }
     }
-
+    
     @Override
     public void criarAnimales(Animales animal) {
-        try {
-            if (animal.esHerbivoro()) {
-                Herbivoros herbivoro = (Herbivoros) animal;
-                Thread hiloHerbivoro = new Thread(herbivoro);
-                hiloHerbivoro.start();
-            } else {
-                Omnivoros omnivoros = (Omnivoros) animal;
-                Thread hiloOmnivoros = new Thread(omnivoros);
-                hiloOmnivoros.start();
-            }
-        } catch (ClassCastException e) {
-            System.out.println("No se pudo iniciar los hilos de animales porque " + e.getMessage());
-        }
+        Animales animalHilo = animal;
+        animalHilo.setVida(30);
+        animalHilo.setEdad(0);
+        animalHilo.setHaComido(false);
+        animalHilo.setGrama(this);
+        Thread hiloAnimal = new Thread(animalHilo);
+        hiloAnimal.start();
     }
-
+    
     public void detenerHilo() {
         try {
             grano.setCosechaRecogida(true);
@@ -122,7 +116,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         } catch (Exception e) {
         }
     }
-
+    
     public void añadirFertilidad(Fertilizantes fertilizante) {
         this.fertilidad = fertilidad + fertilizante.getFertilidad();
     }
@@ -131,35 +125,35 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     public ListaDoble<Animales> getAnimales() {
         return animales;
     }
-
+    
     public String getAnimalesPermitidos() {
         return animalesPermitidos;
     }
-
+    
     public int getFertilidad() {
         return fertilidad;
     }
-
+    
     public boolean esParcela() {
         return esParcela;
     }
-
+    
     public boolean estaOpupado() {
         return estaOpupado;
     }
-
+    
     public Cola<Integer> getOrdenDeProduccionCelda() {
         return ordenDeProduccionCelda;
     }
-
+    
     public Cola<Alimentos> getOrdenDeProduccionAlimentos() {
         return ordenDeProduccionAlimentos;
     }
-
+    
     public boolean tienePlanta() {
         return tienePlanta;
     }
-
+    
     public boolean tieneAnimales() {
         return tieneAnimales;
     }
@@ -168,33 +162,33 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     public void setFertilidad(int fertilidad) {
         this.fertilidad = fertilidad;
     }
-
+    
     public void setEsParcela(boolean esParcela) {
         this.esParcela = esParcela;
     }
-
+    
     public void setAnimalesPermitidos(String animalesPermitidos) {
         this.animalesPermitidos = animalesPermitidos;
     }
-
+    
     public void setEstaOpupado(boolean estaOpupado) {
         this.estaOpupado = estaOpupado;
     }
-
+    
     public void setTienePlanta(boolean tienePlanta) {
         this.tienePlanta = tienePlanta;
     }
-
+    
     public void setTieneAnimales(boolean tieneAnimales) {
         this.tieneAnimales = tieneAnimales;
     }
-
+    
     public Animales getAnimalCriado() {
         return animalCriado;
     }
-
+    
     public void setAnimalCriado(Animales animalCriado) {
         this.animalCriado = animalCriado;
     }
-
+    
 }

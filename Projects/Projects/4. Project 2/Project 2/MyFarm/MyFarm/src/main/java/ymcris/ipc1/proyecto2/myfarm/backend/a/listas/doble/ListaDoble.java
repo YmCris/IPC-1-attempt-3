@@ -1,8 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
 
 import java.io.Serializable;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
