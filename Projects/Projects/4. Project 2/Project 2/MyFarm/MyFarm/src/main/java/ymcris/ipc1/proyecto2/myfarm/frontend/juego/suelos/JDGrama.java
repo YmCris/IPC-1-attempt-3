@@ -43,6 +43,7 @@ public class JDGrama extends javax.swing.JDialog {
         lblFertilidad.setText(String.valueOf(grama.getFertilidad()));
         lblEstaOcupado.setText(String.valueOf(grama.estaOpupado()));
         lblEstaSucio.setText(String.valueOf(grama.estaSucio()));
+        lblEsParcela.setText(String.valueOf(grama.esParcela()));
         this.boton = btnCosechar;
         desactivarBotones();
     }
@@ -105,6 +106,8 @@ public class JDGrama extends javax.swing.JDialog {
         btnCosechar = new javax.swing.JButton();
         lblEstaSucio = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
+        lblEsParcela = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -160,11 +163,11 @@ public class JDGrama extends javax.swing.JDialog {
 
         jLabel1.setText("Fertilidad:");
 
-        lblFertilidad.setText("Fertilidad:");
+        lblFertilidad.setText("120");
 
         jLabel2.setText("Esta Ocupado:");
 
-        lblEstaOcupado.setText("Fertilidad:");
+        lblEstaOcupado.setText("true");
 
         btnCosechar.setBackground(new java.awt.Color(51, 51, 51));
         btnCosechar.setFont(new java.awt.Font("Ravie", 1, 36)); // NOI18N
@@ -179,9 +182,13 @@ public class JDGrama extends javax.swing.JDialog {
             }
         });
 
-        lblEstaSucio.setText("Fertilidad:");
+        lblEstaSucio.setText("true");
 
         jLabel3.setText("Esta Sucio");
+
+        lblEsParcela.setText("true");
+
+        jLabel4.setText("Es Parcela");
 
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
@@ -205,41 +212,43 @@ public class JDGrama extends javax.swing.JDialog {
                                     .addComponent(btnSembrar, javax.swing.GroupLayout.PREFERRED_SIZE, 296, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addGap(290, 290, 290))))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
-                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlFondoLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblEstaOcupado))
-                            .addComponent(jLabel1))
-                        .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlFondoLayout.createSequentialGroup()
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblFertilidad))
-                            .addGroup(pnlFondoLayout.createSequentialGroup()
-                                .addGap(20, 20, 20)
-                                .addComponent(jLabel3)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(lblEstaSucio)))
-                        .addGap(300, 300, 300))))
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblFertilidad)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEsParcela)
+                        .addGap(332, 332, 332))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlFondoLayout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEstaOcupado)
+                        .addGap(18, 18, 18)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(lblEstaSucio)
+                        .addGap(320, 320, 320))))
         );
         pnlFondoLayout.setVerticalGroup(
             pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlFondoLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblTitulo2, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(34, 34, 34)
+                .addGap(32, 32, 32)
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
-                    .addComponent(lblFertilidad))
+                    .addComponent(lblFertilidad)
+                    .addComponent(jLabel4)
+                    .addComponent(lblEsParcela))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblEstaOcupado)
                     .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(jLabel3)
-                        .addComponent(lblEstaSucio))
-                    .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel2)
-                        .addComponent(lblEstaOcupado)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                        .addComponent(lblEstaSucio)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(btnCosechar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnSembrar, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -322,6 +331,8 @@ public class JDGrama extends javax.swing.JDialog {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel lblEsParcela;
     private javax.swing.JLabel lblEstaOcupado;
     private javax.swing.JLabel lblEstaSucio;
     private javax.swing.JLabel lblFertilidad;

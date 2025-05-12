@@ -1,7 +1,5 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.elementos;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;

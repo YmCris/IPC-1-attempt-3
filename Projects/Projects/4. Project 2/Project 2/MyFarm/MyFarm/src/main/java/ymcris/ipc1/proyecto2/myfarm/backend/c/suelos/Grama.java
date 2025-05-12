@@ -38,6 +38,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     private boolean esParcela;
     private boolean estaOpupado;
     private boolean tienePlanta;
+    private boolean tieneAnimales;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String NOMBRE_SUELO = "Grama";
@@ -124,15 +125,11 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         return fertilidad;
     }
 
-    public boolean isEsParcela() {
+    public boolean esParcela() {
         return esParcela;
     }
 
     public boolean estaOpupado() {
-        return estaOpupado;
-    }
-
-    public boolean isEstaOpupado() {
         return estaOpupado;
     }
 
@@ -146,6 +143,10 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     public boolean tienePlanta() {
         return tienePlanta;
+    }
+
+    public boolean tieneAnimales() {
+        return tieneAnimales;
     }
 
     // SETTERS -----------------------------------------------------------------
@@ -167,6 +168,10 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     public void setTienePlanta(boolean tienePlanta) {
         this.tienePlanta = tienePlanta;
+    }
+
+    public void setTieneAnimales(boolean tieneAnimales) {
+        this.tieneAnimales = tieneAnimales;
     }
 
 }

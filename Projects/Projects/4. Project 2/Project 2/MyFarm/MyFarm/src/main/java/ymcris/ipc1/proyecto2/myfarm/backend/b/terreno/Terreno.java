@@ -72,8 +72,60 @@ public final class Terreno {
 
     }
 
-    public void crearParcela() {
+    public boolean parcelaEliminada(int filaInicio, int columnaInicio, int filaFin, int columnaFin, String nombreAnimal) {
+        try {
+            if (parcelaCreada(filaInicio, columnaInicio, filaFin, columnaFin, nombreAnimal)) {
+                for (int i = filaInicio; i <= filaFin; i++) {
+                    for (int j = columnaInicio; j <= columnaFin; j++) {
+                        Suelo suelo = tablero.obtenerNodo(i, j).getSuelo();
+                        if (suelo instanceof Grama grama) {
+                            grama.setEsParcela(false);
+                            grama.setAnimalesPermitidos("No hay animales permitidos");
+                        }
+                    }
+                }
+                return true;
+            }
+        } catch (ListaOrtogonalException e) {
+            System.out.println("No se ha podido crear la parcela porque " + e.getMessage());
+        }
+        return false;
+    }
 
+    public boolean parcelaCreada(int filaInicio, int columnaInicio, int filaFin, int columnaFin, String nombreAnimal) {
+        try {
+            for (int i = filaInicio; i <= filaFin; i++) {// verificación para saber si son del tipo grama
+                for (int j = columnaInicio; j <= columnaFin; j++) {
+                    Suelo suelo = tablero.obtenerNodo(i, j).getSuelo();
+                    if (suelo instanceof Agua || suelo instanceof Desierto) {
+                        return false;
+                    }
+                }
+            }
+            for (int i = filaInicio; i <= filaFin; i++) {// verificar que no este ocupada
+                for (int j = columnaInicio; j <= columnaFin; j++) {
+                    Suelo suelo = tablero.obtenerNodo(i, j).getSuelo();
+                    if (suelo instanceof Grama grama) {
+                        if (grama.estaOpupado() || grama.tieneAnimales() || grama.tienePlanta()) {
+                            return false;
+                        }
+                    }
+                }
+            }
+            for (int i = filaInicio; i <= filaFin; i++) {// asignarlo como parcela
+                for (int j = columnaInicio; j <= columnaFin; j++) {
+                    Suelo suelo = tablero.obtenerNodo(i, j).getSuelo();
+                    if (suelo instanceof Grama grama) {
+                        grama.setEsParcela(true);
+                        grama.setAnimalesPermitidos(nombreAnimal);
+                    }
+                }
+            }
+            return true;
+        } catch (ListaOrtogonalException e) {
+            System.out.println("No se ha podido crear la parcela porque " + e.getMessage());
+            return false;
+        }
     }
 
     public void eliminarParcela() {
@@ -96,6 +148,11 @@ public final class Terreno {
                     if (suelo.estaSucio()) {
                         suelo.setEstaSucio(false);
                         suelo.setBloqueado(false);
+                        if (suelo instanceof Grama grama) {
+                            if (grama.tieneAnimales() == false || grama.tienePlanta() == false) {
+                                grama.setEstaOpupado(false);
+                            }
+                        }
                         suelo.colocarImagen();
                     }
                 }
@@ -110,6 +167,11 @@ public final class Terreno {
             Suelo suelo = tablero.obtenerNodo(fila, columna).getSuelo();
             suelo.setEstaSucio(false);
             suelo.setBloqueado(false);
+            if (suelo instanceof Grama grama) {
+                if (grama.tieneAnimales() == false || grama.tienePlanta() == false) {
+                    grama.setEstaOpupado(false);
+                }
+            }
             suelo.colocarImagen();
         } catch (ListaOrtogonalException e) {
             System.out.println("Hubo un error al limpiar la celda [" + fila + "," + columna + "] porque " + e.getMessage());

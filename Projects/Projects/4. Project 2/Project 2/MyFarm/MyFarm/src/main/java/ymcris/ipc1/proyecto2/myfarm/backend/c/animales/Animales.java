@@ -100,7 +100,7 @@ public class Animales implements Runnable, Serializable {
         return espacio;
     }
 
-    public boolean isEsHerbivoro() {
+    public boolean esHerbivoro() {
         return esHerbivoro;
     }
 
@@ -116,11 +116,11 @@ public class Animales implements Runnable, Serializable {
         return porcentajeDeProduccionSinDestaze;
     }
 
-    public boolean isEsDestazable() {
+    public boolean esDestazable() {
         return esDestazable;
     }
 
-    public boolean isProduciraProductosConDestace() {
+    public boolean produciraProductosConDestace() {
         return produciraProductosConDestace;
     }
 

@@ -20,8 +20,8 @@ public abstract class Suelo extends JButton {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int fila;
     private int columna;
+    protected boolean bloqueado;
     protected boolean estaSucio;
-    public boolean bloqueado;
     // CONSTANTES --------------------------------------------------------------
     public static final int PRECIO_DE_COMPRA = 40;
 
@@ -106,7 +106,5 @@ public abstract class Suelo extends JButton {
     public void setBloqueado(boolean bloqueado) {
         this.bloqueado = bloqueado;
     }
-
-    
 
 }
