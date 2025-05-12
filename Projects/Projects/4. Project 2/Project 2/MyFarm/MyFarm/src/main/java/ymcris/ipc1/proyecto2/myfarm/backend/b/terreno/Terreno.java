@@ -6,11 +6,11 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Desierto;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.NodoOrtogonal;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.ListaOrtogonal;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
-import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 
 /**
  * Clase Terreno
@@ -27,7 +27,8 @@ public final class Terreno {
     private Cola<Alimentos> ordenDeProduccionAlimentos;
 
     // CONSTANTES --------------------------------------------------------------
-    private static final int PRECIO_LIMPIEZA = 15;
+    public static final int PRECIO_LIMPIEZA_TODO_EL_TERRENO = 300;
+    public static final int PRECIO_LIMPIEZA_CELDA = 50;
     private static final int DISTRIBUCION_GRAMA = 40;
     private static final int DISTRIBUCION_DESIERTO = 25;
 
@@ -86,10 +87,38 @@ public final class Terreno {
             System.out.println("No se pudo modificar la celda porque " + ex.getMessage());
         }
     }
-    // GETTERS -----------------------------------------------------------------
 
-    // SETTERS -----------------------------------------------------------------
+    public void limpiarTerreno() {
+        try {
+            for (int i = 0; i < tablero.getFilas(); i++) {
+                for (int j = 0; j < tablero.getColumnas(); j++) {
+                    Suelo suelo = tablero.obtenerNodo(i, j).getSuelo();
+                    if (suelo.estaSucio()) {
+                        suelo.setEstaSucio(false);
+                        suelo.setBloqueado(false);
+                        suelo.colocarImagen();
+                    }
+                }
+            }
+        } catch (ListaOrtogonalException e) {
+            System.out.println("Hubo un error al limpiar el terreno porque " + e.getMessage());
+        }
+    }
+
+    public void limpiarTerreno(int fila, int columna) {
+        try {
+            Suelo suelo = tablero.obtenerNodo(fila, columna).getSuelo();
+            suelo.setEstaSucio(false);
+            suelo.setBloqueado(false);
+            suelo.colocarImagen();
+        } catch (ListaOrtogonalException e) {
+            System.out.println("Hubo un error al limpiar la celda [" + fila + "," + columna + "] porque " + e.getMessage());
+        }
+    }
+
+    // GETTERS -----------------------------------------------------------------
     public ListaOrtogonal getTablero() {
         return tablero;
     }
+    // SETTERS -----------------------------------------------------------------
 }

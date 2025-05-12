@@ -48,6 +48,13 @@ public class JDGrama extends javax.swing.JDialog {
     }
 
     private void desactivarBotones() {
+        if (grama.estaBloqueado()) {
+            btnAgregarFertilizante.setEnabled(false);
+            btnCosechar.setEnabled(false);
+            btnCriarAnimales.setEnabled(false);
+            btnSembrar.setEnabled(false);
+            return;
+        }
         if (grama.tienePlanta() == true && grama.estaOpupado()) {
             btnAgregarFertilizante.setEnabled(false);
             btnCosechar.setEnabled(false);
@@ -297,6 +304,7 @@ public class JDGrama extends javax.swing.JDialog {
             } catch (ColaException | ListaDobleException ex) {
                 JOptionPane.showMessageDialog(null, "No puedes recolectar la cosecha porque se ha podrido", "Cosecha podrida", JOptionPane.INFORMATION_MESSAGE);
                 grama.detenerHilo();
+                desactivarBotones();
                 lblEstaOcupado.setText(String.valueOf(grama.estaOpupado()));
                 lblEstaSucio.setText(String.valueOf(grama.estaSucio()));
             }

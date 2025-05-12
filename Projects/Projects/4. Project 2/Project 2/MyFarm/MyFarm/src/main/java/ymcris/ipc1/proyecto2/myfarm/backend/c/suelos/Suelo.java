@@ -21,7 +21,7 @@ public abstract class Suelo extends JButton {
     private int fila;
     private int columna;
     protected boolean estaSucio;
-
+    public boolean bloqueado;
     // CONSTANTES --------------------------------------------------------------
     public static final int PRECIO_DE_COMPRA = 40;
 
@@ -30,6 +30,7 @@ public abstract class Suelo extends JButton {
         this.fila = 0;
         this.columna = 0;
         this.estaSucio = false;
+        this.bloqueado = false;
         this.setSize(250, 180);
         this.setText("");
         this.setHorizontalTextPosition(CENTER);
@@ -77,13 +78,13 @@ public abstract class Suelo extends JButton {
         return columna;
     }
 
+    public boolean estaBloqueado() {
+        return bloqueado;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
-    }
-
-    public void estaSucio(boolean estaSucio) {
-        this.estaSucio = estaSucio;
     }
 
     public void setEstaSucio(boolean estaSucio) {
@@ -97,5 +98,15 @@ public abstract class Suelo extends JButton {
     public void setColumna(int columna) {
         this.columna = columna;
     }
+
+    public boolean isBloqueado() {
+        return bloqueado;
+    }
+
+    public void setBloqueado(boolean bloqueado) {
+        this.bloqueado = bloqueado;
+    }
+
+    
 
 }

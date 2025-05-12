@@ -73,6 +73,7 @@ public class Frutas extends Planta {
                                 ordenDeProduccionAlimentos.sacarElemento();
                                 this.getGrama().setText("Cosecha podrida");
                                 this.getGrama().setEstaSucio(true);
+                                this.getGrama().setBloqueado(true);
                             } catch (ColaException | ListaDobleException | NullPointerException ex) {
                                 System.out.println("Ha ocurrido un error al sacar el elemento que se pudrio porque " + ex.getMessage());
                             }
