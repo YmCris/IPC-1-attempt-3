@@ -32,14 +32,14 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
         pnlFondo.add(new PanelPersonalizado(pnlFondo, RUTA_IMAGEN)).repaint();
         agregarAnimales();
     }
-    
+
     private void agregarAnimales() {
         Animales[] animales = binario.obtenerAnimales();
         for (Animales animal : animales) {
             cbAnimal.addItem(animal.getNombre());
         }
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -254,25 +254,31 @@ public class JFEditoDeAnimales extends javax.swing.JFrame {
         boolean esConDestace = chbSeObtieneAlDestazar.isSelected();
         if (nombreProducto == null || nombreAnimal.isBlank()) {
             JOptionPane.showMessageDialog(null, "Debes agregar algún producto, primero define si el producto será con destace o no", "Erero", JOptionPane.ERROR_MESSAGE);
-        } else {
-            Animales animal = (Animales) binario.obtenerObjeto(binario.getRutaCarpetaAnimales(), nombreAnimal);
-            if (animal.getPorcentajeDeProduccionConDestaze() + porcentajeDeProduccion < 100 || animal.getPorcentajeDeProduccionSinDestaze() + porcentajeDeProduccion < 100) {
-                Productos producto;
-                if (archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombreProducto + ".bin")) {
-                    producto = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), nombreProducto);
-                    producto.setProduccion(porcentajeDeProduccion);
-                    String mensaje = binario.editarAnimal(animal, producto, esConDestace);
-                    JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
-                } else if (archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombreProducto + ".bin")) {
-                    producto = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), nombreProducto);
-                    String mensaje = binario.editarAnimal(animal, producto, esConDestace);
-                    JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(null, "No puedes agregar ese producto al animal porque sobrepasa el límite de producción, el animal tiene una producción con destace del " + animal.getPorcentajeDeProduccionConDestaze() + " % y una producción sin destace del " + animal.getPorcentajeDeProduccionSinDestaze() + " %", "Animal sobreexplotado", JOptionPane.WARNING_MESSAGE);
-            }
-            
+            return;
         }
+        Animales animal = (Animales) binario.obtenerObjeto(binario.getRutaCarpetaAnimales(), nombreAnimal);
+        if (esConDestace) {//MATERIA PRIMA
+            if (animal.getPorcentajeDeProduccionMateriaPrima() + porcentajeDeProduccion <= 100) {
+                if (archivo.existeArchivo(binario.getRutaCarpetaMateriaPrima(), nombreProducto + ".bin")) {
+                    MateriasPrimas materia = (MateriasPrimas) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), nombreProducto);
+                    materia.setProduccion(porcentajeDeProduccion);
+                    String mensaje = binario.editarAnimalMateriaPrima(animal, materia, porcentajeDeProduccion);
+                    JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+        } else {//ALIMENTOS
+            if (animal.getPorcentajeDeProduccionAlimentos() + porcentajeDeProduccion <= 100) {
+                if (archivo.existeArchivo(binario.getRutaCarpetaAlimentos(), nombreProducto + ".bin")) {
+                    Alimentos alimento = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), nombreProducto);
+                    alimento.setProduccion(porcentajeDeProduccion);
+                    String mensaje = binario.editarAnimalAlimentos(animal, alimento, porcentajeDeProduccion);
+                    JOptionPane.showMessageDialog(null, mensaje, "Animal Modificado", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }
+            }
+        }
+        JOptionPane.showMessageDialog(null, "No puedes agregar ese producto al animal porque sobrepasa el límite de producción, el animal tiene una producción con destace del " + animal.getPorcentajeDeProduccionMateriaPrima() + " % y una producción sin destace del " + animal.getPorcentajeDeProduccionAlimentos() + " %", "Animal sobreexplotado", JOptionPane.WARNING_MESSAGE);
     }//GEN-LAST:event_btnCrearPlantaActionPerformed
 
     private void btnIrAlMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIrAlMenuActionPerformed

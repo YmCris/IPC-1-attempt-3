@@ -2,8 +2,8 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.animales;
 
 import java.io.Serializable;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Productos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
 
 /**
@@ -18,8 +18,8 @@ public class Animales implements Runnable, Serializable {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected String nombre;
     protected Grama grama;
-    protected ListaDoble<Productos> productosDestazables = new ListaDoble<>();
-    protected ListaDoble<Productos> productosNoDestazables = new ListaDoble<>();
+    protected ListaDoble<MateriasPrimas> materiasPrimas = new ListaDoble<>();
+    protected ListaDoble<Alimentos> alimentos = new ListaDoble<>();
 
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 7894124;
@@ -34,8 +34,8 @@ public class Animales implements Runnable, Serializable {
     protected boolean esHerbivoro;
     protected boolean esDestazable;
     protected int cantidadDeAlimentoConsumido;
-    protected int porcentajeDeProduccionConDestaze;
-    protected int porcentajeDeProduccionSinDestaze;
+    protected int porcentajeDeProduccionMateriaPrima;
+    protected int porcentajeDeProduccionAlimentos;
     protected boolean produciraProductosConDestace;
 
     // CONSTANTES --------------------------------------------------------------
@@ -59,11 +59,11 @@ public class Animales implements Runnable, Serializable {
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public MateriasPrimas[] producirMateriaPrima() {
         /*
-        MateriasPrimas[] materias = new MateriasPrimas[productosNoDestazables.length()];
+        MateriasPrimas[] materias = new MateriasPrimas[alimentos.length()];
         for (int i = 0; i < materias.length; i++) {
-            materias[i] = productosDestazables.usar(nombre);
+            materias[i] = materiasPrimas.usar(nombre);
         }
-*/
+         */
         return null;
     }
 
@@ -120,12 +120,12 @@ public class Animales implements Runnable, Serializable {
         return nombre;
     }
 
-    public ListaDoble<Productos> getProductosDestazables() {
-        return productosDestazables;
+    public ListaDoble<MateriasPrimas> getMateriasPrimas() {
+        return materiasPrimas;
     }
 
-    public ListaDoble<Productos> getProductosNoDestazables() {
-        return productosNoDestazables;
+    public ListaDoble<Alimentos> getAlimentos() {
+        return alimentos;
     }
 
     public int getVida() {
@@ -144,8 +144,8 @@ public class Animales implements Runnable, Serializable {
         return edadMaxima;
     }
 
-    public int getPorcentajeDeProduccionConDestaze() {
-        return porcentajeDeProduccionConDestaze;
+    public int getPorcentajeDeProduccionMateriaPrima() {
+        return porcentajeDeProduccionMateriaPrima;
     }
 
     public double getEspacio() {
@@ -164,8 +164,8 @@ public class Animales implements Runnable, Serializable {
         return PORCENTAJE_MAXIMO_DE_PRODUCCION;
     }
 
-    public int getPorcentajeDeProduccionSinDestaze() {
-        return porcentajeDeProduccionSinDestaze;
+    public int getPorcentajeDeProduccionAlimentos() {
+        return porcentajeDeProduccionAlimentos;
     }
 
     public boolean esDestazable() {
@@ -193,12 +193,12 @@ public class Animales implements Runnable, Serializable {
         this.cantidadDeAlimentoConsumido = cantidadDeAlimentoConsumido;
     }
 
-    public void setPorcentajeDeProduccionConDestaze(int porcentajeDeProduccionConDestaze) {
-        this.porcentajeDeProduccionConDestaze = porcentajeDeProduccionConDestaze;
+    public void setPorcentajeDeProduccionMateriaPrima(int porcentajeDeProduccionMateriaPrima) {
+        this.porcentajeDeProduccionMateriaPrima = porcentajeDeProduccionMateriaPrima;
     }
 
-    public void setPorcentajeDeProduccionSinDestaze(int porcentajeDeProduccionSinDestaze) {
-        this.porcentajeDeProduccionSinDestaze = porcentajeDeProduccionSinDestaze;
+    public void setPorcentajeDeProduccionAlimentos(int porcentajeDeProduccionAlimentos) {
+        this.porcentajeDeProduccionAlimentos = porcentajeDeProduccionAlimentos;
     }
 
     public boolean haComido() {

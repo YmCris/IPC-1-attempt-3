@@ -107,28 +107,28 @@ public class Creador {
      * además de modificar sus respectivas listas.
      */
     public void crearAnimalesPredeterminados() {
-        Productos cuero = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), "cuero");
-        Productos carne = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), "carne");
-        Productos leche = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "leche");
-        Productos huevos = (Productos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "huevo");
+        MateriasPrimas cuero = (MateriasPrimas) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), "cuero");
+        MateriasPrimas carne = (MateriasPrimas) binario.obtenerObjeto(binario.getRutaCarpetaMateriaPrima(), "carne");
+        Alimentos leche = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "leche");
+        Alimentos huevos = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "huevo");
         Herbivoros vaca = new Herbivoros("vaca", 500, 2, 600, true, true, true);
         cuero.setProduccion(25);
-        vaca.getProductosDestazables().agregar(cuero, cuero.getNombre());
-        vaca.setPorcentajeDeProduccionConDestaze(vaca.getPorcentajeDeProduccionConDestaze() + 25);
+        vaca.getMateriasPrimas().agregar(cuero, cuero.getNombre());
+        vaca.setPorcentajeDeProduccionMateriaPrima(vaca.getPorcentajeDeProduccionMateriaPrima() + 25);
         carne.setProduccion(75);
-        vaca.getProductosDestazables().agregar(carne, carne.getNombre());
-        vaca.setPorcentajeDeProduccionConDestaze(vaca.getPorcentajeDeProduccionConDestaze() + 75);
+        vaca.getMateriasPrimas().agregar(carne, carne.getNombre());
+        vaca.setPorcentajeDeProduccionMateriaPrima(vaca.getPorcentajeDeProduccionMateriaPrima() + 75);
         leche.setProduccion(100);
-        vaca.getProductosNoDestazables().agregar(leche, leche.getNombre());
-        vaca.setPorcentajeDeProduccionSinDestaze(vaca.getPorcentajeDeProduccionSinDestaze() + 100);
+        vaca.getAlimentos().agregar(leche, leche.getNombre());
+        vaca.setPorcentajeDeProduccionAlimentos(vaca.getPorcentajeDeProduccionAlimentos() + 100);
         binario.guardarAnimales(vaca);
         Omnivoros gallina = new Omnivoros("gallina", 50, 0.5, 180, false, true, true);
         carne.setProduccion(100);
-        gallina.getProductosDestazables().agregar(carne, carne.getNombre());
-        gallina.setPorcentajeDeProduccionConDestaze(gallina.getPorcentajeDeProduccionConDestaze() + carne.getProduccion());
+        gallina.getMateriasPrimas().agregar(carne, carne.getNombre());
+        gallina.setPorcentajeDeProduccionMateriaPrima(gallina.getPorcentajeDeProduccionMateriaPrima() + carne.getProduccion());
         huevos.setProduccion(100);
-        gallina.getProductosNoDestazables().agregar(huevos, huevos.getNombre());
-        gallina.setPorcentajeDeProduccionSinDestaze(gallina.getPorcentajeDeProduccionSinDestaze() + huevos.getProduccion());
+        gallina.getAlimentos().agregar(huevos, huevos.getNombre());
+        gallina.setPorcentajeDeProduccionAlimentos(gallina.getPorcentajeDeProduccionAlimentos() + huevos.getProduccion());
         binario.guardarAnimales(gallina);
     }
 

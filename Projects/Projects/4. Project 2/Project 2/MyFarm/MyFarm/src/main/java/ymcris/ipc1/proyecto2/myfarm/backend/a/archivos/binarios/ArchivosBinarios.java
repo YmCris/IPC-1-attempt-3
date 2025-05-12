@@ -219,29 +219,31 @@ public class ArchivosBinarios {
      * pero ahora con la nueva instancia de animal.
      *
      * @param animal animal a modificar.
-     * @param producto producto a agregar.
-     * @param esConDestace si el producto a agregar es con destace
+     * @param materia producto a agregar.
+     * @param porcentajeDeProduccion
      * @return un chingo de mensajes porque es necesario comunicarle al frontend
      * que chingados pasó.
      */
-    public String editarAnimal(Animales animal, Productos producto, boolean esConDestace) {
+    public String editarAnimalMateriaPrima(Animales animal, MateriasPrimas materia, int porcentajeDeProduccion) {
         Animales nuevoAnimal = animal;
-        if (esConDestace) {
-            if ((nuevoAnimal.getPorcentajeDeProduccionConDestaze() + producto.getProduccion()) <= 100) {
-                nuevoAnimal.getProductosDestazables().agregar(producto, producto.getNombre());
-                nuevoAnimal.setPorcentajeDeProduccionConDestaze(nuevoAnimal.getPorcentajeDeProduccionConDestaze() + producto.getProduccion());
-                eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
-                guardarAnimales(nuevoAnimal);
-                return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción con destace del " + nuevoAnimal.getPorcentajeDeProduccionConDestaze();
-            }
-        } else {
-            if ((nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + producto.getProduccion()) <= 100) {
-                nuevoAnimal.getProductosNoDestazables().agregar(producto, producto.getNombre());
-                nuevoAnimal.setPorcentajeDeProduccionSinDestaze(nuevoAnimal.getPorcentajeDeProduccionSinDestaze() + producto.getProduccion());
-                eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
-                guardarAnimales(nuevoAnimal);
-                return "Se ha agregado el producto " + producto.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción sin destace del " + nuevoAnimal.getPorcentajeDeProduccionSinDestaze();
-            }
+        if ((nuevoAnimal.getPorcentajeDeProduccionMateriaPrima() + porcentajeDeProduccion) <= 100) {
+            nuevoAnimal.getMateriasPrimas().agregar(materia, materia.getNombre());
+            nuevoAnimal.setPorcentajeDeProduccionMateriaPrima(nuevoAnimal.getPorcentajeDeProduccionMateriaPrima() + porcentajeDeProduccion);
+            eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
+            guardarAnimales(nuevoAnimal);
+            return "Se ha agregado el producto " + materia.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción con destace del " + nuevoAnimal.getPorcentajeDeProduccionMateriaPrima();
+        }
+        return "No puedes agregarle ese alimento que se obtiene al destazar el animal, porque sobrepasa el límite";
+    }
+
+    public String editarAnimalAlimentos(Animales animal, Alimentos alimento, int porcentajeDeProduccion) {
+        Animales nuevoAnimal = animal;
+        if ((nuevoAnimal.getPorcentajeDeProduccionAlimentos() + porcentajeDeProduccion) <= 100) {
+            nuevoAnimal.getAlimentos().agregar(alimento, alimento.getNombre());
+            nuevoAnimal.setPorcentajeDeProduccionAlimentos(nuevoAnimal.getPorcentajeDeProduccionAlimentos() + porcentajeDeProduccion);
+            eliminarArchivo(rutaCarpetaAnimales, nuevoAnimal.getNombre());
+            guardarAnimales(nuevoAnimal);
+            return "Se ha agregado el producto " + alimento.getNombre() + " al animal " + nuevoAnimal.getNombre() + " ahora tiene un porcentaje de producción sin destace del " + nuevoAnimal.getPorcentajeDeProduccionAlimentos();
         }
         return "No puedes agregarle ese alimento que se obtiene al destazar el animal, porque sobrepasa el límite";
     }
