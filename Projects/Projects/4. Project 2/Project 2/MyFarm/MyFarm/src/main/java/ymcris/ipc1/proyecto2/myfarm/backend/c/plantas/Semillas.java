@@ -18,6 +18,8 @@ public class Semillas implements Serializable {
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int precio;
     private int cantidad;
+    private int semillasAdquiridas;
+    private int celdasDeTerrenoSembradas;
     private int cantidadDeSemillasRequerida;
     private boolean produceFruta;
 
@@ -66,5 +68,21 @@ public class Semillas implements Serializable {
     public void setAlimento(Alimentos alimento) {
         this.alimento = alimento;
     }
-    
+
+    public int getSemillasAdquiridas() {
+        return semillasAdquiridas;
+    }
+
+    public void setSemillasAdquiridas(int semillasAdquiridas) {
+        this.semillasAdquiridas = semillasAdquiridas;
+    }
+
+    public int getCeldasDeTerrenoSembradas() {
+        return celdasDeTerrenoSembradas;
+    }
+
+    public void setCeldasDeTerrenoSembradas(int celdasDeTerrenoSembradas) {
+        this.celdasDeTerrenoSembradas = celdasDeTerrenoSembradas;
+    }
+
 }

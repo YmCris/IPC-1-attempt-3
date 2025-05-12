@@ -26,6 +26,8 @@ public class Animales implements Runnable, Serializable {
     private static final long serialVersionUID = 7894124;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    protected int criasCompradas;
+    protected int vecesDestazado;
     protected int vida;
     protected int edad;
     protected int precio;
@@ -256,4 +258,20 @@ public class Animales implements Runnable, Serializable {
         this.grama = grama;
     }
 
+    public int getCriasCompradas() {
+        return criasCompradas;
+    }
+
+    public void setCriasCompradas(int criasCompradas) {
+        this.criasCompradas = criasCompradas;
+    }
+
+    public int getVecesDestazado() {
+        return vecesDestazado;
+    }
+
+    public void setVecesDestazado(int vecesDestazado) {
+        this.vecesDestazado = vecesDestazado;
+    }
+    
 }

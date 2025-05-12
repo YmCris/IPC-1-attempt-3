@@ -23,6 +23,9 @@ public class Granja implements Serializable, Runnable {
     private Terreno terreno;
     private Mercado mercado;
     private Granjero granjero;
+    private int oroGenerado;
+    private int alimentoGenerado;
+    private int alimentoConsumido;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tiempoJugado;
@@ -58,6 +61,9 @@ public class Granja implements Serializable, Runnable {
 
     public void jugar() {
         if (granjero.haComido()) {//Si ha comido se reinicia el contador
+            alimentoConsumido++;
+            this.setOroGenerado(granjero.getOro());
+            this.setAlimentoGenerado(granjero.getAlimentos().length());
             contador = 0;
             if (granjero.haComidoLoSuficiente()) {
                 granjero.setVida(granjero.getVida() + 1);
@@ -106,6 +112,26 @@ public class Granja implements Serializable, Runnable {
 
     public String getNombre() {
         return nombre;
+    }
+
+    public int getOroGenerado() {
+        return oroGenerado;
+    }
+
+    public void setOroGenerado(int oroGenerado) {
+        this.oroGenerado = oroGenerado;
+    }
+
+    public int getAlimentoGenerado() {
+        return alimentoGenerado;
+    }
+
+    public void setAlimentoGenerado(int alimentoGenerado) {
+        this.alimentoGenerado = alimentoGenerado;
+    }
+
+    public int getAlimentoConsumido() {
+        return alimentoConsumido;
     }
 
 }

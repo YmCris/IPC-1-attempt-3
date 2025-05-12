@@ -19,16 +19,17 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ArchivoException;
  * @see ArchivoException
  * @since May 3, 2025
  */
-public class Archivos implements Serializable{
+public class Archivos implements Serializable {
 
     // VARIABLES DE REFERNCIA --------------------------------------------------
     private final String rutaProyecto = System.getProperty("user.dir");
     private final String rutaCarpetaFertilizantes = rutaProyecto + File.separator + "Fertilizantes";
     private final String rutaCarpetaAlimentosAnimales = rutaProyecto + File.separator + "Alimentos para animales";
+    private final String rutaCarpetaReportes = rutaProyecto + File.separator + "Reportes";
     private final String rutaCarpetaGranjeros = rutaProyecto + File.separator + "Granjeros";
 
     private static final long serialVersionUID = 884422005;
-    
+
     // MÉTODOS CONCRETOS -------------------------------------------------------
     /**
      * Método encargado de crear las carpetas de los elemntos incambiables.
@@ -36,6 +37,8 @@ public class Archivos implements Serializable{
     public void crearCarpetas() {
         File carpetaFertilizantes = new File(rutaCarpetaFertilizantes);
         File carpetaAlimentosAnimales = new File(rutaCarpetaAlimentosAnimales);
+        File carpetaReportes = new File(rutaCarpetaReportes);
+        carpetaReportes.mkdirs();
         carpetaAlimentosAnimales.mkdirs();
         carpetaFertilizantes.mkdirs();
     }
@@ -50,6 +53,21 @@ public class Archivos implements Serializable{
     public int numeroDeArchivosEnCarpeta(String rutaCarpeta) {
         File file = new File(rutaCarpeta);
         return file.listFiles().length;
+    }
+
+    public String leerArchivo(File archivo) {
+        StringBuilder contenido = new StringBuilder();
+        try (BufferedReader leer = new BufferedReader(new FileReader(archivo))) {
+            String temp;
+            while ((temp = leer.readLine()) != null) {
+                contenido.append(temp);
+                contenido.append("\n");
+            }
+            return contenido.toString();
+        } catch (IOException e) {
+            System.out.println("No se pudo leer en el archivo " + archivo.getName() + ", porque " + e.getMessage());
+            return null;
+        }
     }
 
     /**
@@ -183,5 +201,9 @@ public class Archivos implements Serializable{
     public String getRutaCarpetaGranjeros() {
         return rutaCarpetaGranjeros;
     }
-    
+
+    public String getRutaCarpetaReportes() {
+        return rutaCarpetaReportes;
+    }
+
 }

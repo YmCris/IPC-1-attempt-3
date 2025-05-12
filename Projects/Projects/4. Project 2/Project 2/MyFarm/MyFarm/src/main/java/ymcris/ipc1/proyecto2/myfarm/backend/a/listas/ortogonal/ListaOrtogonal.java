@@ -10,7 +10,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException
  * @author YmCris
  * @since Apr 27, 2025
  */
-public class ListaOrtogonal implements Serializable{
+public class ListaOrtogonal implements Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private NodoOrtogonal inicio;
@@ -31,7 +31,7 @@ public class ListaOrtogonal implements Serializable{
     private int nodosEnColumnas;
 
     private static final long serialVersionUID = 425746024;
-    
+
     public ListaOrtogonal() {
         this.filas = 0;
         this.columnas = 0;
