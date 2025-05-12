@@ -66,8 +66,6 @@ public class JDBodega extends javax.swing.JDialog {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         btnComer = new javax.swing.JButton();
-        btnAgregarMercadoAlimento = new javax.swing.JButton();
-        btnAgregarMercadoMateria = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
@@ -147,20 +145,6 @@ public class JDBodega extends javax.swing.JDialog {
             }
         });
 
-        btnAgregarMercadoAlimento.setText("Agregar al Mercado");
-        btnAgregarMercadoAlimento.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarMercadoAlimentoActionPerformed(evt);
-            }
-        });
-
-        btnAgregarMercadoMateria.setText("Agregar al Mercado");
-        btnAgregarMercadoMateria.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarMercadoMateriaActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlFondoLayout = new javax.swing.GroupLayout(pnlFondo);
         pnlFondo.setLayout(pnlFondoLayout);
         pnlFondoLayout.setHorizontalGroup(
@@ -172,14 +156,10 @@ public class JDBodega extends javax.swing.JDialog {
                     .addGroup(pnlFondoLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(btnComer)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAgregarMercadoAlimento)
-                        .addGap(295, 295, 295)
+                        .addGap(445, 445, 445)
                         .addComponent(jLabel5))
                     .addGroup(pnlFondoLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(btnAgregarMercadoMateria)
-                        .addGap(349, 349, 349)
+                        .addGap(501, 501, 501)
                         .addComponent(jLabel6)))
                 .addContainerGap(505, Short.MAX_VALUE))
         );
@@ -189,14 +169,11 @@ public class JDBodega extends javax.swing.JDialog {
                 .addContainerGap()
                 .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel5)
-                    .addComponent(btnComer)
-                    .addComponent(btnAgregarMercadoAlimento))
+                    .addComponent(btnComer))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(2, 2, 2)
-                .addGroup(pnlFondoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel6)
-                    .addComponent(btnAgregarMercadoMateria))
+                .addComponent(jLabel6)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
@@ -221,25 +198,15 @@ public class JDBodega extends javax.swing.JDialog {
         } else {
             int fila = tblAlimentos.getSelectedRow();
             String nombreAlimento = (String) tblAlimentos.getValueAt(fila, 0);
-            bodega.getGranjero().comer(nombreAlimento);
+            if (bodega.getGranjero().tieneElAlimentoSuficiente(nombreAlimento)) {
+                bodega.getGranjero().comer(nombreAlimento);
+            } else {
+                JOptionPane.showMessageDialog(null, "No tienes el alimento suficiente", "Error", JOptionPane.WARNING_MESSAGE);
+            }
         }
     }//GEN-LAST:event_btnComerActionPerformed
 
-    private void btnAgregarMercadoAlimentoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMercadoAlimentoActionPerformed
-        if (tblAlimentos.getSelectedRow() == -1) {
-            JOptionPane.showMessageDialog(null, "Debes seleccionar alguna fila en la tabla de alimentos", "Error", JOptionPane.WARNING_MESSAGE);
-        } else {
-            tablaAlimentos.removeRow(tblAlimentos.getSelectedRow());
-        }
-    }//GEN-LAST:event_btnAgregarMercadoAlimentoActionPerformed
-
-    private void btnAgregarMercadoMateriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarMercadoMateriaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarMercadoMateriaActionPerformed
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAgregarMercadoAlimento;
-    private javax.swing.JButton btnAgregarMercadoMateria;
     private javax.swing.JButton btnComer;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;

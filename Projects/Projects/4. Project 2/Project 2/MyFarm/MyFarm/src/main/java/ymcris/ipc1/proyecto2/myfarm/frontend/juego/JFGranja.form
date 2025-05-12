@@ -96,45 +96,38 @@
                       <Component id="btnMercado" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnLimpiarTerreno" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="btnProcesar" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="btnPreseleccionarAlimentos" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
                       <Component id="btnPreseleccionarAlimentos1" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="btnPreseleccionarAlimentos2" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace pref="102" max="32767" attributes="0"/>
                       <Component id="btnInformación" min="-2" pref="50" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
                       <Component id="btnSalir" min="-2" pref="50" max="-2" attributes="0"/>
-                      <EmptySpace pref="48" max="32767" attributes="0"/>
+                      <EmptySpace min="-2" pref="72" max="-2" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" attributes="0">
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace min="-2" pref="31" max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnBodega" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnGuardarPartida" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnMercado" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnLimpiarTerreno" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnProcesar" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnPreseleccionarAlimentos" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  <Component id="btnPreseleccionarAlimentos1" alignment="3" min="-2" max="-2" attributes="0"/>
-                              </Group>
-                          </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Group type="103" groupAlignment="3" attributes="0">
-                                  <Component id="btnInformación" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                                  <Component id="btnSalir" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
-                              </Group>
+                      <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="3" attributes="0">
+                          <Component id="btnBodega" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnGuardarPartida" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnMercado" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnLimpiarTerreno" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPreseleccionarAlimentos" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPreseleccionarAlimentos1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnPreseleccionarAlimentos2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Group type="103" alignment="3" groupAlignment="3" attributes="0">
+                              <Component id="btnInformación" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
+                              <Component id="btnSalir" alignment="3" min="-2" pref="50" max="-2" attributes="0"/>
                           </Group>
                       </Group>
-                      <EmptySpace pref="30" max="32767" attributes="0"/>
+                      <EmptySpace pref="19" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -191,17 +184,6 @@
                 <Property name="toolTipText" type="java.lang.String" value=""/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="btnProcesar">
-              <Properties>
-                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="33" green="33" red="33" type="rgb"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="PROCESAR ALIMENTOS"/>
-              </Properties>
-            </Component>
             <Component class="javax.swing.JButton" name="btnPreseleccionarAlimentos">
               <Properties>
                 <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
@@ -212,6 +194,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="PRESELECCIONAR ALIMENTOS"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreseleccionarAlimentosActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="btnInformaci&#xf3;n">
               <Properties>
@@ -269,6 +254,20 @@
               </Properties>
               <Events>
                 <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreseleccionarAlimentos1ActionPerformed"/>
+              </Events>
+            </Component>
+            <Component class="javax.swing.JButton" name="btnPreseleccionarAlimentos2">
+              <Properties>
+                <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="33" green="33" red="33" type="rgb"/>
+                </Property>
+                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                  <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                </Property>
+                <Property name="text" type="java.lang.String" value="COSECHAR"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnPreseleccionarAlimentos2ActionPerformed"/>
               </Events>
             </Component>
           </SubComponents>

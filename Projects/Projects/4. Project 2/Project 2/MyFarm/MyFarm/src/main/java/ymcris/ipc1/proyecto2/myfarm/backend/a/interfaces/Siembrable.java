@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.interfaces;
 
+import javax.swing.JButton;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 
 /**
@@ -16,6 +17,7 @@ public interface Siembrable {
      * Método encargado de sembrar en la celda (instancia de grama)
      *
      * @param semilla semilla a sembrar.
+     * @param boton
      */
-    public void sembrar(Semillas semilla);
+    public void sembrar(Semillas semilla, JButton boton);
 }

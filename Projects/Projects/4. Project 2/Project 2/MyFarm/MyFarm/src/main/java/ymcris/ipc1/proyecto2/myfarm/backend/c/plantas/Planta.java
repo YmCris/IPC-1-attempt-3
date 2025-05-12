@@ -2,6 +2,7 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
 import java.io.Serializable;
 import java.util.Random;
+import javax.swing.JButton;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
@@ -18,12 +19,14 @@ public abstract class Planta implements Runnable, Serializable {
     // VARIABLES DE REFERENCIA -------------------------------------------------
     protected Grama grama;
     protected String nombre;
+    protected JButton boton;
     protected Semillas semilla;
     protected Cola<Alimentos> ordenDeProduccionAlimentos;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     protected int fertilidadSuelo;
     protected int tiempoVivido;
+    protected boolean cosechaRecogida;
     protected boolean estaPodrida;//cuando muere para el hilo
     protected boolean cosechaLista;
     protected int tiempoParaCosechar;//depende de cada planta
@@ -31,20 +34,22 @@ public abstract class Planta implements Runnable, Serializable {
 
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 798877127;
-    private static final int TIEMPO_MAXIMO_PARA_DAR_COSECHA = 6;//segundos 420   6
-    private static final int TIEMPO_MAXIMO_PARA_PODRIRSE = 4;//segundos 120   4
+    private static final int TIEMPO_MAXIMO_PARA_DAR_COSECHA = 18;//segundos 420   6
+    private static final int TIEMPO_MAXIMO_PARA_PODRIRSE = 20;//segundos 120   4
 
     // INSTANCIAS --------------------------------------------------------------
     Random random = new Random();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Planta(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama) {
+    public Planta(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama, JButton boton) {
+        this.boton=boton;
         this.grama = grama;
         this.nombre = nombre;
         this.semilla = semilla;
         this.fertilidadSuelo = fertilidadSuelo;
         this.tiempoVivido = 0;
         this.estaPodrida = false;
+        this.cosechaRecogida = false;
         this.cosechaLista = false;
         this.ordenDeProduccionAlimentos = ordenDeProduccionAlimentos;
     }
@@ -112,6 +117,14 @@ public abstract class Planta implements Runnable, Serializable {
 
     public Grama getGrama() {
         return grama;
+    }
+
+    public boolean isCosechaRecogida() {
+        return cosechaRecogida;
+    }
+
+    public void setCosechaRecogida(boolean cosechaRecogida) {
+        this.cosechaRecogida = cosechaRecogida;
     }
 
     // SETTTERS ----------------------------------------------------------------

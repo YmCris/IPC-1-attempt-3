@@ -1,8 +1,12 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
+import javax.swing.JButton;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ColaException;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 
 /**
  * Clase Frutas es la subclase encargada de referenciar los objetos del tipo
@@ -13,12 +17,16 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
  */
 public class Frutas extends Planta {
 
+    // INSTANCIAS --------------------------------------------------------------
+    private Granjero granjero;
+
     // CONSTANTES --------------------------------------------------------------
     private static final int TIEMPO_PARA_DESAPARECER = 2;//20
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Frutas(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama) {
-        super(nombre, semilla, fertilidadSuelo, ordenDeProduccionAlimentos, grama);
+    public Frutas(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama, Granjero granjero, JButton boton) {
+        super(nombre, semilla, fertilidadSuelo, ordenDeProduccionAlimentos, grama, boton);
+        this.granjero = granjero;
         this.tiempoParaCosechar = tiempoCosecha();
         this.tiempoParaPodrirse = tiempoPodrirse();
     }
@@ -26,28 +34,56 @@ public class Frutas extends Planta {
     // MÉTODOS CONCRETOS -------------------------------------------------------
     @Override
     public Alimentos darCosecha() {
-        int cantidadDeAlimentos = random.nextInt(semilla.getAlimento().getProduccion() + fertilidadSuelo, semilla.getAlimento().getProduccion() + fertilidadSuelo + semilla.getCantidadDeSemillasRequerida());
-        Alimentos alimento = semilla.getAlimento();
-        //La cantidad de alimentos que darán depende de la fertilidad del suelo
-        alimento.setProduccion(cantidadDeAlimentos);
-        //Solo se podrá cosechar el alimento en la forma en la que se fue dando, es decir FIFO
-        ordenDeProduccionAlimentos.agregarElemento(alimento, alimento.getNombre());
-        return alimento;
+        try {
+            Alimentos alimento = granjero.obtenerAlimentos(semilla.getAlimento().getNombre());
+            int cantidadDeAlimentos = random.nextInt(1, fertilidadSuelo + alimento.getPrecioDeCompra() / 2);
+            //La cantidad de alimentos que darán depende de la fertilidad del suelo
+            alimento.setCantidad(alimento.getCantidad() + cantidadDeAlimentos);
+            //Solo se podrá cosechar el alimento en la forma en la que se fue dando, es decir FIFO
+            ordenDeProduccionAlimentos.agregarElemento(alimento, alimento.getNombre());
+            return alimento;
+        } catch (ListaDobleException ex) {
+            System.out.println("Ha ocurrido un error al darse la cosecha porque " + ex.getMessage());
+            return null;
+        }
     }
 
     @Override
     public void run() {
-        //No mueren al recoger la cosecha, pero mueren eventualmente.
+        //Mueren y desaparecen al momento de la cosecha
+        Alimentos alimentoARetornar = null;
         while (!estaPodrida) {
-            if (TIEMPO_PARA_DESAPARECER + tiempoParaCosechar + tiempoParaPodrirse == tiempoVivido) {
+            if (cosechaRecogida == false) {
                 try {
                     Thread.sleep(1000);
+                    tiempoVivido++;//Las plantas crecen y están listas para cosechar su alimento
+                    if (tiempoVivido == tiempoParaCosechar) {
+                        cosechaLista = true;
+                        boton.setEnabled(true);
+                        alimentoARetornar = darCosecha();//Lo guardo en la cola y luego cada instanicia verificará si cosechaLista && entonces podrá obtenerlo (osea luego se suma o agrega al alimentos<> del granjero)
+                        alimentoARetornar.setEstaPodrido(false);
+                        this.getGrama().setText("Cosecha lista, # " + getOrdenDeProduccionAlimentos().getIndice());
+                        this.getGrama().agregarImagenSemillaFin();
+                    }
+                    if (cosechaRecogida == false) {
+                        if (tiempoVivido == tiempoParaPodrirse) {
+                            estaPodrida = true;//Si no se cosechan las siembras despues de un cierto tiempo aleatorio, estas se pudren y se pierde la cosecha.
+                            tiempoVivido = 0;
+                            try {
+                                ordenDeProduccionAlimentos.sacarElemento();
+                                this.getGrama().setText("Cosecha podrida");
+                                this.getGrama().setEstaSucio(true);
+                            } catch (ColaException | ListaDobleException | NullPointerException ex) {
+                                System.out.println("Ha ocurrido un error al sacar el elemento que se pudrio porque " + ex.getMessage());
+                            }
+                        }
+                    }
                 } catch (InterruptedException e) {
-                    System.out.println("Ha ocurrido un error en el hilo de la fruta " + this.getNombre());
+                    System.out.println("El hilo de la planta " + nombre + " ha sido interrumpido, porque " + e.getMessage());
                 }
             }
         }
-        System.out.println("El hilo de la planta " + getNombre());
+        System.out.println("Se ha terminado el hilo de la fruta");
     }
 
 }

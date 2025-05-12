@@ -54,7 +54,7 @@ public final class Granjero {
         this.nick = nick;
         this.nombre = nombre;
         this.oro = 1000;
-        this.vida = 3;
+        this.vida = 10;
         this.alimento = 0;
         this.haComido = false;
         this.estaLleno = true;
@@ -184,6 +184,18 @@ public final class Granjero {
             NodoDoble<Semillas> nodo = semillas.obtenerNodo(i);
             if (nodo.getNombre().equals(nombreSemilla)) {
                 if (nodo.getContenido().getCantidad() >= cantidadRequerida) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean tieneElAlimentoSuficiente(String nombreAlimento) {
+        for (int i = 0; i < alimentos.length(); i++) {
+            NodoDoble<Alimentos> nodo = alimentos.obtenerNodo(i);
+            if (nodo.getNombre().equals(nombreAlimento)) {
+                if (nodo.getContenido().getCantidad() > 0) {
                     return true;
                 }
             }

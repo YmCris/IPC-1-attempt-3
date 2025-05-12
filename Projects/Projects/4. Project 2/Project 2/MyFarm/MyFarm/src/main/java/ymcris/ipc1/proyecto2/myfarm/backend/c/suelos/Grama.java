@@ -2,6 +2,7 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.suelos;
 
 import java.awt.Image;
 import javax.swing.ImageIcon;
+import javax.swing.JButton;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Grano;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Frutas;
@@ -25,6 +26,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
     private Grano grano;
+    private Frutas fruta;
     private Granjero granjero;
     private String animalesPermitidos;
     private ListaDoble<Animales> animales;
@@ -35,6 +37,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     private int fertilidad;
     private boolean esParcela;
     private boolean estaOpupado;
+    private boolean tienePlanta;
 
     // CONSTANTES --------------------------------------------------------------
     private static final String NOMBRE_SUELO = "Grama";
@@ -53,6 +56,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         this.estaOpupado = false;
         this.nombre = NOMBRE_SUELO;
         this.rutaImagen = RUTA_IMAGEN;
+        this.tienePlanta = false;
         colocarImagen();
     }
 
@@ -64,7 +68,7 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         ImageIcon icono = new ImageIcon(icon.getImage().getScaledInstance(ancho, alto, Image.SCALE_DEFAULT));
         this.setIcon(icono);
     }
-    
+
     public void agregarImagenSemillaFin() {
         ImageIcon icon = new ImageIcon(getClass().getResource(NOMBRE_IMAGEN_SEMILLA_FIN));
         int ancho = this.getWidth();
@@ -74,14 +78,14 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
     }
 
     @Override
-    public void sembrar(Semillas semilla) {
+    public void sembrar(Semillas semilla, JButton boton) {
         agregarImagenSemillaInicio();
         if (semilla.produceFruta()) {//Hilo Fruta
-            Frutas fruta = new Frutas(semilla.getNombre(), semilla, fertilidad, ordenDeProduccionAlimentos, this);
-            Thread hiloFruta = new Thread(fruta);
-            hiloFruta.start();
+            grano = new Grano(semilla.getNombre(), semilla, fertilidad, ordenDeProduccionAlimentos, this, granjero, boton);
+            Thread hiloGrano = new Thread(grano);
+            hiloGrano.start();
         } else {//Hilo grano
-            grano = new Grano(semilla.getNombre(), semilla, fertilidad, ordenDeProduccionAlimentos, this, granjero);
+            grano = new Grano(semilla.getNombre(), semilla, fertilidad, ordenDeProduccionAlimentos, this, granjero, boton);
             Thread hiloGrano = new Thread(grano);
             hiloGrano.start();
         }
@@ -92,8 +96,15 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     }
 
-    public void detenerHiloGrano() {
-        grano.setCosechaRecogida(true);
+    public void detenerHilo() {
+        try {
+            grano.setCosechaRecogida(true);
+        } catch (Exception e) {
+        }
+        try {
+            fruta.setCosechaRecogida(true);
+        } catch (Exception e) {
+        }
     }
 
     public void añadirFertilidad(Fertilizantes fertilizante) {
@@ -133,6 +144,10 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         return ordenDeProduccionAlimentos;
     }
 
+    public boolean tienePlanta() {
+        return tienePlanta;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setFertilidad(int fertilidad) {
         this.fertilidad = fertilidad;
@@ -148,6 +163,10 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
 
     public void setEstaOpupado(boolean estaOpupado) {
         this.estaOpupado = estaOpupado;
+    }
+
+    public void setTienePlanta(boolean tienePlanta) {
+        this.tienePlanta = tienePlanta;
     }
 
 }

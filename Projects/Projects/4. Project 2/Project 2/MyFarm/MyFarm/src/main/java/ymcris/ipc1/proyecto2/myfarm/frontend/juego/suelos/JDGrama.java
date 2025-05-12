@@ -1,5 +1,6 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos;
 
+import javax.swing.JButton;
 import javax.swing.JOptionPane;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ColaException;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
@@ -21,6 +22,7 @@ public class JDGrama extends javax.swing.JDialog {
     private Grama grama;
     private Granjero granjero;
     private Semillas semillaAPlantar;
+    private JButton boton;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int fertilidad;
@@ -41,6 +43,34 @@ public class JDGrama extends javax.swing.JDialog {
         lblFertilidad.setText(String.valueOf(grama.getFertilidad()));
         lblEstaOcupado.setText(String.valueOf(grama.estaOpupado()));
         lblEstaSucio.setText(String.valueOf(grama.estaSucio()));
+        this.boton = btnCosechar;
+        desactivarBotones();
+    }
+
+    private void desactivarBotones() {
+        if (grama.tienePlanta() == true && grama.estaOpupado()) {
+            btnAgregarFertilizante.setEnabled(false);
+            btnCosechar.setEnabled(false);
+            btnCriarAnimales.setEnabled(false);
+            btnSembrar.setEnabled(false);
+        } else if (grama.tienePlanta() == false && grama.estaOpupado() == false) {
+            activarBotones();
+        } else if (grama.tienePlanta() == false) {
+            btnAgregarFertilizante.setEnabled(false);
+            btnCosechar.setEnabled(true);
+            btnCriarAnimales.setEnabled(false);
+            btnSembrar.setEnabled(false);
+        } else {
+            activarBotones();
+        }
+
+    }
+
+    private void activarBotones() {
+        btnAgregarFertilizante.setEnabled(true);
+        btnCosechar.setEnabled(true);
+        btnCriarAnimales.setEnabled(true);
+        btnSembrar.setEnabled(true);
     }
 
     public void setSemillaAPlantar(Semillas semillaAPlantar) {
@@ -232,7 +262,9 @@ public class JDGrama extends javax.swing.JDialog {
         new JDElegirSemilla(this, granjero).setVisible(true);
         if (semillaAPlantar != null) {
             grama.setEstaOpupado(true);
-            grama.sembrar(semillaAPlantar);
+            grama.setTienePlanta(true);
+            desactivarBotones();
+            grama.sembrar(semillaAPlantar, boton);
             lblEstaOcupado.setText(String.valueOf(grama.estaOpupado()));
             grama.setText("Cosechando la planta " + semillaAPlantar.getNombre());
         }
@@ -257,20 +289,21 @@ public class JDGrama extends javax.swing.JDialog {
                 //granjero.agregarCantidadAAlimento(alimento.getNombre(), cantidadDeAlimentos);
                 grama.setEstaOpupado(false);
                 grama.setEstaSucio(false);
-                grama.detenerHiloGrano();
+                grama.detenerHilo();
                 grama.colocarImagen();
                 lblEstaOcupado.setText(String.valueOf(grama.estaOpupado()));
                 lblEstaSucio.setText(String.valueOf(grama.estaSucio()));
                 JOptionPane.showMessageDialog(null, "Alimento obtenido " + alimentoObtenido.getNombre() + " cantidad " + alimentoObtenido.getCantidad(), "Cosecha", JOptionPane.INFORMATION_MESSAGE);
             } catch (ColaException | ListaDobleException ex) {
                 JOptionPane.showMessageDialog(null, "No puedes recolectar la cosecha porque se ha podrido", "Cosecha podrida", JOptionPane.INFORMATION_MESSAGE);
-                grama.detenerHiloGrano();
+                grama.detenerHilo();
                 lblEstaOcupado.setText(String.valueOf(grama.estaOpupado()));
                 lblEstaSucio.setText(String.valueOf(grama.estaSucio()));
             }
         } else {
             JOptionPane.showMessageDialog(null, "No puedes cosechar este alimento porque no estas sembrando nada", "Cosecha podrida", JOptionPane.INFORMATION_MESSAGE);
         }
+        activarBotones();
     }//GEN-LAST:event_btnCosecharActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

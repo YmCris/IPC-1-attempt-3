@@ -1,12 +1,12 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
-import java.util.Random;
+import javax.swing.JButton;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ColaException;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ColaException;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
  * Clase Grano es la sub clase de planta encargada de referenciar las plantas
@@ -20,16 +20,12 @@ public class Grano extends Planta {
     // INSTANCIAS --------------------------------------------------------------
     private Granjero granjero;
 
-    private boolean cosechaRecogida;
-
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Grano(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama, Granjero granjero) {
-        super(nombre, semilla, fertilidadSuelo, ordenDeProduccionAlimentos, grama);
+    public Grano(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama, Granjero granjero, JButton boton) {
+        super(nombre, semilla, fertilidadSuelo, ordenDeProduccionAlimentos, grama, boton);
         this.granjero = granjero;
         this.tiempoParaCosechar = tiempoCosecha();
         this.tiempoParaPodrirse = tiempoParaCosechar + tiempoPodrirse();
-        this.cosechaRecogida = false;
-        System.out.println("El tiempo para cosechar es: " + tiempoParaCosechar + " tiempo para podrirse " + tiempoParaPodrirse);
     }
 
     // MÉTODOS SOBREESCRITOS ---------------------------------------------------
@@ -60,10 +56,12 @@ public class Grano extends Planta {
                     tiempoVivido++;//Las plantas crecen y están listas para cosechar su alimento
                     if (tiempoVivido == tiempoParaCosechar) {
                         cosechaLista = true;
+                        boton.setEnabled(true);
                         alimentoARetornar = darCosecha();//Lo guardo en la cola y luego cada instanicia verificará si cosechaLista && entonces podrá obtenerlo (osea luego se suma o agrega al alimentos<> del granjero)
                         alimentoARetornar.setEstaPodrido(false);
                         this.getGrama().setText("Cosecha lista, orden " + getOrdenDeProduccionAlimentos().getIndice());
                         this.getGrama().agregarImagenSemillaFin();
+                        this.getGrama().setTienePlanta(false);
                     }
                     if (cosechaRecogida == false) {
                         if (tiempoVivido == tiempoParaPodrirse) {
@@ -83,15 +81,7 @@ public class Grano extends Planta {
                 }
             }
         }
-        System.out.println("Se ha terminado el hilo del grano");
-    }
-
-    public boolean isCosechaRecogida() {
-        return cosechaRecogida;
-    }
-
-    public void setCosechaRecogida(boolean cosechaRecogida) {
-        this.cosechaRecogida = cosechaRecogida;
+        System.out.println("Se ha terminado el hilo de la planta");
     }
 
 }

@@ -20,6 +20,7 @@ import ymcris.ipc1.proyecto2.myfarm.frontend.menu.JFMenuPrincipal;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDGrama;
 import ymcris.ipc1.proyecto2.myfarm.frontend.juego.suelos.JDDesierto;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
+import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDPreguntarSuelo;
 
 /**
  *
@@ -27,12 +28,12 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException
  * @author YmCris
  */
 public class JFGranja extends javax.swing.JFrame implements Runnable {
-
+    
     private Granja granja;
     private Bodega bodega;
     private Mercado mercado;
     private Granjero granjero;
-
+    
     public JFGranja(Granja granja) {
         initComponents();
         this.granja = granja;
@@ -69,11 +70,11 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }
-
+            
         }
         System.out.println("Partida terminada frontend");
     }
-
+    
     public void cerrarTodasLasVentanas() {
         for (Window window : Window.getWindows()) {
             if (window.isDisplayable()) {
@@ -81,13 +82,13 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             }
         }
     }
-
+    
     private void actualizarContenido() {
         lblNombre.setText(granjero.getNick().toUpperCase());
         lblOro.setText(String.valueOf(granjero.getOro()));
         lblVida.setText(String.valueOf(granjero.getVida()));
     }
-
+    
     private void colocarBotones() throws ListaOrtogonalException {
         int filas = granja.getTerreno().getTablero().getFilas();
         int columnas = granja.getTerreno().getTablero().getColumnas();
@@ -129,11 +130,11 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         btnGuardarPartida = new javax.swing.JButton();
         btnMercado = new javax.swing.JButton();
         btnLimpiarTerreno = new javax.swing.JButton();
-        btnProcesar = new javax.swing.JButton();
         btnPreseleccionarAlimentos = new javax.swing.JButton();
         btnInformación = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnPreseleccionarAlimentos1 = new javax.swing.JButton();
+        btnPreseleccionarAlimentos2 = new javax.swing.JButton();
         pnlTablero = new javax.swing.JPanel();
         pnlInformacion = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -185,13 +186,14 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         btnLimpiarTerreno.setText("LIMPIAR TERRENO");
         btnLimpiarTerreno.setToolTipText("");
 
-        btnProcesar.setBackground(new java.awt.Color(51, 51, 51));
-        btnProcesar.setForeground(new java.awt.Color(255, 255, 255));
-        btnProcesar.setText("PROCESAR ALIMENTOS");
-
         btnPreseleccionarAlimentos.setBackground(new java.awt.Color(51, 51, 51));
         btnPreseleccionarAlimentos.setForeground(new java.awt.Color(255, 255, 255));
         btnPreseleccionarAlimentos.setText("PRESELECCIONAR ALIMENTOS");
+        btnPreseleccionarAlimentos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreseleccionarAlimentosActionPerformed(evt);
+            }
+        });
 
         btnInformación.setBackground(new java.awt.Color(51, 51, 51));
         btnInformación.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -224,6 +226,15 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             }
         });
 
+        btnPreseleccionarAlimentos2.setBackground(new java.awt.Color(51, 51, 51));
+        btnPreseleccionarAlimentos2.setForeground(new java.awt.Color(255, 255, 255));
+        btnPreseleccionarAlimentos2.setText("COSECHAR");
+        btnPreseleccionarAlimentos2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPreseleccionarAlimentos2ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlOpcionesLayout = new javax.swing.GroupLayout(pnlOpciones);
         pnlOpciones.setLayout(pnlOpcionesLayout);
         pnlOpcionesLayout.setHorizontalGroup(
@@ -237,38 +248,34 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
                 .addComponent(btnMercado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnLimpiarTerreno)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProcesar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPreseleccionarAlimentos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnPreseleccionarAlimentos1)
-                .addGap(68, 68, 68)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnPreseleccionarAlimentos2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 102, Short.MAX_VALUE)
                 .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGap(72, 72, 72))
         );
         pnlOpcionesLayout.setVerticalGroup(
             pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlOpcionesLayout.createSequentialGroup()
-                .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlOpcionesLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnBodega)
-                            .addComponent(btnGuardarPartida)
-                            .addComponent(btnMercado)
-                            .addComponent(btnLimpiarTerreno)
-                            .addComponent(btnProcesar)
-                            .addComponent(btnPreseleccionarAlimentos)
-                            .addComponent(btnPreseleccionarAlimentos1)))
-                    .addGroup(pnlOpcionesLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(30, Short.MAX_VALUE))
+                .addGap(19, 19, 19)
+                .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBodega)
+                    .addComponent(btnGuardarPartida)
+                    .addComponent(btnMercado)
+                    .addComponent(btnLimpiarTerreno)
+                    .addComponent(btnPreseleccionarAlimentos)
+                    .addComponent(btnPreseleccionarAlimentos1)
+                    .addComponent(btnPreseleccionarAlimentos2)
+                    .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         pnlTablero.setBackground(new java.awt.Color(102, 102, 102));
@@ -435,6 +442,14 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
 
     }//GEN-LAST:event_btnPreseleccionarAlimentos1ActionPerformed
 
+    private void btnPreseleccionarAlimentos2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreseleccionarAlimentos2ActionPerformed
+        new JDPreguntarSuelo(granja, granjero).setVisible(true);
+    }//GEN-LAST:event_btnPreseleccionarAlimentos2ActionPerformed
+
+    private void btnPreseleccionarAlimentosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPreseleccionarAlimentosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnPreseleccionarAlimentosActionPerformed
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBodega;
     private javax.swing.JButton btnGuardarPartida;
@@ -443,7 +458,7 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnMercado;
     private javax.swing.JButton btnPreseleccionarAlimentos;
     private javax.swing.JButton btnPreseleccionarAlimentos1;
-    private javax.swing.JButton btnProcesar;
+    private javax.swing.JButton btnPreseleccionarAlimentos2;
     private javax.swing.JButton btnSalir;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
