@@ -24,9 +24,4 @@ public class Omnivoros extends Animales {
         return null;
     }
 
-    @Override
-    public void run() {
-
-    }
-
 }

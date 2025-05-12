@@ -1,10 +1,11 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.animales;
 
 import java.io.Serializable;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
  * Clase Animales es la super clase encargada de tener todos los atributos
@@ -57,14 +58,44 @@ public class Animales implements Runnable, Serializable {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public MateriasPrimas[] producirMateriaPrima() {
-        /*
-        MateriasPrimas[] materias = new MateriasPrimas[alimentos.length()];
-        for (int i = 0; i < materias.length; i++) {
-            materias[i] = materiasPrimas.usar(nombre);
+    private int producirBasadoEnAtributos() {
+        int cantidad = 0;
+        if (esAdulto()) {
+            cantidad = 5;
         }
-         */
-        return null;
+        return cantidad + vida; //Math.max(1, precio / 6);
+    }
+
+    public MateriasPrimas[] producirMateriaPrima() {
+        try {
+            MateriasPrimas[] materias = new MateriasPrimas[materiasPrimas.length()];
+            for (int i = 0; i < materias.length; i++) {
+                MateriasPrimas materia = materiasPrimas.sacar();
+                materia.setProduccion(producirBasadoEnAtributos());
+                materias[i] = materia;
+            }
+            //vida = 0;
+            return materias;
+        } catch (ListaDobleException ex) {
+            System.out.println("No se pudo sacar las materias primas porque " + ex.getMessage());
+            return null;
+        }
+    }
+
+    public Alimentos[] producirAlimentos() {
+        try {
+            Alimentos[] arregloAlimentos = new Alimentos[alimentos.length()];
+            for (int i = 0; i < arregloAlimentos.length; i++) {
+                Alimentos alimento = alimentos.sacar();
+                alimento.setProduccion(producirBasadoEnAtributos());
+                arregloAlimentos[i] = alimento;
+            }
+            //              vida = 0;
+            return arregloAlimentos;
+        } catch (ListaDobleException ex) {
+            System.out.println("No se pudo sacar las materias primas porque " + ex.getMessage());
+            return null;
+        }
     }
 
     @Override

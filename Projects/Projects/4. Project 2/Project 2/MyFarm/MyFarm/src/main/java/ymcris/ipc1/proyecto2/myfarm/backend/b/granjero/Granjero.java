@@ -156,7 +156,6 @@ public final class Granjero {
                 System.out.println("Se tienen " + alimentoAUsar.getContenido().getCantidad() + " unidades del alimento " + alimentoAUsar.getContenido().getNombre());
             }
         }
-
     }
 
     private void quitarCantidadAAlimento(String nombreAlimento, int cantidad) {

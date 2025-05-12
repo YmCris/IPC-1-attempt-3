@@ -102,8 +102,10 @@ public class Grama extends Suelo implements Siembrable, Finquerable {
         animalHilo.setEdad(0);
         animalHilo.setHaComido(false);
         animalHilo.setGrama(this);
+        System.out.println("Hloas");
         Thread hiloAnimal = new Thread(animalHilo);
         hiloAnimal.start();
+        System.out.println("hsa");
     }
     
     public void detenerHilo() {

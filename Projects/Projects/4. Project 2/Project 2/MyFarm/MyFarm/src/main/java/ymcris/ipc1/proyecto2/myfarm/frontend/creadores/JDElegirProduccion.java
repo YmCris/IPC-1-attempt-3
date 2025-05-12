@@ -1,7 +1,9 @@
 package ymcris.ipc1.proyecto2.myfarm.frontend.creadores;
 
 import javax.swing.JOptionPane;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
  *
@@ -10,9 +12,12 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 public class JDElegirProduccion extends javax.swing.JDialog {
 
     private Animales animal;
+    private Granjero granjero;
 
-    public JDElegirProduccion(Animales animal) {
+    public JDElegirProduccion(Animales animal, Granjero granjero) {
         initComponents();
+        this.animal = animal;
+        this.granjero = granjero;
         this.setLocationRelativeTo(null);
         this.setModal(true);
     }
@@ -35,6 +40,11 @@ public class JDElegirProduccion extends javax.swing.JDialog {
         });
 
         jButton2.setText("PRODUCIR ANIMAL SIN DESTACE");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -78,8 +88,22 @@ public class JDElegirProduccion extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(null, "El animal no produce productos con destace", "Error", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        
+        MateriasPrimas[] materias = animal.producirMateriaPrima();
+        System.out.println("Las materias obtenidas son :" + materias.length);
+        for (MateriasPrimas materia : materias) {
+            granjero.getMaterias().agregar(materia, materia.getNombre());
+        }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        /*
+        Alimentos[] alimentos = animal.producirAlimentos();
+        for (Alimentos alimento : alimentos) {
+            granjero.agregarCantidadAAlimento(alimento.getNombre(), alimento.getProduccion());
+        }
+*/
+
+    }//GEN-LAST:event_jButton2ActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;

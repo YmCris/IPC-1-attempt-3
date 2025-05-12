@@ -92,6 +92,19 @@ public class ListaDoble<T> implements Serializable {
         tamaño++;
     }
 
+    public T sacar() throws ListaDobleException {
+        if (tamaño != 0) {
+            for (int i = 0; i < length(); i++) {
+                NodoDoble<T> nodo = obtenerNodo(i);
+                if (nodo.getContenido() != null) {
+                    eliminarNodo(i);
+                    return nodo.getContenido();
+                }
+            }
+        }
+        throw new ListaDobleException("No se ha podido sacar porque el tamaño es 0");
+    }
+
     /**
      * Método encargado de usar el elemento en la lista y eliminarlo.
      *

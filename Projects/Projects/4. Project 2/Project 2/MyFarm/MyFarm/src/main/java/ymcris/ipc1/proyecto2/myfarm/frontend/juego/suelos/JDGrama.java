@@ -11,6 +11,7 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.frontend.creadores.JDElegirProduccion;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDElegirAlimentoParaAnimal;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.JDElegirSemilla;
 import ymcris.ipc1.proyecto2.myfarm.frontend.elementos.PanelPersonalizado;
@@ -54,7 +55,7 @@ public class JDGrama extends javax.swing.JDialog {
         this.animalCriado = grama.getAnimalCriado();
         desactivarBotones();
     }
-    
+
     private void desactivarBotones() {
         if (grama.estaBloqueado()) {
             btnAgregarFertilizante.setEnabled(false);
@@ -80,24 +81,24 @@ public class JDGrama extends javax.swing.JDialog {
         } else {
             activarBotones();
         }
-        
+
     }
-    
+
     private void activarBotones() {
         btnAgregarFertilizante.setEnabled(true);
         btnCosechar.setEnabled(true);
         btnCriarAnimales.setEnabled(true);
         btnSembrar.setEnabled(true);
     }
-    
+
     public void setSemillaAPlantar(Semillas semillaAPlantar) {
         this.semillaAPlantar = semillaAPlantar;
     }
-    
+
     public void setFertilidad(int fertilidad) {
         this.fertilidad = fertilidad;
     }
-    
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -421,7 +422,7 @@ public class JDGrama extends javax.swing.JDialog {
     }//GEN-LAST:event_btnAlimentarAnimalActionPerformed
 
     private void btnDestazarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDestazarActionPerformed
-        
+        //new JDElegirProduccion(grama.getAnimalCriado(), granjero).setVisible(true);
     }//GEN-LAST:event_btnDestazarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
