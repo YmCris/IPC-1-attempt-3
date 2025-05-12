@@ -2,3 +2,11 @@ pollo
 25
 100
 false
+pollo
+80
+120
+false
+pollo
+80
+120
+false

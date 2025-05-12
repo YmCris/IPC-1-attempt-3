@@ -2,3 +2,11 @@ nuez
 25
 15
 true
+nuez
+10
+15
+true
+nuez
+10
+15
+true

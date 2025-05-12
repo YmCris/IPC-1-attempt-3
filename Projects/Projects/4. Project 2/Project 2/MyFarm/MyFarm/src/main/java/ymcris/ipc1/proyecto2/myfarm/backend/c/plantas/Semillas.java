@@ -22,7 +22,7 @@ public class Semillas implements Serializable {
     private boolean produceFruta;
 
     // CONSTANTES --------------------------------------------------------------
-    private  static final long serialVersionUID = 22222222;
+    private static final long serialVersionUID = 22222222;
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Semillas(String nombre, int precio, boolean produceFruta, int cantidadDeSemillasRequerida, Alimentos alimento) {
@@ -46,7 +46,7 @@ public class Semillas implements Serializable {
         return nombre;
     }
 
-    public boolean isProduceFruta() {
+    public boolean produceFruta() {
         return produceFruta;
     }
 
@@ -63,4 +63,8 @@ public class Semillas implements Serializable {
         this.cantidad = cantidad;
     }
 
+    public void setAlimento(Alimentos alimento) {
+        this.alimento = alimento;
+    }
+    
 }

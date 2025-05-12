@@ -1,8 +1,5 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;

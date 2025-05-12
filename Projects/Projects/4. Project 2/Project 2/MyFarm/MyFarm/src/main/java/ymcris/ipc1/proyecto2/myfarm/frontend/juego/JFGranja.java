@@ -27,12 +27,12 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException
  * @author YmCris
  */
 public class JFGranja extends javax.swing.JFrame implements Runnable {
-    
+
     private Granja granja;
     private Bodega bodega;
     private Mercado mercado;
     private Granjero granjero;
-    
+
     public JFGranja(Granja granja) {
         initComponents();
         this.granja = granja;
@@ -69,46 +69,44 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
             } catch (InterruptedException ex) {
                 System.out.println(ex.getMessage());
             }
-            
+
         }
         System.out.println("Partida terminada frontend");
     }
-    
+
     public void cerrarTodasLasVentanas() {
-    for (Window window : Window.getWindows()) {
-        if (window.isDisplayable()) {
-            window.dispose();
+        for (Window window : Window.getWindows()) {
+            if (window.isDisplayable()) {
+                window.dispose();
+            }
         }
     }
-}
-    
+
     private void actualizarContenido() {
         lblNombre.setText(granjero.getNick().toUpperCase());
         lblOro.setText(String.valueOf(granjero.getOro()));
         lblVida.setText(String.valueOf(granjero.getVida()));
     }
-    
+
     private void colocarBotones() throws ListaOrtogonalException {
         int filas = granja.getTerreno().getTablero().getFilas();
         int columnas = granja.getTerreno().getTablero().getColumnas();
         pnlTablero.setSize(1200, 700);
         pnlTablero.setLayout(new GridLayout(filas, columnas));
         pnlTablero.setSize(1200, 700);
-        System.out.println("Filas: " + filas + " Columnas: " + columnas);
         for (int i = 0; i < filas; i++) {
             for (int j = 0; j < columnas; j++) {
                 int fila = i;
                 int columna = j;
                 Suelo sueloActual = granja.getTerreno().getTablero().obtenerNodo(i, j).getSuelo();
                 sueloActual.addActionListener((e) -> {
-                    System.out.println("Soy el boton en la posición: " + fila + columna);
                     switch (sueloActual) {
                         case Agua agua ->
                             new JDAgua(agua).setVisible(true);
                         case Desierto desierto ->
                             new JDDesierto(desierto).setVisible(true);
                         case Grama grama ->
-                            new JDGrama(grama).setVisible(true);
+                            new JDGrama(grama, granjero).setVisible(true);
                         default -> {
                         }
                     }
@@ -133,7 +131,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         btnLimpiarTerreno = new javax.swing.JButton();
         btnProcesar = new javax.swing.JButton();
         btnPreseleccionarAlimentos = new javax.swing.JButton();
-        btnMusica = new javax.swing.JButton();
         btnInformación = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         btnPreseleccionarAlimentos1 = new javax.swing.JButton();
@@ -196,17 +193,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
         btnPreseleccionarAlimentos.setForeground(new java.awt.Color(255, 255, 255));
         btnPreseleccionarAlimentos.setText("PRESELECCIONAR ALIMENTOS");
 
-        btnMusica.setBackground(new java.awt.Color(51, 51, 51));
-        btnMusica.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnMusica.setForeground(new java.awt.Color(255, 255, 255));
-        btnMusica.setText("<-");
-        btnMusica.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnMusica.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnMusicaActionPerformed(evt);
-            }
-        });
-
         btnInformación.setBackground(new java.awt.Color(51, 51, 51));
         btnInformación.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnInformación.setForeground(new java.awt.Color(255, 255, 255));
@@ -257,9 +243,7 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
                 .addComponent(btnPreseleccionarAlimentos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPreseleccionarAlimentos1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(68, 68, 68)
                 .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(6, 6, 6)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -283,7 +267,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
                         .addContainerGap()
                         .addGroup(pnlOpcionesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnInformación, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnMusica, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE))))
                 .addContainerGap(30, Short.MAX_VALUE))
         );
@@ -431,26 +414,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-    private void btnMusicaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMusicaActionPerformed
-        JDialog dialog = new JDialog(this);
-        dialog.setModal(true);
-        dialog.setLocationRelativeTo(null);
-        dialog.setTitle("Ir al menú principal");
-        dialog.setSize(700, 400);
-        dialog.setLayout(new FlowLayout());
-        dialog.add(new JLabel("Si regresar al menú principal sin haber guardado la partida"));
-        dialog.add(new JLabel(" perderás el progreso"));
-        dialog.add(new JLabel(" ¿Estas seguro de ir al menú principal?"));
-        JButton boton = new JButton(" Ir al menú principal");
-        boton.addActionListener((e) -> {
-            this.dispose();
-            dialog.dispose();
-            new JFMenuPrincipal().setVisible(true);
-        });
-        dialog.add(boton);
-        dialog.pack();
-        dialog.setVisible(true);
-    }//GEN-LAST:event_btnMusicaActionPerformed
 
     private void btnInformaciónActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInformaciónActionPerformed
         JOptionPane.showMessageDialog(null, "¡" + granja.getGranjero().getNombre().toUpperCase() + " RECUERDA COMER!", "Granja de " + granja.getGranjero().getNombre(), JOptionPane.INFORMATION_MESSAGE);
@@ -478,7 +441,6 @@ public class JFGranja extends javax.swing.JFrame implements Runnable {
     private javax.swing.JButton btnInformación;
     private javax.swing.JButton btnLimpiarTerreno;
     private javax.swing.JButton btnMercado;
-    private javax.swing.JButton btnMusica;
     private javax.swing.JButton btnPreseleccionarAlimentos;
     private javax.swing.JButton btnPreseleccionarAlimentos1;
     private javax.swing.JButton btnProcesar;

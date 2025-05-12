@@ -1,7 +1,5 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
@@ -114,14 +112,12 @@ public class Mercado {
         try {
             if (!granjero.getSemillas().existeNodoConContenido(nuevaSemilla.getNombre())) {
                 granjero.getSemillas().agregar(nuevaSemilla, nuevaSemilla.getNombre());
-                System.out.println("El jugador no tenía semilla ese tipo de semilla, se agrega en la lista doble");
             } else {
                 granjero.agregarCantidadASemilla(nombreSemilla, cantidadSemillas);
-                System.out.println("El jugador ya tenía ese tipo de semilla, se modifica. ");
             }
         } catch (ListaDobleException | NullPointerException ex) {
             granjero.getSemillas().agregar(nuevaSemilla, nuevaSemilla.getNombre());
-            System.out.println("El jugador no tenía semilla ese tipo de semilla, se agrega en la lista doble");
+            granjero.agregarCantidadASemilla(nombreSemilla, cantidadSemillas);
         }
     }
 

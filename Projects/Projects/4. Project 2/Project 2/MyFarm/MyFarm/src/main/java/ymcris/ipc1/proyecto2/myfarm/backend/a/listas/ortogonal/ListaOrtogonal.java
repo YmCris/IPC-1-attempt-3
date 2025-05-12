@@ -12,11 +12,11 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException
 public class ListaOrtogonal {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
+    private NodoOrtogonal inicio;
     private NodoOrtogonal finFila;
     private NodoOrtogonal inicioFila;
     private NodoOrtogonal inicioColumna;
     private NodoOrtogonal finColumna;
-    private NodoOrtogonal inicio;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int filas;
@@ -39,40 +39,40 @@ public class ListaOrtogonal {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
-    public void crearTablero(NodoOrtogonal[] nodos) throws ListaOrtogonalException {
-        NodoOrtogonal[][] matriz = new NodoOrtogonal[5][5];
+    public void crearTablero(NodoOrtogonal[] suelos) throws ListaOrtogonalException {
+        NodoOrtogonal[][] matrizDeSuelos = new NodoOrtogonal[5][5];
         int indice = 0;
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                matriz[i][j] = nodos[indice];
+                matrizDeSuelos[i][j] = suelos[indice];
+                suelos[indice].getSuelo().setFila(i);
+                suelos[indice].getSuelo().setColumna(j);
                 indice++;
             }
         }
         for (int i = 0; i < 5; i++) {
             for (int j = 0; j < 5; j++) {
-                NodoOrtogonal actual = matriz[i][j];
+                NodoOrtogonal actual = matrizDeSuelos[i][j];
                 // 1. Referencias de izquierda y derecha
                 if (j < 4) {
-                    actual.setNodoDerecho(matriz[i][j + 1]);
+                    actual.setNodoDerecho(matrizDeSuelos[i][j + 1]);
                 }
                 if (j > 0) {
-                    actual.setNodoIzquierdo(matriz[i][j - 1]);
+                    actual.setNodoIzquierdo(matrizDeSuelos[i][j - 1]);
                 }
                 // 2. Referencias de arriba y abajo
                 if (i < 4) {
-                    actual.setNodoDeAbajo(matriz[i + 1][j]);
+                    actual.setNodoDeAbajo(matrizDeSuelos[i + 1][j]);
                 }
                 if (i > 0) {
-                    actual.setNodoDeArriba(matriz[i - 1][j]);
+                    actual.setNodoDeArriba(matrizDeSuelos[i - 1][j]);
                 }
             }
         }
         //3. Establecer nodo inicio
-        inicio = matriz[0][0];
-        inicioFila = matriz[4][0];
-        inicioColumna = matriz[0][4];
-        System.out.println("inicio fila: " + matriz[4][0].getSuelo().getNombre());
-        System.out.println("inicio Columna: " + matriz[0][4].getSuelo().getNombre());
+        inicio = matrizDeSuelos[0][0];
+        inicioFila = matrizDeSuelos[4][0];
+        inicioColumna = matrizDeSuelos[0][4];
         filas = 5;
         columnas = 5;
     }

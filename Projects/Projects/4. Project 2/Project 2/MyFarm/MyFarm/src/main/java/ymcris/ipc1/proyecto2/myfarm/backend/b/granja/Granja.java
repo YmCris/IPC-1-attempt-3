@@ -1,11 +1,8 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.granja;
 
 import java.io.Serializable;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.pila.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.terreno.Terreno;
 import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
  * Clase Granja es la clase "Partida" encargada de reunir todos los elementos
@@ -25,7 +22,6 @@ public class Granja implements Serializable, Runnable {
     private Terreno terreno;
     private Mercado mercado;
     private Granjero granjero;
-    private Cola<Alimentos> cola;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
     private int tiempoJugado;
@@ -38,7 +34,7 @@ public class Granja implements Serializable, Runnable {
     public Granja(Granjero granjero) {
         this.granjero = granjero;
         this.bodega = new Bodega(granjero);
-        this.terreno = new Terreno();
+        this.terreno = new Terreno(granjero);
         this.mercado = new Mercado(granjero);
     }
 
@@ -57,13 +53,14 @@ public class Granja implements Serializable, Runnable {
         }
         System.out.println("Juego Terminado");
     }
-
+    
     public void jugar() {
         if (granjero.haComido()) {//Si ha comido se reinicia el contador
             System.out.println("ha comido");
             contador = 0;
             if (granjero.haComidoLoSuficiente()) {
                 granjero.setVida(granjero.getVida() + 1);
+                granjero.setAlimento(0);
             }
         } else {//Si no ha comido durante 100 segundos se resta vida
             contador++;
@@ -89,21 +86,21 @@ public class Granja implements Serializable, Runnable {
     public Bodega getBodega() {
         return bodega;
     }
-
+    
     public Terreno getTerreno() {
         return terreno;
     }
-
+    
     public Mercado getMercado() {
         return mercado;
     }
-
+    
     public Granjero getGranjero() {
         return granjero;
     }
-
+    
     public int getTiempoJugado() {
         return tiempoJugado;
     }
-
+    
 }

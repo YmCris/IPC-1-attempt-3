@@ -82,7 +82,7 @@ public class JDMercado extends javax.swing.JDialog {
         tblComprarSemillas = (DefaultTableModel) tblCSemillas.getModel();
         Semillas[] semillas = mercado.getSemillas();
         for (Semillas semilla : semillas) {
-            tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.isProduceFruta(), semilla.getCantidadDeSemillasRequerida(), semilla.getAlimento().getNombre()});
+            tblComprarSemillas.addRow(new Object[]{semilla.getNombre(), semilla.getPrecio(), semilla.produceFruta(), semilla.getCantidadDeSemillasRequerida(), semilla.getAlimento().getNombre()});
         }
     }
 
@@ -511,13 +511,13 @@ public class JDMercado extends javax.swing.JDialog {
             return;
         }
         int fila = tblCSemillas.getSelectedRow();
-        int precioSemilla = (int) tblCSemillas.getValueAt(fila, 1);
         int cantidadSemillas = (int) spnCantidadSemillas.getValue();
         String nombreSemilla = (String) tblCSemillas.getValueAt(fila, 0);
-        if (mercado.jugadorTieneDineroSufiente(precioSemilla)) {
+        int precioSemilla = (int) tblCSemillas.getValueAt(fila, 1);
+        if (mercado.jugadorTieneDineroSufiente(precioSemilla * cantidadSemillas)) {
             mercado.agregarSemillaAlJugador(nombreSemilla, cantidadSemillas);
             mercado.perderOro(precioSemilla * cantidadSemillas);
-            JOptionPane.showMessageDialog(null, "Has adquirido una semilla de la planta " + nombreSemilla, "Nueva semilla", JOptionPane.INFORMATION_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Has adquirido " + cantidadSemillas + " semillas de la planta " + nombreSemilla, "Nueva semilla", JOptionPane.INFORMATION_MESSAGE);
         } else {
             JOptionPane.showMessageDialog(null, "No tienes el dinero suficiente", "Compra fallida", JOptionPane.INFORMATION_MESSAGE);
         }

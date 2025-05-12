@@ -1,0 +1,8 @@
+roedor
+25
+60
+false
+roedor
+25
+60
+false

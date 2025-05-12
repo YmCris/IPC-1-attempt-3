@@ -139,8 +139,8 @@ public class Creador {
     public void crearSemillasPredeterminadas() {
         Alimentos grano = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "grano");
         Alimentos manzana = (Alimentos) binario.obtenerObjeto(binario.getRutaCarpetaAlimentos(), "manzana");
-        Semillas semillaMaiz = new Semillas("maiz", 50, false, 15, grano);
-        Semillas semillaFruta = new Semillas("manzano", 100, true, 25, manzana);
+        Semillas semillaMaiz = new Semillas("maiz", 10, false, 1, grano);
+        Semillas semillaFruta = new Semillas("manzano", 10, true, 1, manzana);
         binario.guardarSemillas(semillaMaiz);
         binario.guardarSemillas(semillaFruta);
     }

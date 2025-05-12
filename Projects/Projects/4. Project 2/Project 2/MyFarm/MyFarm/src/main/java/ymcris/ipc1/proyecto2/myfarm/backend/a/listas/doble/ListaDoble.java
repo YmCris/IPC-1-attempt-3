@@ -1,6 +1,8 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble;
 
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
 
 /**
@@ -25,6 +27,45 @@ public class ListaDoble<T> implements Serializable {
     private static final long serialVersionUID = 89441124;
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    /**
+     * MÉTODO UNICAMENTE PENSADO PARA LA COSECHA, YA NO DOY PARA VERIFICAR SI
+     * SIRVE PARA OTROS CASOS.
+     *
+     * @param indice posición en la cual se agregará
+     * @param contenido
+     * @param nombre
+     * @throws
+     * ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException
+     */
+    public void agregarEnPosicion(int indice, T contenido, String nombre) throws ListaDobleException {
+        if (indice < 0 || indice > tamaño) {
+            throw new ListaDobleException("El índice debe estar dentro del rango de la lista");
+        }
+        NodoDoble<T> nuevo = new NodoDoble<>(contenido, nombre);
+        if (estaVacia()) {
+            inicio = nuevo;
+            fin = nuevo;
+        } else {
+            if (indice == 0) {
+                nuevo.setSiguiente(inicio);
+                inicio.setAnterior(nuevo);
+                inicio = nuevo;
+            } else if (indice == tamaño) {
+                nuevo.setAnterior(fin);
+                fin.setSiguiente(nuevo);
+                fin = nuevo;
+            } else {
+                NodoDoble<T> nodoACambiar = obtenerNodo(indice);
+                NodoDoble<T> nodoAnterior = nodoACambiar.getAnterior();
+                nodoAnterior.setSiguiente(nuevo);
+                nuevo.setAnterior(nodoAnterior);
+                nuevo.setSiguiente(nodoACambiar);
+                nodoACambiar.setAnterior(nuevo);
+            }
+        }
+        tamaño++;
+    }
+
     /**
      * Método encargado de agregar un nuevo nodo con una instancia nueva a la
      * lista.
@@ -66,7 +107,6 @@ public class ListaDoble<T> implements Serializable {
             nodoAUtilizar = obtenerNodo(i);
             if (nodoAUtilizar.getNombre().equals(nombre)) {
                 eliminarNodo(i);
-                System.out.println("Se ha utilizado el elemento " + nombre);
                 return nodoAUtilizar.getContenido();
             }
         }
@@ -78,33 +118,30 @@ public class ListaDoble<T> implements Serializable {
      *
      * @param indice posición de la lista para eliminar el nodo.
      */
-    private void eliminarNodo(int indice) {
+    public void eliminarNodo(int indice) {
         try {
-            System.out.println("Existe el nodo: con el nombre " + existeNodoConContenido(obtenerNodo(indice).getNombre()));
-        } catch (ListaDobleException ex) {
-            System.out.println("...");
-        }
-        NodoDoble<T> nodoAEliminar = obtenerNodo(indice);
-        if (indice == 0) {
-            inicio = nodoAEliminar.getSiguiente();
-            if (inicio != null) {
-                inicio.setAnterior(null);
+            if (existeNodoConContenido(obtenerNodo(indice).getNombre())) {
+                NodoDoble<T> nodoAEliminar = obtenerNodo(indice);
+                if (indice == 0) {
+                    inicio = nodoAEliminar.getSiguiente();
+                    if (inicio != null) {
+                        inicio.setAnterior(null);
+                    }
+                } else if (indice == tamaño - 1) {
+                    fin = nodoAEliminar.getAnterior();
+                    fin.setSiguiente(null);
+                } else {
+                    NodoDoble<T> nodoAnterior = nodoAEliminar.getAnterior();
+                    NodoDoble<T> nodoSiguiente = nodoAEliminar.getSiguiente();
+                    nodoAnterior.setSiguiente(nodoSiguiente);
+                    nodoSiguiente.setAnterior(nodoAnterior);
+                }
+                System.out.println("Se ha eliminado el nodo: " + nodoAEliminar.getNombre());
+                tamaño--;
             }
-        } else if (indice == tamaño - 1) {
-            fin = nodoAEliminar.getAnterior();
-            fin.setSiguiente(null);
-        } else {
-            NodoDoble<T> nodoAnterior = nodoAEliminar.getAnterior();
-            NodoDoble<T> nodoSiguiente = nodoAEliminar.getSiguiente();
-            nodoAnterior.setSiguiente(nodoSiguiente);
-            nodoSiguiente.setAnterior(nodoAnterior);
+        } catch (ListaDobleException ex) {
+            System.out.println(ex.getMessage());
         }
-        System.out.println("SE HA ELIMINADO EL NODO CON EL NOMBRE: " + nodoAEliminar.getNombre());
-        nodoAEliminar.setAnterior(null);
-        nodoAEliminar.setSiguiente(null);
-        nodoAEliminar.setContenido(null);
-        nodoAEliminar = null;
-        tamaño--;
     }
 
     /**
@@ -129,6 +166,16 @@ public class ListaDoble<T> implements Serializable {
         return temporal;
     }
 
+    public T obtenerNodo(String nombre) throws ListaDobleException {
+        for (int i = 0; i < tamaño; i++) {
+            NodoDoble<T> temp = obtenerNodo(i);
+            if (temp.getNombre().equals(nombre)) {
+                return temp.getContenido();
+            }
+        }
+        throw new ListaDobleException("No se ha podido obtener el nodo con el nombre porque, no existe");
+    }
+
     /**
      * Método encargado de verificar si existe un nodo con el mismo contenido
      * (Realmente lo que hace es verificar si el nodo ya tiene un nombre con el
@@ -142,7 +189,6 @@ public class ListaDoble<T> implements Serializable {
         for (int i = 0; i < tamaño; i++) {
             if (obtenerNodo(i) != null) {
                 if (obtenerNodo(i).getNombre().equals(nombre)) {
-                    System.out.println("Existe el nodo con el nombre: " + nombre + " en la posición: " + i);
                     return true;
                 }
             }

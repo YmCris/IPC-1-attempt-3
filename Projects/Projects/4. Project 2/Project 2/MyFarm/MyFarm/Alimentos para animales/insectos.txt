@@ -1,0 +1,8 @@
+insectos
+50
+80
+false
+insectos
+50
+80
+false

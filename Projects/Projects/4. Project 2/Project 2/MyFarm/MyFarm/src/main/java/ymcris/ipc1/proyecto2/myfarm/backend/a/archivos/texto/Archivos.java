@@ -103,7 +103,6 @@ public class Archivos {
         } catch (ArchivoException ex) {
             System.out.println("No se pudo obtener el archivo: " + nombre + " de la carpeta " + rutaCarpeta + "porque " + ex.getMessage());
         }
-        System.out.println("No se ha podido obtener el archivo de la carpeta");
         return null;
     }
 

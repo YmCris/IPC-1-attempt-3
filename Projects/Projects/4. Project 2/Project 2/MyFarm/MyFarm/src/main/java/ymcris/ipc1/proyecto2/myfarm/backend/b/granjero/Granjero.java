@@ -3,12 +3,12 @@ package ymcris.ipc1.proyecto2.myfarm.backend.b.granjero;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.plantas.Semillas;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.animales.Animales;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.NodoDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Fertilizantes;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.ListaDoble;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.archivos.texto.Recreador;
-import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaDobleException;
-import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.doble.NodoDoble;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.MateriasPrimas;
 
 /**
  * Clase Granjero es la clase encargada de representar al jugador dentro del
@@ -51,13 +51,6 @@ public final class Granjero {
         this.alimentos = new ListaDoble<>();
         this.animales = new ListaDoble<>();
         this.semillas = new ListaDoble<>();
-        alimentos.agregar(new Alimentos("alimento1", 50, 100, true), "alimento1");
-        alimentos.agregar(new Alimentos("alimento2", 50, 100, true), "alimento2");
-        alimentos.agregar(new Alimentos("alimento3", 50, 100, true), "alimento3");
-        alimentos.agregar(new Alimentos("alimento4", 50, 100, true), "alimento4");
-        alimentos.agregar(new Alimentos("alimento5", 50, 100, true), "alimento5");
-        alimentos.agregar(new Alimentos("alimento6", 50, 100, true), "alimento6");
-        materias.agregar(new MateriasPrimas("materia1", 50, 15), "materia1");
         this.nick = nick;
         this.nombre = nombre;
         this.oro = 1000;
@@ -88,23 +81,14 @@ public final class Granjero {
      */
     public void comer(String nombreAlimento) {
         if (!alimentos.estaVacia()) {
-            try {
-                alimentos.usar(nombreAlimento);
-                alimento++;
-                haComido = true;
-            } catch (ListaDobleException ex) {
-                System.out.println("Ha ocurrido un error al comer porque " + ex.getMessage());
-            }
+            quitarCantidadAAlimento(nombreAlimento, 1);
+            alimento++;
+            haComido = true;
         }
     }
 
     public boolean haComidoLoSuficiente() {
-        if (alimento >= 5) {
-            alimento = 0;
-            return true;
-        } else {
-            return false;
-        }
+        return alimento >= 5;
     }
 
     /**
@@ -118,7 +102,6 @@ public final class Granjero {
         for (int i = 0; i < arreglo.length; i++) {
             arreglo[i] = (Alimentos) objetos[i];
         }
-        System.out.println("tamaño del arreglo de los alimentos es: " + arreglo.length);
         return arreglo;
     }
 
@@ -133,8 +116,16 @@ public final class Granjero {
         for (int i = 0; i < arreglo.length; i++) {
             arreglo[i] = (MateriasPrimas) objetos[i];
         }
-        System.out.println("tamaño del arreglo de las materias primas es: " + arreglo.length);
         return arreglo;
+    }
+
+    public Semillas[] obtenerSemillasDelGranjero() {
+        Object[] objetos = semillas.obtenerArregloDeObjetos();
+        Semillas[] arregloDeSemillas = new Semillas[objetos.length];
+        for (int i = 0; i < arregloDeSemillas.length; i++) {
+            arregloDeSemillas[i] = (Semillas) objetos[i];
+        }
+        return arregloDeSemillas;
     }
 
     public void agregarCantidadASemilla(String nombreSemilla, int cantidad) {
@@ -142,9 +133,73 @@ public final class Granjero {
             NodoDoble<Semillas> nodo = semillas.obtenerNodo(i);
             if (nodo.getNombre().equals(nombreSemilla)) {
                 nodo.getContenido().setCantidad(nodo.getContenido().getCantidad() + cantidad);
-                System.out.println("Se tienen " + nodo.getContenido().getCantidad() + " semillas de las semilla" + nodo.getContenido().getNombre());
+                System.out.println("Se tienen " + nodo.getContenido().getCantidad() + " semillas de la planta " + nodo.getContenido().getNombre());
             }
         }
+    }
+
+    public Alimentos obtenerAlimentos(String nombreAlimento) throws ListaDobleException {
+        for (int i = 0; i < alimentos.length(); i++) {
+            NodoDoble<Alimentos> alimentoAUsar = alimentos.obtenerNodo(i);
+            if (alimentoAUsar.getNombre().equals(nombreAlimento)) {
+                return alimentoAUsar.getContenido();
+            }
+        }
+        throw new ListaDobleException("No se obtuvo el elemento con el nombre");
+    }
+
+    public void agregarCantidadAAlimento(String nombreAlimento, int cantidad) {
+        for (int i = 0; i < alimentos.length(); i++) {
+            NodoDoble<Alimentos> alimentoAUsar = alimentos.obtenerNodo(i);
+            if (alimentoAUsar.getNombre().equals(nombreAlimento)) {
+                alimentoAUsar.getContenido().setCantidad(alimentoAUsar.getContenido().getCantidad() + cantidad);
+                System.out.println("Se tienen " + alimentoAUsar.getContenido().getCantidad() + " unidades del alimento " + alimentoAUsar.getContenido().getNombre());
+            }
+        }
+
+    }
+
+    private void quitarCantidadAAlimento(String nombreAlimento, int cantidad) {
+        for (int i = 0; i < alimentos.length(); i++) {
+            NodoDoble<Alimentos> nodo = alimentos.obtenerNodo(i);
+            if (nodo.getNombre().equals(nombreAlimento)) {
+                nodo.getContenido().setCantidad(nodo.getContenido().getCantidad() - cantidad);
+                System.out.println("Se tienen " + nodo.getContenido().getCantidad() + " unidades del alimento " + nodo.getContenido().getNombre());
+            }
+        }
+    }
+
+    public void quitarCantidadASemilla(String nombreSemilla, int cantidad) {
+        for (int i = 0; i < semillas.length(); i++) {
+            NodoDoble<Semillas> nodo = semillas.obtenerNodo(i);
+            if (nodo.getNombre().equals(nombreSemilla)) {
+                nodo.getContenido().setCantidad(nodo.getContenido().getCantidad() - cantidad);
+                System.out.println("Se tienen " + nodo.getContenido().getCantidad() + " semillas de la semilla " + nodo.getContenido().getNombre());
+            }
+        }
+    }
+
+    public boolean tieneLasSemillasSuficientes(String nombreSemilla, int cantidadRequerida) {
+        for (int i = 0; i < semillas.length(); i++) {
+            NodoDoble<Semillas> nodo = semillas.obtenerNodo(i);
+            if (nodo.getNombre().equals(nombreSemilla)) {
+                if (nodo.getContenido().getCantidad() >= cantidadRequerida) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean tieneLosFertilizantesSuficientes(String nombreFertilizante, int cantidad) {
+        for (Fertilizantes fertilizante : fertilizantes) {
+            if (fertilizante.getNombre().equals(nombreFertilizante)) {
+                if (fertilizante.getCantidad() >= cantidad) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     public void agregarCantidadFertilizante(String nombreFertilizante) {
@@ -152,6 +207,14 @@ public final class Granjero {
             if (fertilizante.getNombre().equals(nombreFertilizante)) {
                 fertilizante.setCantidad(fertilizante.getCantidad() + 1);
                 System.out.println("Se tienen " + fertilizante.getCantidad() + " fertilizantes del fertilizante " + fertilizante.getNombre());
+            }
+        }
+    }
+
+    public void quitarCantidadAFertilizantes(String nombreFertilizante, int cantidad) {
+        for (Fertilizantes fertilizante : fertilizantes) {
+            if (fertilizante.getNombre().equals(nombreFertilizante)) {
+                fertilizante.setCantidad(fertilizante.getCantidad() - cantidad);
             }
         }
     }
@@ -229,6 +292,9 @@ public final class Granjero {
     // SETTERS -----------------------------------------------------------------
     public void setOro(int oro) {
         this.oro = oro;
+        if (this.oro < 0) {
+            this.oro = 0;
+        }
     }
 
     public void setVida(int vida) {

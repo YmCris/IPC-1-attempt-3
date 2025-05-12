@@ -1,7 +1,10 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.c.plantas;
 
 import java.io.Serializable;
+import java.util.Random;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
 
 /**
  * Clase Planta es la clase abstracta padre encargada de ser quien de forma a
@@ -10,42 +13,57 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
  * @author YmCris
  * @since May 4, 2025
  */
-public abstract class Planta implements Runnable, Serializable{
+public abstract class Planta implements Runnable, Serializable {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
+    protected Grama grama;
     protected String nombre;
     protected Semillas semilla;
+    protected Cola<Alimentos> ordenDeProduccionAlimentos;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    protected int tiempoVivido;//varia
+    protected int fertilidadSuelo;
+    protected int tiempoVivido;
     protected boolean estaPodrida;//cuando muere para el hilo
-    protected boolean produceFruta;
-    protected int semillasRequeridas;
+    protected boolean cosechaLista;
     protected int tiempoParaCosechar;//depende de cada planta
     protected int tiempoParaPodrirse;//depende de cada planta
-    protected boolean desapareceAlMorir;
 
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 798877127;
-    
+    private static final int TIEMPO_MAXIMO_PARA_DAR_COSECHA = 6;//segundos 420   6
+    private static final int TIEMPO_MAXIMO_PARA_PODRIRSE = 4;//segundos 120   4
+
+    // INSTANCIAS --------------------------------------------------------------
+    Random random = new Random();
+
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Planta(String nombre, Semillas semilla, int semillasRequeridas) {
+    public Planta(String nombre, Semillas semilla, int fertilidadSuelo, Cola<Alimentos> ordenDeProduccionAlimentos, Grama grama) {
+        this.grama = grama;
         this.nombre = nombre;
         this.semilla = semilla;
-        this.produceFruta = semilla.isProduceFruta();
-        this.semillasRequeridas = semillasRequeridas;
+        this.fertilidadSuelo = fertilidadSuelo;
+        this.tiempoVivido = 0;
+        this.estaPodrida = false;
+        this.cosechaLista = false;
+        this.ordenDeProduccionAlimentos = ordenDeProduccionAlimentos;
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
     public void obtenerInformación() {
         System.out.println("Nombre: " + nombre);
-        System.out.println("Produce Fruta: " + produceFruta);
         System.out.println("Tiempo Vivido: " + tiempoVivido);
         System.out.println("Esta Podrida: " + estaPodrida);
-        System.out.println("Semillas Requeridas: " + semillasRequeridas);
         System.out.println("Tiempo para Cosechar: " + tiempoParaCosechar);
         System.out.println("Tiempo para Podrirse: " + tiempoParaPodrirse);
-        System.out.println("Desaparece al morir: " + desapareceAlMorir);
+    }
+
+    protected int tiempoCosecha() {
+        return random.nextInt((int) (TIEMPO_MAXIMO_PARA_DAR_COSECHA / 2), TIEMPO_MAXIMO_PARA_DAR_COSECHA + 1);
+    }
+
+    protected int tiempoPodrirse() {
+        return random.nextInt((int) (TIEMPO_MAXIMO_PARA_PODRIRSE / 2), TIEMPO_MAXIMO_PARA_PODRIRSE + 1);
     }
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
@@ -56,10 +74,6 @@ public abstract class Planta implements Runnable, Serializable{
         return nombre;
     }
 
-    public int getSemillasRequeridas() {
-        return semillasRequeridas;
-    }
-
     public int getTiempoParaCosechar() {
         return tiempoParaCosechar;
     }
@@ -68,16 +82,8 @@ public abstract class Planta implements Runnable, Serializable{
         return tiempoParaPodrirse;
     }
 
-    public boolean isProduceFruta() {
-        return produceFruta;
-    }
-
     public boolean isEstaPodrida() {
         return estaPodrida;
-    }
-
-    public boolean isDesapareceAlMorir() {
-        return desapareceAlMorir;
     }
 
     public int getTiempoVivido() {
@@ -86,6 +92,26 @@ public abstract class Planta implements Runnable, Serializable{
 
     public Semillas getSemilla() {
         return semilla;
+    }
+
+    public boolean estaLaCosechaLista() {
+        return cosechaLista;
+    }
+
+    public Cola<Alimentos> getOrdenDeProduccionAlimentos() {
+        return ordenDeProduccionAlimentos;
+    }
+
+    public int getFertilidadSuelo() {
+        return fertilidadSuelo;
+    }
+
+    public boolean isCosechaLista() {
+        return cosechaLista;
+    }
+
+    public Grama getGrama() {
+        return grama;
     }
 
     // SETTTERS ----------------------------------------------------------------
@@ -101,14 +127,6 @@ public abstract class Planta implements Runnable, Serializable{
         this.estaPodrida = estaPodrida;
     }
 
-    public void setProduceFruta(boolean produceFruta) {
-        this.produceFruta = produceFruta;
-    }
-
-    public void setSemillasRequeridas(int semillasRequeridas) {
-        this.semillasRequeridas = semillasRequeridas;
-    }
-
     public void setTiempoParaCosechar(int tiempoParaCosechar) {
         this.tiempoParaCosechar = tiempoParaCosechar;
     }
@@ -117,12 +135,24 @@ public abstract class Planta implements Runnable, Serializable{
         this.tiempoParaPodrirse = tiempoParaPodrirse;
     }
 
-    public void setDesapareceAlMorir(boolean desapareceAlMorir) {
-        this.desapareceAlMorir = desapareceAlMorir;
-    }
-
     public void setSemilla(Semillas semilla) {
         this.semilla = semilla;
+    }
+
+    public void cosechaLista(boolean cosechaLista) {
+        this.cosechaLista = cosechaLista;
+    }
+
+    public void setGrama(Grama grama) {
+        this.grama = grama;
+    }
+
+    public void setFertilidadSuelo(int fertilidadSuelo) {
+        this.fertilidadSuelo = fertilidadSuelo;
+    }
+
+    public void setCosechaLista(boolean cosechaLista) {
+        this.cosechaLista = cosechaLista;
     }
 
 }

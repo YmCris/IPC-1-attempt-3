@@ -143,7 +143,6 @@ public class ArchivosBinarios {
      * @return arreglo de semillas existentes
      */
     public Semillas[] obtenerSemillas() {
-        System.out.println("Se obtiene el arreglo de todas las semillas");
         Object[] objetos = obtenerObjetos(rutaCarpetaSemillas);
         Semillas[] semillas = new Semillas[objetos.length];
         for (int i = 0; i < semillas.length; i++) {
@@ -160,7 +159,6 @@ public class ArchivosBinarios {
      */
     public void guardarSemillas(Semillas semilla) {
         guardarObjeto(semilla, rutaCarpetaSemillas, semilla.getNombre());
-        System.out.println("Se ha guardado la semilla " + semilla.getNombre());
     }
 
     // ALIMENTOS ---------------------------------------------------------------
@@ -171,7 +169,6 @@ public class ArchivosBinarios {
      * @return arreglo de alimentos existentes
      */
     public Alimentos[] obtenerAlimentos() {
-        System.out.println("Se obtiene el arreglo de todos los alimentos");
         Object[] objetos = obtenerObjetos(rutaCarpetaAlimentos);
         Alimentos[] alimentos = new Alimentos[objetos.length];
         for (int i = 0; i < alimentos.length; i++) {
@@ -188,7 +185,6 @@ public class ArchivosBinarios {
      */
     public void guardarAlimento(Alimentos alimento) {
         guardarObjeto(alimento, rutaCarpetaAlimentos, alimento.getNombre());
-        System.out.println("Se ha guardado el alimento " + alimento.getNombre());
     }
 
     // MATERIA PRIMA -----------------------------------------------------------
@@ -199,7 +195,6 @@ public class ArchivosBinarios {
      * @return arreglo de materias primas existentes
      */
     public MateriasPrimas[] obtenerMaterias() {
-        System.out.println("Se obtiene el arreglo de todas las materias");
         Object[] objetos = obtenerObjetos(rutaCarpetaMateriaPrima);
         MateriasPrimas[] materias = new MateriasPrimas[objetos.length];
         for (int i = 0; i < materias.length; i++) {
@@ -216,7 +211,6 @@ public class ArchivosBinarios {
      */
     public void guardarMaterias(MateriasPrimas materia) {
         guardarObjeto(materia, rutaCarpetaMateriaPrima, materia.getNombre());
-        System.out.println("Se ha guardado la materia " + materia.getNombre());
     }
 
     /**

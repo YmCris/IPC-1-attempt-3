@@ -1,6 +1,7 @@
 package ymcris.ipc1.proyecto2.myfarm.backend.b.terreno;
 
 import java.util.Random;
+import ymcris.ipc1.proyecto2.myfarm.backend.a.cola.Cola;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Agua;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Grama;
 import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Suelo;
@@ -8,6 +9,8 @@ import ymcris.ipc1.proyecto2.myfarm.backend.c.suelos.Desierto;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.NodoOrtogonal;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.listas.ortogonal.ListaOrtogonal;
 import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException;
+import ymcris.ipc1.proyecto2.myfarm.backend.b.granjero.Granjero;
+import ymcris.ipc1.proyecto2.myfarm.backend.c.productos.Alimentos;
 
 /**
  * Clase Terreno
@@ -18,19 +21,26 @@ import ymcris.ipc1.proyecto2.myfarm.backend.a.exceptions.ListaOrtogonalException
 public final class Terreno {
 
     // VARIABLES DE REFERENCIA -------------------------------------------------
-    private NodoOrtogonal[] suelosPredeterminados = new NodoOrtogonal[25];
+    private Granjero granjero;
+    private NodoOrtogonal[] suelosPredeterminados;
+    private Cola<Integer> ordenDeProduccionCelda;
+    private Cola<Alimentos> ordenDeProduccionAlimentos;
 
     // CONSTANTES --------------------------------------------------------------
     private static final int PRECIO_LIMPIEZA = 15;
-    private static final int DISTRIBUCION_DESIERTO = 25;
     private static final int DISTRIBUCION_GRAMA = 40;
+    private static final int DISTRIBUCION_DESIERTO = 25;
 
     // INSTANCIAS --------------------------------------------------------------
-    ListaOrtogonal tablero = new ListaOrtogonal();
     Random random = new Random();
+    ListaOrtogonal tablero = new ListaOrtogonal();
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
-    public Terreno() {
+    public Terreno(Granjero granjero) {
+        this.granjero = granjero;
+        this.suelosPredeterminados = new NodoOrtogonal[25];
+        this.ordenDeProduccionCelda = new Cola<>();
+        this.ordenDeProduccionAlimentos = new Cola<>();
         generarSuelos();
     }
 
@@ -53,7 +63,7 @@ public final class Terreno {
         } else if (probabilidad <= 100 - DISTRIBUCION_GRAMA) {//[26,60] ==35% de prob
             return new Agua();
         } else {//[60,100] 40% de prob
-            return new Grama();
+            return new Grama(ordenDeProduccionCelda, ordenDeProduccionAlimentos, granjero);
         }
     }
 

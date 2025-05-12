@@ -42,7 +42,7 @@ public class JDBodega extends javax.swing.JDialog {
     private void agregarAlimentos() {
         Alimentos[] alimentos = bodega.getAlimentos();
         for (Alimentos alimento : alimentos) {
-            tablaAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getPrecioDeVenta(), alimento.getPrecioDeCompra(), alimento.esParaHerbivoros()});
+            tablaAlimentos.addRow(new Object[]{alimento.getNombre(), alimento.getCantidad(), alimento.getProduccion(), alimento.esParaHerbivoros()});
         }
     }
 
@@ -222,7 +222,6 @@ public class JDBodega extends javax.swing.JDialog {
             int fila = tblAlimentos.getSelectedRow();
             String nombreAlimento = (String) tblAlimentos.getValueAt(fila, 0);
             bodega.getGranjero().comer(nombreAlimento);
-            tablaAlimentos.removeRow(tblAlimentos.getSelectedRow());
         }
     }//GEN-LAST:event_btnComerActionPerformed
 

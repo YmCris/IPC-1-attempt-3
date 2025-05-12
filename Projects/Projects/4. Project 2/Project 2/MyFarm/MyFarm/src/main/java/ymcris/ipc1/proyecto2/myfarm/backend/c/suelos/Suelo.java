@@ -18,6 +18,8 @@ public abstract class Suelo extends JButton {
     protected String rutaImagen;
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
+    private int fila;
+    private int columna;
     protected boolean estaSucio;
 
     // CONSTANTES --------------------------------------------------------------
@@ -25,12 +27,20 @@ public abstract class Suelo extends JButton {
 
     // MÉTODO CONSTRUCTOR ------------------------------------------------------
     public Suelo() {
+        this.fila = 0;
+        this.columna = 0;
         this.estaSucio = false;
-        this.setSize(90, 90);
+        this.setSize(250, 180);
+        this.setText("");
+        this.setHorizontalTextPosition(CENTER);
+        this.setVerticalTextPosition(CENTER);
+        this.setForeground(new java.awt.Color(255, 255, 255));
     }
 
     // MÉTODOS ABSTRACTOS ------------------------------------------------------
     public void colocarImagen() {
+        setText("");
+        //this.setIcon(new javax.swing.ImageIcon(getClass().getResource(rutaImagen))); // NOI18N
         ImageIcon icon = new ImageIcon(getClass().getResource(rutaImagen));
         int ancho = this.getWidth();
         int alto = this.getHeight();
@@ -59,6 +69,14 @@ public abstract class Suelo extends JButton {
         return PRECIO_DE_COMPRA;
     }
 
+    public int getFila() {
+        return fila;
+    }
+
+    public int getColumna() {
+        return columna;
+    }
+
     // SETTERS -----------------------------------------------------------------
     public void setRutaImagen(String rutaImagen) {
         this.rutaImagen = rutaImagen;
@@ -70,6 +88,14 @@ public abstract class Suelo extends JButton {
 
     public void setEstaSucio(boolean estaSucio) {
         this.estaSucio = estaSucio;
+    }
+
+    public void setFila(int fila) {
+        this.fila = fila;
+    }
+
+    public void setColumna(int columna) {
+        this.columna = columna;
     }
 
 }

@@ -10,12 +10,13 @@ package ymcris.ipc1.proyecto2.myfarm.backend.c.productos;
 public class Alimentos extends Productos {
 
     // VARIABLES PRIMITIVAS ----------------------------------------------------
-    private boolean esParaHerbivoros;
     /**
      * Cantidad para utilizar en los alimentos predeterminados para los
      * animales, no para los generados durante el proceso de la granja.
      */
     private int cantidad;
+    private boolean estaPodrido;
+    private boolean esParaHerbivoros;
     // CONSTANTES --------------------------------------------------------------
     private static final long serialVersionUID = 540124787;
 
@@ -27,6 +28,7 @@ public class Alimentos extends Productos {
     }
 
     // MÉTODOS CONCRETOS -------------------------------------------------------
+    
     // GETTERS -----------------------------------------------------------------
     public boolean esParaHerbivoros() {
         return esParaHerbivoros;
@@ -39,5 +41,15 @@ public class Alimentos extends Productos {
     public void setCantidad(int cantidad) {
         this.cantidad = cantidad;
     }
+
+    public boolean estaPodrido() {
+        return estaPodrido;
+    }
+
+    public void setEstaPodrido(boolean estaPodrido) {
+        this.estaPodrido = estaPodrido;
+    }
+    
+    
 
 }
